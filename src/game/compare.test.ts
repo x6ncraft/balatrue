@@ -1,0 +1,195 @@
+import {
+  JOKER_CLASSIFICATION_VERSION,
+  JOKER_DATA_GAME_VERSION,
+  type Joker,
+  type JokerDependency,
+  type JokerEffect,
+  type JokerRarity,
+  type JokerTiming,
+} from '../data/types'
+import { describe, expect, it } from 'vitest'
+import { compareJokers } from './compare'
+
+interface FixtureOptions {
+  id?: string
+  number?: number
+  rarity?: JokerRarity
+  cost?: number | null
+  acquisition?: 'shop' | 'soul'
+  effects?: JokerEffect[]
+  timings?: JokerTiming[]
+  dependencies?: JokerDependency[]
+}
+
+function makeJoker(options: FixtureOptions = {}): Joker {
+  const id = options.id ?? 'j_fixture'
+  const acquisition = options.acquisition ?? 'shop'
+  const rarity = options.rarity ?? 'common'
+  const cost = options.cost === undefined ? (acquisition === 'soul' ? null : 5) : options.cost
+
+  return {
+    id,
+    number: options.number ?? 1,
+    name: { en: id, zhCN: id },
+    imagePath: `/jokers/${id}.png`,
+    official: {
+      gameVersion: JOKER_DATA_GAME_VERSION,
+      rarity,
+      cost,
+      shopPurchasable: acquisition === 'shop',
+    },
+    source: {
+      wikiPageUrl: `https://example.com/${id}`,
+      effectTextEn: 'Fixture effect',
+      unlockRequirementEn: 'Available from start.',
+      wikiType: 'effect',
+      wikiActivation: 'passive',
+      imageUrl: `https://example.com/${id}.png`,
+      imageSha1: id,
+      localImageSha1: id,
+      imageWidth: 71,
+      imageHeight: 95,
+    },
+    classification: {
+      version: JOKER_CLASSIFICATION_VERSION,
+      acquisition: {
+        kind: acquisition,
+        unlockState: acquisition === 'soul' ? 'legendary' : 'starting',
+      },
+      effects: options.effects ?? ['mechanism'],
+      timings: options.timings ?? ['passive'],
+      dependencies: options.dependencies ?? [{ family: 'none' }],
+    },
+  }
+}
+
+describe('compareJokers', () => {
+  it('marks every field exact for the same Joker', () => {
+    const joker = makeJoker()
+    const result = compareJokers(joker, joker)
+
+    expect(result.correct).toBe(true)
+    expect(result.rarity).toMatchObject({ result: 'exact', direction: null })
+    expect(result.acquisition).toMatchObject({ result: 'exact', direction: null })
+    expect(result.effects.result).toBe('exact')
+    expect(result.timings.result).toBe('exact')
+    expect(result.dependencies.result).toBe('exact')
+  })
+
+  it('points rarity arrows from the guess toward the answer', () => {
+    const common = makeJoker({ id: 'j_common', rarity: 'common' })
+    const rare = makeJoker({ id: 'j_rare', rarity: 'rare' })
+
+    expect(compareJokers(common, rare).rarity).toMatchObject({
+      result: 'miss',
+      direction: 'up',
+    })
+    expect(compareJokers(rare, common).rarity).toMatchObject({
+      result: 'miss',
+      direction: 'down',
+    })
+  })
+
+  it('compares shop prices exactly and points toward the answer price', () => {
+    const cheap = makeJoker({ id: 'j_cheap', cost: 4 })
+    const expensive = makeJoker({ id: 'j_expensive', cost: 8 })
+
+    expect(compareJokers(cheap, expensive).acquisition).toEqual({
+      kind: 'shop',
+      shopPrice: 4,
+      result: 'miss',
+      direction: 'up',
+    })
+    expect(compareJokers(expensive, cheap).acquisition.direction).toBe('down')
+  })
+
+  it('treats Soul as a separate acquisition kind without a numeric arrow', () => {
+    const soul = makeJoker({
+      id: 'j_soul',
+      rarity: 'legendary',
+      acquisition: 'soul',
+    })
+    const otherSoul = makeJoker({
+      id: 'j_other_soul',
+      rarity: 'legendary',
+      acquisition: 'soul',
+    })
+    const shop = makeJoker({ id: 'j_shop', cost: 9 })
+
+    expect(compareJokers(soul, otherSoul).acquisition).toEqual({
+      kind: 'soul',
+      shopPrice: null,
+      result: 'exact',
+      direction: null,
+    })
+    expect(compareJokers(shop, soul).acquisition).toEqual({
+      kind: 'shop',
+      shopPrice: 9,
+      result: 'miss',
+      direction: null,
+    })
+  })
+
+  it('uses set equality, overlap, and disjointness for effect tags', () => {
+    const answer = makeJoker({ effects: ['chips', 'mult'] })
+    const exact = makeJoker({ id: 'j_exact', effects: ['mult', 'chips'] })
+    const partial = makeJoker({ id: 'j_partial', effects: ['chips', 'economy'] })
+    const miss = makeJoker({ id: 'j_miss', effects: ['x_mult'] })
+
+    expect(compareJokers(exact, answer).effects.result).toBe('exact')
+    expect(compareJokers(partial, answer).effects).toEqual({
+      values: ['chips', 'economy'],
+      matches: ['chips'],
+      result: 'partial',
+    })
+    expect(compareJokers(miss, answer).effects.result).toBe('miss')
+  })
+
+  it('uses the same set semantics for timing tags, including empty sets', () => {
+    const answer = makeJoker({ timings: ['card_scored', 'round_end'] })
+    const partial = makeJoker({ id: 'j_partial', timings: ['round_end', 'shop'] })
+    const empty = makeJoker({ id: 'j_empty', timings: [] })
+
+    expect(compareJokers(partial, answer).timings.result).toBe('partial')
+    expect(compareJokers(empty, makeJoker({ timings: [] })).timings.result).toBe('exact')
+  })
+
+  it('marks same dependency family with a different value as partial', () => {
+    const answer = makeJoker({ dependencies: [{ family: 'suit', value: 'hearts' }] })
+    const guess = makeJoker({
+      id: 'j_guess',
+      dependencies: [{ family: 'suit', value: 'spades' }],
+    })
+    const result = compareJokers(guess, answer).dependencies
+
+    expect(result.result).toBe('partial')
+    expect(result.exactMatches).toEqual([])
+    expect(result.familyMatches).toEqual([{ family: 'suit', value: 'spades' }])
+  })
+
+  it('distinguishes exact dependency overlap from complete set equality', () => {
+    const answer = makeJoker({
+      dependencies: [
+        { family: 'rank', value: 'ace' },
+        { family: 'suit', value: 'hearts' },
+      ],
+    })
+    const guess = makeJoker({
+      id: 'j_guess',
+      dependencies: [{ family: 'rank', value: 'ace' }],
+    })
+
+    expect(compareJokers(guess, answer).dependencies).toMatchObject({
+      result: 'partial',
+      exactMatches: [{ family: 'rank', value: 'ace' }],
+      familyMatches: [],
+    })
+  })
+
+  it('marks disjoint dependency families as a miss', () => {
+    const answer = makeJoker({ dependencies: [{ family: 'money' }] })
+    const guess = makeJoker({ id: 'j_guess', dependencies: [{ family: 'blind' }] })
+
+    expect(compareJokers(guess, answer).dependencies.result).toBe('miss')
+  })
+})
