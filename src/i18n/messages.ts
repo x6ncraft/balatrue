@@ -7,6 +7,7 @@ const zhCN = {
 
   'nav.daily': '今日谜牌',
   'nav.endless': '无尽牌局',
+  'nav.collection': '小丑图鉴',
   'nav.help': '玩法',
   'nav.settings': '设置',
   'nav.language': '语言',
@@ -17,7 +18,7 @@ const zhCN = {
 
   'game.dailyTitle': '今日谜牌',
   'game.endlessTitle': '无尽牌局',
-  'game.dailyDescription': '每天八次机会，找出同一张小丑牌。',
+  'game.dailyDescription': '每天六次机会，找出同一张小丑牌。',
   'game.endlessDescription': '不限次数开局，练熟每一张小丑牌。',
   'game.instructions': '选一张小丑牌出牌，根据五项线索继续缩小范围。',
   'game.remaining': '剩余：{count}',
@@ -25,6 +26,7 @@ const zhCN = {
   'game.today': '北京时间 {date}',
   'game.loading': '正在洗牌……',
   'game.ready': '牌局已就绪',
+  'game.assisted': '图鉴辅助局 · 不计战绩',
 
   'search.label': '选择一张小丑牌',
   'search.placeholder': '输入中文、英文或拼音',
@@ -47,6 +49,7 @@ const zhCN = {
   'action.retry': '再试一次',
   'action.close': '关闭',
   'action.continue': '继续',
+  'action.openGlossary': '查看线索字典',
 
   'clue.joker': '小丑牌',
   'clue.rarity': '稀有度',
@@ -83,11 +86,41 @@ const zhCN = {
   'stats.averageGuesses': '平均出牌',
 
   'help.title': '怎么玩',
-  'help.intro': '你有八次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
+  'help.intro': '你有六次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
   'help.exact': '绿色表示这一项完全吻合。',
   'help.partial': '黄色表示这一项有标签交集；依赖条件同族也算部分吻合。',
   'help.miss': '灰红色表示这一项不吻合。',
   'help.arrow': '价格或稀有度旁的箭头始终指向正确答案。',
+
+  'glossary.kicker': '线索参考',
+  'glossary.title': '线索字典',
+  'glossary.intro':
+    '这里列出五项线索的完整取值，以及 150 张牌里实际出现的依赖细项。查字典不会影响战绩。',
+  'glossary.rarityHint': '稀有度和价格不同时，箭头会从你的猜测指向答案。',
+  'glossary.shopPrice': '商店价格',
+  'glossary.shopPriceDescription': '可购买小丑牌的基础价格；相同为完全吻合。',
+  'glossary.soulDescription': '传奇小丑不显示商店价格，统一归为灵魂牌获取。',
+  'glossary.note':
+    '这些是 Balatrue 为竞猜整理的分类，不是《小丑牌》官方属性；“多个时点”表示效果横跨不止一个阶段。',
+
+  'collection.title': '小丑图鉴',
+  'collection.warningEyebrow': '计分提醒',
+  'collection.warningTitle': '看图鉴，这一局就不计战绩',
+  'collection.warningBody':
+    '图鉴会展示全部 150 张牌和五项分类。打开后仍可继续猜、保存进度和分享结果，但这局不会写入胜率、连胜或平均出牌数。',
+  'collection.warningCancel': '这局先不看',
+  'collection.warningConfirm': '继续看图鉴',
+  'collection.searchLabel': '搜索图鉴',
+  'collection.searchPlaceholder': '中文、英文或拼音',
+  'collection.all': '全部',
+  'collection.results': '找到 {count} 张小丑牌',
+  'collection.classificationNote': '名称、稀有度和价格为资料字段；其余为 Balatrue 分类。',
+  'collection.soul': '灵魂牌',
+  'collection.noResults': '没有符合这些条件的小丑牌。',
+  'collection.clearFilters': '清除筛选',
+  'collection.showFilters': '筛选',
+  'collection.hideFilters': '收起筛选',
+  'collection.assistedNotice': '图鉴已打开：这局仍可继续，但不会计入战绩。',
 
   'settings.title': '设置',
   'settings.language': '界面语言',
@@ -112,6 +145,7 @@ const zhCN = {
   'a11y.jokerImage': '{name}的小丑牌卡图',
   'a11y.openLanguageMenu': '选择界面语言',
   'a11y.openHelp': '打开玩法说明',
+  'a11y.openCollection': '打开小丑图鉴',
   'a11y.guessHistory': '出牌记录',
 } as const
 
@@ -126,6 +160,7 @@ const en = {
 
   'nav.daily': 'Daily',
   'nav.endless': 'Endless',
+  'nav.collection': 'Collection',
   'nav.help': 'How to play',
   'nav.settings': 'Settings',
   'nav.language': 'Language',
@@ -136,7 +171,7 @@ const en = {
 
   'game.dailyTitle': 'Daily Joker',
   'game.endlessTitle': 'Endless',
-  'game.dailyDescription': 'Eight guesses. The same hidden Joker for everyone, every day.',
+  'game.dailyDescription': 'Six guesses. The same hidden Joker for everyone, every day.',
   'game.endlessDescription': 'Start as many rounds as you like and learn every Joker.',
   'game.instructions': 'Play a Joker, read the five clues, and narrow down the answer.',
   'game.remaining': 'Remaining: {count}',
@@ -144,6 +179,7 @@ const en = {
   'game.today': '{date}, Beijing time',
   'game.loading': 'Shuffling…',
   'game.ready': 'Ready to play',
+  'game.assisted': 'Collection-assisted · not scored',
 
   'search.label': 'Choose a Joker',
   'search.placeholder': 'Search by name or pinyin',
@@ -166,6 +202,7 @@ const en = {
   'action.retry': 'Try again',
   'action.close': 'Close',
   'action.continue': 'Continue',
+  'action.openGlossary': 'Open clue glossary',
 
   'clue.joker': 'Joker',
   'clue.rarity': 'Rarity',
@@ -203,12 +240,46 @@ const en = {
 
   'help.title': 'How to play',
   'help.intro':
-    "You have eight tries to find today's Joker. After each guess, five clues show how close you are.",
+    "You have six tries to find today's Joker. After each guess, five clues show how close you are.",
   'help.exact': 'Green means an exact match.',
   'help.partial':
     'Yellow means the tags overlap; related values in the same condition family are also partial.',
   'help.miss': 'Muted red means there is no match.',
   'help.arrow': 'Arrows beside price or rarity always point toward the answer.',
+
+  'glossary.kicker': 'Clue reference',
+  'glossary.title': 'Clue glossary',
+  'glossary.intro':
+    'This lists every value across all five clues, plus the condition details used by the current 150 Jokers. Opening the glossary does not affect scoring.',
+  'glossary.rarityHint':
+    'When rarity or price differs, the arrow points from your guess toward the answer.',
+  'glossary.shopPrice': 'Shop price',
+  'glossary.shopPriceDescription':
+    'The base price of purchasable Jokers; equal prices are an exact match.',
+  'glossary.soulDescription': 'Legendary Jokers have no shop price and are grouped under The Soul.',
+  'glossary.note':
+    'These are Balatrue categories built for this puzzle, not official Balatro attributes. “Multiple” means an effect spans more than one stage.',
+
+  'collection.title': 'Joker Collection',
+  'collection.warningEyebrow': 'Scoring notice',
+  'collection.warningTitle': 'Opening the collection makes this round unscored',
+  'collection.warningBody':
+    'The collection reveals all 150 Jokers and their five categories. You can still guess, save, and share, but this round will not affect win rate, streaks, or average guesses.',
+  'collection.warningCancel': 'Not this round',
+  'collection.warningConfirm': 'Open collection',
+  'collection.searchLabel': 'Search collection',
+  'collection.searchPlaceholder': 'English, Chinese, or pinyin',
+  'collection.all': 'All',
+  'collection.results': '{count} Jokers found',
+  'collection.classificationNote':
+    'Names, rarity, and price are source facts; the remaining fields are Balatrue categories.',
+  'collection.soul': 'The Soul',
+  'collection.noResults': 'No Jokers match these filters.',
+  'collection.clearFilters': 'Clear filters',
+  'collection.showFilters': 'Filters',
+  'collection.hideFilters': 'Hide filters',
+  'collection.assistedNotice':
+    'Collection opened: you can keep playing, but this round will not be scored.',
 
   'settings.title': 'Settings',
   'settings.language': 'Language',
@@ -233,6 +304,7 @@ const en = {
   'a11y.jokerImage': 'Card art for {name}',
   'a11y.openLanguageMenu': 'Choose interface language',
   'a11y.openHelp': 'Open how to play',
+  'a11y.openCollection': 'Open Joker collection',
   'a11y.guessHistory': 'Guess history',
 } as const satisfies Record<MessageKey, string>
 

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import { BarChart3, CircleHelp, Languages } from 'lucide-vue-next'
+import { BarChart3, BookOpen, CircleHelp, Languages, ListTree } from 'lucide-vue-next'
 
+import ClueGlossaryDialog from './components/ClueGlossaryDialog.vue'
 import GuessRow from './components/GuessRow.vue'
 import HelpDialog from './components/HelpDialog.vue'
 import JokerCombobox from './components/JokerCombobox.vue'
+import JokerCollectionDialog from './components/JokerCollectionDialog.vue'
 import ResultBanner from './components/ResultBanner.vue'
 import StatsDialog from './components/StatsDialog.vue'
 import { JOKER_DATA_META, jokers } from './data'
@@ -13,9 +15,12 @@ import {
   compareJokers,
   createDailyGame,
   createPracticeGame,
-  deserializeGameState,
   formatShareResult,
+  GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS,
+  gameStorageKey,
   getBeijingDateKey,
+  markCollectionUsed,
+  restoreStoredGame,
   serializeGameState,
   submitGuess,
   type GameMode,
@@ -41,9 +46,29 @@ const today = getBeijingDateKey(bootTime)
 const initialDailyGame = createDailyGame(jokers, bootTime)
 const dailyAnswer = initialDailyGame.answerId
 const dataKey = `${JOKER_DATA_META.gameVersion}:c${JOKER_DATA_META.classificationVersion}`
-const dailyStorageKey = `balatrue:game:${dataKey}:daily:${today}`
-const practiceStorageKey = `balatrue:game:${dataKey}:practice`
+const dailyStorageKey = gameStorageKey(
+  JOKER_DATA_META.gameVersion,
+  JOKER_DATA_META.classificationVersion,
+  'daily',
+  today,
+)
+const practiceStorageKey = gameStorageKey(
+  JOKER_DATA_META.gameVersion,
+  JOKER_DATA_META.classificationVersion,
+  'practice',
+)
+const previousClassificationVersions = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS.filter(
+  (version) => version < JOKER_DATA_META.classificationVersion,
+)
+const previousDailyStorageKeys = previousClassificationVersions.map((version) =>
+  gameStorageKey(JOKER_DATA_META.gameVersion, version, 'daily', today),
+)
+const previousPracticeStorageKeys = previousClassificationVersions.map((version) =>
+  gameStorageKey(JOKER_DATA_META.gameVersion, version, 'practice'),
+)
 const practiceBagKey = `balatrue:practice-bag:${dataKey}`
+const validJokerIds = new Set(jokers.map((joker) => joker.id))
+const jokersById = new Map(jokers.map((joker) => [joker.id, joker]))
 
 function safeStorageGet(key: string): string | null {
   try {
@@ -62,20 +87,46 @@ function safeStorageSet(key: string, value: string): boolean {
   }
 }
 
-function restoredGame(key: string, mode: GameMode, answerId?: string): GameState | null {
+function refreshFallbackGame(storedState: GameState): GameState | null {
+  const storedAnswer = jokersById.get(storedState.answerId)
+  if (!storedAnswer) return null
+
+  let refreshed: GameState = {
+    ...storedState,
+    status: 'playing',
+    guesses: [],
+  }
   try {
-    const stored = safeStorageGet(key)
-    const state = stored ? deserializeGameState(stored) : null
-    if (!state || state.mode !== mode) return null
-    if (answerId && state.answerId !== answerId) return null
-    if (!jokers.some((joker) => joker.id === state.answerId)) return null
-    if (state.guesses.some((guess) => !jokers.some((joker) => joker.id === guess.guessId))) {
-      return null
+    for (const storedGuess of storedState.guesses) {
+      const guessedJoker = jokersById.get(storedGuess.guessId)
+      if (!guessedJoker) return null
+      refreshed = submitGuess(refreshed, guessedJoker, storedAnswer)
     }
-    return state
   } catch {
     return null
   }
+  return refreshed.status === storedState.status ? refreshed : null
+}
+
+function restoredGame(
+  key: string,
+  fallbackKeys: readonly string[],
+  mode: GameMode,
+  answerId?: string,
+): GameState | null {
+  if (mode === 'daily' && !answerId) return null
+  return restoreStoredGame({
+    currentKey: key,
+    fallbackKeys,
+    context:
+      mode === 'daily'
+        ? { mode, puzzleKey: today, answerId: answerId as string }
+        : { mode: 'practice' },
+    validJokerIds,
+    read: safeStorageGet,
+    write: safeStorageSet,
+    refreshFallback: refreshFallbackGame,
+  })
 }
 
 function shuffledIds(): string[] {
@@ -131,11 +182,15 @@ const locale = ref<Locale>(
 )
 const mode = ref<GameMode>('daily')
 const dailyState = ref<GameState>(
-  restoredGame(dailyStorageKey, 'daily', dailyAnswer) ?? initialDailyGame,
+  restoredGame(dailyStorageKey, previousDailyStorageKeys, 'daily', dailyAnswer) ?? initialDailyGame,
 )
-const practiceState = ref<GameState | null>(restoredGame(practiceStorageKey, 'practice'))
+const practiceState = ref<GameState | null>(
+  restoredGame(practiceStorageKey, previousPracticeStorageKeys, 'practice'),
+)
 const helpOpen = ref(false)
 const statsOpen = ref(false)
+const glossaryOpen = ref(false)
+const collectionOpen = ref(false)
 const notice = ref('')
 const copied = ref(false)
 const resetToken = ref(0)
@@ -157,6 +212,9 @@ const guessRows = computed(() =>
   }),
 )
 const remainingAttempts = computed(() => state.value.maxAttempts - state.value.guesses.length)
+const requiresCollectionConfirmation = computed(
+  () => mode.value === 'daily' && state.value.status === 'playing' && !state.value.usedCollection,
+)
 
 function sameVisibleFeedback(left: GuessComparison, right: GuessComparison): boolean {
   return (
@@ -268,6 +326,15 @@ function startNext(): void {
   resetToken.value += 1
 }
 
+function confirmCollection(): void {
+  if (mode.value !== 'daily') return
+  const next = markCollectionUsed(dailyState.value)
+  if (next === dailyState.value) return
+  dailyState.value = next
+  saveState(next)
+  notice.value = t(locale.value, 'collection.assistedNotice')
+}
+
 async function copyResult(): Promise<void> {
   const result = formatShareResult(state.value, {
     title: 'Balatrue',
@@ -319,6 +386,15 @@ onMounted(() => {
         <p class="brand__zh">猜丑牌</p>
       </div>
       <nav class="top-actions" :aria-label="locale === 'zh-CN' ? '页面工具' : 'Page tools'">
+        <button
+          class="collection-button"
+          type="button"
+          :aria-label="t(locale, 'a11y.openCollection')"
+          @click="collectionOpen = true"
+        >
+          <BookOpen :size="18" aria-hidden="true" />
+          <span>{{ t(locale, 'nav.collection') }}</span>
+        </button>
         <button
           class="icon-button"
           type="button"
@@ -395,14 +471,24 @@ onMounted(() => {
               <span class="legend-dot legend-dot--miss">×</span>{{ t(locale, 'feedback.miss') }}
             </li>
           </ul>
-          <span>
-            {{ t(locale, 'game.remaining', { count: remainingAttempts }) }} ·
-            {{
-              locale === 'zh-CN'
-                ? `约 ${possibleCount} 张仍符合线索`
-                : `About ${possibleCount} still fit`
-            }}
-          </span>
+          <div class="game-meta__right">
+            <button class="glossary-link" type="button" @click="glossaryOpen = true">
+              <ListTree :size="15" aria-hidden="true" />
+              {{ t(locale, 'action.openGlossary') }}
+            </button>
+            <span v-if="state.mode === 'daily' && state.usedCollection" class="assisted-badge">
+              <BookOpen :size="14" aria-hidden="true" />
+              {{ t(locale, 'game.assisted') }}
+            </span>
+            <span class="game-meta__count">
+              {{ t(locale, 'game.remaining', { count: remainingAttempts }) }} ·
+              {{
+                locale === 'zh-CN'
+                  ? `约 ${possibleCount} 张仍符合线索`
+                  : `About ${possibleCount} still fit`
+              }}
+            </span>
+          </div>
         </div>
         <div v-if="notice" class="notice" role="status">{{ notice }}</div>
       </header>
@@ -457,5 +543,19 @@ onMounted(() => {
 
     <HelpDialog :open="helpOpen" :locale="locale" @close="helpOpen = false" />
     <StatsDialog :open="statsOpen" :locale="locale" :stats="stats" @close="statsOpen = false" />
+    <ClueGlossaryDialog
+      :open="glossaryOpen"
+      :locale="locale"
+      :jokers="jokers"
+      @close="glossaryOpen = false"
+    />
+    <JokerCollectionDialog
+      :open="collectionOpen"
+      :locale="locale"
+      :jokers="jokers"
+      :requires-confirmation="requiresCollectionConfirmation"
+      @close="collectionOpen = false"
+      @confirm="confirmCollection"
+    />
   </main>
 </template>

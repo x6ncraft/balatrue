@@ -48,6 +48,9 @@ const secondaryName = computed(() =>
             : t(locale, 'result.lossMessage', { name: primaryName })
         }}
       </p>
+      <p v-if="state.mode === 'daily' && state.usedCollection" class="result-banner__assisted">
+        {{ t(locale, 'game.assisted') }}
+      </p>
     </div>
     <div class="result-banner__actions">
       <button class="secondary-button" type="button" @click="emit('share')">
