@@ -29,7 +29,7 @@ export function formatShareResult(state: GameState, options: ShareResultOptions 
   const title = options.title ?? 'Balatrue'
   const score = state.status === 'won' ? state.guesses.length : 'X'
   const lines = [
-    `${title} ${state.puzzleKey} ${score}/${state.maxAttempts}`,
+    `${title} ${state.puzzleKey} ${score}/${state.maxAttempts}${state.usedCollection ? ' 🔎' : ''}`,
     ...state.guesses.map(comparisonToEmoji),
   ]
   if (options.url) lines.push('', options.url)

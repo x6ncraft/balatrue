@@ -1,4 +1,4 @@
-export const MAX_ATTEMPTS = 8 as const
+export const MAX_ATTEMPTS = 6 as const
 
 export type MatchResult = 'exact' | 'partial' | 'miss'
 
@@ -54,13 +54,15 @@ export type GameMode = 'daily' | 'practice'
 export type GameStatus = 'playing' | 'won' | 'lost'
 
 export interface GameState {
-  version: 1
+  version: 2
   mode: GameMode
   puzzleKey: string
   answerId: string
   maxAttempts: number
   status: GameStatus
   guesses: GuessComparison[]
+  /** Whether the player opened the Joker collection while this game was in progress. */
+  usedCollection: boolean
 }
 
 export interface DailyPuzzle<TJoker> {

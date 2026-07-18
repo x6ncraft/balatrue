@@ -49,30 +49,32 @@ describe('share results', () => {
 
   it('formats a spoiler-free winning result', () => {
     const state: GameState = {
-      version: 1,
+      version: 2,
       mode: 'daily',
       puzzleKey: '2026-07-18',
       answerId: 'j_answer',
-      maxAttempts: 8,
+      maxAttempts: 6,
       status: 'won',
       guesses: [firstGuess, winningGuess],
+      usedCollection: false,
     }
 
     expect(formatShareResult(state, { title: 'Name That Joker' })).toBe(
-      ['Name That Joker 2026-07-18 2/8', '⬛⬛🟨⬛🟨', '🟩🟩🟩🟩🟩'].join('\n'),
+      ['Name That Joker 2026-07-18 2/6', '⬛⬛🟨⬛🟨', '🟩🟩🟩🟩🟩'].join('\n'),
     )
     expect(formatShareResult(state)).not.toContain('j_answer')
   })
 
   it('uses X for a loss and can append a URL', () => {
     const state: GameState = {
-      version: 1,
+      version: 2,
       mode: 'practice',
       puzzleKey: 'practice:round',
       answerId: 'j_answer',
       maxAttempts: 1,
       status: 'lost',
       guesses: [firstGuess],
+      usedCollection: false,
     }
 
     expect(formatShareResult(state, { url: 'https://example.com' })).toBe(
@@ -82,15 +84,32 @@ describe('share results', () => {
 
   it('does not share an unfinished game', () => {
     const state: GameState = {
-      version: 1,
+      version: 2,
       mode: 'daily',
       puzzleKey: '2026-07-18',
       answerId: 'j_answer',
-      maxAttempts: 8,
+      maxAttempts: 6,
       status: 'playing',
       guesses: [],
+      usedCollection: false,
     }
 
     expect(() => formatShareResult(state)).toThrow('Only completed games can be shared')
+  })
+
+  it('marks a collection-assisted result without revealing the answer', () => {
+    const state: GameState = {
+      version: 2,
+      mode: 'daily',
+      puzzleKey: '2026-07-18',
+      answerId: 'j_answer',
+      maxAttempts: 6,
+      status: 'won',
+      guesses: [winningGuess],
+      usedCollection: true,
+    }
+
+    expect(formatShareResult(state)).toContain('1/6 🔎')
+    expect(formatShareResult(state)).not.toContain('j_answer')
   })
 })

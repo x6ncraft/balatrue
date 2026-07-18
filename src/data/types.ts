@@ -1,5 +1,5 @@
 export const JOKER_DATA_GAME_VERSION = '1.0.1o-FULL' as const
-export const JOKER_CLASSIFICATION_VERSION = 2 as const
+export const JOKER_CLASSIFICATION_VERSION = 8 as const
 
 export const JOKER_RARITIES = ['common', 'uncommon', 'rare', 'legendary'] as const
 export type JokerRarity = (typeof JOKER_RARITIES)[number]

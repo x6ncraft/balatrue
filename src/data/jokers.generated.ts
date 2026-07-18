@@ -3,7 +3,7 @@ import type { Joker, JokerDataMeta } from './types'
 
 export const JOKER_DATA_META: JokerDataMeta = {
   gameVersion: '1.0.1o-FULL',
-  classificationVersion: 2,
+  classificationVersion: 8,
   source: {
     wikiPageRevision: 26120,
     enLocalizationRevision: 7348,
@@ -43,7 +43,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -84,7 +84,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -129,7 +129,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -174,7 +174,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -219,7 +219,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -264,7 +264,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -306,7 +306,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -348,7 +348,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -356,10 +356,6 @@ export const jokers: readonly Joker[] = [
       effects: ['mult'],
       timings: ['hand_scored'],
       dependencies: [
-        {
-          family: 'poker_hand',
-          value: 'pair',
-        },
         {
           family: 'poker_hand',
           value: 'two_pair',
@@ -394,7 +390,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -436,7 +432,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -478,7 +474,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -520,7 +516,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -562,7 +558,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -570,10 +566,6 @@ export const jokers: readonly Joker[] = [
       effects: ['chips'],
       timings: ['hand_scored'],
       dependencies: [
-        {
-          family: 'poker_hand',
-          value: 'pair',
-        },
         {
           family: 'poker_hand',
           value: 'two_pair',
@@ -608,7 +600,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -650,7 +642,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -692,7 +684,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -734,7 +726,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -775,7 +767,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -790,6 +782,10 @@ export const jokers: readonly Joker[] = [
         {
           family: 'poker_hand',
           value: 'straight',
+        },
+        {
+          family: 'hand',
+          value: 'card_count',
         },
       ],
     },
@@ -821,7 +817,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -830,7 +826,7 @@ export const jokers: readonly Joker[] = [
       timings: ['card_held'],
       dependencies: [
         {
-          family: 'none',
+          family: 'playing_card',
         },
       ],
     },
@@ -862,7 +858,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -904,7 +900,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -917,6 +913,7 @@ export const jokers: readonly Joker[] = [
         },
         {
           family: 'joker',
+          value: 'right',
         },
         {
           family: 'blind',
@@ -951,7 +948,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -992,13 +989,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mult'],
-      timings: ['hand_scored', 'card_discarded'],
+      timings: ['hand_scored'],
       dependencies: [
         {
           family: 'discard',
@@ -1033,7 +1030,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1042,8 +1039,11 @@ export const jokers: readonly Joker[] = [
       timings: ['blind_selected'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'stone',
         },
         {
           family: 'blind',
@@ -1081,7 +1081,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1090,7 +1090,8 @@ export const jokers: readonly Joker[] = [
       timings: ['hand_scored'],
       dependencies: [
         {
-          family: 'none',
+          family: 'hand',
+          value: 'played_hands',
         },
       ],
     },
@@ -1123,7 +1124,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1134,6 +1135,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: '8',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'consumable',
@@ -1169,7 +1173,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1210,7 +1214,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1220,6 +1224,10 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'playing_card',
+        },
+        {
+          family: 'hand',
+          value: 'final_hand',
         },
       ],
     },
@@ -1251,7 +1259,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1262,6 +1270,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'any',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1293,13 +1304,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mechanism'],
-      timings: ['passive'],
+      timings: ['shop'],
       dependencies: [
         {
           family: 'shop',
@@ -1334,7 +1345,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1344,7 +1355,26 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'rank',
+          value: '2',
+        },
+        {
+          family: 'rank',
+          value: '3',
+        },
+        {
+          family: 'rank',
+          value: '5',
+        },
+        {
+          family: 'rank',
+          value: '8',
+        },
+        {
+          family: 'rank',
           value: 'ace',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1376,7 +1406,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1385,8 +1415,11 @@ export const jokers: readonly Joker[] = [
       timings: ['hand_scored'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'steel',
         },
         {
           family: 'deck',
@@ -1421,7 +1454,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1432,6 +1465,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1463,7 +1499,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1504,7 +1540,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1545,7 +1581,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1556,6 +1592,21 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: '2',
+        },
+        {
+          family: 'rank',
+          value: '3',
+        },
+        {
+          family: 'rank',
+          value: '4',
+        },
+        {
+          family: 'rank',
+          value: '5',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1587,7 +1638,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1598,6 +1649,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1629,7 +1683,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1670,7 +1724,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1680,7 +1734,7 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'rank',
-          value: 'any',
+          value: 'even',
         },
         {
           family: 'playing_card',
@@ -1715,7 +1769,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1725,7 +1779,7 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'rank',
-          value: 'any',
+          value: 'odd',
         },
         {
           family: 'playing_card',
@@ -1760,7 +1814,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1771,6 +1825,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'ace',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1802,7 +1859,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1813,6 +1870,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -1844,7 +1904,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1887,7 +1947,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1898,6 +1958,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'hand',
@@ -1933,7 +1996,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -1975,7 +2038,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2016,16 +2079,20 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mechanism'],
-      timings: ['card_discarded', 'blind_selected'],
+      timings: ['blind_selected'],
       dependencies: [
         {
           family: 'discard',
+        },
+        {
+          family: 'hand',
+          value: 'hands_per_round',
         },
         {
           family: 'blind',
@@ -2060,7 +2127,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2075,6 +2142,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'suit',
           value: 'spades',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -2106,7 +2176,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2148,7 +2218,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2191,7 +2261,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2199,6 +2269,17 @@ export const jokers: readonly Joker[] = [
       effects: ['mechanism'],
       timings: ['card_played'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
+        {
+          family: 'hand',
+          value: 'card_count',
+        },
+        {
+          family: 'hand',
+          value: 'first_hand',
+        },
         {
           family: 'deck',
         },
@@ -2232,7 +2313,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2273,7 +2354,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2281,6 +2362,9 @@ export const jokers: readonly Joker[] = [
       effects: ['chips'],
       timings: ['hand_scored'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'deck',
         },
@@ -2315,7 +2399,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2324,11 +2408,23 @@ export const jokers: readonly Joker[] = [
       timings: ['card_played'],
       dependencies: [
         {
+          family: 'rank',
+          value: '6',
+        },
+        {
           family: 'playing_card',
         },
         {
           family: 'consumable',
           value: 'spectral',
+        },
+        {
+          family: 'hand',
+          value: 'card_count',
+        },
+        {
+          family: 'hand',
+          value: 'first_hand',
         },
       ],
     },
@@ -2361,13 +2457,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['x_mult'],
-      timings: ['hand_scored'],
+      timings: ['mixed'],
       dependencies: [
         {
           family: 'consumable',
@@ -2403,7 +2499,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2444,7 +2540,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2457,7 +2553,14 @@ export const jokers: readonly Joker[] = [
           value: 'face',
         },
         {
+          family: 'playing_card',
+        },
+        {
           family: 'discard',
+        },
+        {
+          family: 'hand',
+          value: 'card_count',
         },
       ],
     },
@@ -2489,7 +2592,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2535,7 +2638,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2550,6 +2653,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'poker_hand',
           value: 'straight',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'consumable',
@@ -2585,7 +2691,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2627,7 +2733,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2668,7 +2774,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2710,13 +2816,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mult'],
-      timings: ['hand_scored'],
+      timings: ['hand_scored', 'shop'],
       dependencies: [
         {
           family: 'shop',
@@ -2752,7 +2858,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2797,16 +2903,17 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['chips'],
-      timings: ['mixed'],
+      timings: ['hand_scored'],
       dependencies: [
         {
-          family: 'none',
+          family: 'hand',
+          value: 'card_count',
         },
       ],
     },
@@ -2839,7 +2946,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2849,11 +2956,7 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'poker_hand',
-          value: 'flush',
-        },
-        {
-          family: 'poker_hand',
-          value: 'straight',
+          value: 'straight_flush',
         },
         {
           family: 'consumable',
@@ -2889,7 +2992,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2898,7 +3001,13 @@ export const jokers: readonly Joker[] = [
       timings: ['blind_selected'],
       dependencies: [
         {
+          family: 'joker',
+        },
+        {
           family: 'blind',
+        },
+        {
+          family: 'joker_slot',
         },
       ],
     },
@@ -2931,7 +3040,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2939,6 +3048,9 @@ export const jokers: readonly Joker[] = [
       effects: ['x_mult'],
       timings: ['mixed'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'card_modifier',
           value: 'enhancement',
@@ -2973,7 +3085,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -2988,6 +3100,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'poker_hand',
           value: 'straight',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -3020,13 +3135,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['x_mult'],
-      timings: ['hand_scored'],
+      timings: ['mixed'],
       dependencies: [
         {
           family: 'playing_card',
@@ -3064,7 +3179,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3109,7 +3224,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3120,6 +3235,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'king',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -3151,7 +3269,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3159,6 +3277,13 @@ export const jokers: readonly Joker[] = [
       effects: ['economy'],
       timings: ['round_end'],
       dependencies: [
+        {
+          family: 'rank',
+          value: '9',
+        },
+        {
+          family: 'playing_card',
+        },
         {
           family: 'deck',
         },
@@ -3192,7 +3317,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3234,7 +3359,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3280,21 +3405,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mechanism'],
-      timings: ['card_played'],
+      timings: ['card_scored'],
       dependencies: [
         {
           family: 'rank',
           value: 'face',
         },
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'gold',
         },
       ],
     },
@@ -3326,7 +3454,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3367,7 +3495,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3378,6 +3506,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -3409,7 +3540,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3419,6 +3550,9 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'money',
+        },
+        {
+          family: 'joker',
         },
         {
           family: 'consumable',
@@ -3454,7 +3588,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3500,7 +3634,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3508,6 +3642,9 @@ export const jokers: readonly Joker[] = [
       effects: ['mult'],
       timings: ['hand_scored'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'deck',
         },
@@ -3541,7 +3678,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3552,6 +3689,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -3583,17 +3723,20 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['economy'],
-      timings: ['card_discarded'],
+      timings: ['card_discarded', 'round_end'],
       dependencies: [
         {
           family: 'rank',
           value: 'any',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'discard',
@@ -3628,7 +3771,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3670,13 +3813,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mechanism'],
-      timings: ['passive'],
+      timings: ['shop'],
       dependencies: [
         {
           family: 'consumable',
@@ -3715,7 +3858,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3757,7 +3900,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3799,19 +3942,16 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mechanism'],
-      timings: ['round_end'],
+      timings: ['passive'],
       dependencies: [
         {
           family: 'discard',
-        },
-        {
-          family: 'round',
         },
       ],
     },
@@ -3843,7 +3983,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3852,8 +3992,11 @@ export const jokers: readonly Joker[] = [
       timings: ['hand_scored'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'stone',
         },
         {
           family: 'deck',
@@ -3888,7 +4031,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3930,7 +4073,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3939,8 +4082,11 @@ export const jokers: readonly Joker[] = [
       timings: ['mixed'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'lucky',
         },
       ],
     },
@@ -3972,7 +4118,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -3981,7 +4127,7 @@ export const jokers: readonly Joker[] = [
       timings: ['joker_triggered'],
       dependencies: [
         {
-          family: 'none',
+          family: 'joker',
         },
       ],
     },
@@ -4013,7 +4159,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4022,7 +4168,7 @@ export const jokers: readonly Joker[] = [
       timings: ['hand_scored'],
       dependencies: [
         {
-          family: 'none',
+          family: 'money',
         },
       ],
     },
@@ -4054,7 +4200,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4095,7 +4241,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4104,7 +4250,14 @@ export const jokers: readonly Joker[] = [
       timings: ['card_discarded'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'discard',
+        },
+        {
+          family: 'hand',
+          value: 'card_count',
         },
       ],
     },
@@ -4136,13 +4289,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['mult'],
-      timings: ['hand_scored'],
+      timings: ['hand_scored', 'shop'],
       dependencies: [
         {
           family: 'shop',
@@ -4177,7 +4330,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4219,7 +4372,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4227,10 +4380,6 @@ export const jokers: readonly Joker[] = [
       effects: ['mult'],
       timings: ['mixed'],
       dependencies: [
-        {
-          family: 'poker_hand',
-          value: 'pair',
-        },
         {
           family: 'poker_hand',
           value: 'two_pair',
@@ -4266,7 +4415,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4311,7 +4460,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4319,6 +4468,9 @@ export const jokers: readonly Joker[] = [
       effects: ['x_mult'],
       timings: ['mixed'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'discard',
         },
@@ -4352,7 +4504,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4363,6 +4515,13 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: '10',
+        },
+        {
+          family: 'rank',
+          value: '4',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -4394,7 +4553,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4403,7 +4562,11 @@ export const jokers: readonly Joker[] = [
       timings: ['card_scored'],
       dependencies: [
         {
-          family: 'none',
+          family: 'playing_card',
+        },
+        {
+          family: 'hand',
+          value: 'played_hands',
         },
       ],
     },
@@ -4436,17 +4599,20 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['chips'],
-      timings: ['mixed'],
+      timings: ['round_end', 'mixed'],
       dependencies: [
         {
           family: 'suit',
           value: 'any',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'discard',
@@ -4481,7 +4647,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
@@ -4492,6 +4658,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -4524,13 +4693,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
       effects: ['x_mult'],
-      timings: ['hand_scored'],
+      timings: ['hand_scored', 'round_end', 'sold'],
       dependencies: [
         {
           family: 'blind',
@@ -4565,7 +4734,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4574,8 +4743,11 @@ export const jokers: readonly Joker[] = [
       timings: ['card_scored'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'gold',
         },
       ],
     },
@@ -4608,7 +4780,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4617,7 +4789,7 @@ export const jokers: readonly Joker[] = [
       timings: ['passive'],
       dependencies: [
         {
-          family: 'none',
+          family: 'blind',
         },
       ],
     },
@@ -4649,7 +4821,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4658,7 +4830,8 @@ export const jokers: readonly Joker[] = [
       timings: ['hand_scored'],
       dependencies: [
         {
-          family: 'none',
+          family: 'hand',
+          value: 'final_hand',
         },
       ],
     },
@@ -4690,7 +4863,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4701,6 +4874,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -4732,7 +4908,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4776,13 +4952,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['mechanism'],
-      timings: ['round_end'],
+      timings: ['passive'],
       dependencies: [
         {
           family: 'hand',
@@ -4791,9 +4967,6 @@ export const jokers: readonly Joker[] = [
         {
           family: 'hand',
           value: 'hands_per_round',
-        },
-        {
-          family: 'round',
         },
       ],
     },
@@ -4825,7 +4998,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4871,7 +5044,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4894,6 +5067,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'suit',
           value: 'spades',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -4925,7 +5101,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -4966,7 +5142,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5007,7 +5183,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5052,7 +5228,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5097,7 +5273,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5142,7 +5318,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5188,17 +5364,20 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['x_mult'],
-      timings: ['hand_scored'],
+      timings: ['mixed'],
       dependencies: [
         {
+          family: 'playing_card',
+        },
+        {
           family: 'card_modifier',
-          value: 'enhancement',
+          value: 'glass',
         },
       ],
     },
@@ -5230,7 +5409,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5238,6 +5417,9 @@ export const jokers: readonly Joker[] = [
       effects: ['mechanism'],
       timings: ['passive'],
       dependencies: [
+        {
+          family: 'joker',
+        },
         {
           family: 'consumable',
           value: 'planet',
@@ -5281,7 +5463,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5308,6 +5490,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'poker_hand',
           value: 'any',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -5339,7 +5524,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5349,6 +5534,7 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'joker',
+          value: 'right',
         },
       ],
     },
@@ -5380,7 +5566,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 271,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5391,6 +5577,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: '2',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -5422,13 +5611,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['mechanism'],
-      timings: ['round_end'],
+      timings: ['passive'],
       dependencies: [
         {
           family: 'discard',
@@ -5436,9 +5625,6 @@ export const jokers: readonly Joker[] = [
         {
           family: 'hand',
           value: 'hand_size',
-        },
-        {
-          family: 'round',
         },
       ],
     },
@@ -5470,7 +5656,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5512,13 +5698,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['x_mult'],
-      timings: ['card_scored'],
+      timings: ['card_scored', 'round_end'],
       dependencies: [
         {
           family: 'suit',
@@ -5527,6 +5713,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'any',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -5559,7 +5748,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5569,7 +5758,14 @@ export const jokers: readonly Joker[] = [
       dependencies: [
         {
           family: 'suit',
+          value: 'any',
+        },
+        {
+          family: 'suit',
           value: 'clubs',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -5601,7 +5797,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5643,7 +5839,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5654,6 +5850,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'jack',
+        },
+        {
+          family: 'playing_card',
         },
         {
           family: 'discard',
@@ -5688,7 +5887,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5730,7 +5929,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5772,7 +5971,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5814,7 +6013,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5856,7 +6055,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5898,7 +6097,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5941,7 +6140,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5955,6 +6154,9 @@ export const jokers: readonly Joker[] = [
         },
         {
           family: 'joker',
+        },
+        {
+          family: 'round',
         },
       ],
     },
@@ -5986,7 +6188,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -5995,7 +6197,8 @@ export const jokers: readonly Joker[] = [
       timings: ['passive'],
       dependencies: [
         {
-          family: 'none',
+          family: 'joker',
+          value: 'leftmost',
         },
       ],
     },
@@ -6027,7 +6230,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -6069,7 +6272,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -6080,6 +6283,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'queen',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -6112,7 +6318,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -6120,6 +6326,9 @@ export const jokers: readonly Joker[] = [
       effects: ['x_mult'],
       timings: ['hand_scored'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'card_modifier',
           value: 'enhancement',
@@ -6157,7 +6366,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -6202,13 +6411,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['mechanism'],
-      timings: ['passive'],
+      timings: ['shop'],
       dependencies: [
         {
           family: 'consumable',
@@ -6247,13 +6456,13 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
       effects: ['mechanism'],
-      timings: ['card_discarded', 'round_end'],
+      timings: ['card_discarded'],
       dependencies: [
         {
           family: 'poker_hand',
@@ -6261,9 +6470,6 @@ export const jokers: readonly Joker[] = [
         },
         {
           family: 'discard',
-        },
-        {
-          family: 'round',
         },
       ],
     },
@@ -6295,7 +6501,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
@@ -6336,7 +6542,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
@@ -6347,6 +6553,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'face',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -6378,7 +6587,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
@@ -6393,6 +6602,9 @@ export const jokers: readonly Joker[] = [
         {
           family: 'rank',
           value: 'queen',
+        },
+        {
+          family: 'playing_card',
         },
       ],
     },
@@ -6424,7 +6636,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
@@ -6432,6 +6644,9 @@ export const jokers: readonly Joker[] = [
       effects: ['x_mult'],
       timings: ['mixed'],
       dependencies: [
+        {
+          family: 'playing_card',
+        },
         {
           family: 'discard',
         },
@@ -6465,7 +6680,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
@@ -6507,7 +6722,7 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 2,
+      version: 8,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',

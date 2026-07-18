@@ -86,6 +86,189 @@ interface ImageSource {
   sha1: string
 }
 
+interface ClassificationOverride {
+  timings?: readonly JokerTiming[]
+  addDependencies?: readonly JokerDependency[]
+  removeDependencies?: readonly JokerDependency[]
+}
+
+/**
+ * Audited exceptions for semantics that the Wiki's short prose does not expose
+ * reliably to the generic classifiers. Keep these keyed by the stable game ID
+ * so a future data sync preserves the corrections and makes reviews explicit.
+ */
+const CLASSIFICATION_OVERRIDES: Readonly<Record<string, ClassificationOverride>> = {
+  j_loyalty_card: {
+    addDependencies: [{ family: 'hand', value: 'played_hands' }],
+  },
+  j_square: {
+    timings: ['hand_scored'],
+    addDependencies: [{ family: 'hand', value: 'card_count' }],
+  },
+  j_baseball: {
+    addDependencies: [{ family: 'joker' }],
+  },
+  j_bull: {
+    addDependencies: [{ family: 'money' }],
+  },
+  j_selzer: {
+    addDependencies: [{ family: 'playing_card' }],
+  },
+  j_brainstorm: {
+    addDependencies: [{ family: 'joker', value: 'leftmost' }],
+  },
+  j_fibonacci: {
+    addDependencies: [
+      { family: 'rank', value: 'ace' },
+      { family: 'rank', value: '2' },
+      { family: 'rank', value: '3' },
+      { family: 'rank', value: '5' },
+      { family: 'rank', value: '8' },
+    ],
+  },
+  j_seance: {
+    removeDependencies: [
+      { family: 'poker_hand', value: 'flush' },
+      { family: 'poker_hand', value: 'straight' },
+    ],
+    addDependencies: [{ family: 'poker_hand', value: 'straight_flush' }],
+  },
+  j_mime: {
+    addDependencies: [{ family: 'playing_card' }],
+  },
+  j_acrobat: {
+    addDependencies: [{ family: 'hand', value: 'final_hand' }],
+  },
+  j_hack: {
+    addDependencies: [
+      { family: 'rank', value: '2' },
+      { family: 'rank', value: '3' },
+      { family: 'rank', value: '4' },
+      { family: 'rank', value: '5' },
+    ],
+  },
+  j_even_steven: {
+    removeDependencies: [{ family: 'rank', value: 'any' }],
+    addDependencies: [{ family: 'rank', value: 'even' }],
+  },
+  j_odd_todd: {
+    removeDependencies: [{ family: 'rank', value: 'any' }],
+    addDependencies: [{ family: 'rank', value: 'odd' }],
+  },
+  j_walkie_talkie: {
+    addDependencies: [
+      { family: 'rank', value: '10' },
+      { family: 'rank', value: '4' },
+    ],
+  },
+  j_sixth_sense: {
+    addDependencies: [{ family: 'rank', value: '6' }],
+  },
+  j_cloud_9: {
+    addDependencies: [{ family: 'rank', value: '9' }],
+  },
+  // These two decay after a round; other "each round" wording describes a
+  // per-round limit or passive resource modifier rather than an end event.
+  j_turtle_bean: {
+    timings: ['round_end'],
+  },
+  j_popcorn: {
+    timings: ['hand_scored', 'round_end'],
+  },
+  j_castle: {
+    timings: ['mixed', 'round_end'],
+  },
+  j_dna: {
+    addDependencies: [{ family: 'playing_card' }],
+  },
+  j_riff_raff: {
+    addDependencies: [{ family: 'joker_slot' }],
+  },
+  j_seeing_double: {
+    addDependencies: [{ family: 'suit', value: 'any' }],
+  },
+  j_four_fingers: {
+    addDependencies: [{ family: 'hand', value: 'card_count' }],
+  },
+  j_faceless: {
+    addDependencies: [{ family: 'hand', value: 'card_count' }],
+  },
+  j_constellation: {
+    timings: ['mixed'],
+  },
+  j_hologram: {
+    timings: ['mixed'],
+  },
+  j_midas_mask: {
+    timings: ['card_scored'],
+  },
+  j_campfire: {
+    timings: ['hand_scored', 'sold', 'round_end'],
+  },
+  j_glass: {
+    timings: ['mixed'],
+  },
+  j_burglar: {
+    addDependencies: [{ family: 'hand', value: 'hands_per_round' }],
+  },
+  j_mr_bones: {
+    addDependencies: [{ family: 'blind' }],
+  },
+}
+
+/**
+ * Cards whose effect directly inspects, creates, changes, destroys, or counts
+ * playing cards. An explicit reviewed set avoids treating self-references such
+ * as "this card" or consumable/Joker cards as playing-card dependencies.
+ */
+const DIRECT_PLAYING_CARD_IDS: ReadonlySet<string> = new Set([
+  'j_marble',
+  'j_8_ball',
+  'j_raised_fist',
+  'j_fibonacci',
+  'j_steel_joker',
+  'j_scary_face',
+  'j_hack',
+  'j_pareidolia',
+  'j_scholar',
+  'j_business',
+  'j_ride_the_bus',
+  'j_blackboard',
+  'j_shortcut',
+  'j_blue_joker',
+  'j_faceless',
+  'j_superposition',
+  'j_vampire',
+  'j_baron',
+  'j_cloud_9',
+  'j_midas_mask',
+  'j_photograph',
+  'j_erosion',
+  'j_reserved_parking',
+  'j_mail',
+  'j_stone',
+  'j_lucky_cat',
+  'j_trading',
+  'j_ramen',
+  'j_castle',
+  'j_walkie_talkie',
+  'j_smiley',
+  'j_ticket',
+  'j_sock_and_buskin',
+  'j_smeared',
+  'j_glass',
+  'j_flower_pot',
+  'j_wee',
+  'j_idol',
+  'j_seeing_double',
+  'j_hit_the_road',
+  'j_shoot_the_moon',
+  'j_drivers_license',
+  'j_caino',
+  'j_triboulet',
+  'j_yorick',
+])
+
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message)
 }
@@ -347,12 +530,13 @@ function classifyTimings(activation: WikiJokerActivation, text: string): JokerTi
     [/when (?:a )?played card is scored|played cards? with|cards? scored/i, 'card_scored'],
     [/held in hand/i, 'card_held'],
     [/when blind is selected|blind is selected/i, 'blind_selected'],
-    [/when.*discard|discarded cards?/i, 'card_discarded'],
     [/after.*hand played|when hand is played|first hand of round/i, 'card_played'],
-    [/end of (?:the )?round/i, 'round_end'],
-    [/per round(?: played)?|each round/i, 'round_end'],
-    [/end of (?:the )?shop|leaving the shop/i, 'shop'],
-    [/when (?:this joker is )?sold|sell this card/i, 'sold'],
+    [/end of (?:the )?round|(?:rank|suit|card) changes every round/i, 'round_end'],
+    [
+      /end of (?:the )?shop|leaving the shop|Booster Pack|reroll|(?:in|per) (?:the )?shop|Packs? in the shop/i,
+      'shop',
+    ],
+    [/when (?:this joker is )?sold|sell this card|cards? sold/i, 'sold'],
   ]
   let foundSpecificEvent = false
   for (const [pattern, timing] of eventRules) {
@@ -421,9 +605,11 @@ function classifyDependencies(text: string): JokerDependency[] {
     [/\bHigh Card\b/i, 'high_card'],
     [/\bStraight(?:s)?\b/i, 'straight'],
     [/\bFlush(?:es)?\b/i, 'flush'],
-    [/\bPair\b/i, 'pair'],
   ]
   for (const [pattern, value] of pokerHands) if (pattern.test(text)) add('poker_hand', value)
+  // Remove the compound hand name before looking for a standalone Pair. This
+  // prevents every "Two Pair" Joker from being tagged as both hand types.
+  if (/\bPair\b/i.test(text.replace(/\bTwo Pair\b/gi, ''))) add('poker_hand', 'pair')
   if (
     /\bpoker hand\b/i.test(text) &&
     ![...dependencies.values()].some((tag) => tag.family === 'poker_hand')
@@ -436,11 +622,17 @@ function classifyDependencies(text: string): JokerDependency[] {
     )
   )
     add('playing_card')
-  if (
-    /enhanced cards?|Bonus Card|Mult Card|Wild Card|Glass Card|Steel Card|Stone Card|Gold Card|Lucky Card/i.test(
-      text,
-    )
-  )
+  const specificEnhancements: Array<[RegExp, string]> = [
+    [/\bStone Cards?\b/i, 'stone'],
+    [/\bSteel Cards?\b/i, 'steel'],
+    [/\bGold Cards?\b/i, 'gold'],
+    [/\bLucky Cards?\b/i, 'lucky'],
+    [/\bGlass Cards?\b/i, 'glass'],
+  ]
+  for (const [pattern, value] of specificEnhancements) {
+    if (pattern.test(text)) add('card_modifier', value)
+  }
+  if (/enhanced cards?|Bonus Cards?|Mult Cards?|Wild Cards?/i.test(text))
     add('card_modifier', 'enhancement')
   if (/\bedition\b|Negative|Foil|Holographic|Polychrome/i.test(text))
     add('card_modifier', 'edition')
@@ -451,8 +643,10 @@ function classifyDependencies(text: string): JokerDependency[] {
     )
   )
     add('money')
-  if (
-    /other Jokers?|random Joker|each Joker|owned Jokers?|Joker to the (?:left|right)|copies ability/i.test(
+  if (/Joker to the right/i.test(text)) add('joker', 'right')
+  else if (/leftmost Joker/i.test(text)) add('joker', 'leftmost')
+  else if (
+    /other Jokers?|random Joker|each Joker|every Joker|owned Jokers?|create \d+ [A-Za-z ]*Jokers?|^Joker,|copies ability/i.test(
       text,
     )
   )
@@ -467,8 +661,22 @@ function classifyDependencies(text: string): JokerDependency[] {
   if (/hands? remaining|hands? per round|[+-]\d+ hands? each round/i.test(text))
     add('hand', 'hands_per_round')
   if (/played hand contains \d+ or fewer cards/i.test(text)) add('hand', 'card_count')
+  if (
+    /first (?:hand|discard) of (?:the )?round (?:has only \d+ cards?|is a single [A-Za-z0-9]+)/i.test(
+      text,
+    )
+  )
+    add('hand', 'card_count')
   if (/\bhand played\b/i.test(text)) add('hand', 'played_hands')
-  if (/per round(?: played)?|each round/i.test(text)) add('round')
+  if (/\bfirst hand of (?:the )?round\b/i.test(text)) add('hand', 'first_hand')
+  if (/\bfinal hand of (?:the )?round\b/i.test(text)) add('hand', 'final_hand')
+  if (/\bnext \d+ hands?\b/i.test(text)) add('hand', 'played_hands')
+  if (
+    /per round played|(?:gains?|loses?|reduces?|increases?|decreases?).{0,30}(?:per|each) round|after \d+ rounds?/i.test(
+      text,
+    )
+  )
+    add('round')
   if (/\bBlind\b/i.test(text)) add('blind')
   if (/\bshop\b|Booster Pack|reroll/i.test(text)) add('shop')
   if (/\bdeck\b/i.test(text)) add('deck')
@@ -482,8 +690,64 @@ function classifyDependencies(text: string): JokerDependency[] {
   })
 }
 
+function dependencyKey({ family, value }: JokerDependency): string {
+  return `${family}:${value ?? ''}`
+}
+
+function applyClassificationOverride(
+  id: string,
+  inferredTimings: readonly JokerTiming[],
+  inferredDependencies: readonly JokerDependency[],
+): { timings: JokerTiming[]; dependencies: JokerDependency[] } {
+  const override = CLASSIFICATION_OVERRIDES[id]
+  const directlyUsesPlayingCards = DIRECT_PLAYING_CARD_IDS.has(id)
+  if (!override && !directlyUsesPlayingCards) {
+    return {
+      timings: [...inferredTimings],
+      dependencies: [...inferredDependencies],
+    }
+  }
+
+  const timings = override?.timings
+    ? JOKER_TIMINGS.filter((timing) => override.timings?.includes(timing))
+    : [...inferredTimings]
+  const dependencies = new Map(
+    inferredDependencies.map((dependency) => [dependencyKey(dependency), dependency]),
+  )
+
+  for (const dependency of override?.removeDependencies ?? []) {
+    dependencies.delete(dependencyKey(dependency))
+  }
+  for (const dependency of override?.addDependencies ?? []) {
+    dependencies.set(dependencyKey(dependency), dependency)
+  }
+  if (directlyUsesPlayingCards) {
+    dependencies.set('playing_card:', { family: 'playing_card' })
+  }
+
+  if ([...dependencies.values()].some(({ family }) => family !== 'none')) {
+    dependencies.delete('none:')
+  }
+  if (dependencies.size === 0) dependencies.set('none:', { family: 'none' })
+
+  const familyOrder = new Map(JOKER_DEPENDENCY_FAMILIES.map((family, index) => [family, index]))
+  return {
+    timings,
+    dependencies: [...dependencies.values()].sort((left, right) => {
+      const familyDifference =
+        (familyOrder.get(left.family) ?? 0) - (familyOrder.get(right.family) ?? 0)
+      return familyDifference || (left.value ?? '').localeCompare(right.value ?? '', 'en')
+    }),
+  }
+}
+
 function makeJoker(row: SourceRow, id: string, nameZhCN: string, image: ImageSource): Joker {
   const legendary = row.rarity === 'legendary'
+  const classification = applyClassificationOverride(
+    id,
+    classifyTimings(row.wikiActivation, row.effectTextEn),
+    classifyDependencies(row.effectTextEn),
+  )
   return {
     id,
     number: row.number,
@@ -518,8 +782,8 @@ function makeJoker(row: SourceRow, id: string, nameZhCN: string, image: ImageSou
             : 'unlock_required',
       },
       effects: classifyEffects(row.wikiType, row.effectTextEn),
-      timings: classifyTimings(row.wikiActivation, row.effectTextEn),
-      dependencies: classifyDependencies(row.effectTextEn),
+      timings: classification.timings,
+      dependencies: classification.dependencies,
     },
   }
 }
@@ -617,6 +881,19 @@ async function main(): Promise<void> {
   })
 
   invariant(new Set(jokers.map((joker) => joker.id)).size === 150, 'Joker IDs are not unique')
+  const jokerIds = new Set(jokers.map((joker) => joker.id))
+  for (const overrideId of Object.keys(CLASSIFICATION_OVERRIDES)) {
+    invariant(
+      jokerIds.has(overrideId),
+      `Classification override references unknown ID '${overrideId}'`,
+    )
+  }
+  for (const playingCardId of DIRECT_PLAYING_CARD_IDS) {
+    invariant(
+      jokerIds.has(playingCardId),
+      `Playing-card classification references unknown ID '${playingCardId}'`,
+    )
+  }
   invariant(
     new Set(jokers.map((joker) => joker.name.en)).size === 150,
     'English Joker names are not unique',

@@ -33,7 +33,7 @@ function dayNumber(dateKey: string): number {
 }
 
 export function recordCompletedDailyGame(stats: PlayerStats, state: GameState): PlayerStats {
-  if (state.mode !== 'daily' || state.status === 'playing') return stats
+  if (state.mode !== 'daily' || state.status === 'playing' || state.usedCollection) return stats
   if (stats.recordedPuzzles.includes(state.puzzleKey)) return stats
 
   const dateKey = dateKeyFromPuzzle(state.puzzleKey)

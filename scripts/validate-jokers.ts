@@ -17,6 +17,7 @@ import {
   WIKI_JOKER_ACTIVATIONS,
   WIKI_JOKER_TYPES,
 } from '../src/data/types'
+import { hasDependencyValueLabel } from '../src/ui/labels'
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
@@ -153,6 +154,10 @@ for (const [index, joker] of jokers.entries()) {
     check(
       dependency.value === undefined || dependency.value.trim().length > 0,
       `${label}: empty dependency value`,
+    )
+    check(
+      dependency.value === undefined || hasDependencyValueLabel(dependency.value),
+      `${label}: dependency value '${dependency.value}' has no bilingual label`,
     )
   }
   if (joker.classification.dependencies.some(({ family }) => family === 'none')) {

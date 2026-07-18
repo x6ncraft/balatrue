@@ -26,14 +26,21 @@ function initialState(
   maxAttempts: number,
 ): GameState {
   return {
-    version: 1,
+    version: 2,
     mode,
     puzzleKey,
     answerId: getJokerId(answer),
     maxAttempts: validateMaxAttempts(maxAttempts),
     status: 'playing',
     guesses: [],
+    usedCollection: false,
   }
+}
+
+/** Marks an active game as assisted without mutating the previous state. */
+export function markCollectionUsed(state: GameState): GameState {
+  if (state.status !== 'playing' || state.usedCollection) return state
+  return { ...state, usedCollection: true }
 }
 
 export function createDailyGame(

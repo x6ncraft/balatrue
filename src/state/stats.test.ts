@@ -8,13 +8,18 @@ import {
   winRate,
 } from './stats'
 
-function completed(puzzleKey: string, status: 'won' | 'lost', guesses = 4): GameState {
+function completed(
+  puzzleKey: string,
+  status: 'won' | 'lost',
+  guesses = 4,
+  usedCollection = false,
+): GameState {
   return {
-    version: 1,
+    version: 2,
     mode: 'daily',
     puzzleKey,
     answerId: 'j_answer',
-    maxAttempts: 8,
+    maxAttempts: 6,
     status,
     guesses: Array.from({ length: guesses }, (_, index) => ({
       guessId: `j_${index}`,
@@ -25,6 +30,7 @@ function completed(puzzleKey: string, status: 'won' | 'lost', guesses = 4): Game
       timings: { values: [], matches: [], result: 'miss' },
       dependencies: { values: [], exactMatches: [], familyMatches: [], result: 'miss' },
     })),
+    usedCollection,
   }
 }
 
@@ -48,9 +54,21 @@ describe('player stats', () => {
       { ...EMPTY_STATS, recordedPuzzles: [] },
       completed('daily:2026-07-18', 'won'),
     )
-    const lost = recordCompletedDailyGame(won, completed('daily:2026-07-19', 'lost', 8))
+    const lost = recordCompletedDailyGame(won, completed('daily:2026-07-19', 'lost', 6))
     expect(lost.currentStreak).toBe(0)
     expect(lost.maxStreak).toBe(1)
+  })
+
+  it('does not score daily games that used the collection or any practice games', () => {
+    const initial = { ...EMPTY_STATS, recordedPuzzles: [] }
+    const assisted = recordCompletedDailyGame(
+      initial,
+      completed('daily:2026-07-18', 'won', 2, true),
+    )
+    const practice = { ...completed('practice:test', 'won', 1), mode: 'practice' as const }
+
+    expect(assisted).toBe(initial)
+    expect(recordCompletedDailyGame(initial, practice)).toBe(initial)
   })
 
   it('falls back safely when stored data is invalid', () => {

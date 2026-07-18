@@ -1,4 +1,32 @@
-import { MAX_ATTEMPTS, type GameState, type GuessComparison, type MatchResult } from './types'
+import type { GameMode, GameState, GuessComparison, MatchResult } from './types'
+
+const LEGACY_MAX_ATTEMPTS = 8
+export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [7, 6, 5, 4, 3, 2] as const
+
+export type StoredGameContext =
+  { mode: 'daily'; puzzleKey: string; answerId: string } | { mode: 'practice' }
+
+export interface RestoreStoredGameOptions {
+  currentKey: string
+  fallbackKeys: readonly string[]
+  context: StoredGameContext
+  validJokerIds: ReadonlySet<string>
+  read: (key: string) => string | null
+  write: (key: string, value: string) => unknown
+  refreshFallback: (state: GameState) => GameState | null
+}
+
+export function gameStorageKey(
+  gameVersion: string,
+  classificationVersion: number,
+  mode: GameMode,
+  puzzleKey?: string,
+): string {
+  const prefix = `balatrue:game:${gameVersion}:c${classificationVersion}:${mode}`
+  if (mode === 'practice') return prefix
+  if (!puzzleKey) throw new TypeError('Daily game storage keys require a puzzle key')
+  return `${prefix}:${puzzleKey}`
+}
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   return typeof value === 'object' && value !== null ? (value as Record<string, unknown>) : null
@@ -71,10 +99,10 @@ function isGuessComparison(value: unknown): value is GuessComparison {
   )
 }
 
-export function isGameState(value: unknown): value is GameState {
-  const state = asRecord(value)
-  if (!state) return false
-  if (state.version !== 1) return false
+function hasValidGameStateFields(
+  state: Record<string, unknown>,
+  maxAllowedAttempts: number,
+): boolean {
   if (state.mode !== 'daily' && state.mode !== 'practice') return false
   if (typeof state.puzzleKey !== 'string' || state.puzzleKey.length === 0) return false
   if (typeof state.answerId !== 'string' || state.answerId.length === 0) return false
@@ -82,7 +110,7 @@ export function isGameState(value: unknown): value is GameState {
     typeof state.maxAttempts !== 'number' ||
     !Number.isInteger(state.maxAttempts) ||
     state.maxAttempts < 1 ||
-    state.maxAttempts > MAX_ATTEMPTS
+    state.maxAttempts > maxAllowedAttempts
   ) {
     return false
   }
@@ -108,6 +136,38 @@ export function isGameState(value: unknown): value is GameState {
   return true
 }
 
+export function isGameState(value: unknown): value is GameState {
+  const state = asRecord(value)
+  return (
+    state !== null &&
+    state.version === 2 &&
+    typeof state.usedCollection === 'boolean' &&
+    hasValidGameStateFields(state, LEGACY_MAX_ATTEMPTS)
+  )
+}
+
+function migrateLegacyGameState(value: unknown): GameState | null {
+  const state = asRecord(value)
+  if (
+    state === null ||
+    state.version !== 1 ||
+    !hasValidGameStateFields(state, LEGACY_MAX_ATTEMPTS)
+  ) {
+    return null
+  }
+
+  return {
+    version: 2,
+    mode: state.mode as GameState['mode'],
+    puzzleKey: state.puzzleKey as string,
+    answerId: state.answerId as string,
+    maxAttempts: state.maxAttempts as number,
+    status: state.status as GameState['status'],
+    guesses: state.guesses as GuessComparison[],
+    usedCollection: false,
+  }
+}
+
 export function serializeGameState(state: GameState): string {
   if (!isGameState(state)) throw new TypeError('Cannot serialize an invalid game state')
   return JSON.stringify(state)
@@ -116,8 +176,85 @@ export function serializeGameState(state: GameState): string {
 export function deserializeGameState(serialized: string): GameState | null {
   try {
     const parsed: unknown = JSON.parse(serialized)
-    return isGameState(parsed) ? parsed : null
+    if (isGameState(parsed)) return parsed
+    return migrateLegacyGameState(parsed)
   } catch {
     return null
   }
+}
+
+function matchesStoredGameContext(
+  state: GameState,
+  context: StoredGameContext,
+  validJokerIds: ReadonlySet<string>,
+): boolean {
+  if (state.mode !== context.mode) return false
+  if (context.mode === 'daily') {
+    if (state.puzzleKey !== context.puzzleKey || state.answerId !== context.answerId) return false
+  } else if (!state.puzzleKey.startsWith('practice:')) {
+    return false
+  }
+  if (!validJokerIds.has(state.answerId)) return false
+  return state.guesses.every((guess) => validJokerIds.has(guess.guessId))
+}
+
+function preservesStoredGameIdentity(source: GameState, refreshed: GameState): boolean {
+  return (
+    refreshed.mode === source.mode &&
+    refreshed.puzzleKey === source.puzzleKey &&
+    refreshed.answerId === source.answerId &&
+    refreshed.maxAttempts === source.maxAttempts &&
+    refreshed.status === source.status &&
+    refreshed.usedCollection === source.usedCollection &&
+    refreshed.guesses.length === source.guesses.length &&
+    refreshed.guesses.every((guess, index) => guess.guessId === source.guesses[index]?.guessId)
+  )
+}
+
+/**
+ * Restores from the current key first, then only from explicitly supplied historical keys.
+ * A historical state is refreshed by the caller and written under the current key after
+ * schema, context, and identity validation.
+ */
+export function restoreStoredGame(options: RestoreStoredGameOptions): GameState | null {
+  const keys = [options.currentKey, ...options.fallbackKeys]
+  for (const key of keys) {
+    let serialized: string | null
+    try {
+      serialized = options.read(key)
+    } catch {
+      serialized = null
+    }
+    if (!serialized) continue
+
+    const state = deserializeGameState(serialized)
+    if (!state || !matchesStoredGameContext(state, options.context, options.validJokerIds)) {
+      continue
+    }
+
+    if (key !== options.currentKey) {
+      let refreshed: GameState | null
+      try {
+        refreshed = options.refreshFallback(state)
+      } catch {
+        refreshed = null
+      }
+      if (
+        !refreshed ||
+        !isGameState(refreshed) ||
+        !preservesStoredGameIdentity(state, refreshed) ||
+        !matchesStoredGameContext(refreshed, options.context, options.validJokerIds)
+      ) {
+        continue
+      }
+      try {
+        options.write(options.currentKey, serializeGameState(refreshed))
+      } catch {
+        // The restored in-memory game remains playable when storage is unavailable.
+      }
+      return refreshed
+    }
+    return state
+  }
+  return null
 }
