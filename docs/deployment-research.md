@@ -4,38 +4,48 @@
 
 ## 结论
 
-验收后的首选组合是：
+技术选型上的首选组合是：
 
-- 主域名：`balatrue.fun`。
-- 托管：腾讯 EdgeOne Pages 免费版，选择“全球可用区（含中国大陆）”。
+- 主域名：`balatrue.com`；若实时注册检查仍可用，它在中英文语境里都最通用，也最适合长期作为唯一入口。
+- 托管：取得大陆发布合规结论后，优先评估腾讯 EdgeOne Pages“全球可用区（含中国大陆）”。
 - 分发：EdgeOne 自带 HTTPS 与全球 CDN，先保持单站点，不做境内外双栈。
 - 统计：EdgeOne 自带请求／流量指标；经用户同意后再加载腾讯云前端性能监控 RUM，统计 PV／UV 和少量游戏事件。
 - 发布：GitHub Actions 使用 Bun 构建 `dist/`，再通过 EdgeOne CLI 上传；仓库继续保持私有。
 
-这个组合不需要业务服务端。EdgeOne Pages [支持 Vue／Vite SPA、Git 部署和 CLI 部署](https://edgeone.ai/document/196763737788014592)，也支持自定义域名与免费 SSL。当前免费版为长期免费，包含自动 CI/CD 和全球 CDN；[价格页写明 $0／月](https://pages.edgeone.ai/pricing)，[免费版额度](https://edgeone.ai/document/211893332490612736)对当前项目绰绰有余。
+这个组合不需要业务服务端。EdgeOne Pages [支持 React／Vite SPA、Git 部署和 CLI 部署](https://edgeone.ai/document/196763737788014592)，也[支持自定义域名](https://pages.edgeone.ai/document/custom-domain)与免费 SSL。当前免费版价格页写明
+[$0／月](https://pages.edgeone.ai/pricing)；实际额度和服务区域以创建项目时的控制台为准。
+
+“中国境内外都顺滑”目前还有一项前置阻塞。ICP 备案只是接入中国大陆节点的条件，不能替代
+网络出版或网络游戏审批。[《网络出版服务管理规定》](https://www.miit.gov.cn/gyhxxhb/jgsj/cyzcyfgs/bmgz/xwcbl/art/2016/art_573f1756b8df41deb671cadf83e98fd1.html)
+把通过网络向公众提供的游戏列入网络出版物范围，并规定网络游戏上网出版前应履行审批；
+[2009 年官方通知](https://www.nppa.gov.cn/xxgk/fdzdgknr/zcfg_210/gfxwj_215/200910/t20091010_4633.html)
+列举网页游戏与休闲游戏。Balatrue
+是否会被主管部门认定为网络游戏，需要属地出版主管部门、合规律师和托管平台给出书面分类结论。
+在结论取得前，本文件不建议创建大陆生产站点，也不把“ICP + 内容审核”描述成足够的发布路径。
+境外静态托管可以快速形成受控预览，但不能据此承诺中国内地访问质量，也不能绕过原作素材许可。
 
 ## 为什么选 EdgeOne Pages
 
 | 方案                  | 中国内地                   | 海外             | 自定义域名 | 成本与复杂度                                        | 结论               |
 | --------------------- | -------------------------- | ---------------- | ---------- | --------------------------------------------------- | ------------------ |
-| EdgeOne Pages         | 备案后可选中国大陆／全球区 | 全球 CDN         | 支持       | 当前免费，Git／CLI 都可部署                         | 首选               |
-| CloudBase 静态托管    | 完成备案后使用境内服务     | 官方提供全球 CDN | 支持       | 个人版当前限时价 19.9 元／月，成熟可控              | 首选兜底           |
-| 阿里 OSS + CDN        | 完成备案后稳定             | CDN 可选全球加速 | 支持       | 用量成本低，但存储、CDN、证书、缓存和 CI 需分别配置 | 备选               |
-| 腾讯 COS + CDN        | 完成备案后稳定             | CDN 可选全球加速 | 支持       | 与 OSS 类似，比 CloudBase 多一层配置                | 备选               |
+| EdgeOne Pages         | 合规确认、备案后再选大陆区 | 全球 CDN         | 支持       | 当前免费，Git／CLI 都可部署                         | 合规确认后首选     |
+| CloudBase 静态托管    | 合规确认、备案后使用       | 官方提供全球 CDN | 支持       | 个人版当前限时价 19.9 元／月，成熟可控              | 合规确认后兜底     |
+| 阿里 OSS + CDN        | 合规确认、备案后使用       | CDN 可选全球加速 | 支持       | 用量成本低，但存储、CDN、证书、缓存和 CI 需分别配置 | 备选               |
+| 腾讯 COS + CDN        | 合规确认、备案后使用       | CDN 可选全球加速 | 支持       | 与 OSS 类似，比 CloudBase 多一层配置                | 备选               |
 | Cloudflare Pages      | 无中国内地服务保证         | 很好             | 支持       | 免费层和 Git 体验好                                 | 只作海外预览／备用 |
 | Vercel                | 无中国内地服务保证         | 很好             | 支持       | Git 体验好；游戏自定义事件需 Pro／Enterprise        | 只作海外预览       |
 | Netlify／GitHub Pages | 无中国内地服务保证         | 可用             | 支持       | 简单，但不解决核心访问目标                          | 不作生产首选       |
 
 Cloudflare 官方明确说明 [Pages 当前不在中国内地网络提供](https://developers.cloudflare.com/china-network/faq/#is-pages-available-in-mainland-china)，因此不能把“偶尔能打开”当作中国内地的访问承诺。Vercel、Netlify 和 GitHub Pages 同样没有适合本项目的中国内地服务保证。
 
-EdgeOne Pages 的免费版当前列出 500 次构建／月、200 个自定义域名与免费 SSL；正常业务超过额度时平台说明会优先保障稳定，商业化后额度可能调整。当前 `dist/` 约 1.3MB，初始 gzip 后的 HTML、CSS、JS 和字体约 260KB，150 张卡图合计约 296KB，对静态 CDN 很轻。它很适合个人娱乐项目，但免费版没有付费 SLA；若后续需要明确额度、工单和成本上限，可切到 CloudBase 个人版。CloudBase 当前包含 1 个自定义域名、1GB 静态托管、10GB／月存储流量与 500 QPS，19.9 元／月限时价以[实时价格页](https://cloud.tencent.com/document/product/876/75213)为准。
+EdgeOne Pages 的免费版当前列出 500 次构建／月、200 个自定义域名与免费 SSL；正常业务超过额度时平台说明会优先保障稳定，商业化后额度可能调整。当前 `dist/` 文件内容合计约 1.1MB，初始 gzip 后的 HTML、CSS、JS 和字体约 280KB，150 张卡图合计约 296KB，对静态 CDN 很轻。它很适合个人娱乐项目，但免费版没有付费 SLA；若后续需要明确额度、工单和成本上限，可切到 CloudBase 个人版。CloudBase 当前包含 1 个自定义域名、1GB 静态托管、10GB／月存储流量与 500 QPS，19.9 元／月限时价以[实时价格页](https://cloud.tencent.com/document/product/876/75213)为准。
 
 EdgeOne 的注意项是内容审核：其中国内地服务的[官方使用限制](https://edgeone.ai/document/63620)
 将“赌博广告和游戏”列为不合规内容。Balatrue 是无真钱、无下注的猜谜粉丝作品，但扑克素材仍可能引发误判。上线前应向腾讯云工单提供玩法说明和截图，书面确认内容边界；若平台认定不可接入，先暂停内地发布并处理合规问题，更换托管商也不会改变这一边界。
 
 ## 备案的真实成本
 
-中国内地节点和 CDN 需要 ICP 备案；仅解析到中国香港或境外服务器可不做 ICP，但无法同时承诺内地访问质量。腾讯云也明确要求[使用内地服务器或 CDN 的域名先完成备案](https://cloud.tencent.com/document/product/243/19630)。
+中国内地节点和 CDN 需要 ICP 备案；仅解析到中国香港或境外服务器可不做 ICP，但无法同时承诺内地访问质量。腾讯云也明确要求[使用内地服务器或 CDN 的域名先完成备案](https://cloud.tencent.com/document/product/243/19630)。备案解决域名接入问题，不等于取得网络出版服务或网络游戏上线资格。
 
 EdgeOne Pages 自己不能充当首次备案资源，因此“免费托管”也不等于“零成本完成内地发布”：
 
@@ -49,15 +59,32 @@ EdgeOne Pages 自己不能充当首次备案资源，因此“免费托管”也
 
 ## 域名建议
 
-推荐顺序：
+截至 2026-07-19，建议顺序与用途如下：
 
-1. `balatrue.fun`：短、好记、和娱乐项目语气一致；当前工信部域名体系可用于备案。
-2. `balatrue.cn`：后缀更短，适合防御性注册或跳转到主域名。
-3. `balatrue.com`：最通用，可作为品牌保护。
+| 候选                | 备案   | 建议用途       | 取舍                                                          |
+| ------------------- | ------ | -------------- | ------------------------------------------------------------- |
+| `balatrue.com`      | 可     | 首选主域       | 最通用、好读好记；优先于强调“娱乐感”的新后缀                  |
+| `balatrue.fun`      | 可     | 第一备选       | 语气轻松，但续费价通常高于 `.com`，购买前要看续费而非首年促销 |
+| `balatrue.games`    | 可     | 第二备选       | 主题明确，但后缀为复数，完整域名更长                          |
+| `play.balatrue.com` | 随主域 | 可选入口       | 根域名备案后子域名无需单独备案，适合未来把游戏与说明站分开    |
+| `playbalatrue.com`  | 可     | 无前缀备选     | 仍易读，但不如首选简洁                                        |
+| `balatrue.cn`       | 可     | 防御注册／跳转 | 对中国用户直观，作为全球唯一主域会显得偏区域                  |
+| `balatrue.xyz`      | 可     | 低成本备选     | 短，但大众信任感和品牌稳定性弱于 `.com`                       |
+| `balatrue.cool`     | 可     | 风格化备选     | 轻松，但辨识和口述成本高于 `.com`                             |
 
-不建议把 `balatrue.gg` 或 `balatrue.game` 作为内地主域名：前者的备案可用性不稳，后者在当前可备案后缀清单中缺失。域名用于 ICP 前还需满足[后缀获批、注册商获批和实名认证主体一致](https://help.aliyun.com/zh/icp-filing/basic-icp-service/user-guide/prepare-and-check-the-domain-name)等要求。
+`.com`、`.fun`、`.games`、`.xyz` 与 `.cool` 均出现在当前
+[阿里云备案域名后缀清单](https://help.aliyun.com/zh/icp-filing/basic-icp-service/user-guide/prepare-and-check-the-domain-name)；
+`.cn` 属中国国家顶级域名。最终仍要同时核验后缀、注册商批复状态、实名认证主体和域名剩余
+有效期。`.game`、`.gg`、`.play`、`.io` 未出现在当前清单中，不作为需要中国内地节点的
+主域名候选。
 
-2026-07-19 通过 RDAP／WHOIS 即时检查时，`balatrue.fun`、`balatrue.cn`、`balatrue.com`、`balatrue.gg` 与 `balatrue.game` 均未发现注册记录。这只是查询时点，不代表已保留；本轮不购买。
+2026-07-19 直接查询 Verisign `.com` 注册局 WHOIS 时，`balatrue.com` 返回 `No match`。
+这只代表查询当刻未见登记，不构成预留；本轮不购买。下单前应在注册商重新检查可用性，并在
+[域名价格页](https://wanwang.aliyun.com/domain)同时查看注册、续费和赎回价格。注册域名也不会
+自动取得与《小丑牌》相关的商标或素材使用权；公开前应把 `Balatrue` 项目名、域名和卡图用途
+一并书面询问 Playstack。`.com` 的优先级只代表可读性、记忆与备案取舍，不代表名称已完成
+商标清查；[WIPO 的 UDRP 指引](https://www.wipo.int/amc/en/domains/search/overview/)指出，文字游戏或
+拼写变化仍可能与既有商标构成混淆性近似，后缀通常不会改变这一判断。
 
 ## 无服务端统计
 
@@ -97,12 +124,12 @@ EdgeOne Pages 自己不能充当首次备案资源，因此“免费托管”也
 
 ## 验收后执行顺序
 
-1. 用户确认玩法、素材公开边界和 `balatrue.fun`。
-2. 注册域名并完成实名认证；购买或复用满足条件的腾讯云备案资源。
-3. 提交 ICP 备案；等待期间只使用本地或受控预览，不把境外免费平台当作正式中国站。
-4. 创建 EdgeOne Pages 项目，选择全球可用区（含中国大陆），绑定根域名与 HTTPS，配置静态资源长缓存、`index.html` 短缓存，并完成内容审核。
-5. 添加 GitHub Actions 发布流程和 RUM 事件适配层；密钥只保存在 GitHub Actions Secrets。若 EdgeOne 稳定性不满足要求，再评估 CloudBase 个人版。
+1. 用户确认玩法、素材公开边界和 `balatrue.com`，并完成对 Playstack 的书面许可询问。
+2. 向属地出版主管部门／合规律师和候选托管平台提交玩法、截图、是否登录收费、原作授权范围等材料，取得 Balatrue 在中国大陆公开提供时的书面分类结论。
+3. 若被认定为普通网站，再按书面要求注册域名、准备备案资源并提交 ICP；若被认定为网络游戏，则先评估具有相应范围的出版单位、运营机构、ICP 证和作品审批，个人静态站方案暂停。
+4. 合规路径明确后创建 EdgeOne Pages 项目，选择获准的服务区域，绑定根域名与 HTTPS，配置静态资源长缓存、`index.html` 短缓存，并完成平台内容审核。
+5. 添加 GitHub Actions 发布流程和 RUM 事件适配层；密钥只保存在 GitHub Actions Secrets。若 EdgeOne 稳定性不满足要求，再评估 CloudBase。
 6. 用中国电信／联通／移动和至少一个海外节点实测首屏、卡图、图鉴与统计上报。
-7. 发布后设置流量预算告警，30 日内完成公安联网备案。
+7. 发布后设置流量预算告警；若使用大陆节点，按书面要求完成公安联网备案及其他展示义务。
 
 在用户最终验收前，不执行以上外部操作。
