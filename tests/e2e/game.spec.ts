@@ -1,7 +1,13 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { jokers } from '../../src/data'
-import { getDailyAnswer } from '../../src/game'
+import { JOKER_DATA_META, jokers } from '../../src/data'
+import {
+  createDailyGame,
+  GAME_CLUE_MODEL_VERSION,
+  gameStorageKey,
+  getDailyAnswer,
+  serializeGameState,
+} from '../../src/game'
 
 const browserErrors = new WeakMap<Page, string[]>()
 
@@ -20,11 +26,12 @@ test.afterEach(async ({ page }) => {
 })
 
 test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
-  await expect(page.getByRole('heading', { name: '猜猜今天是哪张小丑牌' })).toBeVisible()
+  await expect(page.getByRole('region', { name: '猜猜今天是哪张小丑牌' })).toBeVisible()
+  await expect(page.getByText('选一张小丑牌出牌，根据五项线索继续缩小范围。')).toBeVisible()
   await expect(page.getByText('6 次机会')).toBeVisible()
 
   const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
-  await page.getByRole('button', { name: '猜一下' }).click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
   await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
 
   await search.fill('lantu')
@@ -45,6 +52,62 @@ test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
   await search.fill('lantu')
   const repeated = page.getByRole('option').filter({ hasText: '蓝图' })
   await expect(repeated).toHaveAttribute('aria-disabled', 'true')
+})
+
+test('migrates the previous clue model without losing the active daily game', async ({ page }) => {
+  const oldState = createDailyGame(jokers)
+  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 8, 'daily', oldState.puzzleKey, 2)
+  const currentKey = gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    JOKER_DATA_META.classificationVersion,
+    'daily',
+    oldState.puzzleKey,
+    GAME_CLUE_MODEL_VERSION,
+  )
+
+  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+    key: oldKey,
+    value: serializeGameState(oldState),
+  })
+  await page.reload()
+
+  await expect(page.getByText('6 次机会')).toBeVisible()
+  await expect
+    .poll(() => page.evaluate((key) => localStorage.getItem(key), currentKey))
+    .not.toBeNull()
+})
+
+test('continues the previous clue model practice bag in order', async ({ page }) => {
+  const expectedAnswer = jokers[42]
+  const nextAnswer = jokers[87]
+  if (!expectedAnswer || !nextAnswer) throw new Error('Expected practice bag fixtures')
+  const oldBagKey = `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c8:g2`
+  const currentBagKey = `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${JOKER_DATA_META.classificationVersion}:g${GAME_CLUE_MODEL_VERSION}`
+  const currentGameKey = gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    JOKER_DATA_META.classificationVersion,
+    'practice',
+    undefined,
+    GAME_CLUE_MODEL_VERSION,
+  )
+
+  await page.evaluate(({ key, ids }) => localStorage.setItem(key, JSON.stringify(ids)), {
+    key: oldBagKey,
+    ids: [expectedAnswer.id, nextAnswer.id],
+  })
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+
+  await expect
+    .poll(() =>
+      page.evaluate((key) => {
+        const raw = localStorage.getItem(key)
+        return raw ? (JSON.parse(raw) as { answerId?: string }).answerId : null
+      }, currentGameKey),
+    )
+    .toBe(expectedAnswer.id)
+  await expect
+    .poll(() => page.evaluate((key) => localStorage.getItem(key), currentBagKey))
+    .toBe(JSON.stringify([nextAnswer.id]))
 })
 
 test('can finish, share, and restore the daily puzzle with the keyboard', async ({ page }) => {
@@ -87,7 +150,7 @@ test('reveals the answer after six wrong guesses', async ({ page }) => {
     await page
       .getByRole('option', { name: `${joker.name.zhCN} ${joker.name.en}`, exact: true })
       .click()
-    await page.getByRole('button', { name: '猜一下' }).click()
+    await page.getByRole('button', { name: '猜猜看' }).click()
   }
 
   await expect(page.getByText('差一点')).toBeVisible()
@@ -96,15 +159,15 @@ test('reveals the answer after six wrong guesses', async ({ page }) => {
 })
 
 test('switches the full interface to English and opens practice mode', async ({ page }) => {
-  await page.getByRole('button', { name: '猜一下' }).click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
   await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
   await page.getByRole('button', { name: '选择界面语言' }).click()
-  await expect(page.getByRole('heading', { name: "Guess today's Joker" })).toBeVisible()
+  await expect(page.getByRole('region', { name: "Guess today's Joker" })).toBeVisible()
   await expect(page.getByRole('combobox', { name: 'Choose a Joker' })).toBeVisible()
   await expect(page.getByText('Choose a Joker from the suggestions first.')).toBeVisible()
 
   await page.getByRole('button', { name: 'Endless' }).click()
-  await expect(page.getByRole('heading', { name: 'Endless' })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'Endless' })).toBeVisible()
   await expect(page.getByText('6 guesses')).toBeVisible()
 })
 
@@ -113,11 +176,25 @@ test('explains every clue family without affecting the score', async ({ page }) 
 
   const dialog = page.getByRole('dialog', { name: '线索字典' })
   await expect(dialog).toBeVisible()
-  for (const heading of ['稀有度', '基础价格', '主效果', '怎么触发', '依赖什么']) {
+  for (const heading of ['稀有度', '基础价格', '主效果', '触发时机', '依赖条件']) {
     await expect(dialog.getByRole('heading', { name: heading, exact: true })).toBeVisible()
   }
   await expect(dialog.getByText('普通', { exact: true })).toBeVisible()
-  await expect(dialog.getByText('牌局中成长', { exact: true })).toBeVisible()
+  for (const timing of [
+    '常驻',
+    '出牌时',
+    '留在手牌',
+    '弃牌时',
+    '使用消耗牌时',
+    '加入牌组时',
+    '卡牌摧毁时',
+    '盲注阶段',
+    '商店/出售',
+    '回合开始',
+    '回合结束',
+  ]) {
+    await expect(dialog.getByText(timing, { exact: true })).toBeVisible()
+  }
   await expect(dialog.getByText('同花顺', { exact: true })).toBeVisible()
 
   await page.keyboard.press('Escape')
@@ -280,7 +357,7 @@ test('keeps the newest feedback visible on a short phone screen', async ({ page 
       exact: true,
     })
     .click()
-  await page.getByRole('button', { name: '猜一下' }).click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
 
   const guessArticle = page.getByRole('article', { name: directionalGuess.name.zhCN })
   await expect
@@ -296,6 +373,10 @@ test('keeps the newest feedback visible on a short phone screen', async ({ page 
     cells.map((cell) => (cell as HTMLElement).offsetTop),
   )
   expect(new Set(cellTops).size).toBe(1)
+  const jokerTop = await guessArticle
+    .locator('.joker-cell')
+    .evaluate((element) => (element as HTMLElement).offsetTop)
+  expect(cellTops[0]).toBe(jokerTop)
   const clippedValues = await clueCells
     .locator('.feedback-cell__value')
     .evaluateAll(
@@ -366,7 +447,7 @@ test('keeps the 320px starting view compact and aligned', async ({ page }, testI
     page.locator('.brand').boundingBox(),
     page.locator('.top-actions').boundingBox(),
     page.getByRole('combobox', { name: '选择一张小丑牌' }).boundingBox(),
-    page.getByRole('button', { name: '猜一下' }).boundingBox(),
+    page.getByRole('button', { name: '猜猜看' }).boundingBox(),
   ])
   expect(brandBox).not.toBeNull()
   expect(actionsBox).not.toBeNull()
@@ -375,6 +456,7 @@ test('keeps the 320px starting view compact and aligned', async ({ page }, testI
   const brandCenter = (brandBox?.y ?? 0) + (brandBox?.height ?? 0) / 2
   const actionsCenter = (actionsBox?.y ?? 0) + (actionsBox?.height ?? 0) / 2
   expect(Math.abs(brandCenter - actionsCenter)).toBeLessThan(2)
+  expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0) + 4).toBeLessThanOrEqual(actionsBox?.x ?? 0)
   expect(Math.abs((inputBox?.y ?? 0) - (guessBox?.y ?? 0))).toBeLessThan(2)
   await expect(page.getByText('6 次机会')).toBeVisible()
   await expect(page.locator('.empty-board')).toBeInViewport()

@@ -190,7 +190,7 @@ img {
 
 .game-heading-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
@@ -226,28 +226,9 @@ img {
   color: var(--ink);
 }
 
-.puzzle-kicker {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin: 0 0 7px;
-  color: var(--red-deep);
-  font:
-    400 11px/1.3 'Silkscreen',
-    monospace;
-  letter-spacing: 0.015em;
-  text-transform: uppercase;
-}
-
-.puzzle-title {
-  margin: 0;
-  font-size: clamp(21px, 3vw, 27px);
-  line-height: 1.25;
-}
-
 .puzzle-rule {
   max-width: 760px;
-  margin: 8px 0 0;
+  margin: 0;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.65;
@@ -259,7 +240,7 @@ img {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
 .combobox {
@@ -468,7 +449,8 @@ img {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  width: 100%;
   gap: 8px 12px;
 }
 
@@ -500,50 +482,6 @@ img {
   color: #684b12;
   font-size: 11px;
   font-weight: 700;
-}
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 11px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.legend li {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.legend-dot {
-  display: inline-grid;
-  width: 18px;
-  height: 18px;
-  border: 1px solid;
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  place-items: center;
-}
-
-.legend-dot--exact {
-  border-color: var(--exact-border);
-  background: var(--exact-bg);
-  color: var(--exact-ink);
-}
-
-.legend-dot--partial {
-  border-color: var(--partial-border);
-  background: var(--partial-bg);
-  color: var(--partial-ink);
-}
-
-.legend-dot--miss {
-  border-color: var(--miss-border);
-  background: var(--miss-bg);
-  color: var(--miss-ink);
 }
 
 .guess-area {
@@ -1557,7 +1495,7 @@ img {
   }
 
   .brand__name {
-    font-size: 23px;
+    font-size: 32px;
   }
 
   .brand__zh {
@@ -1587,16 +1525,7 @@ img {
     margin-bottom: 10px;
   }
 
-  .puzzle-kicker {
-    display: none;
-  }
-
-  .puzzle-title {
-    font-size: 20px;
-  }
-
   .puzzle-rule {
-    margin-top: 5px;
     font-size: 13px;
     line-height: 1.5;
   }
@@ -1636,16 +1565,19 @@ img {
   }
 
   .guess-header {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns:
+      minmax(48px, 0.95fr) minmax(0, 0.72fr) minmax(0, 0.8fr) minmax(0, 0.86fr)
+      minmax(0, 0.98fr) minmax(0, 1.28fr);
     align-items: center;
-    gap: 4px;
-    padding: 0 8px 1px;
-    font-size: 11px;
+    gap: 2px;
+    padding: 0 5px 1px;
+    font-size: clamp(9px, 2.55vw, 11px);
     line-height: 1.25;
   }
 
   .guess-header > :first-child {
-    display: none;
+    display: block;
+    text-align: center;
   }
 
   .guess-header > span {
@@ -1658,23 +1590,50 @@ img {
   }
 
   .guess-row {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 4px;
-    padding: 7px;
+    grid-template-columns:
+      minmax(48px, 0.95fr) minmax(0, 0.72fr) minmax(0, 0.8fr) minmax(0, 0.86fr)
+      minmax(0, 0.98fr) minmax(0, 1.28fr);
+    gap: 2px;
+    padding: 4px;
     border: 1px solid #c9c1b4;
     border-radius: 12px;
     background: #eee7da;
   }
 
   .joker-cell {
-    grid-column: 1 / -1;
-    min-height: 66px;
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 44px auto;
+    align-content: center;
+    gap: 3px;
+    min-height: 86px;
+    padding: 5px 3px;
+    text-align: center;
+  }
+
+  .joker-cell img {
+    width: 32px;
+    height: 44px;
+    margin: 0 auto;
+  }
+
+  .joker-cell__name strong {
+    overflow: visible;
+    font-size: clamp(9px, 2.55vw, 11px);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+
+  .joker-cell__name small {
+    display: none;
   }
 
   .feedback-cell {
-    min-height: 82px;
+    min-height: 86px;
     gap: 3px;
-    padding: 13px 3px 6px;
+    padding: 13px 2px 6px;
+    border-radius: 8px;
   }
 
   .feedback-cell__mobile-label {
@@ -1684,7 +1643,8 @@ img {
   .feedback-cell__value {
     display: block;
     overflow: visible;
-    font-size: 11px;
+    font-size: clamp(9px, 2.55vw, 11px);
+    font-weight: 650;
     line-height: 1.25;
     overflow-wrap: anywhere;
     -webkit-line-clamp: unset;
@@ -1883,18 +1843,84 @@ img {
   }
 }
 
+@media (max-width: 480px) {
+  .app-shell {
+    width: min(100% - 16px, 1120px);
+  }
+
+  .topbar {
+    gap: 8px;
+  }
+
+  .language-button {
+    flex: 0 0 44px;
+    padding: 0;
+  }
+
+  .language-button > svg {
+    display: none;
+  }
+
+  .game-card__head,
+  .guess-area {
+    padding-right: 13px;
+    padding-left: 13px;
+  }
+
+  .guess-area {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .game-card__head {
+    padding-top: 13px;
+    padding-bottom: 12px;
+  }
+
+  .mode-switch {
+    margin-bottom: 8px;
+  }
+
+  .play-area {
+    gap: 7px;
+    margin-top: 11px;
+  }
+
+  .deal-button {
+    min-width: 78px;
+    padding: 0 10px;
+  }
+
+  .game-meta {
+    gap: 7px;
+    margin-top: 9px;
+  }
+
+  .guess-area {
+    padding-top: 12px;
+    padding-bottom: 14px;
+  }
+
+  .empty-board {
+    min-height: 104px;
+    padding: 13px;
+  }
+
+  .empty-board__mark {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 390px) {
   .app-shell {
     width: min(100% - 12px, 1120px);
   }
 
   .brand__name {
-    font-size: 21px;
-  }
-
-  .legend {
-    gap: 7px;
-    font-size: 11px;
+    font-size: 31px;
   }
 
   .top-actions {
@@ -1931,6 +1957,70 @@ img {
 
   .language-button > svg {
     display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand__name {
+    font-size: 27px;
+  }
+}
+
+@media (max-width: 340px) {
+  .brand__name {
+    font-size: 23px;
+    letter-spacing: -0.075em;
+  }
+
+  .topbar {
+    gap: 6px;
+  }
+
+  .top-actions {
+    gap: 4px;
+  }
+
+  .language-button {
+    flex-basis: 40px;
+  }
+
+  .guess-header,
+  .guess-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .guess-header {
+    gap: 3px;
+    font-size: 10px;
+  }
+
+  .guess-header > :first-child {
+    display: none;
+  }
+
+  .guess-row {
+    gap: 3px;
+  }
+
+  .joker-cell {
+    grid-column: 1 / -1;
+    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 7px;
+    min-height: 48px;
+    padding: 4px 7px;
+    text-align: left;
+  }
+
+  .joker-cell img {
+    width: 28px;
+    height: 38px;
+    margin: 0;
+  }
+
+  .joker-cell__name strong,
+  .feedback-cell__value {
+    font-size: 10px;
   }
 }
 

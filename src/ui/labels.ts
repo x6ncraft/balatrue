@@ -44,10 +44,13 @@ const timingLabels: Record<GameTiming, [string, string]> = {
   play: ['出牌时', 'When playing'],
   held: ['留在手牌', 'Held in hand'],
   discard: ['弃牌时', 'On discard'],
-  blind: ['选盲注时', 'On Blind select'],
+  consumable: ['使用消耗牌时', 'Using consumables'],
+  card_added: ['加入牌组时', 'Adding cards'],
+  card_destroyed: ['卡牌摧毁时', 'Destroying cards'],
+  blind: ['盲注阶段', 'Blind phase'],
   shop: ['商店/出售', 'Shop & selling'],
+  round_start: ['回合开始', 'Start of round'],
   round_end: ['回合结束', 'End of round'],
-  growth: ['牌局中成长', 'Builds over time'],
 }
 
 const timingDescriptions: Record<GameTiming, [string, string]> = {
@@ -55,10 +58,16 @@ const timingDescriptions: Record<GameTiming, [string, string]> = {
   play: ['打出一手牌或进行计分时生效。', 'Applies when a hand is played or scored.'],
   held: ['扑克牌留在手牌中时生效。', 'Applies to cards held in hand.'],
   discard: ['弃掉扑克牌时生效。', 'Applies when cards are discarded.'],
-  blind: ['选择盲注后生效。', 'Applies when a Blind is selected.'],
+  consumable: ['使用塔罗牌、星球牌或幻灵牌时生效。', 'Applies when a consumable is used.'],
+  card_added: ['有扑克牌加入牌组时生效。', 'Applies when a playing card joins the deck.'],
+  card_destroyed: ['扑克牌被摧毁时生效。', 'Applies when a playing card is destroyed.'],
+  blind: [
+    '选择、跳过或击败盲注时生效。',
+    'Applies when a Blind is selected, skipped, or defeated.',
+  ],
   shop: ['在商店、开包、重掷或出售时生效。', 'Applies in the shop or when selling.'],
+  round_start: ['新回合开始时生效。', 'Applies at the start of a round.'],
   round_end: ['回合结束或离开盲注时触发。', 'Triggers at the end of a round.'],
-  growth: ['满足条件后逐步累积效果。', 'Builds up as its condition is met.'],
 }
 
 const dependencyFamilyLabels: Record<GameDependencyFamily, [string, string]> = {

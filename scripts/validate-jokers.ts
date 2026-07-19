@@ -17,7 +17,7 @@ import {
   WIKI_JOKER_ACTIVATIONS,
   WIKI_JOKER_TYPES,
 } from '../src/data/types'
-import { gameplayClueSignature } from '../src/game/clue-model'
+import { gameplayClueSignature, projectJokerTimings } from '../src/game/clue-model'
 import { hasDependencyValueLabel } from '../src/ui/labels'
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -140,6 +140,7 @@ for (const [index, joker] of jokers.entries()) {
   for (const timing of joker.classification.timings) {
     check(isOneOf(timing, JOKER_TIMINGS), `${label}: illegal timing '${timing}'`)
   }
+  check(projectJokerTimings(joker).length > 0, `${label}: no player-facing trigger timing`)
   check(joker.classification.dependencies.length > 0, `${label}: empty dependency classification`)
   check(
     hasUniqueValues(

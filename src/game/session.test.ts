@@ -295,7 +295,7 @@ describe('game state persistence', () => {
         gameStorageKey(JOKER_DATA_GAME_VERSION, version, 'daily', current.puzzleKey),
       ),
     ]
-    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([7, 6, 5, 4, 3, 2])
+    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([8, 7, 6, 5, 4, 3, 2])
 
     const restored = restoreStoredGame({
       currentKey,

@@ -1,7 +1,7 @@
 import type { GameMode, GameState, GuessComparison, MatchResult } from './types'
 
 const LEGACY_MAX_ATTEMPTS = 8
-export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [7, 6, 5, 4, 3, 2] as const
+export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [8, 7, 6, 5, 4, 3, 2] as const
 
 export type StoredGameContext =
   { mode: 'daily'; puzzleKey: string; answerId: string } | { mode: 'practice' }

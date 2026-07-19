@@ -5,6 +5,7 @@ import {
   type JokerDependency,
   type JokerTiming,
 } from '../data/types'
+import { jokers } from '../data'
 import { describe, expect, it } from 'vitest'
 import {
   projectJokerDependencies,
@@ -55,12 +56,18 @@ describe('player-facing clue projection', () => {
     ['card_played', 'play'],
     ['card_held', 'held'],
     ['card_discarded', 'discard'],
+    ['consumable_used', 'consumable'],
+    ['card_added', 'card_added'],
+    ['card_destroyed', 'card_destroyed'],
     ['blind_selected', 'blind'],
+    ['blind_skipped', 'blind'],
+    ['blind_defeated', 'blind'],
+    ['blind_failed', 'blind'],
     ['shop', 'shop'],
+    ['round_start', 'round_start'],
     ['round_end', 'round_end'],
     ['sold', 'shop'],
     ['joker_triggered', 'play'],
-    ['mixed', 'growth'],
   ]
 
   it.each(timingCases)('maps raw timing %s to %s', (raw, expected) => {
@@ -71,10 +78,33 @@ describe('player-facing clue projection', () => {
     expect(
       projectJokerTimings(
         makeJoker({
-          timings: ['mixed', 'round_end', 'card_played', 'hand_scored', 'passive'],
+          timings: ['round_end', 'card_played', 'hand_scored', 'passive'],
         }),
       ),
-    ).toEqual(['always', 'play', 'round_end', 'growth'])
+    ).toEqual(['always', 'play', 'round_end'])
+  })
+
+  it.each([
+    ['j_constellation', ['play', 'consumable']],
+    ['j_trousers', ['play']],
+    ['j_castle', ['play', 'discard', 'round_end']],
+    ['j_hologram', ['play', 'card_added']],
+    ['j_glass', ['play', 'card_destroyed']],
+    ['j_certificate', ['round_start']],
+    ['j_throwback', ['play', 'blind']],
+    ['j_turtle_bean', ['always', 'round_end']],
+    ['j_mr_bones', ['blind']],
+    ['j_campfire', ['play', 'blind', 'shop']],
+    ['j_invisible', ['shop', 'round_end']],
+    ['j_satellite', ['consumable', 'round_end']],
+  ] as const)('keeps complete player-facing timings for %s', (id, expected) => {
+    const joker = jokers.find((candidate) => candidate.id === id)
+    if (!joker) throw new Error(`Missing Joker fixture ${id}`)
+    expect(projectJokerTimings(joker)).toEqual(expected)
+  })
+
+  it('gives every Joker at least one real player-facing timing', () => {
+    expect(jokers.filter((joker) => projectJokerTimings(joker).length === 0)).toEqual([])
   })
 
   const dependencyCases: ReadonlyArray<[JokerDependency['family'], GameDependencyFamily]> = [

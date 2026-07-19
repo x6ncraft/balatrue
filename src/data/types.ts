@@ -1,5 +1,5 @@
 export const JOKER_DATA_GAME_VERSION = '1.0.1o-FULL' as const
-export const JOKER_CLASSIFICATION_VERSION = 8 as const
+export const JOKER_CLASSIFICATION_VERSION = 9 as const
 
 export const JOKER_RARITIES = ['common', 'uncommon', 'rare', 'legendary'] as const
 export type JokerRarity = (typeof JOKER_RARITIES)[number]
@@ -27,12 +27,18 @@ export const JOKER_TIMINGS = [
   'card_played',
   'card_held',
   'card_discarded',
+  'consumable_used',
+  'card_added',
+  'card_destroyed',
   'blind_selected',
+  'blind_skipped',
+  'blind_defeated',
+  'blind_failed',
   'shop',
+  'round_start',
   'round_end',
   'sold',
   'joker_triggered',
-  'mixed',
 ] as const
 export type JokerTiming = (typeof JOKER_TIMINGS)[number]
 

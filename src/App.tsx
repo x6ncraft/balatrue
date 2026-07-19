@@ -72,6 +72,7 @@ const practiceStorageKey = gameStorageKey(
 const previousClassificationVersions = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS.filter(
   (version) => version < JOKER_DATA_META.classificationVersion,
 )
+const previousClueModel = { classificationVersion: 8, clueModelVersion: 2 } as const
 const previousDailyStorageKeys = [
   gameStorageKey(
     JOKER_DATA_META.gameVersion,
@@ -79,12 +80,26 @@ const previousDailyStorageKeys = [
     'daily',
     today,
   ),
+  gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    previousClueModel.classificationVersion,
+    'daily',
+    today,
+    previousClueModel.clueModelVersion,
+  ),
   ...previousClassificationVersions.map((version) =>
     gameStorageKey(JOKER_DATA_META.gameVersion, version, 'daily', today),
   ),
 ]
 const previousPracticeStorageKeys = [
   gameStorageKey(JOKER_DATA_META.gameVersion, JOKER_DATA_META.classificationVersion, 'practice'),
+  gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    previousClueModel.classificationVersion,
+    'practice',
+    undefined,
+    previousClueModel.clueModelVersion,
+  ),
   ...previousClassificationVersions.map((version) =>
     gameStorageKey(JOKER_DATA_META.gameVersion, version, 'practice'),
   ),
@@ -92,6 +107,7 @@ const previousPracticeStorageKeys = [
 const practiceBagKey = `balatrue:practice-bag:${dataKey}`
 const previousPracticeBagKeys = [
   `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${JOKER_DATA_META.classificationVersion}`,
+  `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${previousClueModel.classificationVersion}:g${previousClueModel.clueModelVersion}`,
   ...previousClassificationVersions.map(
     (version) => `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${version}`,
   ),
@@ -284,16 +300,6 @@ export default function App() {
       })
     }).length
   }, [guessedIds, state.guesses, state.status])
-
-  const formattedDate = useMemo(() => {
-    const [year, month, day] = today.split('-').map(Number)
-    return new Intl.DateTimeFormat(locale === 'zh-CN' ? 'zh-CN' : 'en', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      timeZone: 'Asia/Shanghai',
-    }).format(new Date(Date.UTC(year ?? 2026, (month ?? 1) - 1, day ?? 1, 12)))
-  }, [locale])
 
   const saveState = useCallback((next: GameState) => {
     const key = next.mode === 'daily' ? dailyStorageKey : practiceStorageKey
@@ -495,10 +501,7 @@ export default function App() {
               </button>
             </div>
             <div>
-              <p className="puzzle-kicker">
-                {mode === 'daily' ? t(locale, 'game.today', { date: formattedDate }) : 'PRACTICE'}
-              </p>
-              <h1 id="puzzle-title" className="puzzle-title">
+              <h1 id="puzzle-title" className="sr-only">
                 {mode === 'daily' ? t(locale, 'brand.tagline') : t(locale, 'game.endlessTitle')}
               </h1>
               <p className="puzzle-rule">{t(locale, 'game.instructions')}</p>
@@ -516,20 +519,6 @@ export default function App() {
           />
 
           <div className="game-meta">
-            <ul className="legend" aria-label={locale === 'zh-CN' ? '反馈图例' : 'Feedback legend'}>
-              <li>
-                <span className="legend-dot legend-dot--exact">✓</span>
-                {t(locale, 'feedback.exact')}
-              </li>
-              <li>
-                <span className="legend-dot legend-dot--partial">◐</span>
-                {t(locale, 'feedback.partial')}
-              </li>
-              <li>
-                <span className="legend-dot legend-dot--miss">×</span>
-                {t(locale, 'feedback.miss')}
-              </li>
-            </ul>
             <div className="game-meta__right">
               <button className="glossary-link" type="button" onClick={() => setGlossaryOpen(true)}>
                 <ListTree size={15} aria-hidden="true" />

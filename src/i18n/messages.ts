@@ -3,7 +3,7 @@ const zhCN = {
   'brand.nameEnglish': 'Balatrue',
   'brand.tagline': '猜猜今天是哪张小丑牌',
   'brand.subtitle': '《小丑牌》粉丝猜谜游戏',
-  'brand.disclaimer': 'Balatro 粉丝做的免费猜谜小游戏 · 不是官方出品',
+  'brand.disclaimer': 'Balatro 粉丝自制小游戏 · 非官方出品',
 
   'nav.daily': '今日谜牌',
   'nav.endless': '无尽牌局',
@@ -39,7 +39,7 @@ const zhCN = {
   'search.clear': '清除选择',
   'search.keyboardHint': '用方向键选择，按回车确认',
 
-  'action.guess': '猜一下',
+  'action.guess': '猜猜看',
   'action.submitGuess': '打出这张牌',
   'action.newGame': '再开一局',
   'action.nextGame': '下一局',
@@ -56,8 +56,8 @@ const zhCN = {
   'clue.rarity': '稀有度',
   'clue.price': '基础价格',
   'clue.effect': '主效果',
-  'clue.timing': '怎么触发',
-  'clue.dependency': '依赖什么',
+  'clue.timing': '触发时机',
+  'clue.dependency': '依赖条件',
 
   'rarity.common': '普通',
   'rarity.uncommon': '罕见',
@@ -90,7 +90,7 @@ const zhCN = {
   'help.title': '怎么玩',
   'help.intro': '你有 {count} 次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
   'help.exact': '绿色表示这一项完全吻合。',
-  'help.partial': '黄色表示这一项有交集；“依赖什么”里的相近条件也算部分吻合。',
+  'help.partial': '黄色表示这一项有交集；“依赖条件”里的相近条件也算部分吻合。',
   'help.miss': '灰红色表示这一项不吻合。',
   'help.arrow': '价格或稀有度旁的箭头始终指向正确答案。',
 
@@ -103,11 +103,11 @@ const zhCN = {
   'glossary.shopPriceDescription': '可购买小丑牌的基础价格；相同为完全吻合。',
   'glossary.soulDescription': '传奇小丑不显示商店价格，统一归为灵魂牌获取。',
   'glossary.note':
-    '这些是 Balatrue 为猜谜整理的易懂分类，不是《小丑牌》官方属性。“牌局中成长”表示效果会随牌局动作逐步累积或变化。',
+    '这些是 Balatrue 为猜谜整理的易懂分类，不是《小丑牌》官方属性。触发时机描述小丑牌实际生效或发生变化的动作，同一张牌可能有多个时机。',
 
   'footer.links': '项目链接',
   'footer.madeByPrefix': '',
-  'footer.madeBySuffix': ' 的小作品',
+  'footer.madeBySuffix': ' 的小玩具',
   'footer.source': 'GitHub 源码',
   'footer.bilibili': 'B 站',
   'footer.official': 'Balatro 官网',
@@ -270,7 +270,7 @@ const en = {
     'The base price of purchasable Jokers; equal prices are an exact match.',
   'glossary.soulDescription': 'Legendary Jokers have no shop price and are grouped under The Soul.',
   'glossary.note':
-    'These are approachable categories created by Balatrue for this puzzle, not official Balatro attributes. “Builds over time” means the effect accumulates or changes through actions during a run.',
+    'These are approachable categories created by Balatrue for this puzzle, not official Balatro attributes. Trigger timing describes the actions where a Joker applies or changes, so one Joker may have several timings.',
 
   'footer.links': 'Project links',
   'footer.madeByPrefix': 'A little project by ',

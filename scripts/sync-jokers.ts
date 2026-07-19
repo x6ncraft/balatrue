@@ -88,6 +88,7 @@ interface ImageSource {
 
 interface ClassificationOverride {
   timings?: readonly JokerTiming[]
+  addTimings?: readonly JokerTiming[]
   addDependencies?: readonly JokerDependency[]
   removeDependencies?: readonly JokerDependency[]
 }
@@ -170,13 +171,13 @@ const CLASSIFICATION_OVERRIDES: Readonly<Record<string, ClassificationOverride>>
   // These two decay after a round; other "each round" wording describes a
   // per-round limit or passive resource modifier rather than an end event.
   j_turtle_bean: {
-    timings: ['round_end'],
+    timings: ['passive', 'round_end'],
   },
   j_popcorn: {
     timings: ['hand_scored', 'round_end'],
   },
   j_castle: {
-    timings: ['mixed', 'round_end'],
+    addTimings: ['hand_scored', 'card_discarded'],
   },
   j_dna: {
     addDependencies: [{ family: 'playing_card' }],
@@ -194,25 +195,80 @@ const CLASSIFICATION_OVERRIDES: Readonly<Record<string, ClassificationOverride>>
     addDependencies: [{ family: 'hand', value: 'card_count' }],
   },
   j_constellation: {
-    timings: ['mixed'],
+    addTimings: ['consumable_used'],
   },
   j_hologram: {
-    timings: ['mixed'],
+    addTimings: ['card_added'],
   },
   j_midas_mask: {
     timings: ['card_scored'],
   },
   j_campfire: {
-    timings: ['hand_scored', 'sold', 'round_end'],
+    timings: ['hand_scored', 'blind_defeated', 'sold'],
   },
   j_glass: {
-    timings: ['mixed'],
+    addTimings: ['hand_scored', 'card_destroyed'],
   },
   j_burglar: {
     addDependencies: [{ family: 'hand', value: 'hands_per_round' }],
   },
   j_mr_bones: {
+    timings: ['blind_failed'],
     addDependencies: [{ family: 'blind' }],
+  },
+  j_ride_the_bus: {
+    addTimings: ['hand_scored'],
+  },
+  j_runner: {
+    addTimings: ['hand_scored'],
+  },
+  j_green_joker: {
+    addTimings: ['hand_scored', 'card_discarded'],
+  },
+  j_vampire: {
+    addTimings: ['hand_scored', 'card_scored'],
+  },
+  j_obelisk: {
+    addTimings: ['hand_scored'],
+  },
+  j_fortune_teller: {
+    addTimings: ['consumable_used'],
+  },
+  j_lucky_cat: {
+    addTimings: ['hand_scored', 'card_scored'],
+  },
+  j_trousers: {
+    addTimings: ['hand_scored'],
+  },
+  j_ramen: {
+    addTimings: ['hand_scored', 'card_discarded'],
+  },
+  j_rocket: {
+    addTimings: ['blind_defeated'],
+  },
+  j_certificate: {
+    timings: ['round_start'],
+  },
+  j_throwback: {
+    addTimings: ['blind_skipped'],
+  },
+  j_wee: {
+    addTimings: ['hand_scored', 'card_scored'],
+  },
+  j_hit_the_road: {
+    addTimings: ['hand_scored', 'card_discarded', 'round_end'],
+  },
+  j_caino: {
+    addTimings: ['hand_scored', 'card_destroyed'],
+  },
+  j_yorick: {
+    addTimings: ['hand_scored', 'card_discarded'],
+  },
+  j_invisible: {
+    timings: ['round_end', 'sold'],
+  },
+  j_satellite: {
+    addTimings: ['consumable_used'],
   },
 }
 
@@ -513,7 +569,7 @@ function classifyEffects(wikiType: WikiJokerType, text: string): JokerEffect[] {
 
 function classifyTimings(activation: WikiJokerActivation, text: string): JokerTiming[] {
   const timings = new Set<JokerTiming>()
-  const baseTiming: Record<WikiJokerActivation, JokerTiming> = {
+  const baseTiming: Record<WikiJokerActivation, JokerTiming | null> = {
     independent: 'hand_scored',
     passive: 'passive',
     on_scored: 'card_scored',
@@ -522,15 +578,25 @@ function classifyTimings(activation: WikiJokerActivation, text: string): JokerTi
     on_played: 'card_played',
     on_discard: 'card_discarded',
     on_other_jokers: 'joker_triggered',
-    mixed: 'mixed',
+    mixed: null,
   }
-  timings.add(baseTiming[activation])
+  const defaultTiming = baseTiming[activation]
+  if (defaultTiming) timings.add(defaultTiming)
 
   const eventRules: Array<[RegExp, JokerTiming]> = [
     [/when (?:a )?played card is scored|played cards? with|cards? scored/i, 'card_scored'],
     [/held in hand/i, 'card_held'],
     [/when blind is selected|blind is selected/i, 'blind_selected'],
     [/after.*hand played|when hand is played|first hand of round/i, 'card_played'],
+    [
+      /every time a (?:Planet|Tarot|Spectral) card is used|per (?:Tarot|Planet|Spectral) card used/i,
+      'consumable_used',
+    ],
+    [/playing card is added to your deck/i, 'card_added'],
+    [/(?:Glass|face) Card (?:that )?is destroyed|face card is destroyed/i, 'card_destroyed'],
+    [/Blind skipped/i, 'blind_skipped'],
+    [/Blind is defeated/i, 'blind_defeated'],
+    [/when round begins/i, 'round_start'],
     [/end of (?:the )?round|(?:rank|suit|card) changes every round/i, 'round_end'],
     [
       /end of (?:the )?shop|leaving the shop|Booster Pack|reroll|(?:in|per) (?:the )?shop|Packs? in the shop/i,
@@ -545,7 +611,6 @@ function classifyTimings(activation: WikiJokerActivation, text: string): JokerTi
     timings.add(timing)
   }
 
-  if (activation === 'mixed' && foundSpecificEvent) timings.delete('mixed')
   if (activation === 'passive' && foundSpecificEvent) timings.delete('passive')
   return JOKER_TIMINGS.filter((timing) => timings.has(timing))
 }
@@ -708,9 +773,9 @@ function applyClassificationOverride(
     }
   }
 
-  const timings = override?.timings
-    ? JOKER_TIMINGS.filter((timing) => override.timings?.includes(timing))
-    : [...inferredTimings]
+  const timingSet = new Set(override?.timings ?? inferredTimings)
+  for (const timing of override?.addTimings ?? []) timingSet.add(timing)
+  const timings = JOKER_TIMINGS.filter((timing) => timingSet.has(timing))
   const dependencies = new Map(
     inferredDependencies.map((dependency) => [dependencyKey(dependency), dependency]),
   )

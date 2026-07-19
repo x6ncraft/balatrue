@@ -1,20 +1,23 @@
 import type { Joker, JokerDependency, JokerTiming } from '../data/types'
 
 /**
- * Player-facing clue semantics. Raw c8 classifications remain untouched for auditability;
+ * Player-facing clue semantics. Raw c9 classifications remain untouched for auditability;
  * this version changes only the smaller vocabulary used for guessing and comparison.
  */
-export const GAME_CLUE_MODEL_VERSION = 2 as const
+export const GAME_CLUE_MODEL_VERSION = 3 as const
 
 export const GAME_TIMINGS = [
   'always',
   'play',
   'held',
   'discard',
+  'consumable',
+  'card_added',
+  'card_destroyed',
   'blind',
   'shop',
+  'round_start',
   'round_end',
-  'growth',
 ] as const
 export type GameTiming = (typeof GAME_TIMINGS)[number]
 
@@ -43,12 +46,18 @@ const timingProjection: Record<JokerTiming, GameTiming> = {
   card_played: 'play',
   card_held: 'held',
   card_discarded: 'discard',
+  consumable_used: 'consumable',
+  card_added: 'card_added',
+  card_destroyed: 'card_destroyed',
   blind_selected: 'blind',
+  blind_skipped: 'blind',
+  blind_defeated: 'blind',
+  blind_failed: 'blind',
   shop: 'shop',
+  round_start: 'round_start',
   round_end: 'round_end',
   sold: 'shop',
   joker_triggered: 'play',
-  mixed: 'growth',
 }
 
 const dependencyProjection: Record<JokerDependency['family'], GameDependencyFamily> = {
@@ -77,7 +86,11 @@ const specificPlayingCardFamilies = new Set<JokerDependency['family']>([
 ])
 
 export function projectJokerTimings(joker: Joker): GameTiming[] {
-  const projected = new Set(joker.classification.timings.map((timing) => timingProjection[timing]))
+  const projected = new Set<GameTiming>()
+  for (const timing of joker.classification.timings) {
+    const playerTiming = timingProjection[timing]
+    if (playerTiming) projected.add(playerTiming)
+  }
   return GAME_TIMINGS.filter((timing) => projected.has(timing))
 }
 
