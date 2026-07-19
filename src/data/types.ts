@@ -111,14 +111,12 @@ export interface Joker {
     cost: number | null
     shopPurchasable: boolean
   }
-  /** Raw source fields retained so generated facts and inferred gameplay tags are auditable. */
+  /** Source evidence retained without shipping the full upstream prose in the client. */
   source: {
-    wikiPageUrl: string
-    effectTextEn: string
-    unlockRequirementEn: string
+    effectTextSha256: string
+    unlockRequirementSha256: string
     wikiType: WikiJokerType
     wikiActivation: WikiJokerActivation
-    imageUrl: string
     /** MediaWiki's SHA-1 for the unoptimised upload. */
     imageSha1: string
     /** SHA-1 of the checked-in PNG (the CDN may losslessly optimise the upload). */
@@ -143,10 +141,13 @@ export interface JokerDataMeta {
   gameVersion: typeof JOKER_DATA_GAME_VERSION
   classificationVersion: typeof JOKER_CLASSIFICATION_VERSION
   source: {
+    wikiPageUrl: string
     wikiPageRevision: number
+    enLocalizationUrl: string
     enLocalizationRevision: number
     enLocalizationTimestamp: string
     enLocalizationVersion: string
+    zhCNLocalizationUrl: string
     zhCNLocalizationRevision: number
     zhCNLocalizationTimestamp: string
     zhCNLocalizationVersion: string

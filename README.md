@@ -1,71 +1,135 @@
-# Balatrue（猜丑牌）
+# Balatrue
 
-`Balatrue` 是一个通过五项属性线索猜出《小丑牌》（Balatro）小丑卡的网页游戏。每次
-打出一张猜测，系统会从稀有度、基础价格、主效果、触发时机和依赖条件五个维度给出反馈，
-逐步缩小答案范围。玩法灵感来自 [Wordle](https://www.nytimes.com/games/wordle/index.html)、
-[汉兜（Handle）](https://github.com/antfu/handle)和 BLAST.tv 的
-[Counter-Strikle](https://blast.tv/counter-strikle/daily)。
+[简体中文](README.zh-CN.md)
 
-当前处于私人原型阶段，采用纯前端实现；玩法验收通过后再决定公开和部署方式。
+Balatrue is a daily web puzzle about Balatro Jokers. You have six guesses. After each guess, five
+clues—rarity, base price or acquisition, primary effect, trigger timing, and dependency—help narrow
+down the answer.
 
-## 现在可以玩什么
+The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html),
+[Handle](https://github.com/antfu/handle), and BLAST.tv's
+[Counter-Strikle](https://blast.tv/counter-strikle/daily).
 
-- 今日谜牌：北京时间每天一个固定答案，最多六次机会，刷新后继续。
-- 无尽牌局：使用本地洗牌袋连续开局，一轮 150 张内不重复。
-- 五项反馈：稀有度、基础价格／获取、主效果、触发时机、依赖条件。
-- 线索字典：随时查看五项线索的完整枚举，不影响战绩。
-- 小丑图鉴：搜索、筛选并浏览 150 张牌；进行中的每日局查看后会标为图鉴辅助局，不计战绩。
-- 名称与联想：使用官方中英文名称，并索引中文全拼和拼音首字母，支持键盘操作。
-- 本地战绩与分享：保存胜率、连胜和平均出牌数，分享结果不包含答案。
-- 移动端：375px 宽度下仍保留一排五项反馈，图鉴和字典使用全屏触控布局。
+## Status
 
-纯前端版本不会隐藏答案，也不承诺防作弊；它是一款自己和朋友轻松玩的每日谜题。
+The game is a tested, client-side release candidate. Its original source code is available under the
+MIT License and is ready for a public source release. The existing Git history previously contained
+complete upstream effect and unlock prose, so changing repository visibility still requires a clean
+root commit or a new public repository after owner confirmation. No public production site has been
+deployed, and no authorization from the Balatro rights holders is claimed.
 
-## 本地开发
+## Features
 
-项目使用 React 19、TypeScript 和 Vite，本地开发依赖 Bun 1.x 与 Node.js `^20.19.0` 或
-`>=22.12.0`：
+- **Daily Joker:** one answer per Beijing calendar day, six guesses, and restorable local progress.
+- **Endless:** a local shuffle bag cycles through all 150 Jokers without repeating within a round.
+- **Five clues:** rarity, price or acquisition, main effect, trigger timing, and dependency.
+- **Search:** in-game English and Simplified Chinese names, full pinyin, and pinyin initials; every
+  match remains available in a scrollable list.
+- **Clue glossary:** every player-facing clue value, available without affecting the score.
+- **Joker collection:** searchable and filterable; opening it during an active Daily round marks that
+  round as assisted and excludes it from stats.
+- **Local stats and sharing:** win rate, streaks, average guesses, and spoiler-free result sharing.
+- **Responsive play:** the Joker identity and five clue cells stay aligned as six columns on common
+  phone widths; screens at 340px and below use a more readable fallback.
+
+Balatrue is a client-side game. Its answer can be inspected, so it does not promise anti-cheat or
+support prize-based competition.
+
+## Local development
+
+The project uses React 19, TypeScript, Vite, and Bun 1.3.11. Vite also requires Node.js `^20.19.0`
+or `>=22.12.0`.
 
 ```bash
-bun install
+bun install --frozen-lockfile
 bun run dev
 ```
 
-完整技术检查：
+Run the complete technical checks and browser journeys with:
 
 ```bash
 bun run check
+bunx playwright install chromium # one-time browser setup on a new machine
 bun run test:e2e
 ```
 
-构建产物位于 `dist/`，部署契约为：
-
-```bash
-bun install --frozen-lockfile && bun run build
-```
-
-本地生产预览：
+Build and preview the static site:
 
 ```bash
 bun run build
 bun run preview
 ```
 
-## 文档
+The deployable output is `dist/`. A clean checkout can install, validate, test, and build without the
+local source-review file. Remote data synchronization is a maintainer-only operation and is disabled
+by default; see [Data sources and boundaries](docs/data-sources.md) before using it.
 
-- [产品与规则](docs/product.md)
-- [数据来源与边界](docs/data-sources.md)
-- [视觉与交互](docs/design.md)
-- [验收标准](docs/acceptance.md)
-- [当前路线](docs/roadmap.md)
-- [部署、域名与统计调研](docs/deployment-research.md)
-- [权利与发布说明](docs/legal-notice.md)
-- [外部阻塞项](docs/blockers.md)
+`package.json` keeps `private: true` only to prevent accidental npm publication. It does not restrict
+GitHub visibility or the MIT license.
 
-## 关于原作与素材
+## Project structure
 
-Balatrue 是一款由 Balatro 粉丝制作的免费猜谜游戏，与 LocalThunk 或 Playstack 没有官方
-关联。原作由 LocalThunk 开发、Playstack 发行；Balatro、相关名称与游戏美术的权利归各自
-权利人所有。当前仓库保持私有；公开网站或公开包含原作卡图的版本之前，需要先获得合适的
-素材使用许可。页面声明只能帮助读者理解项目性质，不能代替授权。具体发布边界见
-[权利与发布说明](docs/legal-notice.md)。
+```text
+src/          React UI, game rules, search, localization, and generated runtime data
+data/         checked-in per-Joker provenance; local restricted review data is git-ignored
+scripts/      data generation, validation, and release-artifact checks
+tests/e2e/    Playwright browser journeys
+docs/         product, architecture, design, rights, release, and deployment records
+public/       low-resolution Joker images used for card identification
+```
+
+The implementation route and module boundaries are documented in
+[Architecture](docs/architecture.md).
+
+## Data, artwork, and rights
+
+Balatrue is a free, non-commercial fan-made guessing game. It currently has no ads, purchases,
+prizes, sponsorships, or donations. It is not affiliated with, sponsored, endorsed, or approved by
+LocalThunk or Playstack. Balatro is developed by LocalThunk and published by Playstack; related
+names and artwork belong to their respective rights holders.
+
+The repository retains 150 low-resolution Joker images obtained through the community-run
+[Balatro Wiki](https://balatrowiki.org/) solely to identify cards in the fan game. The Wiki is a
+reference and provenance source, not represented here as the original rights holder or as a licensor
+of the game artwork. The images are excluded from the MIT License. Each image has a checked-in source
+page, source URL, hashes, and dimensions in
+[`data/jokers.provenance.generated.json`](data/jokers.provenance.generated.json). Provenance,
+attribution, disclaimers, and a takedown process do not create permission; public redistribution and
+display therefore retain residual rights risk.
+
+For a rights concern, contact [@x6ncraft](https://x.com/x6ncraft). The project will prioritize taking
+the related material offline immediately while the concern is reviewed, then remove or replace it as
+needed.
+
+The browser catalog contains the names and facts required by the puzzle, project-authored
+classifications, and source digests. Complete English effect and unlock prose is kept only in a
+maintainer's local, git-ignored review file. It is not required by a clean checkout and is not
+included in the production build.
+
+Read the [Asset and data notice](ASSET_NOTICE.md),
+[Rights and release notes](docs/legal-notice.md), [Release checklist](docs/release-checklist.md), and
+[Third-party notices](THIRD_PARTY_NOTICES.md) before publishing or redistributing the project.
+
+## Documentation
+
+- [Product and rules](docs/product.md)
+- [Architecture](docs/architecture.md)
+- [Data sources and boundaries](docs/data-sources.md)
+- [Visual and interaction design](docs/design.md)
+- [Acceptance criteria](docs/acceptance.md)
+- [Release checklist](docs/release-checklist.md)
+- [Deployment, domain, and metrics research](docs/deployment-research.md)
+- [Rights and release notes](docs/legal-notice.md)
+- [Roadmap](docs/roadmap.md)
+- [Contributing](CONTRIBUTING.md)
+
+The working documents are written in Chinese so product and release decisions stay precise for the
+project owner.
+
+## License
+
+Balatrue's original feature definitions, game logic, UI, engineering code, and the project-authored
+documentation that describes them are licensed under the [MIT License](LICENSE). This license does
+not cover Balatro-related names, trademarks, game text, Joker artwork, third-party fonts,
+dependencies, or other material identified in
+[ASSET_NOTICE.md](ASSET_NOTICE.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

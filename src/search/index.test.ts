@@ -93,8 +93,13 @@ describe('searchJokers', () => {
     expect(searchJokers(index, 'blue', { guessedIds, includeDisabled: false })).toEqual([])
   })
 
-  it('returns no suggestions for an empty normalized query and respects the limit', () => {
+  it('returns every match by default while respecting an explicit limit', () => {
     expect(searchJokers(index, '  ---  ')).toEqual([])
+    expect(searchJokers(index, 'j').map(({ id }) => id)).toEqual([
+      'j_joker',
+      'j_stencil',
+      'j_greedy',
+    ])
     expect(searchJokers(index, 'j', { limit: 2 })).toHaveLength(2)
   })
 })

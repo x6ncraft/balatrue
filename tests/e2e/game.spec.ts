@@ -8,6 +8,7 @@ import {
   getDailyAnswer,
   serializeGameState,
 } from '../../src/game'
+import { buildJokerSearchIndex, searchJokers } from '../../src/search'
 
 const browserErrors = new WeakMap<Page, string[]>()
 
@@ -33,6 +34,15 @@ test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
   const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
   await page.getByRole('button', { name: '猜猜看' }).click()
   await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
+
+  await search.fill('joker')
+  const expectedBroadMatches = searchJokers(buildJokerSearchIndex(jokers), 'joker').length
+  expect(expectedBroadMatches).toBeGreaterThan(8)
+  await expect(page.getByRole('option')).toHaveCount(expectedBroadMatches)
+  await search.press('End')
+  await expect(page.getByRole('option').last()).toHaveAttribute('aria-selected', 'true')
+  await search.press('Home')
+  await expect(page.getByRole('option').first()).toHaveAttribute('aria-selected', 'true')
 
   await search.fill('lantu')
   await search.dispatchEvent('compositionstart')
@@ -232,6 +242,36 @@ test('marks a daily game unscored before revealing the collection', async ({ pag
   await expect(statsDialog.getByText('0%', { exact: true })).toBeVisible()
 })
 
+test('keeps collection criteria for the page session and clears them in one action', async ({
+  page,
+}) => {
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+  await page.getByRole('button', { name: '打开小丑图鉴' }).click()
+
+  let dialog = page.getByRole('dialog', { name: '小丑图鉴' })
+  const search = dialog.getByRole('searchbox', { name: '搜索图鉴' })
+  await search.fill('Blueprint')
+  const filterToggle = dialog.getByRole('button', { name: /筛选/ })
+  if (await filterToggle.isVisible()) await filterToggle.click()
+  await dialog.getByLabel('稀有度').selectOption('rare')
+  await expect(dialog.getByRole('article', { name: '蓝图' })).toBeVisible()
+  await expect(dialog.getByRole('article')).toHaveCount(1)
+  await dialog.getByRole('button', { name: '关闭' }).click()
+
+  await page.getByRole('button', { name: '打开小丑图鉴' }).click()
+  dialog = page.getByRole('dialog', { name: '小丑图鉴' })
+  await expect(dialog.getByRole('searchbox', { name: '搜索图鉴' })).toHaveValue('Blueprint')
+  await expect(dialog.getByLabel('稀有度')).toHaveValue('rare')
+  await expect(dialog.getByRole('article')).toHaveCount(1)
+
+  await dialog.getByRole('button', { name: '清空' }).click()
+  await expect(dialog.getByRole('searchbox', { name: '搜索图鉴' })).toHaveValue('')
+  await expect(dialog.getByLabel('稀有度')).toHaveValue('')
+  await expect(dialog.getByRole('searchbox', { name: '搜索图鉴' })).toBeFocused()
+  await expect(dialog.getByText('找到 150 张小丑牌')).toBeVisible()
+  await expect(dialog.getByRole('button', { name: '清空' })).toHaveCount(0)
+})
+
 test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
@@ -268,6 +308,31 @@ test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
     'href',
     'https://space.bilibili.com/2056733',
   )
+  await expect(page.getByRole('link', { name: '资料来源' })).toHaveAttribute(
+    'href',
+    'https://balatrowiki.org/',
+  )
+
+  const legalDetails = page.locator('.site-footer__legal')
+  const legalSummary = page.getByText('权利与隐私', { exact: true })
+  await expect(legalDetails).not.toHaveAttribute('open', '')
+  await legalSummary.focus()
+  await legalSummary.press('Enter')
+  await expect(legalDetails).toHaveAttribute('open', '')
+  await expect(page.getByText(/本站不用于盈利/)).toBeVisible()
+  await expect(page.getByText(/MIT 只覆盖 Balatrue 自有的功能定义/)).toBeVisible()
+  await expect(page.getByText(/当前没有账号、统计 SDK/)).toBeVisible()
+  await expect(page.getByText(/Wiki 文字许可链仍在核对/)).toBeVisible()
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+    .toBe(true)
+  await legalSummary.press('Space')
+  await expect(legalDetails).not.toHaveAttribute('open', '')
+  await legalSummary.press('Enter')
+
+  await page.getByRole('button', { name: '选择界面语言' }).click()
+  await expect(page.getByText('Rights & privacy', { exact: true })).toBeVisible()
+  await expect(page.getByText(/The site is not operated for profit/)).toBeVisible()
 })
 
 test('reports storage failures when starting Endless', async ({ page }) => {

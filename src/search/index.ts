@@ -60,8 +60,6 @@ interface RankedEntry {
   readonly match: RankedMatch
 }
 
-const DEFAULT_RESULT_LIMIT = 8
-
 function pinyinText(value: string, initials: boolean): string {
   const result = pinyin(value, {
     type: 'array',
@@ -157,11 +155,11 @@ function bestMatch(entry: JokerSearchEntry, query: string, locale: Locale): Rank
 
 function resultLimit(value: number | undefined): number {
   if (value === undefined) {
-    return DEFAULT_RESULT_LIMIT
+    return Number.POSITIVE_INFINITY
   }
 
   if (!Number.isFinite(value)) {
-    return DEFAULT_RESULT_LIMIT
+    return Number.POSITIVE_INFINITY
   }
 
   return Math.max(0, Math.floor(value))

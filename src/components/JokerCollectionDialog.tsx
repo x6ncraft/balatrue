@@ -90,6 +90,7 @@ export default function JokerCollectionDialog({
   const activeFilterCount = [rarityFilter, effectFilter, timingFilter, dependencyFilter].filter(
     Boolean,
   ).length
+  const hasActiveCriteria = query.trim().length > 0 || activeFilterCount > 0
 
   function primaryName(joker: Joker): string {
     return locale === 'zh-CN' ? joker.name.zhCN : joker.name.en
@@ -317,9 +318,19 @@ export default function JokerCollectionDialog({
               </div>
             </div>
 
-            <div className="collection-summary" role="status">
-              <span>{t(locale, 'collection.results', { count: filteredJokers.length })}</span>
-              <span>{t(locale, 'collection.classificationNote')}</span>
+            <div className="collection-summary">
+              <span className="collection-summary__count" role="status">
+                {t(locale, 'collection.results', { count: filteredJokers.length })}
+              </span>
+              <span className="collection-summary__note">
+                {t(locale, 'collection.classificationNote')}
+              </span>
+              {hasActiveCriteria ? (
+                <button className="collection-clear" type="button" onClick={resetFilters}>
+                  <X size={14} aria-hidden="true" />
+                  {t(locale, 'collection.clearFilters')}
+                </button>
+              ) : null}
             </div>
 
             {filteredJokers.length > 0 ? (

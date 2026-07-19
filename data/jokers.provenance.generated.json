@@ -1,0 +1,2873 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/sync-jokers.ts",
+  "rightsNotice": "Balatro names and Joker artwork belong to their respective rights holders and are excluded from the project MIT license. See ASSET_NOTICE.md.",
+  "metadata": {
+    "gameVersion": "1.0.1o-FULL",
+    "classificationVersion": 9,
+    "source": {
+      "wikiPageUrl": "https://balatrowiki.org/w/Jokers?oldid=26120",
+      "wikiPageRevision": 26120,
+      "enLocalizationUrl": "https://balatrowiki.org/w/Module:Localization/en-us?oldid=7348",
+      "enLocalizationRevision": 7348,
+      "enLocalizationTimestamp": "2024-10-26T18:10:05Z",
+      "enLocalizationVersion": "1.0.1m-FULL",
+      "zhCNLocalizationUrl": "https://balatrowiki.org/w/Module:Localization/zh-cn?oldid=7378",
+      "zhCNLocalizationRevision": 7378,
+      "zhCNLocalizationTimestamp": "2024-10-26T18:22:30Z",
+      "zhCNLocalizationVersion": "1.0.1m-FULL"
+    }
+  },
+  "jokers": [
+    {
+      "id": "j_joker",
+      "number": 1,
+      "name": {
+        "en": "Joker",
+        "zhCN": "小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Joker.png?7edba",
+      "sourceImageSha1": "a4e10dda17171c287b76e7566798d4ed174e255a",
+      "localImageSha1": "1f963a5a322eee5b3a6879fea798b4c6bd8e1088",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d39725d885b73d93a2efe26dc97f12d9a1260dfdf74778b244e102797acc588e",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_greedy_joker",
+      "number": 2,
+      "name": {
+        "en": "Greedy Joker",
+        "zhCN": "贪婪小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Greedy_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Greedy_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Greedy_Joker.png?68b5e",
+      "sourceImageSha1": "3d988d34e556017b6ab1d0623cba081f530d9441",
+      "localImageSha1": "b781b4296591d7e0624c18a4ef43f36502280a2c",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3101c9bf455876ecb96d0b4c0abe07b0029e58e48ac41782394247c4fc739be3",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_lusty_joker",
+      "number": 3,
+      "name": {
+        "en": "Lusty Joker",
+        "zhCN": "色欲小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Lusty_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Lusty_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Lusty_Joker.png?76952",
+      "sourceImageSha1": "bec5445a9ed20a3296f713ef6fbbac90dff35718",
+      "localImageSha1": "c96c37ca728463fe2a80c77bab5ff9409072d03c",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "705659816825205d0728f0b71ba09d43b83c447518430cdc50d02bffb9759bc5",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_wrathful_joker",
+      "number": 4,
+      "name": {
+        "en": "Wrathful Joker",
+        "zhCN": "愤怒小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wrathful_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Wrathful_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Wrathful_Joker.png?76952",
+      "sourceImageSha1": "d4efb26d0815a83dd1e0a824ac5d429f03a04508",
+      "localImageSha1": "8175c4eb7be2fe7619f08462eb26326ff725aaa1",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "162e51ab6955cb488bbc39a13496f61e0d8e4db9b39680865d8ef17fcc8b4e42",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_gluttenous_joker",
+      "number": 5,
+      "name": {
+        "en": "Gluttonous Joker",
+        "zhCN": "暴食小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gluttonous_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Gluttonous_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Gluttonous_Joker.png?ec8cd",
+      "sourceImageSha1": "14164fcae9ce65e6c9bc615d0160b53f6af86ad3",
+      "localImageSha1": "fecf2c748c645a517e844554db2805dbcce777b9",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "89cf7b082301a8ce557d6d94932afc201ee5aad132237042c2c79177d778339b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_jolly",
+      "number": 6,
+      "name": {
+        "en": "Jolly Joker",
+        "zhCN": "开心小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Jolly_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Jolly_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Jolly_Joker.png?31f87",
+      "sourceImageSha1": "d92045e6ef01b5c6a4c8995eb2e7034bec97edd9",
+      "localImageSha1": "b8f2a8c35242619d0c1ff611bc0dbcdb9bf8ca52",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "1e0e251e5dc0c83b20bf746d185d8b2d7e32a2d2ddcab12060334e19992d2d2e",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_zany",
+      "number": 7,
+      "name": {
+        "en": "Zany Joker",
+        "zhCN": "古怪小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Zany_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Zany_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Zany_Joker.png?503ea",
+      "sourceImageSha1": "dcb08756c705722697fd8b136e0c1c2f613ef4b2",
+      "localImageSha1": "2b6319ee4200b872abe7392da790ab1cb9dc6881",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "2b48aaf5f83c2f28cb9a488c467d40362d055e63ddc677881f052c62311c0b61",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_mad",
+      "number": 8,
+      "name": {
+        "en": "Mad Joker",
+        "zhCN": "疯狂小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mad_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Mad_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Mad_Joker.png?bc6c9",
+      "sourceImageSha1": "98b4b301ba301433a41c035f2c88d2fb7fc999fe",
+      "localImageSha1": "d09eb29cba0662af10f67d3617020d9f2c0a3203",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b398f14c17ff4dc2af9d5cbbf6f0d659016ee7fff2f523c1ffc308297d646f01",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_crazy",
+      "number": 9,
+      "name": {
+        "en": "Crazy Joker",
+        "zhCN": "狂野小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Crazy_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Crazy_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Crazy_Joker.png?2bb8f",
+      "sourceImageSha1": "52eccc0d7949b7a9aad6a32179d777f1d6593758",
+      "localImageSha1": "1008e57025f31f6111e59cdec719a707bb815720",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a3efb4e7c219147e7acdeca0cbb4183d486d1572146f45c8b90b579dbf2200d7",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_droll",
+      "number": 10,
+      "name": {
+        "en": "Droll Joker",
+        "zhCN": "滑稽小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Droll_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Droll_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Droll_Joker.png?9dea7",
+      "sourceImageSha1": "1aaaa40588072599a8257a0976ab14fa06e6e5ad",
+      "localImageSha1": "61c7b853fd0ffc3d7859227943c99a297f51c30b",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "daca20a0c8841480f06207710f16da6e6727583d55ea296df9aec4e7e818c60b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_sly",
+      "number": 11,
+      "name": {
+        "en": "Sly Joker",
+        "zhCN": "奸诈小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sly_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Sly_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Sly_Joker.png?785b0",
+      "sourceImageSha1": "f4bd4e7e2ba2e291bf169347a64d57c67cec99cb",
+      "localImageSha1": "62d3381d778fa8ab35fa70009dfba6d5954a0dd9",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "137e0932380393a1c1f979563d337880509ea04b94375b69b4fd92c4db1ec182",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_wily",
+      "number": 12,
+      "name": {
+        "en": "Wily Joker",
+        "zhCN": "狡猾小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wily_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Wily_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Wily_Joker.png?59941",
+      "sourceImageSha1": "472e678baed836e2d5da523788bcc373f5e7af6d",
+      "localImageSha1": "f4d1075b662b6947cc8fa53853ad8db71602fa3f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "1dd11ff0006b528c21f8a5484824d78134801eaea1d44b4ef12e0e02a12f91b2",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_clever",
+      "number": 13,
+      "name": {
+        "en": "Clever Joker",
+        "zhCN": "聪敏小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Clever_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Clever_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Clever_Joker.png?c2577",
+      "sourceImageSha1": "3c78f6dc8d6b8030efb2bcd115d9f0d44c2d2ac4",
+      "localImageSha1": "fd7b3ba9ee9aff875ec579c5ae1b504282efd1fb",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "1986cac3595d835f9dff30a1b23c586d760c962f0126e1a2d82eeba91a50f499",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_devious",
+      "number": 14,
+      "name": {
+        "en": "Devious Joker",
+        "zhCN": "阴险小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Devious_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Devious_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Devious_Joker.png?58028",
+      "sourceImageSha1": "76da13931dd0d1603d9df9995e211b504a8e4dcc",
+      "localImageSha1": "5b502d999083bca0a39b7e1920c935fea45c11f2",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "c12382f85b7ce59c4f17a506e65a4cf2a1b9c556baeb5e8a6efeb431ab168367",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_crafty",
+      "number": 15,
+      "name": {
+        "en": "Crafty Joker",
+        "zhCN": "精明小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Crafty_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Crafty_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Crafty_Joker.png?0a8aa",
+      "sourceImageSha1": "485ef3b3c045d0b245dac8e01662f253ccd449da",
+      "localImageSha1": "c3c02ff84db4c7020befd598bc5465fb46bd0fde",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "cb03166777f72dda88457848f730da94e0b2965af9f2d020e08d92cbaaf284cf",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_half",
+      "number": 16,
+      "name": {
+        "en": "Half Joker",
+        "zhCN": "半张小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Half_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Half_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Half_Joker.png?053e7",
+      "sourceImageSha1": "2bdaa47f3e530bef783d99c2fb87be6720b21f30",
+      "localImageSha1": "508da1942efe8dd82ccc507edbb23745f9322bdd",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a65051a046bcf91ab3422e5d76be8792b5e667305552e08216761867b30afcd6",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_stencil",
+      "number": 17,
+      "name": {
+        "en": "Joker Stencil",
+        "zhCN": "模具小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Joker_Stencil",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Joker_Stencil.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Joker_Stencil.png?e908e",
+      "sourceImageSha1": "00453ce31b1de495f095a2ba80e30872ea682706",
+      "localImageSha1": "19269fc43fc75af5a92f1784b73ffb28b5db82ec",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "5c26c6f5dadcdd9e0cbec6937b849a18ffd50c1f52b4de113f697fd325fd76d3",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_four_fingers",
+      "number": 18,
+      "name": {
+        "en": "Four Fingers",
+        "zhCN": "四指"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Four_Fingers",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Four_Fingers.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Four_Fingers.png?58466",
+      "sourceImageSha1": "7eda1bb8b96fb544d139938f00f48d7db816e553",
+      "localImageSha1": "6c43c3a3c9943efc5444d64d9940cf60b54fd5cc",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "981c3a08e6400519afc3392b9a97afefc60f56c15924ae2c6a491febc70946d7",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_mime",
+      "number": 19,
+      "name": {
+        "en": "Mime",
+        "zhCN": "哑剧演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mime",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Mime.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Mime.png?0b031",
+      "sourceImageSha1": "871d6f93d1d9b64ec7f55b6538b800a8c41ee1a5",
+      "localImageSha1": "9089950269ad28320d3fce725c70e78a1daf720f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "bd7af9899db8849af88b5ee701d06ef02f0642f2e5ea6eb64f4364ab315d022f",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_held"
+    },
+    {
+      "id": "j_credit_card",
+      "number": 20,
+      "name": {
+        "en": "Credit Card",
+        "zhCN": "信用卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Credit_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Credit_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Credit_Card.png?4a471",
+      "sourceImageSha1": "43295702053ecc6e332e0aecafec0b015fba0ac9",
+      "localImageSha1": "e8ddfcc4cc3ce7c548677ffadf65933c649fdb17",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b1b23b3253b4e8450a35c411e0bf61405ef148a41df655f36064348da1932877",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_ceremonial",
+      "number": 21,
+      "name": {
+        "en": "Ceremonial Dagger",
+        "zhCN": "仪式匕首"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ceremonial_Dagger",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Ceremonial_Dagger.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Ceremonial_Dagger.png?25d93",
+      "sourceImageSha1": "b9794f2714e568474839df7e1c9c69129c6f4c73",
+      "localImageSha1": "8b83a07baf12b22984cf5e2485abfd9a27995534",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ada24336a079badda659ecd4cd932c3c278254c28ef1a594b0fa8054e75ca785",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_banner",
+      "number": 22,
+      "name": {
+        "en": "Banner",
+        "zhCN": "旗帜"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Banner",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Banner.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Banner.png?dfdcd",
+      "sourceImageSha1": "eb4d0b0e60070825d519f82a79e4173aade24b4f",
+      "localImageSha1": "9c32c27254c5e013545fbf45a7e0ee7a5de1ad2e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "db6c81df022f2a33d05a54223110bbdeec3f6649f5f7be3a347e3e733a247351",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_mystic_summit",
+      "number": 23,
+      "name": {
+        "en": "Mystic Summit",
+        "zhCN": "神秘之峰"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mystic_Summit",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Mystic_Summit.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Mystic_Summit.png?3671e",
+      "sourceImageSha1": "75f0ed4d63caade5c940fc9db1f578ba1a4eb208",
+      "localImageSha1": "75f0ed4d63caade5c940fc9db1f578ba1a4eb208",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b17eb21373929ddb5bb26e060eacecb54dc74130079a287023a021f8b1c6aee5",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_marble",
+      "number": 24,
+      "name": {
+        "en": "Marble Joker",
+        "zhCN": "大理石小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Marble_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Marble_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Marble_Joker.png?d4382",
+      "sourceImageSha1": "3de27c006618dc4dbfa075e0d2a97b1564aa3618",
+      "localImageSha1": "5e3b86d575587da796b21648cfdac46d09b05da5",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4385b51b33511a28acd801d347f7e8beaf2b6d1748cc7ee9d23e903b714d687d",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select"
+    },
+    {
+      "id": "j_loyalty_card",
+      "number": 25,
+      "name": {
+        "en": "Loyalty Card",
+        "zhCN": "积分卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Loyalty_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Loyalty_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Loyalty_Card.png?516db",
+      "sourceImageSha1": "ee446f3394ac763f81d5c44ec67c45031421b71d",
+      "localImageSha1": "f2a7e439f72c5c9df8bf2176c866853bda7681cb",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "1516c0df3602262734bf580953e89d34b2ed725616308643226ce28577208832",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_8_ball",
+      "number": 26,
+      "name": {
+        "en": "8 Ball",
+        "zhCN": "八号球"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/8_Ball",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:8_Ball.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/8_Ball.png?bfbdc",
+      "sourceImageSha1": "8226489662e5b2d87bb50f736ca7600fde447f59",
+      "localImageSha1": "ed0d4c7236be3ed73018cf78263007dedacce8dc",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "8314cf61b07fbb9954975bc15767757e41ab0779cd1e95d76955a6a683c3f394",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_misprint",
+      "number": 27,
+      "name": {
+        "en": "Misprint",
+        "zhCN": "印错小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Misprint",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Misprint.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Misprint.png?a7cb6",
+      "sourceImageSha1": "153640e126ee386f1e352d633d39909c625fdcca",
+      "localImageSha1": "a5d6f3a899f7d30ffe1fb7db209e00c6a1919727",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4de278654e1b0b1c914e981fe9e8c557d8aa215ade62ba7e6cb528b79179999a",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_dusk",
+      "number": 28,
+      "name": {
+        "en": "Dusk",
+        "zhCN": "黄昏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Dusk",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Dusk.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Dusk.png?0c00a",
+      "sourceImageSha1": "f9cffd3b8177e2a456ca815ea3ce34d4d47429dd",
+      "localImageSha1": "8b17bd3f356dee2d1f804d1b9f9983532121cc35",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "227cd997268d3032d015798a5fac45f9f6a6c363c90183487f9a61ca7e1fed60",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_raised_fist",
+      "number": 29,
+      "name": {
+        "en": "Raised Fist",
+        "zhCN": "致胜之拳"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Raised_Fist",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Raised_Fist.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Raised_Fist.png?a1cd5",
+      "sourceImageSha1": "407c15f47ac688a48e28e2fec63b851ed8dbf84c",
+      "localImageSha1": "097ad64615f9fb2dc23f09dab8c41c4c84b229cc",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b8c3ae3b42fb86b36f395bddbd64ce638ddf46d905b6c9ae05f5d10c42191017",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_held"
+    },
+    {
+      "id": "j_chaos",
+      "number": 30,
+      "name": {
+        "en": "Chaos the Clown",
+        "zhCN": "混沌小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Chaos_the_Clown",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Chaos_the_Clown.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Chaos_the_Clown.png?35876",
+      "sourceImageSha1": "20f16fccb7a6194a8549feb522af3deb8cb4dd70",
+      "localImageSha1": "ffb22b116f56fe24ba019e611b5c0f477d944356",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "cd1d123bd42f791738ea0076674b74c2bf1d7ea2d60bb749f556b494f092adb7",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_fibonacci",
+      "number": 31,
+      "name": {
+        "en": "Fibonacci",
+        "zhCN": "斐波那契"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Fibonacci",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Fibonacci.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Fibonacci.png?287ab",
+      "sourceImageSha1": "9cccb699fd68b6581ead3f827b8f0ce9b5b0e721",
+      "localImageSha1": "3810c91360659f1954b518a1a9df5a445dbb0f51",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "71a631ab79a16a7be2436187f4499821ffc01a9217d2041162954b2b9b5a59e6",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_steel_joker",
+      "number": 32,
+      "name": {
+        "en": "Steel Joker",
+        "zhCN": "钢铁小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Steel_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Steel_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Steel_Joker.png?91161",
+      "sourceImageSha1": "41d00224d4e374a74dcc3ad15dc5abc32f7d60be",
+      "localImageSha1": "faf43991333b7320c4c6dfac9af2e37349ac1da3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "220d0e74a40a589949a93a0f8e4b6c4a1ce480f13e27b0b66f95aaa8fd47e14b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_scary_face",
+      "number": 33,
+      "name": {
+        "en": "Scary Face",
+        "zhCN": "恐怖面孔"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Scary_Face",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Scary_Face.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Scary_Face.png?08486",
+      "sourceImageSha1": "9f85c72c2b5d7136b992cadc72e7a472ec6f7dfc",
+      "localImageSha1": "c086d430f78b43d368b06dc1b38056bc7a2e5a7a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "f4bff6fbb8fe4e1425ce5c24229aca5c9c4979ec315a05e69fd78f6dcaf618ca",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_abstract",
+      "number": 34,
+      "name": {
+        "en": "Abstract Joker",
+        "zhCN": "抽象小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Abstract_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Abstract_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Abstract_Joker.png?2a9b3",
+      "sourceImageSha1": "98fd480778c0a5a6bd433d786f281044380ee5a7",
+      "localImageSha1": "b44603bf0f7341b508c2b87d224646b9e0b392bf",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "2dc82dbfb31be2ca3987ade8f8c5b17b7dbed1ddd0311d44848dd36dc8552e84",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_delayed_grat",
+      "number": 35,
+      "name": {
+        "en": "Delayed Gratification",
+        "zhCN": "延迟满足"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Delayed_Gratification",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Delayed_Gratification.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Delayed_Gratification.png?ba8a9",
+      "sourceImageSha1": "7ebae63a2c16c9d1cdc45802ec04a25aa1b97dc5",
+      "localImageSha1": "5ec7c29f976b5ba67a36740b6ee920c947140123",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3979bb3e1aebc849d7936f3f4c6ac3ec6a6db0a7e249401d51a5dabfcc9864b4",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_hack",
+      "number": 36,
+      "name": {
+        "en": "Hack",
+        "zhCN": "烂脱口秀演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hack",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hack.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hack.png?3c921",
+      "sourceImageSha1": "4e9db8eb677cd263a16e57d5970aa664491cb70c",
+      "localImageSha1": "7c342e40204fa55b6b1e33404a81da05e0bffa40",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "c60822c1533954ebf6973f82ee9d63cf63350232a8013e9490ef3fb0665a21ce",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_pareidolia",
+      "number": 37,
+      "name": {
+        "en": "Pareidolia",
+        "zhCN": "幻视"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Pareidolia",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Pareidolia.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Pareidolia.png?f3c30",
+      "sourceImageSha1": "8d8e78417446c4dc1faf3413a218c55f284b9a63",
+      "localImageSha1": "49321dd70b2d8be8319b1b9276e6a6455aef9d2d",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a8dcdf783f51c4772addb17c009cc02ec39d32835a84c1d1c94d3e907558bd00",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_gros_michel",
+      "number": 38,
+      "name": {
+        "en": "Gros Michel",
+        "zhCN": "大麦克香蕉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gros_Michel",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Gros_Michel.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Gros_Michel.png?85eae",
+      "sourceImageSha1": "c184b15e8e7e021654d5e403f2fab7e30a628022",
+      "localImageSha1": "61e7e287eaec5c05741bb2a35d60ef882820cc04",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "7050ca916729b9d33da7ec4e2cea91cb5364f2ebba1dda7ea31eefda9b3ed068",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_even_steven",
+      "number": 39,
+      "name": {
+        "en": "Even Steven",
+        "zhCN": "偶数史蒂文"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Even_Steven",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Even_Steven.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Even_Steven.png?2595d",
+      "sourceImageSha1": "86c1dca890414238063e704d1433b074c8ffc2b6",
+      "localImageSha1": "c89b0be48a6d5ccfeaafdb43184313b95929d79e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "6006181230e1c8c771a1f47e9caf038869b9f179ed8ccd3034e79cf4e48d146e",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_odd_todd",
+      "number": 40,
+      "name": {
+        "en": "Odd Todd",
+        "zhCN": "奇数托德"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Odd_Todd",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Odd_Todd.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Odd_Todd.png?6bb7f",
+      "sourceImageSha1": "6539933c502f59c184799fc39dff8b19fa20ba4e",
+      "localImageSha1": "19c099a850f7d7745bc0032451e2b7132288a558",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "030b444bea5261a1fe6ed4dbfb40b0b6fd500f6f1e14e6afe5d9caf4cf9e50a5",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_scholar",
+      "number": 41,
+      "name": {
+        "en": "Scholar",
+        "zhCN": "学者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Scholar",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Scholar.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Scholar.png?303f6",
+      "sourceImageSha1": "b5056c3244462f388e73155496857994f0133fe5",
+      "localImageSha1": "04eca9b19197bdbc88e680bc3d4e4ae9ef34d34f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "33a96de645a17b73238e890c9975af2d3a322b3d1cc9951caa3ef639b072cc31",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips_and_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_business",
+      "number": 42,
+      "name": {
+        "en": "Business Card",
+        "zhCN": "名片"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Business_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Business_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Business_Card.png?f91d7",
+      "sourceImageSha1": "6dd4b332bc7502fedf8e6fbb46b3c0ae5e737d40",
+      "localImageSha1": "dd2e7f9183afc13fc1c7580d31b064ea39c6d186",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "57eb0c25d7748c0ae7d49a5b53ba59ddd59730f7715a6f1d323dc5e582b0272b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_supernova",
+      "number": 43,
+      "name": {
+        "en": "Supernova",
+        "zhCN": "超新星"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Supernova",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Supernova.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Supernova.png?0771d",
+      "sourceImageSha1": "0edab08d973bef5a41c4076bd36fe9700195e96e",
+      "localImageSha1": "b5d88a3eca811ac9db527959b11b758e7a956d7b",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "df6af3c7a70ceb0dcb3f66be8436637e0a77f84c0501fb5aae703e02e165a80e",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_ride_the_bus",
+      "number": 44,
+      "name": {
+        "en": "Ride the Bus",
+        "zhCN": "搭乘巴士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ride_the_Bus",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Ride_the_Bus.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Ride_the_Bus.png?1c42b",
+      "sourceImageSha1": "ebf820a05d4edfbb6e1adaadc5afba670971282e",
+      "localImageSha1": "6a6daf55d53f962c73d897b1d54d52a2740996d3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "42c3188fe8ee03b978f43ad47c81c7f40a660c7b566487385a637913515ea98c",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_space",
+      "number": 45,
+      "name": {
+        "en": "Space Joker",
+        "zhCN": "太空小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Space_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Space_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Space_Joker.png?255c3",
+      "sourceImageSha1": "c83d87bc517c9f67d20613f5fac93723268223ab",
+      "localImageSha1": "6230c04a9f6881b75cbb4373564598f9c995c99a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "aadc767dce83f96dc84bcbefd06ee2e80aa1adea959beac65421a6ca59c8ae16",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_played"
+    },
+    {
+      "id": "j_egg",
+      "number": 46,
+      "name": {
+        "en": "Egg",
+        "zhCN": "鸡蛋"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Egg",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Egg.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Egg.png?a944d",
+      "sourceImageSha1": "b3c9eb34f0f4f6e24681f6bd05ffe1b1304fc4c8",
+      "localImageSha1": "6a800eeae5c6c90f1d22807249b285a5bf6645c5",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "7d33847d3551447fc77fe3d0d3a0e7de526a0d200ee36c690604b7cca5581bdc",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_burglar",
+      "number": 47,
+      "name": {
+        "en": "Burglar",
+        "zhCN": "窃贼"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Burglar",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Burglar.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Burglar.png?54fa4",
+      "sourceImageSha1": "d447ca7e6d5e0e8508da9b44e6a3b19d5b1f7c2c",
+      "localImageSha1": "296ae5311672ac0411d7aef2e944c3c0d16bb218",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "c1888ef3ee960f9f67d810de8e6d4e7e73e204b28f32828b4070748a2cd40692",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select"
+    },
+    {
+      "id": "j_blackboard",
+      "number": 48,
+      "name": {
+        "en": "Blackboard",
+        "zhCN": "黑板"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blackboard",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Blackboard.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Blackboard.png?cf54d",
+      "sourceImageSha1": "4e8e8b53ca94a10f4bbb88fce8db9e5095863eb3",
+      "localImageSha1": "c5bdf05c975d0bead2a2b57ffe27e30153045dbb",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "7501fa1d6d92af48bfaace3d4700477a7562949a318a1dd7d69c0b1219692c1d",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_runner",
+      "number": 49,
+      "name": {
+        "en": "Runner",
+        "zhCN": "跑步选手"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Runner",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Runner.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Runner.png?62aad",
+      "sourceImageSha1": "161d56e0849eff61abe344fa8a71dd98681dc0a0",
+      "localImageSha1": "0a7dce63cbe58995c2e1af71210f6d38bdc0affb",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a87994f740c0ce89193c6e45121fcfa2a45a1e4a4d66ccee2a375b90c31d8c3b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_ice_cream",
+      "number": 50,
+      "name": {
+        "en": "Ice Cream",
+        "zhCN": "冰淇淋"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ice_Cream",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Ice_Cream.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Ice_Cream.png?c0e70",
+      "sourceImageSha1": "d1ea9d3039478da5cb0609c69e444110440c5a21",
+      "localImageSha1": "3459c2e843fc2953c140e1656b24d24f9f371f77",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "df5a7774c1e07a5be0134c29ad4e52577654e6c355c28fee94124fcbe79dcbfb",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_dna",
+      "number": 51,
+      "name": {
+        "en": "DNA",
+        "zhCN": "DNA"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/DNA",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:DNA.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/DNA.png?20c90",
+      "sourceImageSha1": "702d168b6157f26c1d472a876a0d143e90012699",
+      "localImageSha1": "ebd10842b9f551274cd4de09bc90e39d93e7479a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "00e4f18004f19e09792c286ea246d37a0853812349077692a92f3e346904435c",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_played"
+    },
+    {
+      "id": "j_splash",
+      "number": 52,
+      "name": {
+        "en": "Splash",
+        "zhCN": "飞溅"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Splash",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Splash.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Splash.png?26f6c",
+      "sourceImageSha1": "1708199a391465eeb41ec1713c797747980c5daa",
+      "localImageSha1": "1aef82f7cccb0552067de32dbde7c9787e8613a3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a404cafb9c3a1eca2323c0651b96e4fb342c81f9531d9c7627072cb3b95b5765",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_blue_joker",
+      "number": 53,
+      "name": {
+        "en": "Blue Joker",
+        "zhCN": "蓝色小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blue_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Blue_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Blue_Joker.png?8106c",
+      "sourceImageSha1": "5cd62e64e10a7c905b991eac04482e10d1ce90b9",
+      "localImageSha1": "d4d7f28962588ab683c08c20cf5479abb0f62144",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "e5a5526ab8338adcc3acf9f4785814b20d126c8da6b8516dd732ac1f493c1916",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_sixth_sense",
+      "number": 54,
+      "name": {
+        "en": "Sixth Sense",
+        "zhCN": "第六感"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sixth_Sense",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Sixth_Sense.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Sixth_Sense.png?d0e95",
+      "sourceImageSha1": "7fde6e651711bd072e5833536d42c8c79deb50a1",
+      "localImageSha1": "c0838baee85c5cf107b17f10ff4ea03c011babfc",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "941f314722847d70284a08e23a210eca0b4cdd2bdb0a722f5946cc761ef60b8d",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_constellation",
+      "number": 55,
+      "name": {
+        "en": "Constellation",
+        "zhCN": "星座"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Constellation",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Constellation.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Constellation.png?24ca0",
+      "sourceImageSha1": "8b51554665facacd0161f6f86685a8e356ada1fc",
+      "localImageSha1": "d9f2c1abc1c21b9bcbd9816cb213fc97fe1cff2f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d0ae023fa6a2080e52aadaa099cc4fe2c57bf4e66cda07135a309aa68e490a2c",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_hiker",
+      "number": 56,
+      "name": {
+        "en": "Hiker",
+        "zhCN": "徒步者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hiker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hiker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hiker.png?61ba9",
+      "sourceImageSha1": "f0543cf7c608ed018297a0957e8f42de3561a096",
+      "localImageSha1": "23f05bfcb89136a8e7597658ce2bba0ddfb6335f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4208e6224b903d2a2dbf2f8b103715271ce023060cf85ffaac2fa2f718354874",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_faceless",
+      "number": 57,
+      "name": {
+        "en": "Faceless Joker",
+        "zhCN": "无面小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Faceless_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Faceless_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Faceless_Joker.png?2deac",
+      "sourceImageSha1": "e822d78cee6ec39478337d3f9685b5611309ad4c",
+      "localImageSha1": "bc8b267ca68d332b81871dcc8d1d982a39db8fe7",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "fae6c04be6131afc8d03b5ba83e0e9f7c9487af8adc68cfa0ae12d815b49eddf",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard"
+    },
+    {
+      "id": "j_green_joker",
+      "number": 58,
+      "name": {
+        "en": "Green Joker",
+        "zhCN": "绿色小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Green_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Green_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Green_Joker.png?2deac",
+      "sourceImageSha1": "fcfe7004a64015a715dfc24efabc79ec907d5eb5",
+      "localImageSha1": "6302446afa4fb256ce69eca976e57d18f1e14eb3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "45e41b83c0238a30d939abd5b356777e645d4a93667b76d6eca24ce9f8cdb926",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_superposition",
+      "number": 59,
+      "name": {
+        "en": "Superposition",
+        "zhCN": "叠加态"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Superposition",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Superposition.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Superposition.png?fa5e1",
+      "sourceImageSha1": "d471218cd327fae0cfeb2798fc1ceb8a414cd11b",
+      "localImageSha1": "4e119e8ded2bf30c31777f81a92b69b198110852",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b312f470ea9f72119c9caf873175ee017de0e4e0434f3b719f42d72523770c0f",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_todo_list",
+      "number": 60,
+      "name": {
+        "en": "To Do List",
+        "zhCN": "待办清单"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/To_Do_List",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:To_Do_List.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/To_Do_List.png?e2f47",
+      "sourceImageSha1": "cb0a1a01faecd9dd5a1504d906c9275f5dfde2ab",
+      "localImageSha1": "2e830405e03be6403c8e6fca3be4f1e0fc5ad641",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d21f384906b558c3bc31e69c4372afa3020c3437518a0025d718e0b79e6d7f04",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_played"
+    },
+    {
+      "id": "j_cavendish",
+      "number": 61,
+      "name": {
+        "en": "Cavendish",
+        "zhCN": "卡文迪什"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cavendish",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Cavendish.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Cavendish.png?a1358",
+      "sourceImageSha1": "011ce8d32511d1a2c8c41efcd13cd98f5da041c7",
+      "localImageSha1": "8830f9959731c8364be93efd85913f3e32be6aa2",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b7b119a8bb18279a1df915c0e31348f603d4e32225c176cc11e06b7f0350be3a",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_card_sharp",
+      "number": 62,
+      "name": {
+        "en": "Card Sharp",
+        "zhCN": "老千小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Card_Sharp",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Card_Sharp.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Card_Sharp.png?d65e9",
+      "sourceImageSha1": "5170f751fbf8a563edb6b70c47e936b7377196d0",
+      "localImageSha1": "b57263d2c4901f2667b195c259a2b447856f73c1",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "fc2e73103fc6122aa29f764005782a7fdb4e4fa49334ce6834e2ddd89dae5175",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_red_card",
+      "number": 63,
+      "name": {
+        "en": "Red Card",
+        "zhCN": "红牌"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Red_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Red_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Red_Card.png?a1358",
+      "sourceImageSha1": "f1843a31bc7d7e5f7429e3354346ba96459a8cc8",
+      "localImageSha1": "810e1dc2c2ecf4ec49f9f9f9ece11f1c00ce6d81",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d8fcc4ea227bcbed86a8b8084b07d26b8cc95b292b5a22aa5937eb01eb7ba4b4",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_madness",
+      "number": 64,
+      "name": {
+        "en": "Madness",
+        "zhCN": "疯狂"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Madness",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Madness.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Madness.png?aca82",
+      "sourceImageSha1": "94b5f7d0acf539c9f3ae6a74a02c8e752ccfedf8",
+      "localImageSha1": "11275013f23e494c14b53b4ca311fc27fbfc72da",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "98d02a7a00c6604e20a80519d098ef64fac47b2b5f04dd9babfc52d3f09cde1f",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_square",
+      "number": 65,
+      "name": {
+        "en": "Square Joker",
+        "zhCN": "方形小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Square_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Square_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Square_Joker.png?e63f8",
+      "sourceImageSha1": "68b85b4f44e06afc640d77b4fd8a28e9e2fee575",
+      "localImageSha1": "a80c2683daf7a2b4efd1b027948dec9be4ee464a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4f84bdb35b2d2b0b7d0e6f44ca4600fd87dd5c46e15699e047069e6952c982c5",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_seance",
+      "number": 66,
+      "name": {
+        "en": "Séance",
+        "zhCN": "通灵"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/S%C3%A9ance",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:S%C3%A9ance.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/S%C3%A9ance.png?2fe62",
+      "sourceImageSha1": "eeaf95ce6cb33fa59362d22623f52a96e6b1a627",
+      "localImageSha1": "9b849b1d189eedae2500b2e49eb040f82f2d5e1a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "5b59523847acd2aa9ddffd18269db2be70e45233eda19aa55e07e2631fccf2ac",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_riff_raff",
+      "number": 67,
+      "name": {
+        "en": "Riff-Raff",
+        "zhCN": "乌合之众"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Riff-Raff",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Riff-Raff.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Riff-Raff.png?9ab59",
+      "sourceImageSha1": "20872ad18e013725e18110e890890619c66a5020",
+      "localImageSha1": "1fd6b305cd3e1990290829ba36fd8ed277cec3da",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a4d448b4c8e348707d04f620c7866fe7fc1613a4e4effb9c5680adf5ca1cfc3c",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select"
+    },
+    {
+      "id": "j_vampire",
+      "number": 68,
+      "name": {
+        "en": "Vampire",
+        "zhCN": "吸血鬼"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Vampire",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Vampire.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Vampire.png?2fe62",
+      "sourceImageSha1": "b8c1f01abb866610e024f0d7c4718312b9f38fde",
+      "localImageSha1": "bdf1e5ba25598effa250fb70ce9c2ad88c231d48",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "862336a1efb9d462c342f7c5d4670986c5d7ce547acff5d1a8c6b0f2afd59c0d",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_shortcut",
+      "number": 69,
+      "name": {
+        "en": "Shortcut",
+        "zhCN": "捷径"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Shortcut",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Shortcut.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Shortcut.png?e6a46",
+      "sourceImageSha1": "650487cc5dd214cf431395af156381e86bf6d07a",
+      "localImageSha1": "e7c81d5f588359f519ef9e1b41be371a5ea66a20",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "9ed79a1903a2446f5d2c4419632d1b65267424bc5889771fa2d33d51eda88f62",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_hologram",
+      "number": 70,
+      "name": {
+        "en": "Hologram",
+        "zhCN": "全息影像"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hologram",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hologram.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hologram.png?53136",
+      "sourceImageSha1": "7eda06e376fac96b0e1f18bc68b937adbf6cab9b",
+      "localImageSha1": "cb23339d72fa5f9a63e8d5f565d9a64c72b4e1ef",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "df1f2263af8dfeaa140d0ffd3b89753a40f57828d5af4a31a63340d581a8eb16",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_vagabond",
+      "number": 71,
+      "name": {
+        "en": "Vagabond",
+        "zhCN": "流浪者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Vagabond",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Vagabond.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Vagabond.png?bacdb",
+      "sourceImageSha1": "3c8171a794515328393ddd4ff63cd01e2fe1cb93",
+      "localImageSha1": "3ab41d6415e3f11b75133704b8658aa0cd048207",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ad13030c8357080a1a70e3ae973a6b38e2bf6d7e7148f8483c9a30219c06d456",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_baron",
+      "number": 72,
+      "name": {
+        "en": "Baron",
+        "zhCN": "男爵"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Baron",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Baron.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Baron.png?300d5",
+      "sourceImageSha1": "34928610a41b9faf95b288aa58b6f30ded59246d",
+      "localImageSha1": "054b0569963aa36248b7104f512b449fd7b297e4",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "cd25557234207553a8143ae0108298adfa481dc5b716dcd2582efbef0532cd74",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_held"
+    },
+    {
+      "id": "j_cloud_9",
+      "number": 73,
+      "name": {
+        "en": "Cloud 9",
+        "zhCN": "9霄云外"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cloud_9",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Cloud_9.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Cloud_9.png?bacdb",
+      "sourceImageSha1": "133dc7645595b6f807617e164c3087362e6dab60",
+      "localImageSha1": "89dc9cb2ae2973933e6308f24b50fe0b08685b25",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "7ebd0b7caead2aa8ac8e131c314796e6980ee979ef7c807c67bf459afdaf4b8a",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_rocket",
+      "number": 74,
+      "name": {
+        "en": "Rocket",
+        "zhCN": "火箭"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Rocket",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Rocket.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Rocket.png?5465a",
+      "sourceImageSha1": "368fecd253aedd1db7dd0c5229732ef440f4e75a",
+      "localImageSha1": "10f900cbc99ee2818f5c8ef50fd5f12c6f1b1a0d",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "dd3c9118c4bf51ce3180213101bc743b684ccc018e38c5cfb7fbd821071a6e85",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_obelisk",
+      "number": 75,
+      "name": {
+        "en": "Obelisk",
+        "zhCN": "方尖石塔"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Obelisk",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Obelisk.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Obelisk.png?5465a",
+      "sourceImageSha1": "4f95f7e1af75dbf7faab0607d6609ec50da08772",
+      "localImageSha1": "c91deb072d74047e0fa3aaa941875aec2c31ca3b",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d1394f0e24d6e7d09005410e992c8eeb9ec528cdab27161e5e52c13743198443",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_midas_mask",
+      "number": 76,
+      "name": {
+        "en": "Midas Mask",
+        "zhCN": "迈达斯面具"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Midas_Mask",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Midas_Mask.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Midas_Mask.png?96bfd",
+      "sourceImageSha1": "f94c17aaaf0fa79b6e9eb070b8a53f242eb77a4a",
+      "localImageSha1": "96cda1fd2aaf8365a69b3887e65bff9db1c64af4",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "0b823fa2937b2a2c027079f69371240e28731d26c8bde1221d031cf1f0e944c5",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "on_played"
+    },
+    {
+      "id": "j_luchador",
+      "number": 77,
+      "name": {
+        "en": "Luchador",
+        "zhCN": "摔跤手"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Luchador",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Luchador.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Luchador.png?96bfd",
+      "sourceImageSha1": "217e5916ceb943affe68f39f437a554a92f7d5d7",
+      "localImageSha1": "2221cb48ce2372c209528bac87dcdccf7068c0ee",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "22edaf1d6450e3f083af05581a74b3141f4ad8941c31913550b512e95edf6bd3",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_photograph",
+      "number": 78,
+      "name": {
+        "en": "Photograph",
+        "zhCN": "照片"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Photograph",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Photograph.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Photograph.png?b46a7",
+      "sourceImageSha1": "e67c3b1520140549c6e0799c2dc428e06023f103",
+      "localImageSha1": "3605881b5a5f54b1300495e2d9b34facb3512526",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "647665f81c66b1d124f106fd29d8960f5b7b5a7774912bb1c14da480c53d1e23",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_gift",
+      "number": 79,
+      "name": {
+        "en": "Gift Card",
+        "zhCN": "礼品卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gift_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Gift_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Gift_Card.png?156e2",
+      "sourceImageSha1": "bc2c106f7f382c2b8bfbb1366047e6cc170c9b52",
+      "localImageSha1": "1347dbb84e8a508aa005db30325067862e2ee803",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "24c365f46d483d69c65191cb2441fb55f117e5fb77cf5d2f2080d89bdd0ee7c1",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_turtle_bean",
+      "number": 80,
+      "name": {
+        "en": "Turtle Bean",
+        "zhCN": "黑龟豆"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Turtle_Bean",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Turtle_Bean.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Turtle_Bean.png?156e2",
+      "sourceImageSha1": "1c203d3f2925413388885cf51d89eacb90d0eed6",
+      "localImageSha1": "d3e6ec2065c449c5c11b95f47a0669cfa61e0752",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "dfe3821d5a08e7c24c4c63b8ffc1ce2a5a3a30b9a94cfc7007df318588e45296",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_erosion",
+      "number": 81,
+      "name": {
+        "en": "Erosion",
+        "zhCN": "侵蚀"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Erosion",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Erosion.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Erosion.png?af063",
+      "sourceImageSha1": "0f804a5562ff2970a2f5ad92eb3cd493a5f9a34d",
+      "localImageSha1": "6c45ef19c9d54eeabaf618f654466e0c80a68fdf",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "308fe4ec82dc3dfc3aa78ba38994959a41120185ddb69fa769354c7219bb9f53",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_reserved_parking",
+      "number": 82,
+      "name": {
+        "en": "Reserved Parking",
+        "zhCN": "私人车位"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Reserved_Parking",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Reserved_Parking.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Reserved_Parking.png?af063",
+      "sourceImageSha1": "415965e72db0ffae6d2248812903cbe9b496fab1",
+      "localImageSha1": "9b69ab83e681138774ef56e6553b6d42f6625e83",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ea8caf8d7cb616d1d3a60d6a48c98eae753c12e56f3d646d90545a8e7fcbe349",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_held"
+    },
+    {
+      "id": "j_mail",
+      "number": 83,
+      "name": {
+        "en": "Mail-In Rebate",
+        "zhCN": "邮件回扣"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mail-In_Rebate",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Mail-In_Rebate.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Mail-In_Rebate.png?8a903",
+      "sourceImageSha1": "d745fd55c937b26348755384304e314e106b4015",
+      "localImageSha1": "21db7aac8762e1beae85d96e981280393c2af77b",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "114b148ce4408ca58b39419dbd304c76609f2983f80120e19a0ed06f66b479ce",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard"
+    },
+    {
+      "id": "j_to_the_moon",
+      "number": 84,
+      "name": {
+        "en": "To the Moon",
+        "zhCN": "冲向月球"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/To_the_Moon",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:To_the_Moon.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/To_the_Moon.png?8a903",
+      "sourceImageSha1": "c5082ce846f7f3f39485b050135df30d6f53fa52",
+      "localImageSha1": "bf46c8f3a52204371dc815bace39257885584bf3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a607c8817f45ab979067a774f57b7a55653ea72d46a940a4ae53949d2cb7358d",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_hallucination",
+      "number": 85,
+      "name": {
+        "en": "Hallucination",
+        "zhCN": "幻觉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hallucination",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hallucination.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hallucination.png?119bf",
+      "sourceImageSha1": "98121e3629411ebc4195d41afa104dcea357b6c9",
+      "localImageSha1": "4a1cae2ef60d6e3bf5c2e7f1cd8324757fa4d987",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "c3899ab76c2943ab05faba75dd8b3c42c4a3c9cc8f4300680db7ac4b36df6e34",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_fortune_teller",
+      "number": 86,
+      "name": {
+        "en": "Fortune Teller",
+        "zhCN": "占卜师"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Fortune_Teller",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Fortune_Teller.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Fortune_Teller.png?e9294",
+      "sourceImageSha1": "0ce9e6952f598aae3bd795204f8fbd781c956a29",
+      "localImageSha1": "f50f0e7397a964b2eb7fed638ea8a82c32145e96",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "14dbaaa0eda7ef2c7ae5a28c1a578dc7d0efdb07df921e9ac6ef3a2564857301",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_juggler",
+      "number": 87,
+      "name": {
+        "en": "Juggler",
+        "zhCN": "杂耍师"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Juggler",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Juggler.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Juggler.png?5d094",
+      "sourceImageSha1": "008780ef289eb690a683760012086508fec776cd",
+      "localImageSha1": "ebed57b77d7f4a52fbb3d54dc1054dab0d78929a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "51a0aca4a908d744c77a285c3e07fdf8594f9397b1b6db2caceb770deeeaea62",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_drunkard",
+      "number": 88,
+      "name": {
+        "en": "Drunkard",
+        "zhCN": "醉汉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Drunkard",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Drunkard.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Drunkard.png?c846d",
+      "sourceImageSha1": "c6ccc83022929a94c57e678254d5358201f2f641",
+      "localImageSha1": "0988e7b7c9de81749faf668db996798cf0f60a27",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3273822e0f02633bd73448aafffc62e79b46b9527a9dde597a8c2ce652e56d69",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_stone",
+      "number": 89,
+      "name": {
+        "en": "Stone Joker",
+        "zhCN": "石头小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Stone_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Stone_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Stone_Joker.png?0dd82",
+      "sourceImageSha1": "2df34b8edcd252ba659bf34970ed5ae485dea16e",
+      "localImageSha1": "d28446436a01b2b6def294c531f33777887a5b6f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "87c932c934f4d76b929672f6ac039aa5e38d7cefcb4ea915e0f458c1ce7fab49",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_golden",
+      "number": 90,
+      "name": {
+        "en": "Golden Joker",
+        "zhCN": "黄金小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Golden_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Golden_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Golden_Joker.png?55a9b",
+      "sourceImageSha1": "7482271f48b660a59e61c94fcb5c6f9818eddb9d",
+      "localImageSha1": "48e57b446762e6028398047f8384e3ee1d22fe0f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "07662cbee9d8bab1eec794018e7c7d5cfce557b72a551c9d91d6dcf2ef6c3d94",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_lucky_cat",
+      "number": 91,
+      "name": {
+        "en": "Lucky Cat",
+        "zhCN": "招财猫"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Lucky_Cat",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Lucky_Cat.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Lucky_Cat.png?119bf",
+      "sourceImageSha1": "42bed4a18066075fee396d1c43418f3b1b44182c",
+      "localImageSha1": "7d9575e53d12d33a42b17597b88a51ee9a2dcd10",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ba27d92dc48bf6c9b0f4e0272bfded90b236338fd328218ad953c2d5202d64c9",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_baseball",
+      "number": 92,
+      "name": {
+        "en": "Baseball Card",
+        "zhCN": "棒球卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Baseball_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Baseball_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Baseball_Card.png?97b3d",
+      "sourceImageSha1": "a413279abe4504a5b17f39207c0f031013f27fe6",
+      "localImageSha1": "3de9d0d9575dd9b5d8a6d81fdec9a08a9b6af98d",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3386f8bdb6534adf83fae34487546a431a1948a280a98cd34bb64d01bc5b00bb",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_other_jokers"
+    },
+    {
+      "id": "j_bull",
+      "number": 93,
+      "name": {
+        "en": "Bull",
+        "zhCN": "斗牛"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bull",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Bull.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Bull.png?97b3d",
+      "sourceImageSha1": "f80fb6390edf0d7240cb578c8761fd0019b8ba38",
+      "localImageSha1": "6f3a5aad3ee8af66a02eea49c048cb353c5baf40",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "09e1a57f7d9447bb060aa5253071900f496a2dbf1cf8de5c3bf4389d91b0281a",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_diet_cola",
+      "number": 94,
+      "name": {
+        "en": "Diet Cola",
+        "zhCN": "零糖可乐"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Diet_Cola",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Diet_Cola.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Diet_Cola.png?97b3d",
+      "sourceImageSha1": "eb2f37bf85765d5615776e3ad9be65c7c412b99f",
+      "localImageSha1": "6557d1199a39f12ffefc3c899fa83201598d659c",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "799873418df2e55dc2c227435ea0586fda058cea528a748e074282dc0331f263",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_trading",
+      "number": 95,
+      "name": {
+        "en": "Trading Card",
+        "zhCN": "交易卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Trading_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Trading_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Trading_Card.png?12d13",
+      "sourceImageSha1": "9f93b4c181ea143fcd43d37a1b05cec057f57d54",
+      "localImageSha1": "4a40e04690f84d91393807e32362653fa373c537",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "6da74043ad6b6051e7bcfc484ce7b517775f614094fdee6632eac8cd591804b4",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard"
+    },
+    {
+      "id": "j_flash",
+      "number": 96,
+      "name": {
+        "en": "Flash Card",
+        "zhCN": "闪示卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Flash_Card",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Flash_Card.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Flash_Card.png?12d13",
+      "sourceImageSha1": "35398e8ee775d6a0082db35eed7b072b20a595a3",
+      "localImageSha1": "66bd7b8029528dbd25f90b9d4238713eb57d6310",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "5bf719ea8684f2c097499b99ae959fb0f76bab0778406b7161c33502d853c350",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_popcorn",
+      "number": 97,
+      "name": {
+        "en": "Popcorn",
+        "zhCN": "爆米花"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Popcorn",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Popcorn.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Popcorn.png?2d2c2",
+      "sourceImageSha1": "dcb16ee689171574a474fdbc94bc2a8df854371a",
+      "localImageSha1": "e017aadc36d43bdbfe9e0bdfeccb49984190b97e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "f01cda6f624ed130b91c794b9ffde1288a4b1c13f7a2dfdddf942fdb841e7bc3",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_trousers",
+      "number": 98,
+      "name": {
+        "en": "Spare Trousers",
+        "zhCN": "备用裤子"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Spare_Trousers",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Spare_Trousers.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Spare_Trousers.png?274c7",
+      "sourceImageSha1": "7fe4dd9fe41814f0e7e1dcb4e2c54132483b9df9",
+      "localImageSha1": "4be3e9ed32ab25dee09ba6ca282439aa59018a64",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "f9ced069904bf50461b0e05164b9aba0601f6b9e66a608e644801237d3ec1736",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_ancient",
+      "number": 99,
+      "name": {
+        "en": "Ancient Joker",
+        "zhCN": "古老小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ancient_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Ancient_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Ancient_Joker.png?274c7",
+      "sourceImageSha1": "2cb22068291a7a92b51d2ee03553489745bbe0e5",
+      "localImageSha1": "729e3a929cfe67a50ced495855c3a95567591ea8",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "5f2229556ac3e2f315c06da5c74a8f90708b6de144903862e0f8f895d5f70c1a",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_ramen",
+      "number": 100,
+      "name": {
+        "en": "Ramen",
+        "zhCN": "拉面"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ramen",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Ramen.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Ramen.png?31ec6",
+      "sourceImageSha1": "95bc044461541a0b586ecf8ff371c387a2757ed8",
+      "localImageSha1": "1dec7fc63f398f282d8c6dabefa582a138b1f15e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "c07433891147615e34a31bffb02dcabeaf78ab3333b2d6edbca930c1df717aed",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_walkie_talkie",
+      "number": 101,
+      "name": {
+        "en": "Walkie Talkie",
+        "zhCN": "对讲机"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Walkie_Talkie",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Walkie_Talkie.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Walkie_Talkie.png?31ec6",
+      "sourceImageSha1": "c30602c03945e39ec0c8ade8a4cd41e180b2663f",
+      "localImageSha1": "54ddf0931e1168006d3550e08dc6c715ce2e4e13",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ccc41313827849888323fc5d40c176491ed14cdbe688c55cfe3054e1b5ffdb95",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips_and_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_selzer",
+      "number": 102,
+      "name": {
+        "en": "Seltzer",
+        "zhCN": "苏打水"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Seltzer",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Seltzer.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Seltzer.png?0e998",
+      "sourceImageSha1": "596a0c883dc9956d4c122e3e8844304c27269a3b",
+      "localImageSha1": "2549e8ceb27fe409a3f7c784b199e4e754bdbc96",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "64a08912b3ea9e9bc02f83183611119c8df62e49752ab9efb2a46bbf56a86d76",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_castle",
+      "number": 103,
+      "name": {
+        "en": "Castle",
+        "zhCN": "城堡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Castle",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Castle.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Castle.png?0e998",
+      "sourceImageSha1": "2bf75eb32d92c1b8291dd689c5c70e9d5da0a4e1",
+      "localImageSha1": "9abce80d99c59eb77fc06b982c71391645813159",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d0a7925f9d2664c124342f084cc47d71ac8a2d507ccc059d0adc6c3e4028c11b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "chips",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_smiley",
+      "number": 104,
+      "name": {
+        "en": "Smiley Face",
+        "zhCN": "微笑表情"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Smiley_Face",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Smiley_Face.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Smiley_Face.png?78ae0",
+      "sourceImageSha1": "8909821339385e553b9668eafdbd5865c69a114c",
+      "localImageSha1": "58ea995b48aac54845d8b7dac72633942730092f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "8c557cd84cbe9f7abe5609243d2415bd1c92e6b590ec5253b1dcf24e5e79f19b",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_campfire",
+      "number": 105,
+      "name": {
+        "en": "Campfire",
+        "zhCN": "篝火"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Campfire",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Campfire.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Campfire.png?78ae0",
+      "sourceImageSha1": "d9ff9b63237bd4416d4edd52addc0397de51d0da",
+      "localImageSha1": "8ddd1c8d569f076e102d36c731e2ebd7b16bc187",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ae528e14bd2d9ddc6468001f6b6be381ce376c1d518661356e84ce7d4ce693de",
+      "unlockRequirementSha256": "0c26d68f82d24a991be54126fd24396c169520605c053e3387ca005d72688c43",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_ticket",
+      "number": 106,
+      "name": {
+        "en": "Golden Ticket",
+        "zhCN": "黄金门票"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Golden_Ticket",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Golden_Ticket.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Golden_Ticket.png?a915f",
+      "sourceImageSha1": "e6c307d39066991fdf9df4eb97c976c15033f77c",
+      "localImageSha1": "a5a812af1b5372ed43b1d16f2e44b36082e1737a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "cd7d5a2b19b88963d2502257e6ccfdfbc3d8a6b4860a44be54cdf5391d2b01cd",
+      "unlockRequirementSha256": "ce736a39d562eb6b1dda56f1c67cd6817046c0c5943502ef9d7530ca34f42ad1",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_mr_bones",
+      "number": 107,
+      "name": {
+        "en": "Mr. Bones",
+        "zhCN": "骷髅先生"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mr._Bones",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Mr._Bones.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Mr._Bones.png?80615",
+      "sourceImageSha1": "8a48d5bbc3ece9d1b23a6a8f6a2c86dbc9e1261e",
+      "localImageSha1": "c3252065775f3edff414b1b041bf2f71230e8c17",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "f7e6260169e23d3dcd72f52ce53f4e2577501235d272f2807d34fe7fa7f49b3a",
+      "unlockRequirementSha256": "7ecc25d6dc4a6b065d8b2899a8378cc552fd31d059ce356a38082f0d540ae69c",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_acrobat",
+      "number": 108,
+      "name": {
+        "en": "Acrobat",
+        "zhCN": "杂技演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Acrobat",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Acrobat.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Acrobat.png?78ae0",
+      "sourceImageSha1": "f75a77fb6ce844825bb1ca01519300c9ac3b1d16",
+      "localImageSha1": "393d6f47b47bad11d796a674939576bb8ae14347",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "e5633479460c49902e0ebf8c93e13ceee2d37ae0e736c3b40d605d51e8ff9065",
+      "unlockRequirementSha256": "d7897a3a5d9c8dd464c3ae685a0295814b9ca49525b0798c7c8818b97843922d",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_sock_and_buskin",
+      "number": 109,
+      "name": {
+        "en": "Sock and Buskin",
+        "zhCN": "喜与悲"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sock_and_Buskin",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Sock_and_Buskin.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Sock_and_Buskin.png?bf55f",
+      "sourceImageSha1": "4f6d7b669b47bcfa03bfda1825e787a810eec713",
+      "localImageSha1": "bcab5f70a8cb5d3a71636cbce2c263fb673155e2",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "aa734fb7591eeb489535193437e2673478d18020dedd83e364bb2d77a7d74577",
+      "unlockRequirementSha256": "14346ab34cc039b373faaa72a3e7fc13c99cef2b4e911a937569058ce1f4c7e2",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_swashbuckler",
+      "number": 110,
+      "name": {
+        "en": "Swashbuckler",
+        "zhCN": "侠盗"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Swashbuckler",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Swashbuckler.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Swashbuckler.png?98223",
+      "sourceImageSha1": "5ee42d3f207a6207dcfccc268aebaf2ad87cdfbd",
+      "localImageSha1": "23f1661fbe453482575191a7b2092a863f63eae3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b2a0fbfd7e2448f48196700536992fea186fc3e860d76f97f22f9f9a7e573650",
+      "unlockRequirementSha256": "0596716f66772b3efcd236d0b04d85b183d031bb8bb0159e431bf40e58d6fde3",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_troubadour",
+      "number": 111,
+      "name": {
+        "en": "Troubadour",
+        "zhCN": "游吟诗人"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Troubadour",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Troubadour.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Troubadour.png?29a95",
+      "sourceImageSha1": "dc61622de07457ee63df5689505a7756065f2fa3",
+      "localImageSha1": "16c393cf688922a1360119d4a4b0e3cc7c8ef545",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a4ee69938d2bdac71d075556f70e4433ab9ba22031b229001c9d56780e18888d",
+      "unlockRequirementSha256": "334aff17711bd4de5c172048c8c4a1278023b1188e0ebb3650b36b9e89d68cdb",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_certificate",
+      "number": 112,
+      "name": {
+        "en": "Certificate",
+        "zhCN": "证书"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Certificate",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Certificate.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Certificate.png?43465",
+      "sourceImageSha1": "250abb905c8d2a4c53983ea249597741863d83cd",
+      "localImageSha1": "ea5f66f86c620947c03c5a2a3939ddd95573b016",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "8eae399b446b93947fd1567e113de3d86f61b26e99078bee4cfbc11cfe0a8559",
+      "unlockRequirementSha256": "6ac0e9fb60042fc7d66ba4d622356e5cf044afe10287e904f03fbed8a71122a6",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_smeared",
+      "number": 113,
+      "name": {
+        "en": "Smeared Joker",
+        "zhCN": "模糊小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Smeared_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Smeared_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Smeared_Joker.png?e3b32",
+      "sourceImageSha1": "3d6bbb0f4ecea3518fc397f841b0afefecf4a12d",
+      "localImageSha1": "d78a492abbf688072eb5afe78119140f720033b0",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b3124c94ce1037877024a89adb831437c10a8420fff7c181ba045a450ba92544",
+      "unlockRequirementSha256": "a748402074e5c62e8d3a22361d81b3628c9834a3f9dd6baa0c17531bf623ad1d",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_throwback",
+      "number": 114,
+      "name": {
+        "en": "Throwback",
+        "zhCN": "回溯"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Throwback",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Throwback.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Throwback.png?7f7ee",
+      "sourceImageSha1": "f1ba2911e8a062a6422d31ca286a226bc29c9fbb",
+      "localImageSha1": "d1323a9140ec38967bbb64ac4dccb17a70f85f1a",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "5f2e4541ea378ff8b3524c95b22fa69b7097f8296450f0d8079c2c181617cd1d",
+      "unlockRequirementSha256": "ba094a8990543916c0b8d7f58d7a8be8415c3466e680b30711751a1b11fe7424",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_hanging_chad",
+      "number": 115,
+      "name": {
+        "en": "Hanging Chad",
+        "zhCN": "未断选票"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hanging_Chad",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hanging_Chad.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hanging_Chad.png?be2e1",
+      "sourceImageSha1": "845af5b65df72edcb6efd4086fd17c0d45e5708a",
+      "localImageSha1": "5276c14ba6f22779ae76c3db02285215200c41b9",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "a6f4c26332a1a89ac9ac3c710c14143f076c6fd2c4956127a3d6271699a54033",
+      "unlockRequirementSha256": "614c7edbd62fbba4a6e3962a5f317f59f7759c493d99930cf0582e6b8e01daa3",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_rough_gem",
+      "number": 116,
+      "name": {
+        "en": "Rough Gem",
+        "zhCN": "璞玉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Rough_Gem",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Rough_Gem.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Rough_Gem.png?1f9cf",
+      "sourceImageSha1": "56746d2cd351623988b8a5953fb05d53fc24f7cc",
+      "localImageSha1": "aab5d9bbfbf7b4dea1fe2dab52cb96062d86cd4f",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4fe56883c0a3c1a9e0234f48f2b11d7e2f56e1f657bda8b84140724fb599079b",
+      "unlockRequirementSha256": "7735e157c3197a6fe10e984d1cd092bbcdcbdbfedfc989633f337b41ef90ced4",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_bloodstone",
+      "number": 117,
+      "name": {
+        "en": "Bloodstone",
+        "zhCN": "血石"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bloodstone",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Bloodstone.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Bloodstone.png?4d0a0",
+      "sourceImageSha1": "b3b1a0346ae012d987d151b5f7170469f11cc2ad",
+      "localImageSha1": "dc3fd4bd5ac9b77193ccc31bc710f96f6a649907",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3f653f7143b01057e27f4bf0b50faaaf1221ebdebdc59d45defc1dfd2d9d0890",
+      "unlockRequirementSha256": "f4c21301fd93a1cf8645cd4f068a9ebd9c58296ce3ff9852ccc15556bd4fa3d1",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_arrowhead",
+      "number": 118,
+      "name": {
+        "en": "Arrowhead",
+        "zhCN": "箭头"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Arrowhead",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Arrowhead.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Arrowhead.png?cc01b",
+      "sourceImageSha1": "7bb01aa289b83010398bf787fdf9ca97963adf92",
+      "localImageSha1": "7bb01aa289b83010398bf787fdf9ca97963adf92",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "42be1bd8b8f69aef1b9711bebdc7af41950581c442d2e52671a916f9af6baa60",
+      "unlockRequirementSha256": "df092d4cba824a00746b5c4c40c06db6c941e9c39c60080370533a405cc16bf8",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_onyx_agate",
+      "number": 119,
+      "name": {
+        "en": "Onyx Agate",
+        "zhCN": "缟玛瑙"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Onyx_Agate",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Onyx_Agate.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Onyx_Agate.png?f9219",
+      "sourceImageSha1": "f7ebd7a7767ec1aef9a09e8e9d6e37af9c26098c",
+      "localImageSha1": "548bd71f00d0763b91bd0b90bda12c4bc4330a3e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "0ad085f985eeac0aaf72aad0bc8379c2a880cbdc4cd21e0f64f67838fd6e6b3d",
+      "unlockRequirementSha256": "fa125e5536996a0e906be9117a8da5117f1bb4fe7ef2aff3b7f2fac8a5832591",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_glass",
+      "number": 120,
+      "name": {
+        "en": "Glass Joker",
+        "zhCN": "玻璃小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Glass_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Glass_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Glass_Joker.png?a6916",
+      "sourceImageSha1": "ad7c673ec462c4f58cd1e8aeee9acabf1d07d7ce",
+      "localImageSha1": "eeb5d9ee319d78e7b02ed907175590fb34005c63",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "8cfd5f6b29bcf112d70df66286c286979853ff71236a4467a4647a15a34602ba",
+      "unlockRequirementSha256": "3dc8c9d53ac9e850b63483b0007597b1ca9ec09c29e2fd7898253ec8f1dc9833",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_ring_master",
+      "number": 121,
+      "name": {
+        "en": "Showman",
+        "zhCN": "马戏团长"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Showman",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Showman.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Showman.png?12b50",
+      "sourceImageSha1": "26cbcb604d360efa84fc3938bf165f208cd58122",
+      "localImageSha1": "67a21997af8d742c50641d71074cdf0c9b432584",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ac3e93add597bc270e4942e0539cb2ab37444400163ce52ce8331cf798f67973",
+      "unlockRequirementSha256": "267826bdf7d93e5043f31a53608b065109b9b197454a7adfc39e3f1f5b8d21b5",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_flower_pot",
+      "number": 122,
+      "name": {
+        "en": "Flower Pot",
+        "zhCN": "花盆"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Flower_Pot",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Flower_Pot.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Flower_Pot.png?25ed2",
+      "sourceImageSha1": "f6ef6bc022eaa6f2121b3fad38cfd5b45b582490",
+      "localImageSha1": "bb1cd6c65c3e4b35dbd45b108514db0b0f9be1c9",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b16f4438a53cae83cee3d39bb3277fda2e4553c486619aca4279f8250d3b963b",
+      "unlockRequirementSha256": "26b7e4c2b26010e6e031f8f02235d52a30041aba489cb1199f5563e05c8a8b92",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_blueprint",
+      "number": 123,
+      "name": {
+        "en": "Blueprint",
+        "zhCN": "蓝图"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blueprint",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Blueprint.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Blueprint.png?1314d",
+      "sourceImageSha1": "fe03edcf7e838c95f1532dc55facf76ea5ad4613",
+      "localImageSha1": "29d40195582982dd28beb47b3c587efcc413ddef",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "ec5d15f44bdfff34684b70dfc01c52a06c89c5bded3165ad9256dbf6d5255835",
+      "unlockRequirementSha256": "7e227b90ee9e841072b0ebde36156f0f11d1865494e3b589b8275c1cf4df6f72",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_wee",
+      "number": 124,
+      "name": {
+        "en": "Wee Joker",
+        "zhCN": "小小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wee_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Wee_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Wee_Joker.png?fc6ba",
+      "sourceImageSha1": "eaba6cf53d71df4a126367d61ea8eae8629b36d7",
+      "localImageSha1": "6c73fed08897d8e51daaa65c0cb906ddf36214b9",
+      "imageWidth": 203,
+      "imageHeight": 271,
+      "effectTextSha256": "94432b861714a6b7781309323426c11951738b9352efb1cb0284af3c4c4abd59",
+      "unlockRequirementSha256": "e36602018816c2a5326ecb870305683a363f0de025eeb130ff08b263957b601b",
+      "wikiType": "chips",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_merry_andy",
+      "number": 125,
+      "name": {
+        "en": "Merry Andy",
+        "zhCN": "快乐安迪"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Merry_Andy",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Merry_Andy.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Merry_Andy.png?91743",
+      "sourceImageSha1": "829ddbf22d965b9bdd2c524f3a4f43781f51dfb5",
+      "localImageSha1": "66ee949a0ef25edb2f3af6569982de7f4d593ea9",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "7bd513f0e87e1167160050a0cbd34e73403a00a7c8ef323910564283d0c46d70",
+      "unlockRequirementSha256": "3f698609615255dc68e21d25f7bd8a4a8c4130d186c6c7d95dc1a56726078c58",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_oops",
+      "number": 126,
+      "name": {
+        "en": "Oops! All 6s",
+        "zhCN": "六六大顺"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Oops!_All_6s",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Oops!_All_6s.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Oops%21_All_6s.png?54fc7",
+      "sourceImageSha1": "7a635ee1abf0fb195dfefe810d7d9be58a84bf2d",
+      "localImageSha1": "642f27e9ce8c4faaa8b92faed0c06e4757663279",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "86ce41b879f8f0435a05652007a4e3d6f4f02334d4c0f0298c2c7646d0abc881",
+      "unlockRequirementSha256": "4dc8cdd5460fdbe842f8b186c7533bfb373c02d2003293567df69cad5d520b5c",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_idol",
+      "number": 127,
+      "name": {
+        "en": "The Idol",
+        "zhCN": "偶像"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Idol",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Idol.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Idol.png?e1781",
+      "sourceImageSha1": "abc18eb2c8703000055f9ceb59a03c266e15a6b4",
+      "localImageSha1": "2892953cd34023876eee46ed3a53c221b90eefc0",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "020bf4dde912bcda0ab4401c38c1d331395e421e05aa7ad94d916627a2eb97d1",
+      "unlockRequirementSha256": "0f67d49bee1a27ddc7ecd9ab155a13bd774a4ef85924933b6067818450b36f08",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_seeing_double",
+      "number": 128,
+      "name": {
+        "en": "Seeing Double",
+        "zhCN": "重影"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Seeing_Double",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Seeing_Double.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Seeing_Double.png?6a93e",
+      "sourceImageSha1": "ee01e03c01eaf0073eb44b675cce2c17913198bb",
+      "localImageSha1": "a8074359d6e58002d6ddc782a8cb7178daedf4b1",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "e77e6fd6d2590a351d24ea98067933d6d6ca7f1b4290cdba7c7528a6403fa999",
+      "unlockRequirementSha256": "b00c93e7211c23c6877bfbb18f7c05e4a712e42d97c6043836f1dd8eab596223",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_matador",
+      "number": 129,
+      "name": {
+        "en": "Matador",
+        "zhCN": "斗牛士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Matador",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Matador.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Matador.png?937bc",
+      "sourceImageSha1": "1ba86e04dbcdb87d8f77222accb32edc613bd569",
+      "localImageSha1": "85fd5fcb52b0746131c1d1145aa094c5582168e3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "b2a8f7b364fcf26d3c4313f4c0a7e0aeb869d9c7e141f17e33926bb5937bd2b3",
+      "unlockRequirementSha256": "1bdb8bd2585a366f332a7918676198028d0b7c7ae4a39e4c3ddc5ef6110cacb3",
+      "wikiType": "economy",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_hit_the_road",
+      "number": 130,
+      "name": {
+        "en": "Hit the Road",
+        "zhCN": "上路吧杰克"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hit_the_Road",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Hit_the_Road.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Hit_the_Road.png?e2da5",
+      "sourceImageSha1": "67224e85bf16d42676114396e17dc6e3f775332b",
+      "localImageSha1": "ec8663a344f9bc8046cc45eb567d40165e386c17",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "9393b893dc7cdc83a47eba7f54a91193d93a3111c347961b94728b2db83e2777",
+      "unlockRequirementSha256": "71d7a8636f21c82397a60d6193db0a14094129c0509bf204f3b59648681c2e5c",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_duo",
+      "number": 131,
+      "name": {
+        "en": "The Duo",
+        "zhCN": "二重奏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Duo",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Duo.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Duo.png?af07c",
+      "sourceImageSha1": "5d3d54c79befcfee708499139e87b6d3d4bf2f2f",
+      "localImageSha1": "a03c297814330ef6919329008908f375b0dbe29d",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3ed19e1fbf998ea99512da615e1bec75b2221d2cfccea28e997bcd10c186165a",
+      "unlockRequirementSha256": "0382ff21bcd17296500581333266e6ace70f076077b3ab80742b1bac1362db09",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_trio",
+      "number": 132,
+      "name": {
+        "en": "The Trio",
+        "zhCN": "三重奏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Trio",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Trio.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Trio.png?90749",
+      "sourceImageSha1": "d7de3322a3bd6e5b30c1c388ce7dcfaca2b901aa",
+      "localImageSha1": "cf1a322985fa56b049fa3a041f7ee1d466292253",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "8245fb758700cab5dc3944f340f0b3ae880b2768f2420ebdd44382f163f024d4",
+      "unlockRequirementSha256": "3d60d3462999f2d67272bf4182defdeeae5a5b37072402ef5ef6e6b2c5af8469",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_family",
+      "number": 133,
+      "name": {
+        "en": "The Family",
+        "zhCN": "一家人"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Family",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Family.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Family.png?2c222",
+      "sourceImageSha1": "0c3585c45b9da74784a54ae76decb4c789c2db2c",
+      "localImageSha1": "fc9f357d7c40915d8c727e5a3b179f3c45978e92",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3ab58b44066e4519f038fdb5f4e0e736f9973955b374bf8dc1edeb92b89829b6",
+      "unlockRequirementSha256": "15abd935863d1fa80ab5db1f6bdc7d15482e3f2a6f7a720c959e2090e8762041",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_order",
+      "number": 134,
+      "name": {
+        "en": "The Order",
+        "zhCN": "秩序"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Order",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Order.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Order.png?8f641",
+      "sourceImageSha1": "9c088f316cb70bcae38df126727ca2c2a37e4311",
+      "localImageSha1": "b0841d191324607912e7ccfff986e2760133d389",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "d30bf9318db44d1ac6b846dbe9e391c83adf65d752ea5e39a2b69db3873045c4",
+      "unlockRequirementSha256": "9886d93e466832c12c79c94ced33be72655ad2ae2eccc6200aa35d592b17ffe0",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_tribe",
+      "number": 135,
+      "name": {
+        "en": "The Tribe",
+        "zhCN": "部落"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Tribe",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:The_Tribe.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/The_Tribe.png?a6a44",
+      "sourceImageSha1": "b5d34fc353239afa15b24bedc9109527b5a18609",
+      "localImageSha1": "280fa9f54d8caceb8d7ff0351a4970d25bab6fa0",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "95987cb54735d5e77759c269aee30cc6cdb81c252b81cf8e79dc094b764e2d64",
+      "unlockRequirementSha256": "4ee5bf4a280dd17a3ad4ea7d4134659a738d64ed21246b3e9364f60bdd3873d4",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_stuntman",
+      "number": 136,
+      "name": {
+        "en": "Stuntman",
+        "zhCN": "特技演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Stuntman",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Stuntman.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Stuntman.png?84641",
+      "sourceImageSha1": "67a2d4dca82c5c5e9616774c2946000147fe56d6",
+      "localImageSha1": "2e84cb9d5f1796812aae4941ccc8bcbb6fdfa094",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "408487a9f3fe1e3b05f7beb7fc8d20112194aab67d466dd8349cbb86d795081e",
+      "unlockRequirementSha256": "fe9dc7810f4b5d5b48d9666eb2ced00a035596bb7087c47bc68bbf74b217bc33",
+      "wikiType": "chips",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_invisible",
+      "number": 137,
+      "name": {
+        "en": "Invisible Joker",
+        "zhCN": "隐形小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Invisible_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Invisible_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Invisible_Joker.png?1314d",
+      "sourceImageSha1": "522c865cf32e56b346456aa1c4c545d080e9908c",
+      "localImageSha1": "b79f9e5d8ed28c9d8a90df63f977ed4c4151ebb3",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "e0ffa2739006053c1866a24c930662a4c5a558bd19531986acc3902a302fbfca",
+      "unlockRequirementSha256": "cc2c37ecb7079639a44e0320a52f1fd44a348ce6b58929358e8fed8b6edba739",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_brainstorm",
+      "number": 138,
+      "name": {
+        "en": "Brainstorm",
+        "zhCN": "头脑风暴"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Brainstorm",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Brainstorm.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Brainstorm.png?82de6",
+      "sourceImageSha1": "c6bc5efce0cb3b4ffe20a011c48a3127fa6daa33",
+      "localImageSha1": "3784646b9c3a924ea4b836acbc214cb6d02f44c1",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "3b88a9395fe8ed5d3f50eae15aeda565abb090a7fa0d2f820c1bdac44df31947",
+      "unlockRequirementSha256": "599677f25d38dc0659fe3d1386d66548e263ee48ee422ef6a98a9fb5904a047c",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_satellite",
+      "number": 139,
+      "name": {
+        "en": "Satellite",
+        "zhCN": "卫星"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Satellite",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Satellite.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Satellite.png?20821",
+      "sourceImageSha1": "c102e823a52ebf509e83763dc9b74ec3714ca395",
+      "localImageSha1": "de93ecb794d0b6505c6a3d7a3edcb797e94ae4d6",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "4f0a1a2c5985340526eab3614d0e854d133fd6c8413dac529ad55c078c370cd6",
+      "unlockRequirementSha256": "7921e9a33130b672f61056e89d9e49b612e06825c3d205eff419f6282d9e0767",
+      "wikiType": "economy",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_shoot_the_moon",
+      "number": 140,
+      "name": {
+        "en": "Shoot the Moon",
+        "zhCN": "射月"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Shoot_the_Moon",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Shoot_the_Moon.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Shoot_the_Moon.png?098c2",
+      "sourceImageSha1": "6a54628712d88dec39dfa38e9c49cd134b2baf69",
+      "localImageSha1": "f970baf6c5f9f814782b03c3585cce1796296271",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "43d5b90e9247eb15426177f1d14aced0bb72bc45eda43705ace4da769754d1ea",
+      "unlockRequirementSha256": "43445ad381e2b99a6701ea22dcd7dc55b0aeab31c3dc0cbae8f3ce47e1676572",
+      "wikiType": "mult",
+      "wikiActivation": "on_held"
+    },
+    {
+      "id": "j_drivers_license",
+      "number": 141,
+      "name": {
+        "en": "Driver's License",
+        "zhCN": "驾驶执照"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Driver's_License",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Driver's_License.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Driver%27s_License.png?04561",
+      "sourceImageSha1": "0b01dc5b8e878581a753ddb84926acbc737974ec",
+      "localImageSha1": "f385078af2f737a219175ccce7c6bec48fdeaa71",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "cbe92ae96318bf87087efaea6e89dbc45c8d311f88fbf4f19bb8f17c6563c7a5",
+      "unlockRequirementSha256": "022d371649922fe8da0e804c5d23a0858b3c1e0eed9574389cb1de79b9c7e8da",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_cartomancer",
+      "number": 142,
+      "name": {
+        "en": "Cartomancer",
+        "zhCN": "卡牌术士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cartomancer",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Cartomancer.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Cartomancer.png?e4486",
+      "sourceImageSha1": "9869c6caf529d77fd8f6ed98131ff9269efbf021",
+      "localImageSha1": "46cd89db46f715f482a6ccefc818289ce578a4a4",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "46a3548ca2313236b5806b07ea5b8e110a18821fe3bdaef14f724ec663e10ce7",
+      "unlockRequirementSha256": "640ae1d8219f99e23cb775d99968d1dc23c730e0a59180dafe898d26b34ed0e3",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select"
+    },
+    {
+      "id": "j_astronomer",
+      "number": 143,
+      "name": {
+        "en": "Astronomer",
+        "zhCN": "天文学家"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Astronomer",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Astronomer.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Astronomer.png?0a271",
+      "sourceImageSha1": "fc6872a02081d3100ba516ae52966a4b1ee31111",
+      "localImageSha1": "243a0dd89dfa1b2cbfcf093feae0fe8e87266788",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "47b39cb05963b715786aa87f72a7203db96990ae9fad14281505883857ff718c",
+      "unlockRequirementSha256": "e4728f899473c485d12414c985450151943426eee3dff31072c1c410d1750966",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    },
+    {
+      "id": "j_burnt",
+      "number": 144,
+      "name": {
+        "en": "Burnt Joker",
+        "zhCN": "烧焦小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Burnt_Joker",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Burnt_Joker.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Burnt_Joker.png?445f6",
+      "sourceImageSha1": "b03712fe993ec173c4da62c40259b75ea94e180f",
+      "localImageSha1": "d744c838b0ee2493f2d470d7071e0c3b9c27dd48",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "24d5bccc40f15f8eefe7f264856b7c31d7b2dd439993b0c27b36f84134963b24",
+      "unlockRequirementSha256": "907ac747fa479403a92e159ca346fe7fdadc445d1d304590b65e0279dcc9d2ca",
+      "wikiType": "effect",
+      "wikiActivation": "on_discard"
+    },
+    {
+      "id": "j_bootstraps",
+      "number": 145,
+      "name": {
+        "en": "Bootstraps",
+        "zhCN": "提靴带"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bootstraps",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Bootstraps.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Bootstraps.png?4fbc6",
+      "sourceImageSha1": "60c2d99be94d8ed915ff9af02676bf5123b4b319",
+      "localImageSha1": "76ca66fbe18d8f489ec295bb18967f9bd0e91949",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "09b335e82084904733575965ad51838b2ea97fa826c97cc3763fcddd996810bb",
+      "unlockRequirementSha256": "19a7eb1a541022cddeb4dea2c4f095808f1e61e0038e1b1f43816683cb50d2ad",
+      "wikiType": "mult",
+      "wikiActivation": "independent"
+    },
+    {
+      "id": "j_caino",
+      "number": 146,
+      "name": {
+        "en": "Canio",
+        "zhCN": "卡尼奥"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Canio",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Canio.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Canio.png?afd92",
+      "sourceImageSha1": "2a7ae412b5ea817e70f5b15b0ab51f9edfe19fcc",
+      "localImageSha1": "36fe4bebae35388da94a8aad8a1771d55bd12c39",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "54fc044cc0fc7cdc3bb4a2b278c2e52252f1eb92a0d72b07e1af5c5c7e0885f2",
+      "unlockRequirementSha256": "23d7a58b01122eb9693f24ccdec21e83c965a8ad543cbb2f3a70f69c5e13fd20",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_triboulet",
+      "number": 147,
+      "name": {
+        "en": "Triboulet",
+        "zhCN": "特里布莱"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Triboulet",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Triboulet.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Triboulet.png?baf0d",
+      "sourceImageSha1": "74070bed6432e3644b9f8ca050eb881af37e29c1",
+      "localImageSha1": "b41384834d8a1df3b367c0a162c7ed5d1c4230de",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "fa68f4a208f3d3b3f5209c286c34c05a3d9b7f61e76dbc7fc9179616bfeec29b",
+      "unlockRequirementSha256": "23d7a58b01122eb9693f24ccdec21e83c965a8ad543cbb2f3a70f69c5e13fd20",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored"
+    },
+    {
+      "id": "j_yorick",
+      "number": 148,
+      "name": {
+        "en": "Yorick",
+        "zhCN": "约里克"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Yorick",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Yorick.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Yorick.png?7e474",
+      "sourceImageSha1": "97534f24986bd6dbf198fcfe321526300b3edf30",
+      "localImageSha1": "672e0b30a33dd6dda6a969e8a12195f345bb9c8d",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "e785ad1418523f24d58f9f8a3f0b61bed0c5f35970c8a6e0f63f9d71b5f84a29",
+      "unlockRequirementSha256": "23d7a58b01122eb9693f24ccdec21e83c965a8ad543cbb2f3a70f69c5e13fd20",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed"
+    },
+    {
+      "id": "j_chicot",
+      "number": 149,
+      "name": {
+        "en": "Chicot",
+        "zhCN": "希科"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Chicot",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Chicot.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Chicot.png?ca9b9",
+      "sourceImageSha1": "93076aedd333a3d7ac13eb9848f12b01156ee229",
+      "localImageSha1": "77d2eb25eb8946144fdf7736efcc08175d7747f1",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "142241fd5646575240c64d4c560c711a28b20c4bdbd245abe03551f71f1793d9",
+      "unlockRequirementSha256": "23d7a58b01122eb9693f24ccdec21e83c965a8ad543cbb2f3a70f69c5e13fd20",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select"
+    },
+    {
+      "id": "j_perkeo",
+      "number": 150,
+      "name": {
+        "en": "Perkeo",
+        "zhCN": "帕奇欧"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Perkeo",
+      "imageDescriptionPageUrl": "https://balatrowiki.org/w/File:Perkeo.png",
+      "imageSourceUrl": "https://balatrowiki.org/images/Perkeo.png?1c007",
+      "sourceImageSha1": "3dd91237e9f59f7e36cc9ce3cae7fd05c8777516",
+      "localImageSha1": "d95bb073ae2b0e0e378089eddaa5233b8a8cf84e",
+      "imageWidth": 142,
+      "imageHeight": 190,
+      "effectTextSha256": "67a76dc3ad9ea3aef88ba64c823ebf1352b05cc2e86ff2c8348bb9b360b08182",
+      "unlockRequirementSha256": "23d7a58b01122eb9693f24ccdec21e83c965a8ad543cbb2f3a70f69c5e13fd20",
+      "wikiType": "effect",
+      "wikiActivation": "passive"
+    }
+  ]
+}

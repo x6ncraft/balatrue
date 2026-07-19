@@ -31,7 +31,7 @@ const zhCN = {
 
   'search.label': '选择一张小丑牌',
   'search.placeholder': '输入中文、英文或拼音',
-  'search.hint': '可输入官方中英文名、全拼或拼音首字母',
+  'search.hint': '可输入游戏内中英文名、全拼或拼音首字母',
   'search.results': '候选小丑牌',
   'search.noResults': '没有找到这张牌',
   'search.alreadyGuessed': '已经出过',
@@ -110,8 +110,22 @@ const zhCN = {
   'footer.madeBySuffix': ' 的小玩具',
   'footer.source': 'GitHub 源码',
   'footer.bilibili': 'B 站',
+  'footer.dataSource': '资料来源',
   'footer.official': 'Balatro 官网',
   'footer.localProgress': '进度仅保存在本机',
+  'footer.rightsPrivacy': '权利与隐私',
+  'footer.rightsNotice':
+    '本项目与 LocalThunk、Playstack 无关联，也未获其赞助、背书或认可。Balatro 及相关名称与卡图的权利归相应权利人所有。',
+  'footer.nonCommercialNotice': '本站不用于盈利，目前没有广告、付费、奖品、赞助或捐赠。',
+  'footer.codeLicenseNotice':
+    'MIT 只覆盖 Balatrue 自有的功能定义、游戏逻辑、界面与工程代码，不覆盖卡名、卡图或原作文本。',
+  'footer.privacyNotice':
+    '当前没有账号、统计 SDK、广告画像或跨站追踪；牌局进度只保存在本机。公开托管后，托管商可能记录标准访问日志。',
+  'footer.dataCredit': '资料与卡图获取来源：',
+  'footer.textLicenseOnly':
+    '；Balatro 名称、卡图与游戏文本的权利归相应权利人，Wiki 文字许可链仍在核对。',
+  'footer.rightsContact': '素材使用或权利疑问请联系',
+  'footer.rightsResponse': '；我们会先下线相关内容，再核实处理。',
 
   'collection.title': '小丑图鉴',
   'collection.warningEyebrow': '计分提醒',
@@ -127,7 +141,7 @@ const zhCN = {
   'collection.classificationNote': '名称、稀有度和价格为资料字段；其余为 Balatrue 分类。',
   'collection.soul': '灵魂牌',
   'collection.noResults': '没有符合这些条件的小丑牌。',
-  'collection.clearFilters': '清除筛选',
+  'collection.clearFilters': '清空',
   'collection.showFilters': '筛选',
   'collection.hideFilters': '收起筛选',
   'collection.assistedNotice': '图鉴已打开：这局仍可继续，但不会计入战绩。',
@@ -166,7 +180,7 @@ const en = {
   'brand.nameEnglish': 'Balatrue',
   'brand.tagline': "Guess today's Joker",
   'brand.subtitle': 'A fan-made Balatro guessing game',
-  'brand.disclaimer': 'A free guessing game made by Balatro fans · Not an official release',
+  'brand.disclaimer': 'A fan-made Balatro guessing game · Unofficial',
 
   'nav.daily': 'Daily',
   'nav.endless': 'Endless',
@@ -194,7 +208,7 @@ const en = {
 
   'search.label': 'Choose a Joker',
   'search.placeholder': 'Search by name or pinyin',
-  'search.hint': 'Search the official English or Chinese name, full pinyin, or initials',
+  'search.hint': 'Search the in-game English or Chinese name, full pinyin, or initials',
   'search.results': 'Joker suggestions',
   'search.noResults': 'No Joker found',
   'search.alreadyGuessed': 'Already played',
@@ -277,8 +291,24 @@ const en = {
   'footer.madeBySuffix': '',
   'footer.source': 'GitHub source',
   'footer.bilibili': 'Bilibili',
+  'footer.dataSource': 'Data source',
   'footer.official': 'Official Balatro',
   'footer.localProgress': 'Progress stays on this device',
+  'footer.rightsPrivacy': 'Rights & privacy',
+  'footer.rightsNotice':
+    'This project is not affiliated with, sponsored, endorsed, or approved by LocalThunk or Playstack. Balatro and related names and artwork belong to their respective rights holders.',
+  'footer.nonCommercialNotice':
+    'The site is not operated for profit and currently has no ads, purchases, prizes, sponsorships, or donations.',
+  'footer.codeLicenseNotice':
+    "The MIT License covers only Balatrue's original product definitions, game logic, UI, and project code; it does not cover card names, artwork, or original game text.",
+  'footer.privacyNotice':
+    'There are currently no accounts, analytics SDKs, advertising profiles, or cross-site tracking. Game progress stays on this device. A public host may keep standard request logs.',
+  'footer.dataCredit': 'Data and artwork obtained from:',
+  'footer.textLicenseOnly':
+    '; rights in Balatro names, artwork, and game text remain with their respective owners, and the Wiki text license chain is still under review.',
+  'footer.rightsContact': 'For an asset-use or rights concern, contact',
+  'footer.rightsResponse':
+    '; we will take the relevant material offline first, then review the concern.',
 
   'collection.title': 'Joker Collection',
   'collection.warningEyebrow': 'Scoring notice',
@@ -295,7 +325,7 @@ const en = {
     'Names, rarity, and price are source facts; the remaining fields are Balatrue categories.',
   'collection.soul': 'The Soul',
   'collection.noResults': 'No Jokers match these filters.',
-  'collection.clearFilters': 'Clear filters',
+  'collection.clearFilters': 'Clear all',
   'collection.showFilters': 'Filters',
   'collection.hideFilters': 'Hide filters',
   'collection.assistedNotice':

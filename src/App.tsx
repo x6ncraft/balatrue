@@ -48,6 +48,7 @@ const PROJECT_LINKS = {
   x: 'https://x.com/x6ncraft',
   bilibili: 'https://space.bilibili.com/2056733',
   balatro: 'https://www.playbalatro.com/',
+  wiki: 'https://balatrowiki.org/',
 } as const
 
 const bootTime = new Date()
@@ -612,24 +613,49 @@ export default function App() {
           </p>
         </div>
         <nav className="site-footer__links" aria-label={t(locale, 'footer.links')}>
-          <a href={PROJECT_LINKS.source} target="_blank" rel="noopener noreferrer">
-            {t(locale, 'footer.source')}
-          </a>
-          <a href={PROJECT_LINKS.x} target="_blank" rel="noopener noreferrer">
-            X
-          </a>
-          <a href={PROJECT_LINKS.bilibili} target="_blank" rel="noopener noreferrer">
-            {t(locale, 'footer.bilibili')}
-          </a>
-          <a
-            className="site-footer__official"
-            href={PROJECT_LINKS.balatro}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t(locale, 'footer.official')}
-          </a>
+          <span className="site-footer__link-group">
+            <a href={PROJECT_LINKS.source} target="_blank" rel="noopener noreferrer">
+              {t(locale, 'footer.source')}
+            </a>
+            <a href={PROJECT_LINKS.x} target="_blank" rel="noopener noreferrer">
+              X
+            </a>
+            <a href={PROJECT_LINKS.bilibili} target="_blank" rel="noopener noreferrer">
+              {t(locale, 'footer.bilibili')}
+            </a>
+          </span>
+          <span className="site-footer__link-group site-footer__link-group--external">
+            <a href={PROJECT_LINKS.wiki} target="_blank" rel="noopener noreferrer">
+              {t(locale, 'footer.dataSource')}
+            </a>
+            <a href={PROJECT_LINKS.balatro} target="_blank" rel="noopener noreferrer">
+              {t(locale, 'footer.official')}
+            </a>
+          </span>
         </nav>
+        <details className="site-footer__legal">
+          <summary>{t(locale, 'footer.rightsPrivacy')}</summary>
+          <div className="site-footer__legal-content">
+            <p>{t(locale, 'footer.rightsNotice')}</p>
+            <p>{t(locale, 'footer.nonCommercialNotice')}</p>
+            <p>{t(locale, 'footer.codeLicenseNotice')}</p>
+            <p>{t(locale, 'footer.privacyNotice')}</p>
+            <p>
+              {t(locale, 'footer.dataCredit')}{' '}
+              <a href={PROJECT_LINKS.wiki} target="_blank" rel="noopener noreferrer">
+                Balatro Wiki
+              </a>
+              {t(locale, 'footer.textLicenseOnly')}
+            </p>
+            <p>
+              {t(locale, 'footer.rightsContact')}{' '}
+              <a href={PROJECT_LINKS.x} target="_blank" rel="noopener noreferrer">
+                @x6ncraft
+              </a>
+              {t(locale, 'footer.rightsResponse')}
+            </p>
+          </div>
+        </details>
       </footer>
 
       <HelpDialog
@@ -652,16 +678,14 @@ export default function App() {
           onClose={() => setGlossaryOpen(false)}
         />
       ) : null}
-      {collectionOpen ? (
-        <JokerCollectionDialog
-          open
-          locale={locale}
-          jokers={jokers}
-          requiresConfirmation={requiresCollectionConfirmation}
-          onClose={() => setCollectionOpen(false)}
-          onConfirm={confirmCollection}
-        />
-      ) : null}
+      <JokerCollectionDialog
+        open={collectionOpen}
+        locale={locale}
+        jokers={jokers}
+        requiresConfirmation={requiresCollectionConfirmation}
+        onClose={() => setCollectionOpen(false)}
+        onConfirm={confirmCollection}
+      />
     </main>
   )
 }

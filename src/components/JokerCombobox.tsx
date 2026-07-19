@@ -51,7 +51,6 @@ export function JokerCombobox({
       searchJokers(searchIndex, inputValue, {
         locale,
         guessedIds,
-        limit: 8,
       }),
     [guessedIds, inputValue, locale, searchIndex],
   )
@@ -114,6 +113,23 @@ export function JokerCombobox({
     [options, scrollOptionIntoView, updateActiveIndex],
   )
 
+  const jumpActive = useCallback(
+    (fromEnd: boolean): void => {
+      if (!options.length) return
+      const indexes = fromEnd
+        ? Array.from({ length: options.length }, (_, index) => options.length - index - 1)
+        : Array.from({ length: options.length }, (_, index) => index)
+      const nextIndex = indexes.find((index) => !options[index]?.disabled)
+      if (nextIndex === undefined) return
+
+      setOpen(true)
+      updateActiveIndex(nextIndex)
+      const option = options[nextIndex]
+      if (option) scrollOptionIntoView(option.id)
+    },
+    [options, scrollOptionIntoView, updateActiveIndex],
+  )
+
   const submit = useCallback((): void => {
     if (!selected || disabled || guessedIds.includes(selected.id)) {
       onInvalid()
@@ -141,6 +157,16 @@ export function JokerCombobox({
     if (event.key === 'ArrowUp') {
       event.preventDefault()
       moveActive(-1)
+      return
+    }
+    if (open && event.key === 'Home') {
+      event.preventDefault()
+      jumpActive(false)
+      return
+    }
+    if (open && event.key === 'End') {
+      event.preventDefault()
+      jumpActive(true)
       return
     }
     if (event.key === 'Escape') {
@@ -255,6 +281,7 @@ export function JokerCombobox({
                   alt=""
                   width="30"
                   height="40"
+                  loading="lazy"
                 />
                 <span className="suggestion__name">
                   <strong>{option.primaryName}</strong>

@@ -20,12 +20,15 @@ import {
   type WikiJokerActivation,
   type WikiJokerType,
 } from '../src/data/types'
+import { writePublicProvenance } from './public-provenance'
 
 const WIKI_API = 'https://balatrowiki.org/api.php'
-const WIKI_PAGE_URL = 'https://balatrowiki.org/wiki'
+const WIKI_PAGE_URL = 'https://balatrowiki.org/w'
+const remoteSyncAcknowledgement = 'BALATRUE_REMOTE_SYNC_ALLOWED'
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const imageDirectory = join(projectRoot, 'public/jokers')
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
+const auditFile = join(projectRoot, 'data/restricted/jokers.audit.generated.json')
 
 interface WikiRevisionResponse {
   query: {
@@ -84,6 +87,24 @@ interface ImageSource {
   height: number
   url: string
   sha1: string
+}
+
+interface SourceAuditRecord {
+  id: string
+  number: number
+  name: { en: string; zhCN: string }
+  referencePageUrl: string
+  effectTextEn: string
+  unlockRequirementEn: string
+  wikiType: WikiJokerType
+  wikiActivation: WikiJokerActivation
+  imageUrl: string
+  imageSha1: string
+}
+
+interface SyncCandidate {
+  joker: Joker
+  audit: SourceAuditRecord
 }
 
 interface ClassificationOverride {
@@ -806,7 +827,16 @@ function applyClassificationOverride(
   }
 }
 
-function makeJoker(row: SourceRow, id: string, nameZhCN: string, image: ImageSource): Joker {
+function sha256Text(value: string): string {
+  return createHash('sha256').update(value, 'utf8').digest('hex')
+}
+
+function makeJoker(
+  row: SourceRow,
+  id: string,
+  nameZhCN: string,
+  image: ImageSource,
+): SyncCandidate {
   const legendary = row.rarity === 'legendary'
   const classification = applyClassificationOverride(
     id,
@@ -814,41 +844,53 @@ function makeJoker(row: SourceRow, id: string, nameZhCN: string, image: ImageSou
     classifyDependencies(row.effectTextEn),
   )
   return {
-    id,
-    number: row.number,
-    name: { en: row.nameEn, zhCN: nameZhCN },
-    imagePath: `/jokers/${id}.png`,
-    official: {
-      gameVersion: JOKER_DATA_GAME_VERSION,
-      rarity: row.rarity,
-      cost: row.cost,
-      shopPurchasable: !legendary,
-    },
-    source: {
-      wikiPageUrl: `${WIKI_PAGE_URL}/${encodeURIComponent(row.nameEn.replaceAll(' ', '_'))}`,
+    audit: {
+      id,
+      number: row.number,
+      name: { en: row.nameEn, zhCN: nameZhCN },
+      referencePageUrl: `${WIKI_PAGE_URL}/${encodeURIComponent(row.nameEn.replaceAll(' ', '_'))}`,
       effectTextEn: row.effectTextEn,
       unlockRequirementEn: row.unlockRequirementEn,
       wikiType: row.wikiType,
       wikiActivation: row.wikiActivation,
       imageUrl: image.url,
       imageSha1: image.sha1,
-      localImageSha1: '',
-      imageWidth: image.width,
-      imageHeight: image.height,
     },
-    classification: {
-      version: JOKER_CLASSIFICATION_VERSION,
-      acquisition: {
-        kind: legendary ? 'soul' : 'shop',
-        unlockState: legendary
-          ? 'legendary'
-          : row.unlockRequirementEn === 'Available from start.'
-            ? 'starting'
-            : 'unlock_required',
+    joker: {
+      id,
+      number: row.number,
+      name: { en: row.nameEn, zhCN: nameZhCN },
+      imagePath: `/jokers/${id}.png`,
+      official: {
+        gameVersion: JOKER_DATA_GAME_VERSION,
+        rarity: row.rarity,
+        cost: row.cost,
+        shopPurchasable: !legendary,
       },
-      effects: classifyEffects(row.wikiType, row.effectTextEn),
-      timings: classification.timings,
-      dependencies: classification.dependencies,
+      source: {
+        effectTextSha256: sha256Text(row.effectTextEn),
+        unlockRequirementSha256: sha256Text(row.unlockRequirementEn),
+        wikiType: row.wikiType,
+        wikiActivation: row.wikiActivation,
+        imageSha1: image.sha1,
+        localImageSha1: '',
+        imageWidth: image.width,
+        imageHeight: image.height,
+      },
+      classification: {
+        version: JOKER_CLASSIFICATION_VERSION,
+        acquisition: {
+          kind: legendary ? 'soul' : 'shop',
+          unlockState: legendary
+            ? 'legendary'
+            : row.unlockRequirementEn === 'Available from start.'
+              ? 'starting'
+              : 'unlock_required',
+        },
+        effects: classifyEffects(row.wikiType, row.effectTextEn),
+        timings: classification.timings,
+        dependencies: classification.dependencies,
+      },
     },
   }
 }
@@ -879,7 +921,7 @@ async function reuseVerifiedLocalHashes(jokers: Joker[]): Promise<void> {
   }
 }
 
-async function syncImage(joker: Joker): Promise<'downloaded' | 'cached'> {
+async function syncImage(joker: Joker, imageUrl: string): Promise<'downloaded' | 'cached'> {
   const path = join(projectRoot, 'public', joker.imagePath)
   if (
     joker.source.localImageSha1 &&
@@ -889,7 +931,7 @@ async function syncImage(joker: Joker): Promise<'downloaded' | 'cached'> {
     return 'cached'
   }
 
-  const response = await fetchWithRetry(joker.source.imageUrl)
+  const response = await fetchWithRetry(imageUrl)
   const bytes = Buffer.from(await response.arrayBuffer())
   const sha1 = createHash('sha1').update(bytes).digest('hex')
   invariant(
@@ -912,6 +954,10 @@ async function syncImage(joker: Joker): Promise<'downloaded' | 'cached'> {
 }
 
 async function main(): Promise<void> {
+  invariant(
+    process.env[remoteSyncAcknowledgement] === '1',
+    `[data] remote sync is maintainer-only; confirm source access permission, then set ${remoteSyncAcknowledgement}=1`,
+  )
   console.log('[data] fetching official localization names and current Wiki facts')
   const [enLocalization, zhCNLocalization, parsedPage, imageSources] = await Promise.all([
     fetchLocalization('Module:Localization/en-us'),
@@ -935,15 +981,16 @@ async function main(): Promise<void> {
     enIdsByName.set(name, id)
   }
 
-  const jokers = rows.map((row) => {
+  const candidates = rows.map((row) => {
     const id = enIdsByName.get(row.nameEn)
     invariant(id, `Joker table name '${row.nameEn}' is absent from official English localization`)
     const nameZhCN = zhCNLocalization.names.get(id)
-    invariant(nameZhCN, `Missing official zh-CN localization for ${id}`)
+    invariant(nameZhCN, `Missing in-game zh-CN localization for ${id}`)
     const image = imageSources.get(row.nameEn)
     invariant(image, `Missing official Wiki image for ${row.nameEn}`)
     return makeJoker(row, id, nameZhCN, image)
   })
+  const jokers = candidates.map(({ joker }) => joker)
 
   invariant(new Set(jokers.map((joker) => joker.id)).size === 150, 'Joker IDs are not unique')
   const jokerIds = new Set(jokers.map((joker) => joker.id))
@@ -971,8 +1018,12 @@ async function main(): Promise<void> {
   await mkdir(imageDirectory, { recursive: true })
   await reuseVerifiedLocalHashes(jokers)
   let downloaded = 0
-  for (let start = 0; start < jokers.length; start += 10) {
-    const results = await Promise.all(jokers.slice(start, start + 10).map(syncImage))
+  for (let start = 0; start < candidates.length; start += 10) {
+    const results = await Promise.all(
+      candidates
+        .slice(start, start + 10)
+        .map(({ joker, audit }) => syncImage(joker, audit.imageUrl)),
+    )
     downloaded += results.filter((result) => result === 'downloaded').length
     console.log(`[data] images ${Math.min(start + 10, jokers.length)}/${jokers.length}`)
   }
@@ -981,10 +1032,13 @@ async function main(): Promise<void> {
     gameVersion: JOKER_DATA_GAME_VERSION,
     classificationVersion: JOKER_CLASSIFICATION_VERSION,
     source: {
+      wikiPageUrl: `${WIKI_PAGE_URL}/Jokers?oldid=${parsedPage.parse.revid}`,
       wikiPageRevision: parsedPage.parse.revid,
+      enLocalizationUrl: `${WIKI_PAGE_URL}/Module:Localization/en-us?oldid=${enLocalization.revision}`,
       enLocalizationRevision: enLocalization.revision,
       enLocalizationTimestamp: enLocalization.timestamp,
       enLocalizationVersion: enLocalization.version,
+      zhCNLocalizationUrl: `${WIKI_PAGE_URL}/Module:Localization/zh-cn?oldid=${zhCNLocalization.revision}`,
       zhCNLocalizationRevision: zhCNLocalization.revision,
       zhCNLocalizationTimestamp: zhCNLocalization.timestamp,
       zhCNLocalizationVersion: zhCNLocalization.version,
@@ -995,6 +1049,25 @@ async function main(): Promise<void> {
   await writeFile(
     generatedFile,
     await format(generated, { ...prettierConfig, parser: 'typescript' }),
+  )
+  await mkdir(dirname(auditFile), { recursive: true })
+  await writeFile(
+    auditFile,
+    `${JSON.stringify(
+      {
+        distribution: 'restricted-review-data',
+        generatedBy: 'scripts/sync-jokers.ts',
+        metadata,
+        jokers: candidates.map(({ audit }) => audit),
+      },
+      null,
+      2,
+    )}\n`,
+  )
+  await writePublicProvenance(
+    metadata,
+    jokers,
+    candidates.map(({ audit }) => audit),
   )
   console.log(`[data] wrote ${jokers.length} Jokers; downloaded ${downloaded} image(s)`)
 }
