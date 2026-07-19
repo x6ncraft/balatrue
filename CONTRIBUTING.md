@@ -25,10 +25,11 @@ rights boundary, or release contract changes.
 
 ## Data and assets
 
-- Do not edit `src/data/jokers.generated.ts` or
-  `data/jokers.provenance.generated.json` by hand.
-- Do not commit `data/restricted/*.json`, verbatim upstream effect or unlock prose, game packages,
-  source code, logos, music, or sound effects.
+- Do not edit `src/data/jokers.generated.ts`, `data/jokers.provenance.generated.json`, or
+  `data/upstream/jokers.wiki.generated.json` by hand.
+- Keep upstream effect and unlock wording in the generated `data/upstream/` snapshot with its
+  attribution and rights notice; do not copy it into browser code or production assets.
+- Do not commit game packages, original game source code, logos, music, or sound effects.
 - Do not add or replace third-party artwork without a source record and an explicit review of its
   rights status.
 - Remote Wiki synchronization is maintainer-only and requires the access confirmation described in

@@ -1,7 +1,8 @@
 # Balatrue asset and data notice
 
-The root [MIT License](LICENSE) covers Balatrue's original product definitions, game logic, UI,
-engineering source and tooling, and the project-authored documentation that describes those parts.
+The root [MIT License](LICENSE), read together with [LICENSE_SCOPE.md](LICENSE_SCOPE.md), covers
+Balatrue's original product definitions, game logic, UI, engineering source and tooling, and the
+project-authored documentation that describes those parts.
 It does not grant rights to third-party names, trademarks, game text, artwork, fonts, or other
 material identified below.
 
@@ -25,8 +26,15 @@ provenance; it does not claim that the Wiki granted this project rights that bel
 Playstack, or another owner.
 
 The browser catalog contains only the names, factual fields, project-authored classifications, and
-source digests required by the puzzle. Full upstream English effect and unlock wording is kept in a
-local, git-ignored review file when a maintainer needs to audit or regenerate the data.
+source digests required by the puzzle. The repository also preserves the normalized English effect
+and unlock wording used to review those classifications in
+[`data/upstream/jokers.wiki.generated.json`](data/upstream/jokers.wiki.generated.json). That
+third-party source snapshot is excluded from the root MIT License and from production builds. Its
+source, transformation, source-site license notices, migration history, and unresolved original-game
+text rights are documented in [`data/upstream/README.md`](data/upstream/README.md).
+
+This notice applies to the current tree and to Balatro-related text and artwork retained in earlier
+repository revisions. Their presence in Git history does not relicense them under MIT.
 
 Balatrue is not affiliated with, sponsored, endorsed, or approved by LocalThunk or Playstack. For a
 rights inquiry or takedown request, contact [@x6ncraft](https://x.com/x6ncraft). We will take the

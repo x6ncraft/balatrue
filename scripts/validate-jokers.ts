@@ -26,7 +26,7 @@ import { hasDependencyValueLabel } from '../src/ui/labels'
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
 const provenanceFile = join(projectRoot, 'data/jokers.provenance.generated.json')
-const auditFile = join(projectRoot, 'data/restricted/jokers.audit.generated.json')
+const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 const imageDirectory = join(projectRoot, 'public/jokers')
 const errors: string[] = []
 
@@ -44,7 +44,21 @@ interface SourceAuditRecord {
 }
 
 interface SourceAuditFile {
+  schemaVersion: number
   distribution: string
+  capturedAt: string
+  licenseNotice: {
+    spdx: string
+    projectLicense: string
+    source: string
+    sourceUrl: string
+    attribution: string
+    sourceLicenseNotice: string
+    sourceLicenseUrl: string
+    modifications: string
+    rights: string
+    details: string
+  }
   metadata: JokerDataMeta
   jokers: SourceAuditRecord[]
 }
@@ -91,16 +105,17 @@ if (!existsSync(generatedFile)) {
 if (!existsSync(provenanceFile)) {
   throw new Error('[data] public provenance data is missing')
 }
+if (!existsSync(sourceReviewFile)) {
+  throw new Error('[data] checked-in source-review data is missing')
+}
 if (!existsSync(imageDirectory)) {
   throw new Error('[data] local image directory is missing')
 }
 
 const provenance = JSON.parse(await readFile(provenanceFile, 'utf8')) as PublicProvenanceFile
 const provenanceById = new Map(provenance.jokers.map((record) => [record.id, record]))
-const audit = existsSync(auditFile)
-  ? (JSON.parse(await readFile(auditFile, 'utf8')) as SourceAuditFile)
-  : null
-const auditById = new Map((audit?.jokers ?? []).map((record) => [record.id, record]))
+const sourceReview = JSON.parse(await readFile(sourceReviewFile, 'utf8')) as SourceAuditFile
+const sourceReviewById = new Map(sourceReview.jokers.map((record) => [record.id, record]))
 
 check(JOKER_DATA_META.gameVersion === JOKER_DATA_GAME_VERSION, 'Metadata game version is stale')
 check(
@@ -126,20 +141,39 @@ check(
   JSON.stringify(provenance.metadata) === JSON.stringify(JOKER_DATA_META),
   'Public provenance metadata differs from runtime metadata',
 )
-if (audit) {
-  check(
-    audit.distribution === 'restricted-review-data',
-    'Source-review data has no restriction marker',
-  )
-  check(
-    audit.jokers.length === 150,
-    `Expected 150 source-review records, found ${audit.jokers.length}`,
-  )
-  check(
-    JSON.stringify(audit.metadata) === JSON.stringify(JOKER_DATA_META),
-    'Source-review metadata differs from runtime metadata',
-  )
-}
+check(sourceReview.schemaVersion === 1, 'Unsupported source-review schema')
+check(
+  sourceReview.distribution === 'upstream-source-review-data',
+  'Source-review data has no upstream distribution marker',
+)
+check(
+  !Number.isNaN(Date.parse(sourceReview.capturedAt)),
+  'Source-review data has no capture timestamp',
+)
+check(
+  sourceReview.licenseNotice.spdx === 'NOASSERTION',
+  'Source-review data overstates its license',
+)
+check(
+  sourceReview.licenseNotice.projectLicense === 'Excluded from the root MIT license',
+  'Source-review data has no project-license boundary',
+)
+check(
+  sourceReview.licenseNotice.sourceUrl === 'https://balatrowiki.org/w/Jokers' &&
+    sourceReview.licenseNotice.sourceLicenseUrl ===
+      'https://creativecommons.org/licenses/by-nc-sa/3.0/' &&
+    sourceReview.licenseNotice.attribution === 'Balatro Wiki contributors' &&
+    sourceReview.licenseNotice.modifications.length > 0,
+  'Source-review data has incomplete attribution',
+)
+check(
+  sourceReview.jokers.length === 150,
+  `Expected 150 source-review records, found ${sourceReview.jokers.length}`,
+)
+check(
+  JSON.stringify(sourceReview.metadata) === JSON.stringify(JOKER_DATA_META),
+  'Source-review metadata differs from runtime metadata',
+)
 check(
   JOKER_DATA_META.source.wikiPageUrl ===
     `https://balatrowiki.org/w/Jokers?oldid=${JOKER_DATA_META.source.wikiPageRevision}`,
@@ -164,7 +198,7 @@ check(
   'Public provenance Joker IDs are not unique',
 )
 check(
-  hasUniqueValues((audit?.jokers ?? []).map((record) => record.id)),
+  hasUniqueValues(sourceReview.jokers.map((record) => record.id)),
   'Source-review Joker IDs are not unique',
 )
 
@@ -227,54 +261,66 @@ for (const [index, joker] of jokers.entries()) {
       `${label}: invalid provenance image URL`,
     )
   }
-  const auditRecord = auditById.get(joker.id)
-  if (audit) check(Boolean(auditRecord), `${label}: missing source-review record`)
-  if (auditRecord) {
-    check(auditRecord.number === joker.number, `${label}: source-review number mismatch`)
-    check(auditRecord.name.en === joker.name.en, `${label}: source-review English name mismatch`)
-    check(auditRecord.name.zhCN === joker.name.zhCN, `${label}: source-review zh-CN name mismatch`)
+  const sourceReviewRecord = sourceReviewById.get(joker.id)
+  check(Boolean(sourceReviewRecord), `${label}: missing source-review record`)
+  if (sourceReviewRecord) {
+    check(sourceReviewRecord.number === joker.number, `${label}: source-review number mismatch`)
     check(
-      createHash('sha256').update(auditRecord.effectTextEn, 'utf8').digest('hex') ===
+      sourceReviewRecord.name.en === joker.name.en,
+      `${label}: source-review English name mismatch`,
+    )
+    check(
+      sourceReviewRecord.name.zhCN === joker.name.zhCN,
+      `${label}: source-review zh-CN name mismatch`,
+    )
+    check(
+      createHash('sha256').update(sourceReviewRecord.effectTextEn, 'utf8').digest('hex') ===
         joker.source.effectTextSha256,
       `${label}: effect source digest mismatch`,
     )
     check(
-      createHash('sha256').update(auditRecord.unlockRequirementEn, 'utf8').digest('hex') ===
+      createHash('sha256').update(sourceReviewRecord.unlockRequirementEn, 'utf8').digest('hex') ===
         joker.source.unlockRequirementSha256,
       `${label}: unlock source digest mismatch`,
     )
-    check(auditRecord.wikiType === joker.source.wikiType, `${label}: Wiki type mismatch`)
+    check(sourceReviewRecord.wikiType === joker.source.wikiType, `${label}: Wiki type mismatch`)
     check(
-      auditRecord.wikiActivation === joker.source.wikiActivation,
+      sourceReviewRecord.wikiActivation === joker.source.wikiActivation,
       `${label}: Wiki activation mismatch`,
     )
-    check(auditRecord.imageSha1 === joker.source.imageSha1, `${label}: source image SHA-1 mismatch`)
-    check(auditRecord.effectTextEn.trim().length > 0, `${label}: empty effect source text`)
-    check(auditRecord.unlockRequirementEn.trim().length > 0, `${label}: empty unlock source text`)
     check(
-      auditRecord.effectTextEn === auditRecord.effectTextEn.trim(),
+      sourceReviewRecord.imageSha1 === joker.source.imageSha1,
+      `${label}: source image SHA-1 mismatch`,
+    )
+    check(sourceReviewRecord.effectTextEn.trim().length > 0, `${label}: empty effect source text`)
+    check(
+      sourceReviewRecord.unlockRequirementEn.trim().length > 0,
+      `${label}: empty unlock source text`,
+    )
+    check(
+      sourceReviewRecord.effectTextEn === sourceReviewRecord.effectTextEn.trim(),
       `${label}: effect source text has outer whitespace`,
     )
     check(
-      auditRecord.unlockRequirementEn === auditRecord.unlockRequirementEn.trim(),
+      sourceReviewRecord.unlockRequirementEn === sourceReviewRecord.unlockRequirementEn.trim(),
       `${label}: unlock source text has outer whitespace`,
     )
     check(
-      !auditRecord.effectTextEn.includes('.mw-parser-output') &&
-        !auditRecord.unlockRequirementEn.includes('.mw-parser-output'),
+      !sourceReviewRecord.effectTextEn.includes('.mw-parser-output') &&
+        !sourceReviewRecord.unlockRequirementEn.includes('.mw-parser-output'),
       `${label}: MediaWiki CSS leaked into source text`,
     )
     check(
-      !/&(?:#\d+|#x[a-f\d]+|[a-z][a-z\d]+);/i.test(auditRecord.effectTextEn) &&
-        !/&(?:#\d+|#x[a-f\d]+|[a-z][a-z\d]+);/i.test(auditRecord.unlockRequirementEn),
+      !/&(?:#\d+|#x[a-f\d]+|[a-z][a-z\d]+);/i.test(sourceReviewRecord.effectTextEn) &&
+        !/&(?:#\d+|#x[a-f\d]+|[a-z][a-z\d]+);/i.test(sourceReviewRecord.unlockRequirementEn),
       `${label}: HTML entity leaked into source text`,
     )
     check(
-      auditRecord.referencePageUrl.startsWith('https://balatrowiki.org/w/'),
+      sourceReviewRecord.referencePageUrl.startsWith('https://balatrowiki.org/w/'),
       `${label}: invalid Wiki reference URL`,
     )
     check(
-      auditRecord.imageUrl.startsWith('https://balatrowiki.org/images/'),
+      sourceReviewRecord.imageUrl.startsWith('https://balatrowiki.org/images/'),
       `${label}: invalid source image URL`,
     )
   }
@@ -441,6 +487,6 @@ if (errors.length > 0) {
   process.exitCode = 1
 } else {
   console.log(
-    `[data] valid: ${jokers.length} Jokers, 150 in-game names in EN/zh-CN, rarity 61/64/20/5, ${gameplaySignatures.size}/150 unique player clue signatures, ${actualImageFiles.length} verified images${audit ? ', local source audit verified' : ''}`,
+    `[data] valid: ${jokers.length} Jokers, 150 in-game names in EN/zh-CN, rarity 61/64/20/5, ${gameplaySignatures.size}/150 unique player clue signatures, ${actualImageFiles.length} verified images, 300 repository source fields verified`,
   )
 }

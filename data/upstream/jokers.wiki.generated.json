@@ -1,0 +1,2286 @@
+{
+  "schemaVersion": 1,
+  "distribution": "upstream-source-review-data",
+  "capturedAt": "2026-07-18T13:55:05.000Z",
+  "licenseNotice": {
+    "spdx": "NOASSERTION",
+    "projectLicense": "Excluded from the root MIT license",
+    "source": "Balatro Wiki",
+    "sourceUrl": "https://balatrowiki.org/w/Jokers",
+    "attribution": "Balatro Wiki contributors",
+    "sourceLicenseNotice": "CC BY-NC-SA 3.0; additional terms may apply",
+    "sourceLicenseUrl": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+    "modifications": "MediaWiki presentation markup removed; whitespace and rendered variable values normalized to JSON.",
+    "rights": "Some short wording may originate in Balatro. All underlying rights remain with their respective rights holders.",
+    "details": "See data/upstream/README.md and ASSET_NOTICE.md."
+  },
+  "generatedBy": "scripts/sync-jokers.ts",
+  "metadata": {
+    "gameVersion": "1.0.1o-FULL",
+    "classificationVersion": 9,
+    "source": {
+      "wikiPageUrl": "https://balatrowiki.org/w/Jokers?oldid=26120",
+      "wikiPageRevision": 26120,
+      "enLocalizationUrl": "https://balatrowiki.org/w/Module:Localization/en-us?oldid=7348",
+      "enLocalizationRevision": 7348,
+      "enLocalizationTimestamp": "2024-10-26T18:10:05Z",
+      "enLocalizationVersion": "1.0.1m-FULL",
+      "zhCNLocalizationUrl": "https://balatrowiki.org/w/Module:Localization/zh-cn?oldid=7378",
+      "zhCNLocalizationRevision": 7378,
+      "zhCNLocalizationTimestamp": "2024-10-26T18:22:30Z",
+      "zhCNLocalizationVersion": "1.0.1m-FULL"
+    }
+  },
+  "jokers": [
+    {
+      "id": "j_joker",
+      "number": 1,
+      "name": {
+        "en": "Joker",
+        "zhCN": "小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Joker",
+      "effectTextEn": "+4 Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Joker.png?7edba",
+      "imageSha1": "a4e10dda17171c287b76e7566798d4ed174e255a"
+    },
+    {
+      "id": "j_greedy_joker",
+      "number": 2,
+      "name": {
+        "en": "Greedy Joker",
+        "zhCN": "贪婪小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Greedy_Joker",
+      "effectTextEn": "Played cards with Diamond suit give +3 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Greedy_Joker.png?68b5e",
+      "imageSha1": "3d988d34e556017b6ab1d0623cba081f530d9441"
+    },
+    {
+      "id": "j_lusty_joker",
+      "number": 3,
+      "name": {
+        "en": "Lusty Joker",
+        "zhCN": "色欲小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Lusty_Joker",
+      "effectTextEn": "Played cards with Heart suit give +3 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Lusty_Joker.png?76952",
+      "imageSha1": "bec5445a9ed20a3296f713ef6fbbac90dff35718"
+    },
+    {
+      "id": "j_wrathful_joker",
+      "number": 4,
+      "name": {
+        "en": "Wrathful Joker",
+        "zhCN": "愤怒小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wrathful_Joker",
+      "effectTextEn": "Played cards with Spade suit give +3 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Wrathful_Joker.png?76952",
+      "imageSha1": "d4efb26d0815a83dd1e0a824ac5d429f03a04508"
+    },
+    {
+      "id": "j_gluttenous_joker",
+      "number": 5,
+      "name": {
+        "en": "Gluttonous Joker",
+        "zhCN": "暴食小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gluttonous_Joker",
+      "effectTextEn": "Played cards with Club suit give +3 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Gluttonous_Joker.png?ec8cd",
+      "imageSha1": "14164fcae9ce65e6c9bc615d0160b53f6af86ad3"
+    },
+    {
+      "id": "j_jolly",
+      "number": 6,
+      "name": {
+        "en": "Jolly Joker",
+        "zhCN": "开心小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Jolly_Joker",
+      "effectTextEn": "+8 Mult if played hand contains a Pair",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Jolly_Joker.png?31f87",
+      "imageSha1": "d92045e6ef01b5c6a4c8995eb2e7034bec97edd9"
+    },
+    {
+      "id": "j_zany",
+      "number": 7,
+      "name": {
+        "en": "Zany Joker",
+        "zhCN": "古怪小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Zany_Joker",
+      "effectTextEn": "+12 Mult if played hand contains a Three of a Kind",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Zany_Joker.png?503ea",
+      "imageSha1": "dcb08756c705722697fd8b136e0c1c2f613ef4b2"
+    },
+    {
+      "id": "j_mad",
+      "number": 8,
+      "name": {
+        "en": "Mad Joker",
+        "zhCN": "疯狂小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mad_Joker",
+      "effectTextEn": "+10 Mult if played hand contains a Two Pair",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Mad_Joker.png?bc6c9",
+      "imageSha1": "98b4b301ba301433a41c035f2c88d2fb7fc999fe"
+    },
+    {
+      "id": "j_crazy",
+      "number": 9,
+      "name": {
+        "en": "Crazy Joker",
+        "zhCN": "狂野小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Crazy_Joker",
+      "effectTextEn": "+12 Mult if played hand contains a Straight",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Crazy_Joker.png?2bb8f",
+      "imageSha1": "52eccc0d7949b7a9aad6a32179d777f1d6593758"
+    },
+    {
+      "id": "j_droll",
+      "number": 10,
+      "name": {
+        "en": "Droll Joker",
+        "zhCN": "滑稽小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Droll_Joker",
+      "effectTextEn": "+10 Mult if played hand contains a Flush",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Droll_Joker.png?9dea7",
+      "imageSha1": "1aaaa40588072599a8257a0976ab14fa06e6e5ad"
+    },
+    {
+      "id": "j_sly",
+      "number": 11,
+      "name": {
+        "en": "Sly Joker",
+        "zhCN": "奸诈小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sly_Joker",
+      "effectTextEn": "+50 Chips if played hand contains a Pair",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Sly_Joker.png?785b0",
+      "imageSha1": "f4bd4e7e2ba2e291bf169347a64d57c67cec99cb"
+    },
+    {
+      "id": "j_wily",
+      "number": 12,
+      "name": {
+        "en": "Wily Joker",
+        "zhCN": "狡猾小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wily_Joker",
+      "effectTextEn": "+100 Chips if played hand contains a Three of a Kind",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Wily_Joker.png?59941",
+      "imageSha1": "472e678baed836e2d5da523788bcc373f5e7af6d"
+    },
+    {
+      "id": "j_clever",
+      "number": 13,
+      "name": {
+        "en": "Clever Joker",
+        "zhCN": "聪敏小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Clever_Joker",
+      "effectTextEn": "+80 Chips if played hand contains a Two Pair",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Clever_Joker.png?c2577",
+      "imageSha1": "3c78f6dc8d6b8030efb2bcd115d9f0d44c2d2ac4"
+    },
+    {
+      "id": "j_devious",
+      "number": 14,
+      "name": {
+        "en": "Devious Joker",
+        "zhCN": "阴险小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Devious_Joker",
+      "effectTextEn": "+100 Chips if played hand contains a Straight",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Devious_Joker.png?58028",
+      "imageSha1": "76da13931dd0d1603d9df9995e211b504a8e4dcc"
+    },
+    {
+      "id": "j_crafty",
+      "number": 15,
+      "name": {
+        "en": "Crafty Joker",
+        "zhCN": "精明小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Crafty_Joker",
+      "effectTextEn": "+80 Chips if played hand contains a Flush",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Crafty_Joker.png?0a8aa",
+      "imageSha1": "485ef3b3c045d0b245dac8e01662f253ccd449da"
+    },
+    {
+      "id": "j_half",
+      "number": 16,
+      "name": {
+        "en": "Half Joker",
+        "zhCN": "半张小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Half_Joker",
+      "effectTextEn": "+20 Mult if played hand contains 3 or fewer cards",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Half_Joker.png?053e7",
+      "imageSha1": "2bdaa47f3e530bef783d99c2fb87be6720b21f30"
+    },
+    {
+      "id": "j_stencil",
+      "number": 17,
+      "name": {
+        "en": "Joker Stencil",
+        "zhCN": "模具小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Joker_Stencil",
+      "effectTextEn": "X1 Mult for each empty Joker slot Joker Stencil included (Currently X1)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Joker_Stencil.png?e908e",
+      "imageSha1": "00453ce31b1de495f095a2ba80e30872ea682706"
+    },
+    {
+      "id": "j_four_fingers",
+      "number": 18,
+      "name": {
+        "en": "Four Fingers",
+        "zhCN": "四指"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Four_Fingers",
+      "effectTextEn": "All Flushes and Straights can be made with 4 cards",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Four_Fingers.png?58466",
+      "imageSha1": "7eda1bb8b96fb544d139938f00f48d7db816e553"
+    },
+    {
+      "id": "j_mime",
+      "number": 19,
+      "name": {
+        "en": "Mime",
+        "zhCN": "哑剧演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mime",
+      "effectTextEn": "Retrigger all card held in hand abilities",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_held",
+      "imageUrl": "https://balatrowiki.org/images/Mime.png?0b031",
+      "imageSha1": "871d6f93d1d9b64ec7f55b6538b800a8c41ee1a5"
+    },
+    {
+      "id": "j_credit_card",
+      "number": 20,
+      "name": {
+        "en": "Credit Card",
+        "zhCN": "信用卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Credit_Card",
+      "effectTextEn": "Go up to -$20 in debt",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Credit_Card.png?4a471",
+      "imageSha1": "43295702053ecc6e332e0aecafec0b015fba0ac9"
+    },
+    {
+      "id": "j_ceremonial",
+      "number": 21,
+      "name": {
+        "en": "Ceremonial Dagger",
+        "zhCN": "仪式匕首"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ceremonial_Dagger",
+      "effectTextEn": "When Blind is selected, destroy Joker to the right and permanently add double its sell value to this Mult (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Ceremonial_Dagger.png?25d93",
+      "imageSha1": "b9794f2714e568474839df7e1c9c69129c6f4c73"
+    },
+    {
+      "id": "j_banner",
+      "number": 22,
+      "name": {
+        "en": "Banner",
+        "zhCN": "旗帜"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Banner",
+      "effectTextEn": "+30 Chips for each remaining discard",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Banner.png?dfdcd",
+      "imageSha1": "eb4d0b0e60070825d519f82a79e4173aade24b4f"
+    },
+    {
+      "id": "j_mystic_summit",
+      "number": 23,
+      "name": {
+        "en": "Mystic Summit",
+        "zhCN": "神秘之峰"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mystic_Summit",
+      "effectTextEn": "+15 Mult when 0 discards remaining",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Mystic_Summit.png?3671e",
+      "imageSha1": "75f0ed4d63caade5c940fc9db1f578ba1a4eb208"
+    },
+    {
+      "id": "j_marble",
+      "number": 24,
+      "name": {
+        "en": "Marble Joker",
+        "zhCN": "大理石小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Marble_Joker",
+      "effectTextEn": "Adds one Stone card to the deck when Blind is selected",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select",
+      "imageUrl": "https://balatrowiki.org/images/Marble_Joker.png?d4382",
+      "imageSha1": "3de27c006618dc4dbfa075e0d2a97b1564aa3618"
+    },
+    {
+      "id": "j_loyalty_card",
+      "number": 25,
+      "name": {
+        "en": "Loyalty Card",
+        "zhCN": "积分卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Loyalty_Card",
+      "effectTextEn": "X4 Mult every 6 hands played5 remaining",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Loyalty_Card.png?516db",
+      "imageSha1": "ee446f3394ac763f81d5c44ec67c45031421b71d"
+    },
+    {
+      "id": "j_8_ball",
+      "number": 26,
+      "name": {
+        "en": "8 Ball",
+        "zhCN": "八号球"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/8_Ball",
+      "effectTextEn": "1 in 4 chance for each played 8 to create a Tarot card when scored(Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/8_Ball.png?bfbdc",
+      "imageSha1": "8226489662e5b2d87bb50f736ca7600fde447f59"
+    },
+    {
+      "id": "j_misprint",
+      "number": 27,
+      "name": {
+        "en": "Misprint",
+        "zhCN": "印错小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Misprint",
+      "effectTextEn": "+0-23 Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Misprint.png?a7cb6",
+      "imageSha1": "153640e126ee386f1e352d633d39909c625fdcca"
+    },
+    {
+      "id": "j_dusk",
+      "number": 28,
+      "name": {
+        "en": "Dusk",
+        "zhCN": "黄昏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Dusk",
+      "effectTextEn": "Retrigger all played cards in final hand of the round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Dusk.png?0c00a",
+      "imageSha1": "f9cffd3b8177e2a456ca815ea3ce34d4d47429dd"
+    },
+    {
+      "id": "j_raised_fist",
+      "number": 29,
+      "name": {
+        "en": "Raised Fist",
+        "zhCN": "致胜之拳"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Raised_Fist",
+      "effectTextEn": "Adds double the rank of lowest ranked card held in hand to Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_held",
+      "imageUrl": "https://balatrowiki.org/images/Raised_Fist.png?a1cd5",
+      "imageSha1": "407c15f47ac688a48e28e2fec63b851ed8dbf84c"
+    },
+    {
+      "id": "j_chaos",
+      "number": 30,
+      "name": {
+        "en": "Chaos the Clown",
+        "zhCN": "混沌小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Chaos_the_Clown",
+      "effectTextEn": "1 free Reroll per shop",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Chaos_the_Clown.png?35876",
+      "imageSha1": "20f16fccb7a6194a8549feb522af3deb8cb4dd70"
+    },
+    {
+      "id": "j_fibonacci",
+      "number": 31,
+      "name": {
+        "en": "Fibonacci",
+        "zhCN": "斐波那契"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Fibonacci",
+      "effectTextEn": "Each played Ace, 2, 3, 5, or 8 gives +8 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Fibonacci.png?287ab",
+      "imageSha1": "9cccb699fd68b6581ead3f827b8f0ce9b5b0e721"
+    },
+    {
+      "id": "j_steel_joker",
+      "number": 32,
+      "name": {
+        "en": "Steel Joker",
+        "zhCN": "钢铁小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Steel_Joker",
+      "effectTextEn": "Gives X0.2 Mult for each Steel Card in your full deck (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Steel_Joker.png?91161",
+      "imageSha1": "41d00224d4e374a74dcc3ad15dc5abc32f7d60be"
+    },
+    {
+      "id": "j_scary_face",
+      "number": 33,
+      "name": {
+        "en": "Scary Face",
+        "zhCN": "恐怖面孔"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Scary_Face",
+      "effectTextEn": "Played face cards give +30 Chips when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Scary_Face.png?08486",
+      "imageSha1": "9f85c72c2b5d7136b992cadc72e7a472ec6f7dfc"
+    },
+    {
+      "id": "j_abstract",
+      "number": 34,
+      "name": {
+        "en": "Abstract Joker",
+        "zhCN": "抽象小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Abstract_Joker",
+      "effectTextEn": "+3 Mult for each Joker card(Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Abstract_Joker.png?2a9b3",
+      "imageSha1": "98fd480778c0a5a6bd433d786f281044380ee5a7"
+    },
+    {
+      "id": "j_delayed_grat",
+      "number": 35,
+      "name": {
+        "en": "Delayed Gratification",
+        "zhCN": "延迟满足"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Delayed_Gratification",
+      "effectTextEn": "Earn $2 per discard if no discards are used by end of the round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Delayed_Gratification.png?ba8a9",
+      "imageSha1": "7ebae63a2c16c9d1cdc45802ec04a25aa1b97dc5"
+    },
+    {
+      "id": "j_hack",
+      "number": 36,
+      "name": {
+        "en": "Hack",
+        "zhCN": "烂脱口秀演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hack",
+      "effectTextEn": "Retrigger each played 2, 3, 4, or 5",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Hack.png?3c921",
+      "imageSha1": "4e9db8eb677cd263a16e57d5970aa664491cb70c"
+    },
+    {
+      "id": "j_pareidolia",
+      "number": 37,
+      "name": {
+        "en": "Pareidolia",
+        "zhCN": "幻视"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Pareidolia",
+      "effectTextEn": "All cards are considered face cards",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Pareidolia.png?f3c30",
+      "imageSha1": "8d8e78417446c4dc1faf3413a218c55f284b9a63"
+    },
+    {
+      "id": "j_gros_michel",
+      "number": 38,
+      "name": {
+        "en": "Gros Michel",
+        "zhCN": "大麦克香蕉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gros_Michel",
+      "effectTextEn": "+15 Mult1 in 6 chance this card is destroyed at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Gros_Michel.png?85eae",
+      "imageSha1": "c184b15e8e7e021654d5e403f2fab7e30a628022"
+    },
+    {
+      "id": "j_even_steven",
+      "number": 39,
+      "name": {
+        "en": "Even Steven",
+        "zhCN": "偶数史蒂文"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Even_Steven",
+      "effectTextEn": "Played cards with even rank give +4 Mult when scored (10, 8, 6, 4, 2)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Even_Steven.png?2595d",
+      "imageSha1": "86c1dca890414238063e704d1433b074c8ffc2b6"
+    },
+    {
+      "id": "j_odd_todd",
+      "number": 40,
+      "name": {
+        "en": "Odd Todd",
+        "zhCN": "奇数托德"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Odd_Todd",
+      "effectTextEn": "Played cards with odd rank give +31 Chips when scored (A, 9, 7, 5, 3)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Odd_Todd.png?6bb7f",
+      "imageSha1": "6539933c502f59c184799fc39dff8b19fa20ba4e"
+    },
+    {
+      "id": "j_scholar",
+      "number": 41,
+      "name": {
+        "en": "Scholar",
+        "zhCN": "学者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Scholar",
+      "effectTextEn": "Played Aces give +20 Chips and +4 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips_and_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Scholar.png?303f6",
+      "imageSha1": "b5056c3244462f388e73155496857994f0133fe5"
+    },
+    {
+      "id": "j_business",
+      "number": 42,
+      "name": {
+        "en": "Business Card",
+        "zhCN": "名片"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Business_Card",
+      "effectTextEn": "Played face cards have a 1 in 2 chance to give $2 when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Business_Card.png?f91d7",
+      "imageSha1": "6dd4b332bc7502fedf8e6fbb46b3c0ae5e737d40"
+    },
+    {
+      "id": "j_supernova",
+      "number": 43,
+      "name": {
+        "en": "Supernova",
+        "zhCN": "超新星"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Supernova",
+      "effectTextEn": "Adds the number of times poker hand has been played this run to Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Supernova.png?0771d",
+      "imageSha1": "0edab08d973bef5a41c4076bd36fe9700195e96e"
+    },
+    {
+      "id": "j_ride_the_bus",
+      "number": 44,
+      "name": {
+        "en": "Ride the Bus",
+        "zhCN": "搭乘巴士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ride_the_Bus",
+      "effectTextEn": "This Joker gains +1 Mult per consecutive hand played without a scoring face card (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Ride_the_Bus.png?1c42b",
+      "imageSha1": "ebf820a05d4edfbb6e1adaadc5afba670971282e"
+    },
+    {
+      "id": "j_space",
+      "number": 45,
+      "name": {
+        "en": "Space Joker",
+        "zhCN": "太空小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Space_Joker",
+      "effectTextEn": "1 in 4 chance to upgrade level of played poker hand",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_played",
+      "imageUrl": "https://balatrowiki.org/images/Space_Joker.png?255c3",
+      "imageSha1": "c83d87bc517c9f67d20613f5fac93723268223ab"
+    },
+    {
+      "id": "j_egg",
+      "number": 46,
+      "name": {
+        "en": "Egg",
+        "zhCN": "鸡蛋"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Egg",
+      "effectTextEn": "Gains $3 of sell value at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Egg.png?a944d",
+      "imageSha1": "b3c9eb34f0f4f6e24681f6bd05ffe1b1304fc4c8"
+    },
+    {
+      "id": "j_burglar",
+      "number": 47,
+      "name": {
+        "en": "Burglar",
+        "zhCN": "窃贼"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Burglar",
+      "effectTextEn": "When Blind is selected, gain +3 Hands and lose all discards",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select",
+      "imageUrl": "https://balatrowiki.org/images/Burglar.png?54fa4",
+      "imageSha1": "d447ca7e6d5e0e8508da9b44e6a3b19d5b1f7c2c"
+    },
+    {
+      "id": "j_blackboard",
+      "number": 48,
+      "name": {
+        "en": "Blackboard",
+        "zhCN": "黑板"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blackboard",
+      "effectTextEn": "X3 Mult if all cards held in hand are Spades or Clubs",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Blackboard.png?cf54d",
+      "imageSha1": "4e8e8b53ca94a10f4bbb88fce8db9e5095863eb3"
+    },
+    {
+      "id": "j_runner",
+      "number": 49,
+      "name": {
+        "en": "Runner",
+        "zhCN": "跑步选手"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Runner",
+      "effectTextEn": "Gains +15 Chips if played hand contains a Straight (Currently +0 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Runner.png?62aad",
+      "imageSha1": "161d56e0849eff61abe344fa8a71dd98681dc0a0"
+    },
+    {
+      "id": "j_ice_cream",
+      "number": 50,
+      "name": {
+        "en": "Ice Cream",
+        "zhCN": "冰淇淋"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ice_Cream",
+      "effectTextEn": "+100 Chips-5 Chips for every hand played",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Ice_Cream.png?c0e70",
+      "imageSha1": "d1ea9d3039478da5cb0609c69e444110440c5a21"
+    },
+    {
+      "id": "j_dna",
+      "number": 51,
+      "name": {
+        "en": "DNA",
+        "zhCN": "DNA"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/DNA",
+      "effectTextEn": "If first hand of round has only 1 card, add a permanent copy to deck and draw it to hand",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_played",
+      "imageUrl": "https://balatrowiki.org/images/DNA.png?20c90",
+      "imageSha1": "702d168b6157f26c1d472a876a0d143e90012699"
+    },
+    {
+      "id": "j_splash",
+      "number": 52,
+      "name": {
+        "en": "Splash",
+        "zhCN": "飞溅"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Splash",
+      "effectTextEn": "Every played card counts in scoring",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Splash.png?26f6c",
+      "imageSha1": "1708199a391465eeb41ec1713c797747980c5daa"
+    },
+    {
+      "id": "j_blue_joker",
+      "number": 53,
+      "name": {
+        "en": "Blue Joker",
+        "zhCN": "蓝色小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blue_Joker",
+      "effectTextEn": "+2 Chips for each remaining card in deck (Currently +104 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Blue_Joker.png?8106c",
+      "imageSha1": "5cd62e64e10a7c905b991eac04482e10d1ce90b9"
+    },
+    {
+      "id": "j_sixth_sense",
+      "number": 54,
+      "name": {
+        "en": "Sixth Sense",
+        "zhCN": "第六感"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sixth_Sense",
+      "effectTextEn": "If first hand of round is a single 6, destroy it and create a Spectral card (Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Sixth_Sense.png?d0e95",
+      "imageSha1": "7fde6e651711bd072e5833536d42c8c79deb50a1"
+    },
+    {
+      "id": "j_constellation",
+      "number": 55,
+      "name": {
+        "en": "Constellation",
+        "zhCN": "星座"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Constellation",
+      "effectTextEn": "This Joker gains X0.1 Mult every time a Planet card is used (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Constellation.png?24ca0",
+      "imageSha1": "8b51554665facacd0161f6f86685a8e356ada1fc"
+    },
+    {
+      "id": "j_hiker",
+      "number": 56,
+      "name": {
+        "en": "Hiker",
+        "zhCN": "徒步者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hiker",
+      "effectTextEn": "Every played card permanently gains +5 Chips when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Hiker.png?61ba9",
+      "imageSha1": "f0543cf7c608ed018297a0957e8f42de3561a096"
+    },
+    {
+      "id": "j_faceless",
+      "number": 57,
+      "name": {
+        "en": "Faceless Joker",
+        "zhCN": "无面小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Faceless_Joker",
+      "effectTextEn": "Earn $5 if 3 or more face cards are discarded at the same time",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard",
+      "imageUrl": "https://balatrowiki.org/images/Faceless_Joker.png?2deac",
+      "imageSha1": "e822d78cee6ec39478337d3f9685b5611309ad4c"
+    },
+    {
+      "id": "j_green_joker",
+      "number": 58,
+      "name": {
+        "en": "Green Joker",
+        "zhCN": "绿色小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Green_Joker",
+      "effectTextEn": "+1 Mult per hand played -1 Mult per discard (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Green_Joker.png?2deac",
+      "imageSha1": "fcfe7004a64015a715dfc24efabc79ec907d5eb5"
+    },
+    {
+      "id": "j_superposition",
+      "number": 59,
+      "name": {
+        "en": "Superposition",
+        "zhCN": "叠加态"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Superposition",
+      "effectTextEn": "Create a Tarot card if poker hand contains an Ace and a Straight (Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Superposition.png?fa5e1",
+      "imageSha1": "d471218cd327fae0cfeb2798fc1ceb8a414cd11b"
+    },
+    {
+      "id": "j_todo_list",
+      "number": 60,
+      "name": {
+        "en": "To Do List",
+        "zhCN": "待办清单"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/To_Do_List",
+      "effectTextEn": "Earn $4 if poker hand is a [Poker Hand], poker hand changes at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_played",
+      "imageUrl": "https://balatrowiki.org/images/To_Do_List.png?e2f47",
+      "imageSha1": "cb0a1a01faecd9dd5a1504d906c9275f5dfde2ab"
+    },
+    {
+      "id": "j_cavendish",
+      "number": 61,
+      "name": {
+        "en": "Cavendish",
+        "zhCN": "卡文迪什"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cavendish",
+      "effectTextEn": "X3 Mult 1 in 1000 chance this card is destroyed at the end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Cavendish.png?a1358",
+      "imageSha1": "011ce8d32511d1a2c8c41efcd13cd98f5da041c7"
+    },
+    {
+      "id": "j_card_sharp",
+      "number": 62,
+      "name": {
+        "en": "Card Sharp",
+        "zhCN": "老千小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Card_Sharp",
+      "effectTextEn": "X3 Mult if played poker hand has already been played this round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Card_Sharp.png?d65e9",
+      "imageSha1": "5170f751fbf8a563edb6b70c47e936b7377196d0"
+    },
+    {
+      "id": "j_red_card",
+      "number": 63,
+      "name": {
+        "en": "Red Card",
+        "zhCN": "红牌"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Red_Card",
+      "effectTextEn": "This Joker gains +3 Mult when any Booster Pack is skipped (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Red_Card.png?a1358",
+      "imageSha1": "f1843a31bc7d7e5f7429e3354346ba96459a8cc8"
+    },
+    {
+      "id": "j_madness",
+      "number": 64,
+      "name": {
+        "en": "Madness",
+        "zhCN": "疯狂"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Madness",
+      "effectTextEn": "When Small Blind or Big Blind is selected, gain X0.5 Mult and destroy a random Joker (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Madness.png?aca82",
+      "imageSha1": "94b5f7d0acf539c9f3ae6a74a02c8e752ccfedf8"
+    },
+    {
+      "id": "j_square",
+      "number": 65,
+      "name": {
+        "en": "Square Joker",
+        "zhCN": "方形小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Square_Joker",
+      "effectTextEn": "This Joker gains +4 Chips if played hand has exactly 4 cards (Currently 0 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Square_Joker.png?e63f8",
+      "imageSha1": "68b85b4f44e06afc640d77b4fd8a28e9e2fee575"
+    },
+    {
+      "id": "j_seance",
+      "number": 66,
+      "name": {
+        "en": "Séance",
+        "zhCN": "通灵"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/S%C3%A9ance",
+      "effectTextEn": "If poker hand is a Straight Flush, create a random Spectral card (Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/S%C3%A9ance.png?2fe62",
+      "imageSha1": "eeaf95ce6cb33fa59362d22623f52a96e6b1a627"
+    },
+    {
+      "id": "j_riff_raff",
+      "number": 67,
+      "name": {
+        "en": "Riff-Raff",
+        "zhCN": "乌合之众"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Riff-Raff",
+      "effectTextEn": "When Blind is selected, create 2 Common Jokers (Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select",
+      "imageUrl": "https://balatrowiki.org/images/Riff-Raff.png?9ab59",
+      "imageSha1": "20872ad18e013725e18110e890890619c66a5020"
+    },
+    {
+      "id": "j_vampire",
+      "number": 68,
+      "name": {
+        "en": "Vampire",
+        "zhCN": "吸血鬼"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Vampire",
+      "effectTextEn": "This Joker gains X0.1 Mult per scoring Enhanced card played, removes card Enhancement (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Vampire.png?2fe62",
+      "imageSha1": "b8c1f01abb866610e024f0d7c4718312b9f38fde"
+    },
+    {
+      "id": "j_shortcut",
+      "number": 69,
+      "name": {
+        "en": "Shortcut",
+        "zhCN": "捷径"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Shortcut",
+      "effectTextEn": "Allows Straights to be made with gaps of 1 rank (ex: 10 8 6 5 3)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Shortcut.png?e6a46",
+      "imageSha1": "650487cc5dd214cf431395af156381e86bf6d07a"
+    },
+    {
+      "id": "j_hologram",
+      "number": 70,
+      "name": {
+        "en": "Hologram",
+        "zhCN": "全息影像"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hologram",
+      "effectTextEn": "This Joker gains X0.25 Mult every time a playing card is added to your deck (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Hologram.png?53136",
+      "imageSha1": "7eda06e376fac96b0e1f18bc68b937adbf6cab9b"
+    },
+    {
+      "id": "j_vagabond",
+      "number": 71,
+      "name": {
+        "en": "Vagabond",
+        "zhCN": "流浪者"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Vagabond",
+      "effectTextEn": "Create a Tarot card if hand is played with $4 or less",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Vagabond.png?bacdb",
+      "imageSha1": "3c8171a794515328393ddd4ff63cd01e2fe1cb93"
+    },
+    {
+      "id": "j_baron",
+      "number": 72,
+      "name": {
+        "en": "Baron",
+        "zhCN": "男爵"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Baron",
+      "effectTextEn": "Each King held in hand gives X1.5 Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_held",
+      "imageUrl": "https://balatrowiki.org/images/Baron.png?300d5",
+      "imageSha1": "34928610a41b9faf95b288aa58b6f30ded59246d"
+    },
+    {
+      "id": "j_cloud_9",
+      "number": 73,
+      "name": {
+        "en": "Cloud 9",
+        "zhCN": "9霄云外"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cloud_9",
+      "effectTextEn": "Earn $1 for each 9 in your full deck at end of round (Currently $4)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Cloud_9.png?bacdb",
+      "imageSha1": "133dc7645595b6f807617e164c3087362e6dab60"
+    },
+    {
+      "id": "j_rocket",
+      "number": 74,
+      "name": {
+        "en": "Rocket",
+        "zhCN": "火箭"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Rocket",
+      "effectTextEn": "Earn $1 at end of round. Payout increases by $2 when Boss Blind is defeated",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Rocket.png?5465a",
+      "imageSha1": "368fecd253aedd1db7dd0c5229732ef440f4e75a"
+    },
+    {
+      "id": "j_obelisk",
+      "number": 75,
+      "name": {
+        "en": "Obelisk",
+        "zhCN": "方尖石塔"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Obelisk",
+      "effectTextEn": "This Joker gains X0.2 Mult per consecutive hand played without playing your most played poker hand (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Obelisk.png?5465a",
+      "imageSha1": "4f95f7e1af75dbf7faab0607d6609ec50da08772"
+    },
+    {
+      "id": "j_midas_mask",
+      "number": 76,
+      "name": {
+        "en": "Midas Mask",
+        "zhCN": "迈达斯面具"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Midas_Mask",
+      "effectTextEn": "All played face cards become Gold cards when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "on_played",
+      "imageUrl": "https://balatrowiki.org/images/Midas_Mask.png?96bfd",
+      "imageSha1": "f94c17aaaf0fa79b6e9eb070b8a53f242eb77a4a"
+    },
+    {
+      "id": "j_luchador",
+      "number": 77,
+      "name": {
+        "en": "Luchador",
+        "zhCN": "摔跤手"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Luchador",
+      "effectTextEn": "Sell this card to disable the current Boss Blind",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Luchador.png?96bfd",
+      "imageSha1": "217e5916ceb943affe68f39f437a554a92f7d5d7"
+    },
+    {
+      "id": "j_photograph",
+      "number": 78,
+      "name": {
+        "en": "Photograph",
+        "zhCN": "照片"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Photograph",
+      "effectTextEn": "First played face card gives X2 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Photograph.png?b46a7",
+      "imageSha1": "e67c3b1520140549c6e0799c2dc428e06023f103"
+    },
+    {
+      "id": "j_gift",
+      "number": 79,
+      "name": {
+        "en": "Gift Card",
+        "zhCN": "礼品卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Gift_Card",
+      "effectTextEn": "Add $1 of sell value to every Joker and Consumable card at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Gift_Card.png?156e2",
+      "imageSha1": "bc2c106f7f382c2b8bfbb1366047e6cc170c9b52"
+    },
+    {
+      "id": "j_turtle_bean",
+      "number": 80,
+      "name": {
+        "en": "Turtle Bean",
+        "zhCN": "黑龟豆"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Turtle_Bean",
+      "effectTextEn": "+5 hand size, reduces by 1 each round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Turtle_Bean.png?156e2",
+      "imageSha1": "1c203d3f2925413388885cf51d89eacb90d0eed6"
+    },
+    {
+      "id": "j_erosion",
+      "number": 81,
+      "name": {
+        "en": "Erosion",
+        "zhCN": "侵蚀"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Erosion",
+      "effectTextEn": "+4 Mult for each card below [the deck's starting size] in your full deck (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Erosion.png?af063",
+      "imageSha1": "0f804a5562ff2970a2f5ad92eb3cd493a5f9a34d"
+    },
+    {
+      "id": "j_reserved_parking",
+      "number": 82,
+      "name": {
+        "en": "Reserved Parking",
+        "zhCN": "私人车位"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Reserved_Parking",
+      "effectTextEn": "Each face card held in hand has a 1 in 2 chance to give $1",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_held",
+      "imageUrl": "https://balatrowiki.org/images/Reserved_Parking.png?af063",
+      "imageSha1": "415965e72db0ffae6d2248812903cbe9b496fab1"
+    },
+    {
+      "id": "j_mail",
+      "number": 83,
+      "name": {
+        "en": "Mail-In Rebate",
+        "zhCN": "邮件回扣"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mail-In_Rebate",
+      "effectTextEn": "Earn $5 for each discarded [rank], rank changes every round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard",
+      "imageUrl": "https://balatrowiki.org/images/Mail-In_Rebate.png?8a903",
+      "imageSha1": "d745fd55c937b26348755384304e314e106b4015"
+    },
+    {
+      "id": "j_to_the_moon",
+      "number": 84,
+      "name": {
+        "en": "To the Moon",
+        "zhCN": "冲向月球"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/To_the_Moon",
+      "effectTextEn": "Earn an extra $1 of interest for every $5 you have at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/To_the_Moon.png?8a903",
+      "imageSha1": "c5082ce846f7f3f39485b050135df30d6f53fa52"
+    },
+    {
+      "id": "j_hallucination",
+      "number": 85,
+      "name": {
+        "en": "Hallucination",
+        "zhCN": "幻觉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hallucination",
+      "effectTextEn": "1 in 2 chance to create a Tarot card when any Booster Pack is opened (Must have room)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Hallucination.png?119bf",
+      "imageSha1": "98121e3629411ebc4195d41afa104dcea357b6c9"
+    },
+    {
+      "id": "j_fortune_teller",
+      "number": 86,
+      "name": {
+        "en": "Fortune Teller",
+        "zhCN": "占卜师"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Fortune_Teller",
+      "effectTextEn": "+1 Mult per Tarot card used this run (Currently +0)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Fortune_Teller.png?e9294",
+      "imageSha1": "0ce9e6952f598aae3bd795204f8fbd781c956a29"
+    },
+    {
+      "id": "j_juggler",
+      "number": 87,
+      "name": {
+        "en": "Juggler",
+        "zhCN": "杂耍师"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Juggler",
+      "effectTextEn": "+1 hand size",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Juggler.png?5d094",
+      "imageSha1": "008780ef289eb690a683760012086508fec776cd"
+    },
+    {
+      "id": "j_drunkard",
+      "number": 88,
+      "name": {
+        "en": "Drunkard",
+        "zhCN": "醉汉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Drunkard",
+      "effectTextEn": "+1 discard each round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Drunkard.png?c846d",
+      "imageSha1": "c6ccc83022929a94c57e678254d5358201f2f641"
+    },
+    {
+      "id": "j_stone",
+      "number": 89,
+      "name": {
+        "en": "Stone Joker",
+        "zhCN": "石头小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Stone_Joker",
+      "effectTextEn": "Gives +25 Chips for each Stone Card in your full deck (Currently +0 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Stone_Joker.png?0dd82",
+      "imageSha1": "2df34b8edcd252ba659bf34970ed5ae485dea16e"
+    },
+    {
+      "id": "j_golden",
+      "number": 90,
+      "name": {
+        "en": "Golden Joker",
+        "zhCN": "黄金小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Golden_Joker",
+      "effectTextEn": "Earn $4 at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Golden_Joker.png?55a9b",
+      "imageSha1": "7482271f48b660a59e61c94fcb5c6f9818eddb9d"
+    },
+    {
+      "id": "j_lucky_cat",
+      "number": 91,
+      "name": {
+        "en": "Lucky Cat",
+        "zhCN": "招财猫"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Lucky_Cat",
+      "effectTextEn": "This Joker gains X0.25 Mult every time a Lucky card successfully triggers (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Lucky_Cat.png?119bf",
+      "imageSha1": "42bed4a18066075fee396d1c43418f3b1b44182c"
+    },
+    {
+      "id": "j_baseball",
+      "number": 92,
+      "name": {
+        "en": "Baseball Card",
+        "zhCN": "棒球卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Baseball_Card",
+      "effectTextEn": "Uncommon Jokers each give X1.5 Mult",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_other_jokers",
+      "imageUrl": "https://balatrowiki.org/images/Baseball_Card.png?97b3d",
+      "imageSha1": "a413279abe4504a5b17f39207c0f031013f27fe6"
+    },
+    {
+      "id": "j_bull",
+      "number": 93,
+      "name": {
+        "en": "Bull",
+        "zhCN": "斗牛"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bull",
+      "effectTextEn": "+2 Chips for each $1 you have (Currently +0 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Bull.png?97b3d",
+      "imageSha1": "f80fb6390edf0d7240cb578c8761fd0019b8ba38"
+    },
+    {
+      "id": "j_diet_cola",
+      "number": 94,
+      "name": {
+        "en": "Diet Cola",
+        "zhCN": "零糖可乐"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Diet_Cola",
+      "effectTextEn": "Sell this card to create a free Double Tag",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Diet_Cola.png?97b3d",
+      "imageSha1": "eb2f37bf85765d5615776e3ad9be65c7c412b99f"
+    },
+    {
+      "id": "j_trading",
+      "number": 95,
+      "name": {
+        "en": "Trading Card",
+        "zhCN": "交易卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Trading_Card",
+      "effectTextEn": "If first discard of round has only 1 card, destroy it and earn $3",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "economy",
+      "wikiActivation": "on_discard",
+      "imageUrl": "https://balatrowiki.org/images/Trading_Card.png?12d13",
+      "imageSha1": "9f93b4c181ea143fcd43d37a1b05cec057f57d54"
+    },
+    {
+      "id": "j_flash",
+      "number": 96,
+      "name": {
+        "en": "Flash Card",
+        "zhCN": "闪示卡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Flash_Card",
+      "effectTextEn": "This Joker gains +2 Mult per reroll in the shop (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Flash_Card.png?12d13",
+      "imageSha1": "35398e8ee775d6a0082db35eed7b072b20a595a3"
+    },
+    {
+      "id": "j_popcorn",
+      "number": 97,
+      "name": {
+        "en": "Popcorn",
+        "zhCN": "爆米花"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Popcorn",
+      "effectTextEn": "+20 Mult -4 Mult per round played",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Popcorn.png?2d2c2",
+      "imageSha1": "dcb16ee689171574a474fdbc94bc2a8df854371a"
+    },
+    {
+      "id": "j_trousers",
+      "number": 98,
+      "name": {
+        "en": "Spare Trousers",
+        "zhCN": "备用裤子"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Spare_Trousers",
+      "effectTextEn": "This Joker gains +2 Mult if played hand contains a Two Pair (Currently +0 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Spare_Trousers.png?274c7",
+      "imageSha1": "7fe4dd9fe41814f0e7e1dcb4e2c54132483b9df9"
+    },
+    {
+      "id": "j_ancient",
+      "number": 99,
+      "name": {
+        "en": "Ancient Joker",
+        "zhCN": "古老小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ancient_Joker",
+      "effectTextEn": "Each played card with [suit] gives X1.5 Mult when scored, suit changes at end of round",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Ancient_Joker.png?274c7",
+      "imageSha1": "2cb22068291a7a92b51d2ee03553489745bbe0e5"
+    },
+    {
+      "id": "j_ramen",
+      "number": 100,
+      "name": {
+        "en": "Ramen",
+        "zhCN": "拉面"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Ramen",
+      "effectTextEn": "X2 Mult, loses X0.01 Mult per card discarded",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Ramen.png?31ec6",
+      "imageSha1": "95bc044461541a0b586ecf8ff371c387a2757ed8"
+    },
+    {
+      "id": "j_walkie_talkie",
+      "number": 101,
+      "name": {
+        "en": "Walkie Talkie",
+        "zhCN": "对讲机"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Walkie_Talkie",
+      "effectTextEn": "Each played 10 or 4 gives +10 Chips and +4 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips_and_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Walkie_Talkie.png?31ec6",
+      "imageSha1": "c30602c03945e39ec0c8ade8a4cd41e180b2663f"
+    },
+    {
+      "id": "j_selzer",
+      "number": 102,
+      "name": {
+        "en": "Seltzer",
+        "zhCN": "苏打水"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Seltzer",
+      "effectTextEn": "Retrigger all cards played for the next 10 hands",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Seltzer.png?0e998",
+      "imageSha1": "596a0c883dc9956d4c122e3e8844304c27269a3b"
+    },
+    {
+      "id": "j_castle",
+      "number": 103,
+      "name": {
+        "en": "Castle",
+        "zhCN": "城堡"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Castle",
+      "effectTextEn": "This Joker gains +3 Chips per discarded [suit] card, suit changes every round (Currently +0 Chips)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "chips",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Castle.png?0e998",
+      "imageSha1": "2bf75eb32d92c1b8291dd689c5c70e9d5da0a4e1"
+    },
+    {
+      "id": "j_smiley",
+      "number": 104,
+      "name": {
+        "en": "Smiley Face",
+        "zhCN": "微笑表情"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Smiley_Face",
+      "effectTextEn": "Played face cards give +5 Mult when scored",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Smiley_Face.png?78ae0",
+      "imageSha1": "8909821339385e553b9668eafdbd5865c69a114c"
+    },
+    {
+      "id": "j_campfire",
+      "number": 105,
+      "name": {
+        "en": "Campfire",
+        "zhCN": "篝火"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Campfire",
+      "effectTextEn": "This Joker gains X0.25 Mult for each card sold, resets when Boss Blind is defeated (Currently X1 Mult)",
+      "unlockRequirementEn": "Available from start.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Campfire.png?78ae0",
+      "imageSha1": "d9ff9b63237bd4416d4edd52addc0397de51d0da"
+    },
+    {
+      "id": "j_ticket",
+      "number": 106,
+      "name": {
+        "en": "Golden Ticket",
+        "zhCN": "黄金门票"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Golden_Ticket",
+      "effectTextEn": "Played Gold cards earn $4 when scored",
+      "unlockRequirementEn": "Play a 5 card hand that contains only Gold cards",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Golden_Ticket.png?a915f",
+      "imageSha1": "e6c307d39066991fdf9df4eb97c976c15033f77c"
+    },
+    {
+      "id": "j_mr_bones",
+      "number": 107,
+      "name": {
+        "en": "Mr. Bones",
+        "zhCN": "骷髅先生"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Mr._Bones",
+      "effectTextEn": "Prevents Death if chips scored are at least 25% of required chips self destructs",
+      "unlockRequirementEn": "Lose 5 runs",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Mr._Bones.png?80615",
+      "imageSha1": "8a48d5bbc3ece9d1b23a6a8f6a2c86dbc9e1261e"
+    },
+    {
+      "id": "j_acrobat",
+      "number": 108,
+      "name": {
+        "en": "Acrobat",
+        "zhCN": "杂技演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Acrobat",
+      "effectTextEn": "X3 Mult on final hand of round",
+      "unlockRequirementEn": "Play 200 hands",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Acrobat.png?78ae0",
+      "imageSha1": "f75a77fb6ce844825bb1ca01519300c9ac3b1d16"
+    },
+    {
+      "id": "j_sock_and_buskin",
+      "number": 109,
+      "name": {
+        "en": "Sock and Buskin",
+        "zhCN": "喜与悲"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Sock_and_Buskin",
+      "effectTextEn": "Retrigger all played face cards",
+      "unlockRequirementEn": "Play a total of 300 face cards",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Sock_and_Buskin.png?bf55f",
+      "imageSha1": "4f6d7b669b47bcfa03bfda1825e787a810eec713"
+    },
+    {
+      "id": "j_swashbuckler",
+      "number": 110,
+      "name": {
+        "en": "Swashbuckler",
+        "zhCN": "侠盗"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Swashbuckler",
+      "effectTextEn": "Adds the sell value of all other owned Jokers to Mult (Currently +1 Mult)",
+      "unlockRequirementEn": "Sell a total of 20 Joker cards",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Swashbuckler.png?98223",
+      "imageSha1": "5ee42d3f207a6207dcfccc268aebaf2ad87cdfbd"
+    },
+    {
+      "id": "j_troubadour",
+      "number": 111,
+      "name": {
+        "en": "Troubadour",
+        "zhCN": "游吟诗人"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Troubadour",
+      "effectTextEn": "+2 hand size, -1 hand each round",
+      "unlockRequirementEn": "Win 5 consecutive rounds by playing only 1 hand",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Troubadour.png?29a95",
+      "imageSha1": "dc61622de07457ee63df5689505a7756065f2fa3"
+    },
+    {
+      "id": "j_certificate",
+      "number": 112,
+      "name": {
+        "en": "Certificate",
+        "zhCN": "证书"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Certificate",
+      "effectTextEn": "When round begins, add a random playing card with a random seal to your hand",
+      "unlockRequirementEn": "Have a Gold playing card with a Gold Seal",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Certificate.png?43465",
+      "imageSha1": "250abb905c8d2a4c53983ea249597741863d83cd"
+    },
+    {
+      "id": "j_smeared",
+      "number": 113,
+      "name": {
+        "en": "Smeared Joker",
+        "zhCN": "模糊小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Smeared_Joker",
+      "effectTextEn": "Hearts and Diamonds count as the same suit, Spades and Clubs count as the same suit",
+      "unlockRequirementEn": "Have at least 3 Wild Card in your deck",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Smeared_Joker.png?e3b32",
+      "imageSha1": "3d6bbb0f4ecea3518fc397f841b0afefecf4a12d"
+    },
+    {
+      "id": "j_throwback",
+      "number": 114,
+      "name": {
+        "en": "Throwback",
+        "zhCN": "回溯"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Throwback",
+      "effectTextEn": "X0.25 Mult for each Blind skipped this run (Currently X1 Mult)",
+      "unlockRequirementEn": "Continue a saved run from the main menu",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Throwback.png?7f7ee",
+      "imageSha1": "f1ba2911e8a062a6422d31ca286a226bc29c9fbb"
+    },
+    {
+      "id": "j_hanging_chad",
+      "number": 115,
+      "name": {
+        "en": "Hanging Chad",
+        "zhCN": "未断选票"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hanging_Chad",
+      "effectTextEn": "Retrigger first played card used in scoring 2 additional times",
+      "unlockRequirementEn": "Beat a Boss Blind with a High Card",
+      "wikiType": "retrigger",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Hanging_Chad.png?be2e1",
+      "imageSha1": "845af5b65df72edcb6efd4086fd17c0d45e5708a"
+    },
+    {
+      "id": "j_rough_gem",
+      "number": 116,
+      "name": {
+        "en": "Rough Gem",
+        "zhCN": "璞玉"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Rough_Gem",
+      "effectTextEn": "Played cards with Diamond suit earn $1 when scored",
+      "unlockRequirementEn": "Have at least 30 cards with Diamond suit in your deck",
+      "wikiType": "economy",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Rough_Gem.png?1f9cf",
+      "imageSha1": "56746d2cd351623988b8a5953fb05d53fc24f7cc"
+    },
+    {
+      "id": "j_bloodstone",
+      "number": 117,
+      "name": {
+        "en": "Bloodstone",
+        "zhCN": "血石"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bloodstone",
+      "effectTextEn": "1 in 2 chance for played cards with Heart suit to give X1.5 Mult when scored",
+      "unlockRequirementEn": "Have at least 30 cards with Heart suit in your deck",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Bloodstone.png?4d0a0",
+      "imageSha1": "b3b1a0346ae012d987d151b5f7170469f11cc2ad"
+    },
+    {
+      "id": "j_arrowhead",
+      "number": 118,
+      "name": {
+        "en": "Arrowhead",
+        "zhCN": "箭头"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Arrowhead",
+      "effectTextEn": "Played cards with Spade suit give +50 Chips when scored",
+      "unlockRequirementEn": "Have at least 30 cards with Spade suit in your deck",
+      "wikiType": "chips",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Arrowhead.png?cc01b",
+      "imageSha1": "7bb01aa289b83010398bf787fdf9ca97963adf92"
+    },
+    {
+      "id": "j_onyx_agate",
+      "number": 119,
+      "name": {
+        "en": "Onyx Agate",
+        "zhCN": "缟玛瑙"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Onyx_Agate",
+      "effectTextEn": "Played cards with Club suit give +7 Mult when scored",
+      "unlockRequirementEn": "Have at least 30 cards with Club suit in your deck",
+      "wikiType": "mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Onyx_Agate.png?f9219",
+      "imageSha1": "f7ebd7a7767ec1aef9a09e8e9d6e37af9c26098c"
+    },
+    {
+      "id": "j_glass",
+      "number": 120,
+      "name": {
+        "en": "Glass Joker",
+        "zhCN": "玻璃小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Glass_Joker",
+      "effectTextEn": "This Joker gains X0.75 Mult for every Glass Card that is destroyed (Currently X1 Mult)",
+      "unlockRequirementEn": "Have at least 5 Glass Cards in your deck",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Glass_Joker.png?a6916",
+      "imageSha1": "ad7c673ec462c4f58cd1e8aeee9acabf1d07d7ce"
+    },
+    {
+      "id": "j_ring_master",
+      "number": 121,
+      "name": {
+        "en": "Showman",
+        "zhCN": "马戏团长"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Showman",
+      "effectTextEn": "Joker, Tarot, Planet, and Spectral cards may appear multiple times",
+      "unlockRequirementEn": "Reach Ante level 4",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Showman.png?12b50",
+      "imageSha1": "26cbcb604d360efa84fc3938bf165f208cd58122"
+    },
+    {
+      "id": "j_flower_pot",
+      "number": 122,
+      "name": {
+        "en": "Flower Pot",
+        "zhCN": "花盆"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Flower_Pot",
+      "effectTextEn": "X3 Mult if poker hand contains a Diamond card, Club card, Heart card, and Spade card",
+      "unlockRequirementEn": "Reach Ante level 8",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Flower_Pot.png?25ed2",
+      "imageSha1": "f6ef6bc022eaa6f2121b3fad38cfd5b45b582490"
+    },
+    {
+      "id": "j_blueprint",
+      "number": 123,
+      "name": {
+        "en": "Blueprint",
+        "zhCN": "蓝图"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Blueprint",
+      "effectTextEn": "Copies ability of Joker to the right",
+      "unlockRequirementEn": "Win a run",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Blueprint.png?1314d",
+      "imageSha1": "fe03edcf7e838c95f1532dc55facf76ea5ad4613"
+    },
+    {
+      "id": "j_wee",
+      "number": 124,
+      "name": {
+        "en": "Wee Joker",
+        "zhCN": "小小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Wee_Joker",
+      "effectTextEn": "This Joker gains +8 Chips when each played 2 is scored (Currently +0 Chips)",
+      "unlockRequirementEn": "Win a run in 18 or fewer rounds",
+      "wikiType": "chips",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Wee_Joker.png?fc6ba",
+      "imageSha1": "eaba6cf53d71df4a126367d61ea8eae8629b36d7"
+    },
+    {
+      "id": "j_merry_andy",
+      "number": 125,
+      "name": {
+        "en": "Merry Andy",
+        "zhCN": "快乐安迪"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Merry_Andy",
+      "effectTextEn": "+3 discards each round, -1 hand size",
+      "unlockRequirementEn": "Win a run in 12 or fewer rounds",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Merry_Andy.png?91743",
+      "imageSha1": "829ddbf22d965b9bdd2c524f3a4f43781f51dfb5"
+    },
+    {
+      "id": "j_oops",
+      "number": 126,
+      "name": {
+        "en": "Oops! All 6s",
+        "zhCN": "六六大顺"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Oops!_All_6s",
+      "effectTextEn": "Doubles all listed probabilities (ex: 1 in 3 -> 2 in 3)",
+      "unlockRequirementEn": "In one hand, earn at least 10,000 chips",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Oops%21_All_6s.png?54fc7",
+      "imageSha1": "7a635ee1abf0fb195dfefe810d7d9be58a84bf2d"
+    },
+    {
+      "id": "j_idol",
+      "number": 127,
+      "name": {
+        "en": "The Idol",
+        "zhCN": "偶像"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Idol",
+      "effectTextEn": "Each played [rank] of [suit] gives X2 Mult when scoredCard changes every round",
+      "unlockRequirementEn": "In one hand, earn at least 1,000,000 chips",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/The_Idol.png?e1781",
+      "imageSha1": "abc18eb2c8703000055f9ceb59a03c266e15a6b4"
+    },
+    {
+      "id": "j_seeing_double",
+      "number": 128,
+      "name": {
+        "en": "Seeing Double",
+        "zhCN": "重影"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Seeing_Double",
+      "effectTextEn": "X2 Mult if played hand has a scoring Club card and a scoring card of any other suit",
+      "unlockRequirementEn": "Play a hand that contains four 7 of Clubs",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Seeing_Double.png?6a93e",
+      "imageSha1": "ee01e03c01eaf0073eb44b675cce2c17913198bb"
+    },
+    {
+      "id": "j_matador",
+      "number": 129,
+      "name": {
+        "en": "Matador",
+        "zhCN": "斗牛士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Matador",
+      "effectTextEn": "Earn $8 if played hand triggers the Boss Blind ability",
+      "unlockRequirementEn": "Defeat a Boss Blind in 1 hand without using any discards",
+      "wikiType": "economy",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Matador.png?937bc",
+      "imageSha1": "1ba86e04dbcdb87d8f77222accb32edc613bd569"
+    },
+    {
+      "id": "j_hit_the_road",
+      "number": 130,
+      "name": {
+        "en": "Hit the Road",
+        "zhCN": "上路吧杰克"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Hit_the_Road",
+      "effectTextEn": "This Joker gains X0.5 Mult for every Jack discarded this round (Currently X1 Mult)",
+      "unlockRequirementEn": "Discard 5 Jacks at the same time.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Hit_the_Road.png?e2da5",
+      "imageSha1": "67224e85bf16d42676114396e17dc6e3f775332b"
+    },
+    {
+      "id": "j_duo",
+      "number": 131,
+      "name": {
+        "en": "The Duo",
+        "zhCN": "二重奏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Duo",
+      "effectTextEn": "X2 Mult if played hand contains a Pair",
+      "unlockRequirementEn": "Win a run without playing a Pair.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/The_Duo.png?af07c",
+      "imageSha1": "5d3d54c79befcfee708499139e87b6d3d4bf2f2f"
+    },
+    {
+      "id": "j_trio",
+      "number": 132,
+      "name": {
+        "en": "The Trio",
+        "zhCN": "三重奏"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Trio",
+      "effectTextEn": "X3 Mult if played hand contains a Three of a Kind",
+      "unlockRequirementEn": "Win a run without playing a Three of a Kind.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/The_Trio.png?90749",
+      "imageSha1": "d7de3322a3bd6e5b30c1c388ce7dcfaca2b901aa"
+    },
+    {
+      "id": "j_family",
+      "number": 133,
+      "name": {
+        "en": "The Family",
+        "zhCN": "一家人"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Family",
+      "effectTextEn": "X4 Mult if played hand contains a Four of a Kind",
+      "unlockRequirementEn": "Win a run without playing a Four of a Kind.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/The_Family.png?2c222",
+      "imageSha1": "0c3585c45b9da74784a54ae76decb4c789c2db2c"
+    },
+    {
+      "id": "j_order",
+      "number": 134,
+      "name": {
+        "en": "The Order",
+        "zhCN": "秩序"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Order",
+      "effectTextEn": "X3 Mult if played hand contains a Straight",
+      "unlockRequirementEn": "Win a run without playing a Straight.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/The_Order.png?8f641",
+      "imageSha1": "9c088f316cb70bcae38df126727ca2c2a37e4311"
+    },
+    {
+      "id": "j_tribe",
+      "number": 135,
+      "name": {
+        "en": "The Tribe",
+        "zhCN": "部落"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/The_Tribe",
+      "effectTextEn": "X2 Mult if played hand contains a Flush",
+      "unlockRequirementEn": "Win a run without playing a Flush.",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/The_Tribe.png?a6a44",
+      "imageSha1": "b5d34fc353239afa15b24bedc9109527b5a18609"
+    },
+    {
+      "id": "j_stuntman",
+      "number": 136,
+      "name": {
+        "en": "Stuntman",
+        "zhCN": "特技演员"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Stuntman",
+      "effectTextEn": "+250 Chips,-2 hand size",
+      "unlockRequirementEn": "Earn at least 100 million (100,000,000) Chips in a single hand.",
+      "wikiType": "chips",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Stuntman.png?84641",
+      "imageSha1": "67a2d4dca82c5c5e9616774c2946000147fe56d6"
+    },
+    {
+      "id": "j_invisible",
+      "number": 137,
+      "name": {
+        "en": "Invisible Joker",
+        "zhCN": "隐形小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Invisible_Joker",
+      "effectTextEn": "After 2 rounds, sell this card to Duplicate a random Joker (Currently 0/2) (Removes Negative from copy)",
+      "unlockRequirementEn": "Win a run without ever having more than 4 Jokers",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Invisible_Joker.png?1314d",
+      "imageSha1": "522c865cf32e56b346456aa1c4c545d080e9908c"
+    },
+    {
+      "id": "j_brainstorm",
+      "number": 138,
+      "name": {
+        "en": "Brainstorm",
+        "zhCN": "头脑风暴"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Brainstorm",
+      "effectTextEn": "Copies the ability of leftmost Joker",
+      "unlockRequirementEn": "Discard a Royal Flush.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Brainstorm.png?82de6",
+      "imageSha1": "c6bc5efce0cb3b4ffe20a011c48a3127fa6daa33"
+    },
+    {
+      "id": "j_satellite",
+      "number": 139,
+      "name": {
+        "en": "Satellite",
+        "zhCN": "卫星"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Satellite",
+      "effectTextEn": "Earn $1 at end of round per unique Planet card used this run",
+      "unlockRequirementEn": "Have at least $400.",
+      "wikiType": "economy",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Satellite.png?20821",
+      "imageSha1": "c102e823a52ebf509e83763dc9b74ec3714ca395"
+    },
+    {
+      "id": "j_shoot_the_moon",
+      "number": 140,
+      "name": {
+        "en": "Shoot the Moon",
+        "zhCN": "射月"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Shoot_the_Moon",
+      "effectTextEn": "Each Queen held in hand gives +13 Mult",
+      "unlockRequirementEn": "Play every Heart card in your deck in one round.",
+      "wikiType": "mult",
+      "wikiActivation": "on_held",
+      "imageUrl": "https://balatrowiki.org/images/Shoot_the_Moon.png?098c2",
+      "imageSha1": "6a54628712d88dec39dfa38e9c49cd134b2baf69"
+    },
+    {
+      "id": "j_drivers_license",
+      "number": 141,
+      "name": {
+        "en": "Driver's License",
+        "zhCN": "驾驶执照"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Driver's_License",
+      "effectTextEn": "X3 Mult if you have at least 16 Enhanced cards in your full deck (Currently 0)",
+      "unlockRequirementEn": "Enhance 16 cards in your deck",
+      "wikiType": "x_mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Driver%27s_License.png?04561",
+      "imageSha1": "0b01dc5b8e878581a753ddb84926acbc737974ec"
+    },
+    {
+      "id": "j_cartomancer",
+      "number": 142,
+      "name": {
+        "en": "Cartomancer",
+        "zhCN": "卡牌术士"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Cartomancer",
+      "effectTextEn": "Create a Tarot card when Blind is selected (Must have room)",
+      "unlockRequirementEn": "Discover every Tarot card.",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select",
+      "imageUrl": "https://balatrowiki.org/images/Cartomancer.png?e4486",
+      "imageSha1": "9869c6caf529d77fd8f6ed98131ff9269efbf021"
+    },
+    {
+      "id": "j_astronomer",
+      "number": 143,
+      "name": {
+        "en": "Astronomer",
+        "zhCN": "天文学家"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Astronomer",
+      "effectTextEn": "All Planet cards and Celestial Packs in the shop are free",
+      "unlockRequirementEn": "Discover every Planet card",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Astronomer.png?0a271",
+      "imageSha1": "fc6872a02081d3100ba516ae52966a4b1ee31111"
+    },
+    {
+      "id": "j_burnt",
+      "number": 144,
+      "name": {
+        "en": "Burnt Joker",
+        "zhCN": "烧焦小丑"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Burnt_Joker",
+      "effectTextEn": "Upgrade the level of the first discarded poker hand each round",
+      "unlockRequirementEn": "Sell 50 cards.",
+      "wikiType": "effect",
+      "wikiActivation": "on_discard",
+      "imageUrl": "https://balatrowiki.org/images/Burnt_Joker.png?445f6",
+      "imageSha1": "b03712fe993ec173c4da62c40259b75ea94e180f"
+    },
+    {
+      "id": "j_bootstraps",
+      "number": 145,
+      "name": {
+        "en": "Bootstraps",
+        "zhCN": "提靴带"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Bootstraps",
+      "effectTextEn": "+2 Mult for every $5 you have (Currently +0 Mult)",
+      "unlockRequirementEn": "Have at least 2 Polychrome Jokers at the same time.",
+      "wikiType": "mult",
+      "wikiActivation": "independent",
+      "imageUrl": "https://balatrowiki.org/images/Bootstraps.png?4fbc6",
+      "imageSha1": "60c2d99be94d8ed915ff9af02676bf5123b4b319"
+    },
+    {
+      "id": "j_caino",
+      "number": 146,
+      "name": {
+        "en": "Canio",
+        "zhCN": "卡尼奥"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Canio",
+      "effectTextEn": "This Joker gains X1 Mult when a face card is destroyed (Currently X1 Mult)",
+      "unlockRequirementEn": "Find this Joker from the Soul card.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Canio.png?afd92",
+      "imageSha1": "2a7ae412b5ea817e70f5b15b0ab51f9edfe19fcc"
+    },
+    {
+      "id": "j_triboulet",
+      "number": 147,
+      "name": {
+        "en": "Triboulet",
+        "zhCN": "特里布莱"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Triboulet",
+      "effectTextEn": "Played Kings and Queens each give X2 Mult when scored",
+      "unlockRequirementEn": "Find this Joker from the Soul card.",
+      "wikiType": "x_mult",
+      "wikiActivation": "on_scored",
+      "imageUrl": "https://balatrowiki.org/images/Triboulet.png?baf0d",
+      "imageSha1": "74070bed6432e3644b9f8ca050eb881af37e29c1"
+    },
+    {
+      "id": "j_yorick",
+      "number": 148,
+      "name": {
+        "en": "Yorick",
+        "zhCN": "约里克"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Yorick",
+      "effectTextEn": "This Joker gains X1 Mult every 23 [23] cards discarded(Currently X1 Mult)",
+      "unlockRequirementEn": "Find this Joker from the Soul card.",
+      "wikiType": "x_mult",
+      "wikiActivation": "mixed",
+      "imageUrl": "https://balatrowiki.org/images/Yorick.png?7e474",
+      "imageSha1": "97534f24986bd6dbf198fcfe321526300b3edf30"
+    },
+    {
+      "id": "j_chicot",
+      "number": 149,
+      "name": {
+        "en": "Chicot",
+        "zhCN": "希科"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Chicot",
+      "effectTextEn": "Disables effect of every Boss Blind",
+      "unlockRequirementEn": "Find this Joker from the Soul card.",
+      "wikiType": "effect",
+      "wikiActivation": "on_blind_select",
+      "imageUrl": "https://balatrowiki.org/images/Chicot.png?ca9b9",
+      "imageSha1": "93076aedd333a3d7ac13eb9848f12b01156ee229"
+    },
+    {
+      "id": "j_perkeo",
+      "number": 150,
+      "name": {
+        "en": "Perkeo",
+        "zhCN": "帕奇欧"
+      },
+      "referencePageUrl": "https://balatrowiki.org/w/Perkeo",
+      "effectTextEn": "Creates a Negative copy of 1 random consumable card in your possession at the end of the shop",
+      "unlockRequirementEn": "Find this Joker from the Soul card.",
+      "wikiType": "effect",
+      "wikiActivation": "passive",
+      "imageUrl": "https://balatrowiki.org/images/Perkeo.png?1c007",
+      "imageSha1": "3dd91237e9f59f7e36cc9ce3cae7fd05c8777516"
+    }
+  ]
+}

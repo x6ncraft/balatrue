@@ -41,17 +41,21 @@ If a rights concern is raised, the project will take the related material offlin
 the concern and remove or replace the material as needed.
 
 The client catalog keeps the names and factual fields required by the puzzle, project-authored
-classifications, fixed source revisions, and cryptographic digests. Complete upstream English effect
-and unlock prose is retained only in a maintainer's local, git-ignored audit file. A clean checkout
-does not require that file, and production builds exclude its fields.
+classifications, source records, and cryptographic digests. Complete normalized English effect and
+unlock wording is retained in the checked-in
+[`data/upstream/jokers.wiki.generated.json`](data/upstream/jokers.wiki.generated.json) for review,
+traceability, and later data upgrades. It is third-party source-review material, marked
+`NOASSERTION`, excluded from the root MIT License, and not included in production builds. See the
+adjacent [`README.md`](data/upstream/README.md) for attribution and transformation details.
 
 The current Balatro Wiki footer states CC BY-NC-SA 3.0. Its About page also records a June 2025 fork
 from Fandom, whose Balatro Wiki text is marked CC BY-SA; Weird Gloop's general licensing table does
 not currently identify a Balatro-specific fork date or transition rule. Creative Commons guidance
 does not treat BY-SA and BY-NC-SA adaptations as automatically compatible. Some effect and unlock
 phrasing may also originate in Balatro itself, beyond what Wiki contributors can license. The
-project therefore does not claim that one Creative Commons license covers the local audit text and
-keeps it out of Git, public builds, and the project MIT License.
+project therefore does not claim that one Creative Commons license covers the source snapshot and
+does not relicense it under the project MIT License. The repository preserves it openly, while the
+deployed application excludes the full wording.
 
 Weird Gloop separately states that non-text files must be checked on their own description pages.
 No Wiki text notice is relied on for Joker artwork.

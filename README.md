@@ -13,9 +13,8 @@ The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.ht
 ## Status
 
 The game is a tested, client-side release candidate. Its original source code is available under the
-MIT License and is ready for a public source release. The existing Git history previously contained
-complete upstream effect and unlock prose, so changing repository visibility still requires a clean
-root commit or a new public repository after owner confirmation. No public production site has been
+MIT License. The repository intentionally preserves separately identified upstream review data and
+Joker artwork outside that license; see the rights section below. No public production site has been
 deployed, and no authorization from the Balatro rights holders is claimed.
 
 ## Features
@@ -60,9 +59,10 @@ bun run build
 bun run preview
 ```
 
-The deployable output is `dist/`. A clean checkout can install, validate, test, and build without the
-local source-review file. Remote data synchronization is a maintainer-only operation and is disabled
-by default; see [Data sources and boundaries](docs/data-sources.md) before using it.
+The deployable output is `dist/`. Remote data synchronization is a maintainer-only operation and is
+disabled by default; the checked-in source snapshot makes normal validation and builds reproducible
+without contacting the Wiki. See [Data sources and boundaries](docs/data-sources.md) before using
+the synchronization command.
 
 `package.json` keeps `private: true` only to prevent accidental npm publication. It does not restrict
 GitHub visibility or the MIT license.
@@ -71,7 +71,7 @@ GitHub visibility or the MIT license.
 
 ```text
 src/          React UI, game rules, search, localization, and generated runtime data
-data/         checked-in per-Joker provenance; local restricted review data is git-ignored
+data/         checked-in per-Joker provenance and repository-only upstream review data
 scripts/      data generation, validation, and release-artifact checks
 tests/e2e/    Playwright browser journeys
 docs/         product, architecture, design, rights, release, and deployment records
@@ -102,11 +102,15 @@ the related material offline immediately while the concern is reviewed, then rem
 needed.
 
 The browser catalog contains the names and facts required by the puzzle, project-authored
-classifications, and source digests. Complete English effect and unlock prose is kept only in a
-maintainer's local, git-ignored review file. It is not required by a clean checkout and is not
-included in the production build.
+classifications, and source digests. Complete normalized English effect and unlock wording is kept
+in [`data/upstream/jokers.wiki.generated.json`](data/upstream/jokers.wiki.generated.json) so later
+reviews and data upgrades remain reproducible. It is third-party source-review material, excluded
+from both the project MIT License and the production build. The adjacent
+[source notice](data/upstream/README.md) records the Wiki attribution, source-site license notices,
+Fandom migration history, transformation, and possible original-game text rights without claiming
+that one Creative Commons license covers every field.
 
-Read the [Asset and data notice](ASSET_NOTICE.md),
+Read the [License scope](LICENSE_SCOPE.md), [Asset and data notice](ASSET_NOTICE.md),
 [Rights and release notes](docs/legal-notice.md), [Release checklist](docs/release-checklist.md), and
 [Third-party notices](THIRD_PARTY_NOTICES.md) before publishing or redistributing the project.
 

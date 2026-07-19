@@ -7,7 +7,7 @@ import type { Joker, JokerDataMeta, WikiJokerActivation, WikiJokerType } from '.
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const outputFile = join(projectRoot, 'data/jokers.provenance.generated.json')
-const auditFile = join(projectRoot, 'data/restricted/jokers.audit.generated.json')
+const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
 
 export interface ProvenanceSourceRecord {
@@ -19,7 +19,7 @@ export interface ProvenanceSourceRecord {
   imageSha1: string
 }
 
-interface PrivateAuditFile {
+interface SourceReviewFile {
   metadata: JokerDataMeta
   jokers: ProvenanceSourceRecord[]
 }
@@ -77,11 +77,11 @@ export async function writePublicProvenance(
 }
 
 async function main(): Promise<void> {
-  if (!existsSync(auditFile)) {
-    throw new Error('[data] local restricted audit is required to regenerate public provenance')
+  if (!existsSync(sourceReviewFile)) {
+    throw new Error('[data] checked-in source-review data is required to regenerate provenance')
   }
 
-  const audit = JSON.parse(await readFile(auditFile, 'utf8')) as PrivateAuditFile
+  const sourceReview = JSON.parse(await readFile(sourceReviewFile, 'utf8')) as SourceReviewFile
   const generatedUrl = pathToFileURL(generatedFile)
   generatedUrl.searchParams.set('cacheBust', String(Date.now()))
   const generated = (await import(generatedUrl.href)) as {
@@ -89,7 +89,7 @@ async function main(): Promise<void> {
     jokers: readonly Joker[]
   }
 
-  await writePublicProvenance(generated.JOKER_DATA_META, generated.jokers, audit.jokers)
+  await writePublicProvenance(generated.JOKER_DATA_META, generated.jokers, sourceReview.jokers)
   console.log(`[data] wrote public provenance for ${generated.jokers.length} Jokers`)
 }
 

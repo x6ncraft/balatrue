@@ -28,7 +28,7 @@ src/main.tsx
   ├─ src/data/jokers.generated.ts                  浏览器玩法字段与来源摘要，随仓库提交
   ├─ data/jokers.provenance.generated.json         逐卡公开来源记录，随仓库提交
   ├─ public/jokers/*.png                           用于牌面识别的低分辨率卡图
-  └─ data/restricted/jokers.audit.generated.json   完整英文来源文本，仅限本地且被 Git 忽略
+  └─ data/upstream/jokers.wiki.generated.json      完整英文来源文本，随仓库审查且不进入网页构建
 
 src/data/jokers.generated.ts
   → game/clue-model.ts  c9 原始分类投影为 g3 玩家线索
@@ -36,13 +36,13 @@ src/data/jokers.generated.ts
   → React 界面
 ```
 
-生成器先用英文来源文本推导分类，再分别写出运行目录、公开来源记录和本地审计文件。运行数据只
-保留摘要、类型和玩法字段；公开来源记录保留参考页、图片 URL、摘要与尺寸，不包含完整效果和
-解锁原文。
+生成器先用英文来源文本推导分类，再分别写出运行目录、逐卡来源记录和仓库审查快照。运行数据只
+保留摘要、类型和玩法字段；逐卡来源记录保留参考页、图片 URL、摘要与尺寸；完整效果和解锁描述
+只留在 `data/upstream/`，供人和校验脚本复核，不由浏览器导入。
 
-`scripts/validate-jokers.ts` 始终核对运行目录、150 条公开来源记录与本地图片。若维护者本地存在
-受限审计文件，再额外重新计算原文摘要；干净 checkout 没有该文件也能完成全部标准校验。
-`scripts/public-provenance.ts` 只在维护者需要从本地审计数据重建公开来源记录时使用。
+`scripts/validate-jokers.ts` 核对运行目录、150 条逐卡来源记录、150 条来源审查记录与本地图片，并
+重新计算 300 个英文原文摘要。`scripts/public-provenance.ts` 只在维护者需要从仓库审查快照重建
+逐卡来源记录时使用。
 
 远程同步默认拒绝执行，也不能进入 CI。只有在维护者确认数据源允许自动访问后，才显式设置
 `BALATRUE_REMOTE_SYNC_ALLOWED=1`。正常构建不访问任何远程数据源。
@@ -59,20 +59,21 @@ src/data/jokers.generated.ts
 
 ## 构建与发布产物
 
-Vite 生成纯静态 `dist/`。构建插件同时写入项目 MIT 许可证、`ASSET_NOTICE.md`、150 条逐卡来源
-记录、`THIRD_PARTY_NOTICES.md` 和运行依赖的原始许可证到 `dist/legal/`；
-`scripts/validate-dist.ts` 缺少任何一项或发现本地受限字段都会使构建失败。
+Vite 生成纯静态 `dist/`。构建插件同时写入项目 MIT 许可证、`LICENSE_SCOPE.md`、
+`ASSET_NOTICE.md`、150 条逐卡来源记录、`THIRD_PARTY_NOTICES.md` 和运行依赖的原始许可证到
+`dist/legal/`；
+`scripts/validate-dist.ts` 缺少任何一项，或发现仓库审查用原文进入网页产物，都会使构建失败。
 
 `dist/` 包含 150 张低分辨率卡图。它们服务于免费、非商业粉丝游戏中的牌面识别，明确排除 MIT；
 来源记录、免责声明和下架机制不构成授权，发布者仍承担 `legal-notice.md` 记录的残余风险。
 
-根 MIT 许可证允许公开项目原创代码。现有 Git 历史曾包含完整上游原文，因此实际切换仓库可见性
-前仍需在用户确认后建立干净根提交或新公开仓库；这项历史动作不影响干净 checkout 的当前构建。
+根 MIT 许可证只许可项目原创代码。仓库有意把完整英文来源快照与卡图作为另行标注的第三方材料
+共同保存；当前说明同样覆盖早期提交中的这些内容，因此公开现有历史无需另建干净根提交。
 
 ## 验证路径
 
 - 单元测试：线索投影、比较、每日轮换、牌局、存档、搜索、翻译、战绩与分享。
-- 数据检查：数量、稀有度、两层版本、公开来源记录、摘要、图片、玩家文案和五维签名唯一性；本地
-  审计文件存在时追加原文核对。
+- 数据检查：数量、稀有度、两层版本、逐卡来源记录、300 个原文摘要、图片、玩家文案和五维签名
+  唯一性。
 - Playwright：桌面和手机核心旅程、输入法、键盘、弹层焦点、图鉴辅助局与响应式布局。
 - 完整入口：`bun run check`；浏览器旅程：`bun run test:e2e`。

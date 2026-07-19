@@ -8,12 +8,14 @@ import { defineConfig, type Plugin } from 'vite'
 
 const legalAssets = [
   ['legal/LICENSE', new URL('./LICENSE', import.meta.url)],
+  ['legal/LICENSE_SCOPE.md', new URL('./LICENSE_SCOPE.md', import.meta.url)],
   ['legal/ASSET_NOTICE.md', new URL('./ASSET_NOTICE.md', import.meta.url)],
   ['legal/THIRD_PARTY_NOTICES.md', new URL('./THIRD_PARTY_NOTICES.md', import.meta.url)],
   [
     'legal/data/jokers.provenance.generated.json',
     new URL('./data/jokers.provenance.generated.json', import.meta.url),
   ],
+  ['legal/data/upstream/README.md', new URL('./data/upstream/README.md', import.meta.url)],
   ['legal/licenses/React-MIT.txt', new URL('./node_modules/react/LICENSE', import.meta.url)],
   [
     'legal/licenses/React-DOM-MIT.txt',

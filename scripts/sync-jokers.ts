@@ -28,7 +28,7 @@ const remoteSyncAcknowledgement = 'BALATRUE_REMOTE_SYNC_ALLOWED'
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const imageDirectory = join(projectRoot, 'public/jokers')
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
-const auditFile = join(projectRoot, 'data/restricted/jokers.audit.generated.json')
+const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 
 interface WikiRevisionResponse {
   query: {
@@ -1050,12 +1050,28 @@ async function main(): Promise<void> {
     generatedFile,
     await format(generated, { ...prettierConfig, parser: 'typescript' }),
   )
-  await mkdir(dirname(auditFile), { recursive: true })
+  await mkdir(dirname(sourceReviewFile), { recursive: true })
   await writeFile(
-    auditFile,
+    sourceReviewFile,
     `${JSON.stringify(
       {
-        distribution: 'restricted-review-data',
+        schemaVersion: 1,
+        distribution: 'upstream-source-review-data',
+        capturedAt: new Date().toISOString(),
+        licenseNotice: {
+          spdx: 'NOASSERTION',
+          projectLicense: 'Excluded from the root MIT license',
+          source: 'Balatro Wiki',
+          sourceUrl: 'https://balatrowiki.org/w/Jokers',
+          attribution: 'Balatro Wiki contributors',
+          sourceLicenseNotice: 'CC BY-NC-SA 3.0; additional terms may apply',
+          sourceLicenseUrl: 'https://creativecommons.org/licenses/by-nc-sa/3.0/',
+          modifications:
+            'MediaWiki presentation markup removed; whitespace and rendered variable values normalized to JSON.',
+          rights:
+            'Some short wording may originate in Balatro. All underlying rights remain with their respective rights holders.',
+          details: 'See data/upstream/README.md and ASSET_NOTICE.md.',
+        },
         generatedBy: 'scripts/sync-jokers.ts',
         metadata,
         jokers: candidates.map(({ audit }) => audit),
