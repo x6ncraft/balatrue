@@ -1,5 +1,6 @@
 import { JOKER_CLASSIFICATION_VERSION, JOKER_DATA_GAME_VERSION, type Joker } from '../data/types'
 import { describe, expect, it } from 'vitest'
+import { GAME_CLUE_MODEL_VERSION } from './clue-model'
 import {
   deserializeGameState,
   GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS,
@@ -145,6 +146,40 @@ describe('game sessions', () => {
 })
 
 describe('game state persistence', () => {
+  it('versions current storage keys by the player-facing clue model', () => {
+    expect(
+      gameStorageKey(
+        JOKER_DATA_GAME_VERSION,
+        JOKER_CLASSIFICATION_VERSION,
+        'daily',
+        '2026-07-19',
+        GAME_CLUE_MODEL_VERSION,
+      ),
+    ).toBe(
+      `balatrue:game:${JOKER_DATA_GAME_VERSION}:c${JOKER_CLASSIFICATION_VERSION}:g${GAME_CLUE_MODEL_VERSION}:daily:2026-07-19`,
+    )
+    expect(
+      gameStorageKey(
+        JOKER_DATA_GAME_VERSION,
+        JOKER_CLASSIFICATION_VERSION,
+        'practice',
+        undefined,
+        GAME_CLUE_MODEL_VERSION,
+      ),
+    ).toBe(
+      `balatrue:game:${JOKER_DATA_GAME_VERSION}:c${JOKER_CLASSIFICATION_VERSION}:g${GAME_CLUE_MODEL_VERSION}:practice`,
+    )
+    expect(() =>
+      gameStorageKey(
+        JOKER_DATA_GAME_VERSION,
+        JOKER_CLASSIFICATION_VERSION,
+        'practice',
+        undefined,
+        0,
+      ),
+    ).toThrow('clueModelVersion must be a positive integer')
+  })
+
   it('round-trips the collection-assistance flag through JSON', () => {
     const answer = makeJoker(1)
     const initial = createPracticeGame([answer, makeJoker(2)], () => 0)
@@ -241,13 +276,25 @@ describe('game state persistence', () => {
       JOKER_CLASSIFICATION_VERSION,
       'daily',
       current.puzzleKey,
+      GAME_CLUE_MODEL_VERSION,
     )
     const c2Key = gameStorageKey(JOKER_DATA_GAME_VERSION, 2, 'daily', current.puzzleKey)
     const storage = new Map([[c2Key, legacy]])
     const reads: string[] = []
-    const fallbackKeys = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS.filter(
-      (version) => version < JOKER_CLASSIFICATION_VERSION,
-    ).map((version) => gameStorageKey(JOKER_DATA_GAME_VERSION, version, 'daily', current.puzzleKey))
+    const legacyCurrentKey = gameStorageKey(
+      JOKER_DATA_GAME_VERSION,
+      JOKER_CLASSIFICATION_VERSION,
+      'daily',
+      current.puzzleKey,
+    )
+    const fallbackKeys = [
+      legacyCurrentKey,
+      ...GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS.filter(
+        (version) => version < JOKER_CLASSIFICATION_VERSION,
+      ).map((version) =>
+        gameStorageKey(JOKER_DATA_GAME_VERSION, version, 'daily', current.puzzleKey),
+      ),
+    ]
     expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([7, 6, 5, 4, 3, 2])
 
     const restored = restoreStoredGame({
@@ -292,6 +339,8 @@ describe('game state persistence', () => {
       JOKER_DATA_GAME_VERSION,
       JOKER_CLASSIFICATION_VERSION,
       'practice',
+      undefined,
+      GAME_CLUE_MODEL_VERSION,
     )
     const c4Key = gameStorageKey(JOKER_DATA_GAME_VERSION, 4, 'practice')
     const storage = new Map([[c4Key, serializeGameState(stored)]])
@@ -328,6 +377,7 @@ describe('game state persistence', () => {
       JOKER_CLASSIFICATION_VERSION,
       'daily',
       current.puzzleKey,
+      GAME_CLUE_MODEL_VERSION,
     )
     let refreshCalls = 0
 
@@ -361,6 +411,7 @@ describe('game state persistence', () => {
       JOKER_CLASSIFICATION_VERSION,
       'daily',
       current.puzzleKey,
+      GAME_CLUE_MODEL_VERSION,
     )
     const fallbackKey = gameStorageKey(JOKER_DATA_GAME_VERSION, 4, 'daily', current.puzzleKey)
     const validJokerIds = new Set(pool.map((joker) => joker.id))

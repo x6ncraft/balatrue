@@ -145,13 +145,28 @@ describe('compareJokers', () => {
     expect(compareJokers(miss, answer).effects.result).toBe('miss')
   })
 
-  it('uses the same set semantics for timing tags, including empty sets', () => {
+  it('compares the smaller player timing vocabulary while preserving set semantics', () => {
     const answer = makeJoker({ timings: ['card_scored', 'round_end'] })
-    const partial = makeJoker({ id: 'j_partial', timings: ['round_end', 'shop'] })
+    const partial = makeJoker({ id: 'j_partial', timings: ['hand_scored', 'shop'] })
     const empty = makeJoker({ id: 'j_empty', timings: [] })
 
-    expect(compareJokers(partial, answer).timings.result).toBe('partial')
+    expect(compareJokers(partial, answer).timings).toEqual({
+      values: ['play', 'shop'],
+      matches: ['play'],
+      result: 'partial',
+    })
     expect(compareJokers(empty, makeJoker({ timings: [] })).timings.result).toBe('exact')
+  })
+
+  it('treats related raw play triggers as the same player-facing timing', () => {
+    const answer = makeJoker({ timings: ['card_scored', 'joker_triggered'] })
+    const guess = makeJoker({ id: 'j_guess', timings: ['card_played'] })
+
+    expect(compareJokers(guess, answer).timings).toEqual({
+      values: ['play'],
+      matches: ['play'],
+      result: 'exact',
+    })
   })
 
   it('marks same dependency family with a different value as partial', () => {
@@ -164,7 +179,7 @@ describe('compareJokers', () => {
 
     expect(result.result).toBe('partial')
     expect(result.exactMatches).toEqual([])
-    expect(result.familyMatches).toEqual([{ family: 'suit', value: 'spades' }])
+    expect(result.familyMatches).toEqual([{ family: 'cards', value: 'suit:spades' }])
   })
 
   it('distinguishes exact dependency overlap from complete set equality', () => {
@@ -181,8 +196,43 @@ describe('compareJokers', () => {
 
     expect(compareJokers(guess, answer).dependencies).toMatchObject({
       result: 'partial',
-      exactMatches: [{ family: 'rank', value: 'ace' }],
+      exactMatches: [{ family: 'cards', value: 'rank:ace' }],
       familyMatches: [],
+    })
+  })
+
+  it('marks different raw dependencies in one player family as partial', () => {
+    const moneyAnswer = makeJoker({ dependencies: [{ family: 'money' }] })
+    const shopGuess = makeJoker({ id: 'j_shop', dependencies: [{ family: 'shop' }] })
+    const suitAnswer = makeJoker({ dependencies: [{ family: 'suit', value: 'hearts' }] })
+    const rankGuess = makeJoker({ id: 'j_rank', dependencies: [{ family: 'rank', value: 'ace' }] })
+
+    expect(compareJokers(shopGuess, moneyAnswer).dependencies).toEqual({
+      values: [{ family: 'economy', value: 'shop' }],
+      exactMatches: [],
+      familyMatches: [{ family: 'economy', value: 'shop' }],
+      result: 'partial',
+    })
+    expect(compareJokers(rankGuess, suitAnswer).dependencies).toMatchObject({
+      familyMatches: [{ family: 'cards', value: 'rank:ace' }],
+      result: 'partial',
+    })
+  })
+
+  it('hides a generic playing-card dependency when a specific card condition exists', () => {
+    const answer = makeJoker({
+      dependencies: [{ family: 'playing_card' }, { family: 'suit', value: 'hearts' }],
+    })
+    const guess = makeJoker({
+      id: 'j_guess',
+      dependencies: [{ family: 'suit', value: 'hearts' }],
+    })
+
+    expect(compareJokers(guess, answer).dependencies).toEqual({
+      values: [{ family: 'cards', value: 'suit:hearts' }],
+      exactMatches: [{ family: 'cards', value: 'suit:hearts' }],
+      familyMatches: [],
+      result: 'exact',
     })
   })
 

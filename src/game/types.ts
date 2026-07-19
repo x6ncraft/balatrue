@@ -1,3 +1,7 @@
+import type { GameDependency } from './clue-model'
+
+export type { GameDependency } from './clue-model'
+
 export const MAX_ATTEMPTS = 6 as const
 
 export type MatchResult = 'exact' | 'partial' | 'miss'
@@ -6,11 +10,6 @@ export type MatchResult = 'exact' | 'partial' | 'miss'
 export type Direction = 'up' | 'down'
 
 export type RarityCode = 'common' | 'uncommon' | 'rare' | 'legendary'
-
-export interface GameDependency {
-  family: string
-  value?: string
-}
 
 export interface RarityComparison {
   value: RarityCode

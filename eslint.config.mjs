@@ -1,9 +1,9 @@
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
-import pluginVue from 'eslint-plugin-vue'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
-import vueParser from 'vue-eslint-parser'
 
 export default tseslint.config(
   {
@@ -17,25 +17,13 @@ export default tseslint.config(
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/recommended'],
+  reactHooks.configs.flat.recommended,
+  reactRefresh.configs.vite,
   eslintConfigPrettier,
   {
-    files: ['**/*.vue'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tseslint.parser,
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        extraFileExtensions: ['.vue'],
-      },
       globals: globals.browser,
-    },
-  },
-  {
-    rules: {
-      'vue/multi-word-component-names': 'off',
-      'vue/require-default-prop': 'off',
     },
   },
 )

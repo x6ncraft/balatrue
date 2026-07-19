@@ -1,4 +1,5 @@
 import type { Joker, JokerRarity } from '../data/types'
+import { gameDependencyKey, projectJokerDependencies, projectJokerTimings } from './clue-model'
 import type { GameDependency, RarityCode } from './types'
 
 const RARITY_RANK: Record<JokerRarity, number> = {
@@ -44,13 +45,13 @@ export function getJokerEffects(joker: Joker): string[] {
 }
 
 export function getJokerTimings(joker: Joker): string[] {
-  return [...joker.classification.timings]
+  return projectJokerTimings(joker)
 }
 
 export function getJokerDependencies(joker: Joker): GameDependency[] {
-  return joker.classification.dependencies.map((dependency) => ({ ...dependency }))
+  return projectJokerDependencies(joker)
 }
 
 export function dependencyKey(dependency: GameDependency): string {
-  return `${dependency.family}\u0000${dependency.value ?? ''}`
+  return gameDependencyKey(dependency)
 }

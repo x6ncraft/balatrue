@@ -2,8 +2,8 @@ const zhCN = {
   'brand.name': '猜丑牌',
   'brand.nameEnglish': 'Balatrue',
   'brand.tagline': '猜猜今天是哪张小丑牌',
-  'brand.subtitle': '非官方《小丑牌》每日竞猜',
-  'brand.disclaimer': '非官方粉丝作品，与 LocalThunk、Playstack 无关联。',
+  'brand.subtitle': '《小丑牌》粉丝猜谜游戏',
+  'brand.disclaimer': 'Balatro 粉丝做的免费猜谜小游戏 · 不是官方出品',
 
   'nav.daily': '今日谜牌',
   'nav.endless': '无尽牌局',
@@ -21,6 +21,7 @@ const zhCN = {
   'game.dailyDescription': '每天六次机会，找出同一张小丑牌。',
   'game.endlessDescription': '不限次数开局，练熟每一张小丑牌。',
   'game.instructions': '选一张小丑牌出牌，根据五项线索继续缩小范围。',
+  'game.startingAttempts': '{count} 次机会',
   'game.remaining': '剩余：{count}',
   'game.progress': '第 {current} / {total} 次',
   'game.today': '北京时间 {date}',
@@ -49,14 +50,14 @@ const zhCN = {
   'action.retry': '再试一次',
   'action.close': '关闭',
   'action.continue': '继续',
-  'action.openGlossary': '查看线索字典',
+  'action.openGlossary': '线索字典',
 
   'clue.joker': '小丑牌',
   'clue.rarity': '稀有度',
   'clue.price': '基础价格',
   'clue.effect': '主效果',
-  'clue.timing': '生效时点',
-  'clue.dependency': '依赖条件',
+  'clue.timing': '怎么触发',
+  'clue.dependency': '依赖什么',
 
   'rarity.common': '普通',
   'rarity.uncommon': '罕见',
@@ -77,6 +78,7 @@ const zhCN = {
   'result.answer': '谜底',
   'result.reveal': '翻开谜牌',
   'result.shareTitle': '分享这局',
+  'result.attributes': '谜底小丑牌的五项属性',
 
   'stats.title': '战绩',
   'stats.played': '已玩',
@@ -86,9 +88,9 @@ const zhCN = {
   'stats.averageGuesses': '平均出牌',
 
   'help.title': '怎么玩',
-  'help.intro': '你有六次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
+  'help.intro': '你有 {count} 次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
   'help.exact': '绿色表示这一项完全吻合。',
-  'help.partial': '黄色表示这一项有标签交集；依赖条件同族也算部分吻合。',
+  'help.partial': '黄色表示这一项有交集；“依赖什么”里的相近条件也算部分吻合。',
   'help.miss': '灰红色表示这一项不吻合。',
   'help.arrow': '价格或稀有度旁的箭头始终指向正确答案。',
 
@@ -101,7 +103,15 @@ const zhCN = {
   'glossary.shopPriceDescription': '可购买小丑牌的基础价格；相同为完全吻合。',
   'glossary.soulDescription': '传奇小丑不显示商店价格，统一归为灵魂牌获取。',
   'glossary.note':
-    '这些是 Balatrue 为竞猜整理的分类，不是《小丑牌》官方属性；“多个时点”表示效果横跨不止一个阶段。',
+    '这些是 Balatrue 为猜谜整理的易懂分类，不是《小丑牌》官方属性。“牌局中成长”表示效果会随牌局动作逐步累积或变化。',
+
+  'footer.links': '项目链接',
+  'footer.madeByPrefix': '',
+  'footer.madeBySuffix': ' 的小作品',
+  'footer.source': 'GitHub 源码',
+  'footer.bilibili': 'B 站',
+  'footer.official': 'Balatro 官网',
+  'footer.localProgress': '进度仅保存在本机',
 
   'collection.title': '小丑图鉴',
   'collection.warningEyebrow': '计分提醒',
@@ -132,7 +142,7 @@ const zhCN = {
   'settings.soundOn': '开启',
   'settings.soundOff': '关闭',
 
-  'state.empty': '还没有出牌',
+  'state.empty': '从上方选一张小丑牌开始',
   'state.savedLocally': '进度已保存在这台设备上',
   'state.offline': '当前离线，仍可继续这局。',
 
@@ -155,8 +165,8 @@ const en = {
   'brand.name': 'Balatrue',
   'brand.nameEnglish': 'Balatrue',
   'brand.tagline': "Guess today's Joker",
-  'brand.subtitle': 'An unofficial daily Balatro Joker puzzle',
-  'brand.disclaimer': 'An unofficial fan project. Not affiliated with LocalThunk or Playstack.',
+  'brand.subtitle': 'A fan-made Balatro guessing game',
+  'brand.disclaimer': 'A free guessing game made by Balatro fans · Not an official release',
 
   'nav.daily': 'Daily',
   'nav.endless': 'Endless',
@@ -174,6 +184,7 @@ const en = {
   'game.dailyDescription': 'Six guesses. The same hidden Joker for everyone, every day.',
   'game.endlessDescription': 'Start as many rounds as you like and learn every Joker.',
   'game.instructions': 'Play a Joker, read the five clues, and narrow down the answer.',
+  'game.startingAttempts': '{count} guesses',
   'game.remaining': 'Remaining: {count}',
   'game.progress': 'Guess {current} of {total}',
   'game.today': '{date}, Beijing time',
@@ -202,14 +213,14 @@ const en = {
   'action.retry': 'Try again',
   'action.close': 'Close',
   'action.continue': 'Continue',
-  'action.openGlossary': 'Open clue glossary',
+  'action.openGlossary': 'Clue glossary',
 
   'clue.joker': 'Joker',
   'clue.rarity': 'Rarity',
   'clue.price': 'Base price',
   'clue.effect': 'Main effect',
   'clue.timing': 'Trigger',
-  'clue.dependency': 'Condition',
+  'clue.dependency': 'Depends on',
 
   'rarity.common': 'Common',
   'rarity.uncommon': 'Uncommon',
@@ -230,6 +241,7 @@ const en = {
   'result.answer': 'Answer',
   'result.reveal': 'Reveal the Joker',
   'result.shareTitle': 'Share this round',
+  'result.attributes': "The answer Joker's five attributes",
 
   'stats.title': 'Stats',
   'stats.played': 'Played',
@@ -240,10 +252,10 @@ const en = {
 
   'help.title': 'How to play',
   'help.intro':
-    "You have six tries to find today's Joker. After each guess, five clues show how close you are.",
+    "You have {count} tries to find today's Joker. After each guess, five clues show how close you are.",
   'help.exact': 'Green means an exact match.',
   'help.partial':
-    'Yellow means the tags overlap; related values in the same condition family are also partial.',
+    'Yellow means the clues overlap; related values under “Depends on” also count as partial.',
   'help.miss': 'Muted red means there is no match.',
   'help.arrow': 'Arrows beside price or rarity always point toward the answer.',
 
@@ -258,7 +270,15 @@ const en = {
     'The base price of purchasable Jokers; equal prices are an exact match.',
   'glossary.soulDescription': 'Legendary Jokers have no shop price and are grouped under The Soul.',
   'glossary.note':
-    'These are Balatrue categories built for this puzzle, not official Balatro attributes. “Multiple” means an effect spans more than one stage.',
+    'These are approachable categories created by Balatrue for this puzzle, not official Balatro attributes. “Builds over time” means the effect accumulates or changes through actions during a run.',
+
+  'footer.links': 'Project links',
+  'footer.madeByPrefix': 'A little project by ',
+  'footer.madeBySuffix': '',
+  'footer.source': 'GitHub source',
+  'footer.bilibili': 'Bilibili',
+  'footer.official': 'Official Balatro',
+  'footer.localProgress': 'Progress stays on this device',
 
   'collection.title': 'Joker Collection',
   'collection.warningEyebrow': 'Scoring notice',
@@ -291,7 +311,7 @@ const en = {
   'settings.soundOn': 'On',
   'settings.soundOff': 'Off',
 
-  'state.empty': 'No guesses yet',
+  'state.empty': 'Choose a Joker above to begin',
   'state.savedLocally': 'Progress is saved on this device',
   'state.offline': 'You are offline, but this round is still playable.',
 

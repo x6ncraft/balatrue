@@ -100,7 +100,7 @@ describe('searchJokers', () => {
 })
 
 describe('createJokerCombobox', () => {
-  it('provides selection-safe lookup functions for a Vue combobox', () => {
+  it('provides selection-safe lookup functions for the Joker combobox', () => {
     const combobox = createJokerCombobox(index, {
       locale: 'en',
       guessedIds: ['j_blueprint'],

@@ -21,8 +21,16 @@ export function gameStorageKey(
   classificationVersion: number,
   mode: GameMode,
   puzzleKey?: string,
+  clueModelVersion?: number,
 ): string {
-  const prefix = `balatrue:game:${gameVersion}:c${classificationVersion}:${mode}`
+  if (
+    clueModelVersion !== undefined &&
+    (!Number.isInteger(clueModelVersion) || clueModelVersion < 1)
+  ) {
+    throw new RangeError('clueModelVersion must be a positive integer')
+  }
+  const clueSegment = clueModelVersion === undefined ? '' : `:g${clueModelVersion}`
+  const prefix = `balatrue:game:${gameVersion}:c${classificationVersion}${clueSegment}:${mode}`
   if (mode === 'practice') return prefix
   if (!puzzleKey) throw new TypeError('Daily game storage keys require a puzzle key')
   return `${prefix}:${puzzleKey}`

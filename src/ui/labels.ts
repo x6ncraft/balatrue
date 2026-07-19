@@ -1,4 +1,10 @@
-import type { JokerDependency, JokerEffect, JokerRarity, JokerTiming } from '../data/types'
+import type { JokerEffect, JokerRarity } from '../data/types'
+import {
+  GAME_DEPENDENCY_FAMILIES,
+  type GameDependency,
+  type GameDependencyFamily,
+  type GameTiming,
+} from '../game/clue-model'
 import type { Locale } from '../i18n'
 
 const rarityLabels: Record<JokerRarity, [string, string]> = {
@@ -33,75 +39,54 @@ const effectDescriptions: Record<JokerEffect, [string, string]> = {
   mechanism: ['改变规则、资源、牌组或栏位。', 'Changes rules, resources, the deck, or slots.'],
 }
 
-const timingLabels: Record<JokerTiming, [string, string]> = {
-  passive: ['持续', 'Passive'],
-  hand_scored: ['手牌计分', 'Hand scored'],
-  card_scored: ['卡牌计分', 'Card scored'],
-  card_played: ['出牌时', 'Card played'],
-  card_held: ['留在手牌', 'Held in hand'],
-  card_discarded: ['弃牌时', 'On discard'],
-  blind_selected: ['选盲注', 'Blind selected'],
-  shop: ['商店', 'Shop'],
+const timingLabels: Record<GameTiming, [string, string]> = {
+  always: ['常驻', 'Always on'],
+  play: ['出牌时', 'When playing'],
+  held: ['留在手牌', 'Held in hand'],
+  discard: ['弃牌时', 'On discard'],
+  blind: ['选盲注时', 'On Blind select'],
+  shop: ['商店/出售', 'Shop & selling'],
   round_end: ['回合结束', 'End of round'],
-  sold: ['出售时', 'When sold'],
-  joker_triggered: ['小丑触发', 'Joker triggered'],
-  mixed: ['多个时点', 'Multiple'],
+  growth: ['牌局中成长', 'Builds over time'],
 }
 
-const timingDescriptions: Record<JokerTiming, [string, string]> = {
-  passive: ['无需特定动作，持续影响牌局。', 'Applies continuously without a specific action.'],
-  hand_scored: ['一手牌完成计分时触发。', 'Triggers when a played hand is scored.'],
-  card_scored: ['某张扑克牌参与计分时触发。', 'Triggers when an individual card scores.'],
-  card_played: ['打出扑克牌或提交手牌时触发。', 'Triggers when cards are played.'],
-  card_held: ['扑克牌留在手牌中时生效。', 'Applies to cards held in hand.'],
-  card_discarded: ['弃掉扑克牌时触发。', 'Triggers when cards are discarded.'],
-  blind_selected: ['选择盲注后触发。', 'Triggers when a Blind is selected.'],
-  shop: ['进入商店、购买或使用商店内容时触发。', 'Triggers from shop actions.'],
+const timingDescriptions: Record<GameTiming, [string, string]> = {
+  always: ['无需特定动作，一直影响牌局。', 'Continuously affects the run.'],
+  play: ['打出一手牌或进行计分时生效。', 'Applies when a hand is played or scored.'],
+  held: ['扑克牌留在手牌中时生效。', 'Applies to cards held in hand.'],
+  discard: ['弃掉扑克牌时生效。', 'Applies when cards are discarded.'],
+  blind: ['选择盲注后生效。', 'Applies when a Blind is selected.'],
+  shop: ['在商店、开包、重掷或出售时生效。', 'Applies in the shop or when selling.'],
   round_end: ['回合结束或离开盲注时触发。', 'Triggers at the end of a round.'],
-  sold: ['出售小丑牌或其他物品时触发。', 'Triggers when an item is sold.'],
-  joker_triggered: ['其他小丑牌生效时跟随触发。', 'Triggers from another Joker.'],
-  mixed: ['包含两个或更多不同生效时点。', 'Uses two or more different trigger timings.'],
+  growth: ['满足条件后逐步累积效果。', 'Builds up as its condition is met.'],
 }
 
-const dependencyFamilyLabels: Record<JokerDependency['family'], [string, string]> = {
-  suit: ['花色', 'Suit'],
-  rank: ['点数', 'Rank'],
-  poker_hand: ['牌型', 'Poker hand'],
-  playing_card: ['扑克牌', 'Playing card'],
-  card_modifier: ['卡牌增强', 'Card modifier'],
-  money: ['金钱', 'Money'],
-  joker: ['其他小丑', 'Jokers'],
-  consumable: ['消耗牌', 'Consumables'],
-  discard: ['弃牌', 'Discards'],
-  hand: ['出牌次数', 'Hands'],
-  round: ['回合', 'Rounds'],
-  blind: ['盲注', 'Blinds'],
-  shop: ['商店', 'Shop'],
-  deck: ['牌组', 'Deck'],
-  joker_slot: ['小丑栏位', 'Joker slots'],
-  none: ['无特定依赖', 'No specific dependency'],
+const dependencyFamilyLabels: Record<GameDependencyFamily, [string, string]> = {
+  cards: ['扑克牌/牌组', 'Cards & deck'],
+  hand_type: ['牌型', 'Poker hand'],
+  actions: ['出牌/弃牌', 'Play & discard'],
+  economy: ['金钱/商店', 'Money & shop'],
+  jokers: ['小丑/栏位', 'Jokers & slots'],
+  consumables: ['消耗牌', 'Consumables'],
+  progress: ['盲注/回合', 'Blinds & rounds'],
+  none: ['无特定条件', 'No specific condition'],
 }
 
-const dependencyFamilyDescriptions: Record<JokerDependency['family'], [string, string]> = {
-  suit: ['依赖方片、红桃、黑桃或梅花。', 'Depends on one or more card suits.'],
-  rank: ['依赖特定点数或人头牌。', 'Depends on card ranks or face cards.'],
-  poker_hand: ['依赖对子、顺子、同花等牌型。', 'Depends on a poker hand type.'],
-  playing_card: ['依赖打出、留手或牌组中的扑克牌。', 'Depends on playing cards.'],
-  card_modifier: [
-    '依赖增强、蜡封或版本效果。',
-    'Depends on card enhancements, seals, or editions.',
+const dependencyFamilyDescriptions: Record<GameDependencyFamily, [string, string]> = {
+  cards: [
+    '看扑克牌的花色、点数、增强效果或牌组构成。',
+    'Looks at card suits, ranks, modifiers, or deck composition.',
   ],
-  money: ['依赖当前金钱、收入或出售价值。', 'Depends on money, income, or sell value.'],
-  joker: ['依赖其他小丑牌或其状态。', 'Depends on other Jokers.'],
-  consumable: ['依赖塔罗、星球或幻灵牌。', 'Depends on Tarot, Planet, or Spectral cards.'],
-  discard: ['依赖弃牌次数或弃牌动作。', 'Depends on discards.'],
-  hand: ['依赖手牌数量、出牌次数或出牌张数。', 'Depends on hand size, hands, or cards played.'],
-  round: ['依赖经过的回合或连续回合。', 'Depends on rounds played.'],
-  blind: ['依赖盲注、Boss 盲注或其状态。', 'Depends on Blinds or Boss Blinds.'],
-  shop: ['依赖商店、补充包或重掷。', 'Depends on shops, packs, or rerolls.'],
-  deck: ['依赖牌组大小或牌组构成。', 'Depends on deck size or composition.'],
-  joker_slot: ['依赖空余或已占用的小丑栏位。', 'Depends on available Joker slots.'],
-  none: ['不要求某一类牌或资源。', 'Has no specific card or resource condition.'],
+  hand_type: ['看对子、顺子、同花等牌型。', 'Looks for a poker hand such as a Pair or Flush.'],
+  actions: [
+    '看出牌张数、手牌数量、出牌次数或弃牌。',
+    'Looks at cards played, hand size, hands, or discards.',
+  ],
+  economy: ['看金钱、出售价值、商店、开包或重掷。', 'Looks at money or shop actions.'],
+  jokers: ['看其他小丑牌、相对位置或栏位。', 'Looks at other Jokers or Joker slots.'],
+  consumables: ['看塔罗牌、星球牌或幻灵牌。', 'Looks at Tarot, Planet, or Spectral cards.'],
+  progress: ['看盲注、Boss 盲注或经过的回合。', 'Looks at Blinds or rounds played.'],
+  none: ['无需特定牌、资源或操作。', 'Needs no specific card, resource, or action.'],
 }
 
 const valueLabels: Record<string, [string, string]> = {
@@ -151,6 +136,27 @@ const valueLabels: Record<string, [string, string]> = {
   right: ['右侧', 'To the right'],
 }
 
+const sourceOnlyDependencyLabels: Record<string, [string, string]> = {
+  playing_card: ['任意牌', 'Any card'],
+  deck: ['牌组', 'Deck'],
+  discard: ['弃牌', 'Discards'],
+  money: ['金钱', 'Money'],
+  joker: ['其他小丑', 'Other Jokers'],
+  joker_slot: ['小丑栏位', 'Joker slots'],
+  shop: ['商店', 'Shop'],
+  round: ['回合', 'Rounds'],
+  blind: ['盲注', 'Blinds'],
+}
+
+const contextualAnyLabels: Record<string, [string, string]> = {
+  suit: ['任意花色', 'Any suit'],
+  rank: ['任意点数', 'Any rank'],
+  poker_hand: ['任意牌型', 'Any poker hand'],
+  consumable: ['任意消耗牌', 'Any consumable'],
+}
+
+const allSuitsLabel: readonly [string, string] = ['四种花色', 'All four suits']
+
 function localized(pair: readonly [string, string], locale: Locale): string {
   return locale === 'zh-CN' ? pair[0] : pair[1]
 }
@@ -177,22 +183,19 @@ export function effectDescription(value: JokerEffect, locale: Locale): string {
 }
 
 export function timingLabel(value: string, locale: Locale): string {
-  const pair = timingLabels[value as JokerTiming]
+  const pair = timingLabels[value as GameTiming]
   return pair ? localized(pair, locale) : humanize(value)
 }
 
-export function timingDescription(value: JokerTiming, locale: Locale): string {
+export function timingDescription(value: GameTiming, locale: Locale): string {
   return localized(timingDescriptions[value], locale)
 }
 
-export function dependencyFamilyLabel(family: JokerDependency['family'], locale: Locale): string {
+export function dependencyFamilyLabel(family: GameDependencyFamily, locale: Locale): string {
   return localized(dependencyFamilyLabels[family], locale)
 }
 
-export function dependencyFamilyDescription(
-  family: JokerDependency['family'],
-  locale: Locale,
-): string {
+export function dependencyFamilyDescription(family: GameDependencyFamily, locale: Locale): string {
   return localized(dependencyFamilyDescriptions[family], locale)
 }
 
@@ -207,16 +210,64 @@ export function hasDependencyValueLabel(value: string): boolean {
   return /^\d+$/.test(normalizedValue) || normalizedValue in valueLabels
 }
 
-export function dependencyLabel(
-  value: Pick<JokerDependency, 'value'> & { family: string },
-  locale: Locale,
-): string {
-  const familyPair = dependencyFamilyLabels[value.family as JokerDependency['family']]
-  const family = familyPair ? localized(familyPair, locale) : humanize(value.family)
+export function gameDependencyDetailLabel(value: string, locale: Locale): string {
+  const separatorIndex = value.indexOf(':')
+  const sourceFamily = separatorIndex === -1 ? value : value.slice(0, separatorIndex)
+  const sourceValue = separatorIndex === -1 ? '' : value.slice(separatorIndex + 1)
+
+  if (!sourceValue) {
+    const pair = sourceOnlyDependencyLabels[sourceFamily]
+    return pair ? localized(pair, locale) : humanize(sourceFamily)
+  }
+  if (sourceValue === 'any' && contextualAnyLabels[sourceFamily]) {
+    return localized(contextualAnyLabels[sourceFamily], locale)
+  }
+  if (sourceFamily === 'joker' && sourceValue === 'leftmost') {
+    return locale === 'zh-CN' ? '最左侧小丑' : 'Leftmost Joker'
+  }
+  if (sourceFamily === 'joker' && sourceValue === 'right') {
+    return locale === 'zh-CN' ? '右侧小丑' : 'Joker to the right'
+  }
+  return dependencyValueLabel(sourceValue, locale)
+}
+
+function compactDependencyValues(values: readonly string[], locale: Locale): string[] {
+  const uniqueValues = [...new Set(values)]
+  const suitValues = ['suit:clubs', 'suit:diamonds', 'suit:hearts', 'suit:spades']
+  if (suitValues.every((value) => uniqueValues.includes(value))) {
+    return [
+      localized(allSuitsLabel, locale),
+      ...uniqueValues
+        .filter((value) => !suitValues.includes(value))
+        .map((value) => gameDependencyDetailLabel(value, locale)),
+    ]
+  }
+  return uniqueValues.map((value) => gameDependencyDetailLabel(value, locale))
+}
+
+export function dependencyLabel(value: GameDependency, locale: Locale): string {
+  const family = dependencyFamilyLabel(value.family, locale)
   if (!value.value || value.family === 'none') return family
 
-  const detail = dependencyValueLabel(value.value, locale)
-  return locale === 'zh-CN' ? `${family}·${detail}` : `${family}: ${detail}`
+  const detail = gameDependencyDetailLabel(value.value, locale)
+  return locale === 'zh-CN' ? `${family}：${detail}` : `${family}: ${detail}`
+}
+
+export function dependenciesLabel(values: readonly GameDependency[], locale: Locale): string {
+  return GAME_DEPENDENCY_FAMILIES.flatMap((family) => {
+    const matches = values.filter((value) => value.family === family)
+    if (matches.length === 0) return []
+    const familyLabel = dependencyFamilyLabel(family, locale)
+    if (family === 'none') return [familyLabel]
+
+    const details = compactDependencyValues(
+      matches.flatMap((value) => (value.value ? [value.value] : [])),
+      locale,
+    )
+    if (details.length === 0) return [familyLabel]
+    const detailList = details.join(locale === 'zh-CN' ? '、' : ', ')
+    return [locale === 'zh-CN' ? `${familyLabel}：${detailList}` : `${familyLabel}: ${detailList}`]
+  }).join(locale === 'zh-CN' ? '；' : '; ')
 }
 
 export function listLabel(

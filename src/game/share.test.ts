@@ -30,9 +30,9 @@ function comparison(
       result: timings,
     },
     dependencies: {
-      values: [{ family: 'suit', value: 'hearts' }],
-      exactMatches: dependencies === 'exact' ? [{ family: 'suit', value: 'hearts' }] : [],
-      familyMatches: dependencies === 'partial' ? [{ family: 'suit', value: 'hearts' }] : [],
+      values: [{ family: 'cards', value: 'suit:hearts' }],
+      exactMatches: dependencies === 'exact' ? [{ family: 'cards', value: 'suit:hearts' }] : [],
+      familyMatches: dependencies === 'partial' ? [{ family: 'cards', value: 'suit:hearts' }] : [],
       result: dependencies,
     },
   }

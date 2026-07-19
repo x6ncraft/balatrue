@@ -17,6 +17,7 @@ import {
   WIKI_JOKER_ACTIVATIONS,
   WIKI_JOKER_TYPES,
 } from '../src/data/types'
+import { gameplayClueSignature } from '../src/game/clue-model'
 import { hasDependencyValueLabel } from '../src/ui/labels'
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
@@ -157,7 +158,7 @@ for (const [index, joker] of jokers.entries()) {
     )
     check(
       dependency.value === undefined || hasDependencyValueLabel(dependency.value),
-      `${label}: dependency value '${dependency.value}' has no bilingual label`,
+      `${label}: dependency value '${dependency.value}' has no localized label`,
     )
   }
   if (joker.classification.dependencies.some(({ family }) => family === 'none')) {
@@ -212,22 +213,19 @@ for (const rarity of JOKER_RARITIES) {
   )
 }
 
-const visibleSignatures = new Map<string, string[]>()
+const gameplaySignatures = new Map<string, string[]>()
 for (const joker of jokers) {
-  const signature = JSON.stringify([
-    joker.official.rarity,
-    joker.classification.acquisition.kind,
-    joker.official.cost,
-    [...joker.classification.effects].sort(),
-    [...joker.classification.timings].sort(),
-    joker.classification.dependencies.map(({ family, value }) => `${family}:${value ?? ''}`).sort(),
-  ])
-  const names = visibleSignatures.get(signature) ?? []
+  const signature = gameplayClueSignature(joker)
+  const names = gameplaySignatures.get(signature) ?? []
   names.push(joker.name.en)
-  visibleSignatures.set(signature, names)
+  gameplaySignatures.set(signature, names)
 }
-for (const names of visibleSignatures.values()) {
-  check(names.length === 1, `Indistinguishable visible clue signature: ${names.join(', ')}`)
+check(
+  gameplaySignatures.size === jokers.length,
+  `Expected ${jokers.length}/${jokers.length} unique player clue signatures, found ${gameplaySignatures.size}/${jokers.length}`,
+)
+for (const names of gameplaySignatures.values()) {
+  check(names.length === 1, `Indistinguishable player clue signature: ${names.join(', ')}`)
 }
 
 const actualImageFiles = (await readdir(imageDirectory)).filter((file) => file.endsWith('.png'))
@@ -242,6 +240,6 @@ if (errors.length > 0) {
   process.exitCode = 1
 } else {
   console.log(
-    `[data] valid: ${jokers.length} Jokers, 150 official names in EN/zh-CN, rarity 61/64/20/5, ${actualImageFiles.length} verified images`,
+    `[data] valid: ${jokers.length} Jokers, 150 official names in EN/zh-CN, rarity 61/64/20/5, ${gameplaySignatures.size}/150 unique player clue signatures, ${actualImageFiles.length} verified images`,
   )
 }
