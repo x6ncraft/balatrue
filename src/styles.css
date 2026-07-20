@@ -32,23 +32,35 @@
 }
 
 html {
+  width: 100%;
   min-width: 320px;
   min-height: 100%;
   background: var(--table);
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  width: 100%;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   background:
     radial-gradient(circle at 18% 0%, rgb(65 139 132 / 18%), transparent 34rem),
     linear-gradient(180deg, var(--table), var(--table-deep));
 }
 
+#app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 button,
 input,
-select {
+select,
+textarea {
   color: inherit;
   font: inherit;
 }
@@ -56,8 +68,10 @@ select {
 button,
 a,
 input,
-select {
+select,
+summary {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 button {
@@ -312,6 +326,8 @@ img {
   padding: 6px;
   margin: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid #bdb5a7;
   border-radius: 12px;
   background: #fffdf7;
@@ -890,7 +906,10 @@ img {
 .dialog {
   width: min(560px, 100%);
   max-height: min(760px, calc(100vh - 40px));
+  max-height: min(760px, calc(100dvh - 40px));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid #d3cabc;
   border-radius: 16px;
   background: var(--paper-strong);
@@ -1051,6 +1070,8 @@ img {
 .clue-glossary-dialog .glossary-body {
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .glossary-body > section + section {
@@ -1172,7 +1193,9 @@ img {
   flex-direction: column;
   width: min(1120px, 100%);
   height: min(860px, calc(100vh - 40px));
+  height: min(860px, calc(100dvh - 40px));
   max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
   overflow: hidden;
 }
 
@@ -1236,6 +1259,8 @@ img {
 .collection-content {
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: #eee7da;
 }
 
@@ -1599,7 +1624,7 @@ img {
 
   .search-field input {
     height: 48px;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .game-meta {
@@ -1917,6 +1942,37 @@ img {
   }
 }
 
+@media (max-height: 520px) {
+  .suggestions {
+    max-height: min(220px, calc(100dvh - 232px));
+  }
+
+  .collection-gate {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    padding: 20px 28px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    align-content: start;
+  }
+
+  .collection-gate__mark {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 10px;
+  }
+
+  .collection-gate > p:not(.collection-gate__eyebrow) {
+    margin-top: 9px;
+    line-height: 1.5;
+  }
+
+  .collection-gate__actions {
+    margin-top: 15px;
+  }
+}
+
 @media (max-width: 480px) {
   .app-shell {
     width: min(100% - 16px, 1120px);
@@ -2031,6 +2087,14 @@ img {
 
   .language-button > svg {
     display: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .search-field input,
+  .collection-search input,
+  .collection-filters select {
+    font-size: 16px;
   }
 }
 

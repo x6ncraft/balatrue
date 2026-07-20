@@ -469,6 +469,31 @@ test('uses full-screen mobile reference panels with collapsible filters', async 
   test.skip(testInfo.project.name !== 'mobile-chromium')
   await page.setViewportSize({ width: 375, height: 667 })
 
+  const viewport = await page.locator('meta[name="viewport"]').getAttribute('content')
+  expect(viewport).toContain('width=device-width')
+  expect(viewport).toContain('initial-scale=1.0')
+  expect(viewport).not.toContain('user-scalable=no')
+  expect(viewport).not.toContain('maximum-scale=1')
+
+  const gameSearch = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await expect
+    .poll(() =>
+      gameSearch.evaluate((element) => ({
+        fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
+        touchAction: getComputedStyle(element).touchAction,
+      })),
+    )
+    .toEqual({ fontSize: 16, touchAction: 'manipulation' })
+
+  await expect
+    .poll(() =>
+      page.evaluate(() => ({
+        viewportTouchAction: getComputedStyle(document.documentElement).touchAction,
+        fitsWidth: document.documentElement.scrollWidth <= window.innerWidth,
+      })),
+    )
+    .toEqual({ viewportTouchAction: 'manipulation', fitsWidth: true })
+
   await page.getByRole('button', { name: '打开小丑图鉴' }).click()
   const collection = page.getByRole('dialog', { name: '小丑图鉴' })
   await collection.getByRole('button', { name: '继续看图鉴' }).click()
@@ -484,7 +509,17 @@ test('uses full-screen mobile reference panels with collapsible filters', async 
   await expect(collection.getByRole('button', { name: '关闭' })).toBeFocused()
   await expect(page.locator('.app-shell')).toHaveAttribute('inert', '')
   await collection.getByRole('button', { name: '筛选' }).click()
-  await expect(collection.getByRole('combobox', { name: '稀有度' })).toBeVisible()
+  const rarityFilter = collection.getByRole('combobox', { name: '稀有度' })
+  await expect(rarityFilter).toBeVisible()
+  await expect
+    .poll(() =>
+      collection
+        .locator('input, select')
+        .evaluateAll((controls) =>
+          controls.map((control) => Number.parseFloat(getComputedStyle(control).fontSize)),
+        ),
+    )
+    .toEqual([16, 16, 16, 16, 16])
 
   const collectionBox = await collection.boundingBox()
   expect(collectionBox).not.toBeNull()
@@ -502,6 +537,82 @@ test('uses full-screen mobile reference panels with collapsible filters', async 
   expect(Math.round(glossaryBox?.height ?? 0)).toBe(667)
   await glossary.getByRole('button', { name: '关闭' }).click()
   await expect(page.locator('.app-shell')).not.toHaveAttribute('inert', '')
+})
+
+test('keeps touch form controls zoom-safe in phone landscape', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium')
+  await page.setViewportSize({ width: 844, height: 390 })
+
+  const gameSearch = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await expect
+    .poll(() =>
+      gameSearch.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize)),
+    )
+    .toBeGreaterThanOrEqual(16)
+
+  await gameSearch.fill('a')
+  const suggestions = page.getByRole('listbox')
+  await expect(suggestions).toBeVisible()
+  const suggestionsBox = await suggestions.boundingBox()
+  expect(suggestionsBox).not.toBeNull()
+  expect((suggestionsBox?.y ?? 0) + (suggestionsBox?.height ?? 0)).toBeLessThanOrEqual(390)
+  const options = suggestions.getByRole('option')
+  expect(await options.count()).toBeGreaterThan(1)
+  await options.last().scrollIntoViewIfNeeded()
+  await expect(options.last()).toBeVisible()
+  await gameSearch.fill('')
+
+  await page.setViewportSize({ width: 568, height: 320 })
+  await page.getByRole('button', { name: '打开小丑图鉴' }).click()
+  let collection = page.getByRole('dialog', { name: '小丑图鉴' })
+  const compactGate = collection.locator('.collection-gate')
+  const compactMark = collection.locator('.collection-gate__mark')
+  const compactCancel = collection.getByRole('button', { name: '这局先不看' })
+  const [compactGateBox, compactMarkBox] = await Promise.all([
+    compactGate.boundingBox(),
+    compactMark.boundingBox(),
+  ])
+  expect(compactGateBox).not.toBeNull()
+  expect(compactMarkBox).not.toBeNull()
+  expect(compactMarkBox?.y ?? 0).toBeGreaterThanOrEqual(compactGateBox?.y ?? 0)
+  await compactCancel.scrollIntoViewIfNeeded()
+  const compactCancelBox = await compactCancel.boundingBox()
+  expect(compactCancelBox).not.toBeNull()
+  expect((compactCancelBox?.y ?? 0) + (compactCancelBox?.height ?? 0)).toBeLessThanOrEqual(320)
+  await compactCancel.click()
+
+  await page.setViewportSize({ width: 844, height: 390 })
+  await page.getByRole('button', { name: '打开小丑图鉴' }).click()
+  collection = page.getByRole('dialog', { name: '小丑图鉴' })
+  const continueButton = collection.getByRole('button', { name: '继续看图鉴' })
+  const cancelButton = collection.getByRole('button', { name: '这局先不看' })
+  const [collectionBox, continueBox, cancelBox] = await Promise.all([
+    collection.boundingBox(),
+    continueButton.boundingBox(),
+    cancelButton.boundingBox(),
+  ])
+  expect(collectionBox).not.toBeNull()
+  expect(continueBox).not.toBeNull()
+  expect(cancelBox).not.toBeNull()
+  expect((continueBox?.y ?? 0) + (continueBox?.height ?? 0)).toBeLessThanOrEqual(
+    (collectionBox?.y ?? 0) + (collectionBox?.height ?? 0),
+  )
+  expect((cancelBox?.y ?? 0) + (cancelBox?.height ?? 0)).toBeLessThanOrEqual(
+    (collectionBox?.y ?? 0) + (collectionBox?.height ?? 0),
+  )
+  await continueButton.click()
+  await expect
+    .poll(() =>
+      collection
+        .locator('input, select')
+        .evaluateAll((controls) =>
+          controls.map((control) => Number.parseFloat(getComputedStyle(control).fontSize)),
+        ),
+    )
+    .toEqual([16, 16, 16, 16, 16])
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+    .toBe(true)
 })
 
 test('keeps the 320px starting view compact and aligned', async ({ page }, testInfo) => {
