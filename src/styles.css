@@ -1943,6 +1943,12 @@ img {
 }
 
 @media (max-height: 520px) {
+  .collection-dialog,
+  .clue-glossary-dialog {
+    height: calc(100dvh - 2px);
+    max-height: calc(100dvh - 2px);
+  }
+
   .suggestions {
     max-height: min(220px, calc(100dvh - 232px));
   }
