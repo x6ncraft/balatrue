@@ -1,0 +1,6 @@
+{
+  "installCommand": "bun --version && bun install --frozen-lockfile",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "nodeVersion": "22.17.1"
+}
