@@ -615,14 +615,22 @@ test('keeps touch form controls zoom-safe in phone landscape', async ({ page }, 
     .toBe(true)
 })
 
-test('keeps the 320px starting view compact and aligned', async ({ page }, testInfo) => {
+test('keeps the 320px layout readable without zoom or overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium')
   await page.setViewportSize({ width: 320, height: 568 })
+
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await expect
+    .poll(() => search.evaluate((input) => Number.parseFloat(getComputedStyle(input).fontSize)))
+    .toBe(16)
+  expect(await page.evaluate(() => visualViewport?.scale ?? 1)).toBe(1)
+  await search.focus()
+  expect(await page.evaluate(() => visualViewport?.scale ?? 1)).toBe(1)
 
   const [brandBox, actionsBox, inputBox, guessBox] = await Promise.all([
     page.locator('.brand').boundingBox(),
     page.locator('.top-actions').boundingBox(),
-    page.getByRole('combobox', { name: '选择一张小丑牌' }).boundingBox(),
+    search.boundingBox(),
     page.getByRole('button', { name: '猜猜看' }).boundingBox(),
   ])
   expect(brandBox).not.toBeNull()
@@ -636,6 +644,37 @@ test('keeps the 320px starting view compact and aligned', async ({ page }, testI
   expect(Math.abs((inputBox?.y ?? 0) - (guessBox?.y ?? 0))).toBeLessThan(2)
   await expect(page.getByText('6 次机会')).toBeVisible()
   await expect(page.locator('.empty-board')).toBeInViewport()
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+    .toBe(true)
+
+  const joker = jokers[0]
+  if (!joker) throw new Error('Expected a Joker fixture')
+  await search.fill(joker.name.en)
+  await page
+    .getByRole('option', { name: `${joker.name.zhCN} ${joker.name.en}`, exact: true })
+    .click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
+
+  const row = page.locator('.guess-row').first()
+  const [rowBox, jokerCellBox, feedbackBoxes] = await Promise.all([
+    row.boundingBox(),
+    row.locator('.joker-cell').boundingBox(),
+    row.locator('.feedback-cell').evaluateAll((cells) =>
+      cells.map((cell) => {
+        const box = cell.getBoundingClientRect()
+        return { x: box.x, y: box.y, width: box.width, height: box.height }
+      }),
+    ),
+  ])
+  expect(rowBox).not.toBeNull()
+  expect(jokerCellBox).not.toBeNull()
+  expect(feedbackBoxes).toHaveLength(5)
+  expect(jokerCellBox?.width ?? 0).toBeGreaterThan((rowBox?.width ?? 0) * 0.9)
+  expect(feedbackBoxes.every((box) => Math.abs(box.y - feedbackBoxes[0]!.y) < 2)).toBe(true)
+  expect(feedbackBoxes[0]!.y).toBeGreaterThanOrEqual(
+    (jokerCellBox?.y ?? 0) + (jokerCellBox?.height ?? 0),
+  )
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true)
