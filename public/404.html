@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#123d36" />
+    <title>404 · Balatrue</title>
+    <style>
+      :root {
+        color: #172622;
+        background: #123d36;
+        font-family:
+          ui-rounded, 'SF Pro Rounded', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100svh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 50% 24%, rgb(255 245 218 / 8%), transparent 36%), #123d36;
+      }
+
+      main {
+        width: min(100%, 520px);
+        padding: clamp(28px, 7vw, 48px);
+        border: 1px solid #c9c0ad;
+        border-radius: 24px;
+        background: #f8f1e3;
+        box-shadow: 0 14px 0 rgb(6 34 30 / 35%);
+        text-align: center;
+      }
+
+      .code {
+        margin: 0 0 16px;
+        color: #b33f35;
+        font-family: 'Courier New', monospace;
+        font-size: clamp(3.5rem, 15vw, 6rem);
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        line-height: 0.9;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.5rem, 6vw, 2.25rem);
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 12px 0 24px;
+        color: #63716d;
+        font-size: 1rem;
+        line-height: 1.65;
+      }
+
+      a {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 24px;
+        border: 1px solid #8f3029;
+        border-radius: 12px;
+        color: #fff8e9;
+        background: #d84f43;
+        box-shadow: 0 5px 0 #9d322b;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a:focus-visible {
+        outline: 3px solid #24756b;
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code" aria-label="404">404</p>
+      <h1>这张牌不在牌组里</h1>
+      <p>The card you were looking for is not in this deck.</p>
+      <a href="/">回到 Balatrue</a>
+    </main>
+  </body>
+</html>
