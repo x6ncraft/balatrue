@@ -12,11 +12,10 @@ The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.ht
 
 ## Status
 
-The game is a tested, client-side release candidate. Its original source code is available under the
-MIT License. The repository intentionally preserves separately identified upstream review data and
-Joker artwork outside that license; see the rights section below. The first hosted production build
-has passed, while the permanent public URL is still pending domain registration and custom-domain
-validation. No authorization from the Balatro rights holders is claimed.
+The game is a tested, client-side release candidate. A clean checkout produces a self-contained
+static build. Its original source code is available under the MIT License. The repository
+intentionally preserves separately identified upstream review data and Joker artwork outside that
+license; see the rights section below. No authorization from the Balatro rights holders is claimed.
 
 ## Features
 
@@ -75,7 +74,7 @@ src/          React UI, game rules, search, localization, and generated runtime 
 data/         checked-in per-Joker provenance and repository-only upstream review data
 scripts/      data generation, validation, and release-artifact checks
 tests/e2e/    Playwright browser journeys
-docs/         product, architecture, design, rights, release, and deployment records
+docs/         product, architecture, design, rights, and reproducible release guidance
 public/       low-resolution Joker images used for card identification
 ```
 
@@ -123,7 +122,6 @@ Read the [License scope](LICENSE_SCOPE.md), [Asset and data notice](ASSET_NOTICE
 - [Visual and interaction design](docs/design.md)
 - [Acceptance criteria](docs/acceptance.md)
 - [Release checklist](docs/release-checklist.md)
-- [Deployment, domain, and metrics research](docs/deployment-research.md)
 - [Rights and release notes](docs/legal-notice.md)
 - [Roadmap](docs/roadmap.md)
 - [Contributing](CONTRIBUTING.md)
