@@ -27,7 +27,8 @@
 - 反馈算法只读取版本化字段，不根据名称或图片做隐式特判。
 - 绿色表示完全吻合，黄色表示集合或同类条件部分吻合；图标、文字和边框共同表达状态。
 - 纯前端答案可以被检查，因此不承诺防作弊，也不设计有奖排名。
-- `src/data/jokers.generated.ts` 只能由 `scripts/sync-jokers.ts` 生成，禁止手改。
+- `src/data/jokers.generated.ts` 只能由 `scripts/sync-jokers.ts` 生成；
+  `src/search/joker-search.generated.ts` 只能由 `scripts/generate-joker-search.ts` 生成，均禁止手改。
 - 修改原始分类或玩家投影时，递增相应版本，迁移存档，并重新验证 150 张五维签名唯一。
 
 ## 数据与素材边界

@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc -b && vite build && bun scripts/validate-dist.ts",
+    "build": "tsc -b && bun run data:validate && vite build && bun scripts/validate-dist.ts",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc -b",
     "test": "vitest run",
@@ -18,7 +18,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "data:sync": "bun scripts/sync-jokers.ts",
+    "data:sync": "bun scripts/sync-jokers.ts && bun run data:search",
+    "data:search": "bun scripts/generate-joker-search.ts",
     "data:provenance": "bun scripts/public-provenance.ts",
     "data:validate": "bun scripts/validate-jokers.ts",
     "check": "bun scripts/check.ts"
@@ -26,7 +27,6 @@
   "dependencies": {
     "@fontsource/silkscreen": "^5.2.6",
     "lucide-react": "^0.468.0",
-    "pinyin-pro": "^3.27.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -45,6 +45,7 @@
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^14.0.0",
     "jsdom": "^27.2.0",
+    "pinyin-pro": "^3.27.0",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1",

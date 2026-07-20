@@ -11,7 +11,7 @@ src/main.tsx
        ├─ components/   输入、猜测行、结果、字典、图鉴和战绩
        ├─ game/         每日轮换、比较、牌局、存档与分享
        ├─ data/         运行时类型与生成后的小丑目录
-       ├─ search/       中英文与拼音索引
+       ├─ search/       中英文与预生成拼音索引
        ├─ i18n/         中英文界面文案
        ├─ state/        本地战绩
        └─ ui/           玩家线索标签和小丑属性格式化
@@ -24,8 +24,9 @@ src/main.tsx
 
 ```text
 维护者远程同步（默认关闭）
-  → scripts/sync-jokers.ts
+  → bun run data:sync
   ├─ src/data/jokers.generated.ts                  浏览器玩法字段与来源摘要，随仓库提交
+  ├─ src/search/joker-search.generated.ts          从简中名称生成的拼音检索词，随仓库提交
   ├─ data/jokers.provenance.generated.json         逐卡公开来源记录，随仓库提交
   ├─ public/jokers/*.png                           用于牌面识别的低分辨率卡图
   └─ data/upstream/jokers.wiki.generated.json      完整英文来源文本，随仓库审查且不进入网页构建
@@ -34,15 +35,20 @@ src/data/jokers.generated.ts
   → game/clue-model.ts  c9 原始分类投影为 g3 玩家线索
   → game/compare.ts     五项反馈
   → React 界面
+
+src/search/joker-search.generated.ts
+  → search/index.ts     中英文、全拼与首字母检索
+  → React 界面
 ```
 
-生成器先用英文来源文本推导分类，再分别写出运行目录、逐卡来源记录和仓库审查快照。运行数据只
-保留摘要、类型和玩法字段；逐卡来源记录保留参考页、图片 URL、摘要与尺寸；完整效果和解锁描述
-只留在 `data/upstream/`，供人和校验脚本复核，不由浏览器导入。
+生成器先用英文来源文本推导分类，再分别写出运行目录、名称检索词、逐卡来源记录和仓库审查
+快照。拼音和首字母在维护阶段由 `pinyin-pro` 生成，浏览器只读取结果，不加载整套拼音字典。
+运行数据只保留摘要、类型和玩法字段；逐卡来源记录保留参考页、图片 URL、摘要与尺寸；完整效果
+和解锁描述只留在 `data/upstream/`，供人和校验脚本复核，不由浏览器导入。
 
-`scripts/validate-jokers.ts` 核对运行目录、150 条逐卡来源记录、150 条来源审查记录与本地图片，并
-重新计算 300 个英文原文摘要。`scripts/public-provenance.ts` 只在维护者需要从仓库审查快照重建
-逐卡来源记录时使用。
+`scripts/validate-jokers.ts` 核对运行目录、150 组检索词、150 条逐卡来源记录、150 条来源审查记录
+与本地图片，并重新计算拼音检索词和 300 个英文原文摘要。`scripts/public-provenance.ts` 只在维护者
+需要从仓库审查快照重建逐卡来源记录时使用。
 
 远程同步默认拒绝执行，也不能进入 CI。只有在维护者确认数据源允许自动访问后，才显式设置
 `BALATRUE_REMOTE_SYNC_ALLOWED=1`。正常构建不访问任何远程数据源。
@@ -59,7 +65,8 @@ src/data/jokers.generated.ts
 
 ## 构建与发布产物
 
-Vite 生成纯静态 `dist/`。构建插件同时写入项目 MIT 许可证、`LICENSE_SCOPE.md`、
+`bun run build` 先执行类型与完整数据校验，再由 Vite 生成纯静态 `dist/`。构建插件同时写入项目
+MIT 许可证、`LICENSE_SCOPE.md`、
 `ASSET_NOTICE.md`、150 条逐卡来源记录、`THIRD_PARTY_NOTICES.md` 和运行依赖的原始许可证到
 `dist/legal/`；
 `scripts/validate-dist.ts` 缺少任何一项，或发现仓库审查用原文进入网页产物，都会使构建失败。

@@ -30,10 +30,6 @@ const legalAssets = [
     new URL('./node_modules/lucide-react/LICENSE', import.meta.url),
   ],
   [
-    'legal/licenses/pinyin-pro-MIT.txt',
-    new URL('./node_modules/pinyin-pro/LICENSE', import.meta.url),
-  ],
-  [
     'legal/licenses/Silkscreen-OFL-1.1.txt',
     new URL('./node_modules/@fontsource/silkscreen/LICENSE', import.meta.url),
   ],

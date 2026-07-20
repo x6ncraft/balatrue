@@ -3,7 +3,6 @@ const checks = [
   ['typecheck', ['bun', 'run', 'typecheck']],
   ['unit tests', ['bun', 'run', 'test']],
   ['lint', ['bun', 'run', 'lint']],
-  ['data', ['bun', 'run', 'data:validate']],
   ['build', ['bun', 'run', 'build']],
 ] as const
 

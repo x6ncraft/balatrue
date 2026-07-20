@@ -36,6 +36,7 @@ import {
   type Locale,
   type MessageKey,
 } from './i18n'
+import { buildJokerSearchIndex } from './search'
 import {
   STATS_STORAGE_KEY,
   parseStats,
@@ -115,6 +116,7 @@ const previousPracticeBagKeys = [
 ]
 const validJokerIds = new Set(jokers.map((joker) => joker.id))
 const jokersById = new Map(jokers.map((joker) => [joker.id, joker]))
+const jokerSearchIndex = buildJokerSearchIndex(jokers)
 
 function safeStorageGet(key: string): string | null {
   try {
@@ -511,7 +513,7 @@ export default function App() {
 
           <JokerCombobox
             key={resetToken}
-            jokers={jokers}
+            searchIndex={jokerSearchIndex}
             locale={locale}
             guessedIds={guessedIds}
             disabled={state.status !== 'playing'}
@@ -682,6 +684,7 @@ export default function App() {
         open={collectionOpen}
         locale={locale}
         jokers={jokers}
+        searchIndex={jokerSearchIndex}
         requiresConfirmation={requiresCollectionConfirmation}
         onClose={() => setCollectionOpen(false)}
         onConfirm={confirmCollection}

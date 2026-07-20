@@ -1,7 +1,6 @@
-import { pinyin } from 'pinyin-pro'
-
 import type { Joker } from '../data/types'
 import type { Locale } from '../i18n'
+import { JOKER_SEARCH_ALIASES } from './joker-search.generated'
 import { normalizeSearchText } from './normalize'
 
 export { normalizeSearchText } from './normalize'
@@ -23,6 +22,10 @@ interface JokerSearchEntry {
 export interface JokerSearchIndex {
   readonly entries: readonly JokerSearchEntry[]
 }
+
+export type JokerSearchAliases = Readonly<
+  Record<string, readonly [pinyin: string, initials: string]>
+>
 
 export interface JokerSearchOptions {
   readonly locale?: Locale
@@ -60,29 +63,26 @@ interface RankedEntry {
   readonly match: RankedMatch
 }
 
-function pinyinText(value: string, initials: boolean): string {
-  const result = pinyin(value, {
-    type: 'array',
-    toneType: 'none',
-    nonZh: 'consecutive',
-    ...(initials ? { pattern: 'first' as const } : {}),
-  })
-
-  return normalizeSearchText(result.join(''))
-}
-
-export function buildJokerSearchIndex(jokers: readonly Joker[]): JokerSearchIndex {
+export function buildJokerSearchIndex(
+  jokers: readonly Joker[],
+  aliasesById: JokerSearchAliases = JOKER_SEARCH_ALIASES,
+): JokerSearchIndex {
   return {
-    entries: jokers.map((joker, sourceIndex) => ({
-      joker,
-      sourceIndex,
-      values: [
-        { field: 'zhCN', normalized: normalizeSearchText(joker.name.zhCN) },
-        { field: 'en', normalized: normalizeSearchText(joker.name.en) },
-        { field: 'pinyin', normalized: pinyinText(joker.name.zhCN, false) },
-        { field: 'initials', normalized: pinyinText(joker.name.zhCN, true) },
-      ],
-    })),
+    entries: jokers.map((joker, sourceIndex) => {
+      const aliases = aliasesById[joker.id]
+      if (!aliases) throw new Error(`Missing search aliases for ${joker.id}`)
+
+      return {
+        joker,
+        sourceIndex,
+        values: [
+          { field: 'zhCN', normalized: normalizeSearchText(joker.name.zhCN) },
+          { field: 'en', normalized: normalizeSearchText(joker.name.en) },
+          { field: 'pinyin', normalized: normalizeSearchText(aliases[0]) },
+          { field: 'initials', normalized: normalizeSearchText(aliases[1]) },
+        ],
+      }
+    }),
   }
 }
 

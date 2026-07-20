@@ -1,8 +1,8 @@
 # Third-party notices
 
-This file records the third-party software and font packages distributed in Balatrue's production
-build. It does not grant any rights to Balatro names, artwork, game text, or other material owned by
-their respective rights holders.
+This file records third-party runtime software, fonts, and build tooling used by Balatrue. It does
+not grant any rights to Balatro names, artwork, game text, or other material owned by their
+respective rights holders.
 
 ## Runtime software
 
@@ -10,9 +10,13 @@ their respective rights holders.
 | ------------------------------- | ------- | -------------------------------------------------------- |
 | React, React DOM, and Scheduler | MIT     | Meta Platforms, Inc. and affiliates                      |
 | Lucide React                    | ISC     | Lucide Contributors; portions from Feather by Cole Bemis |
-| pinyin-pro                      | MIT     | zh-lx                                                    |
 
 Unmodified license texts are included in production builds under `legal/licenses/`.
+
+## Build-time tooling
+
+`pinyin-pro` is used under the MIT License to generate the checked-in pinyin search aliases. Its
+code is not included in the production JavaScript bundle.
 
 ## Font
 

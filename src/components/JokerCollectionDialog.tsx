@@ -18,7 +18,7 @@ import {
   type GameTiming,
 } from '../game'
 import { t, type Locale } from '../i18n'
-import { buildJokerSearchIndex, searchJokers } from '../search'
+import { searchJokers, type JokerSearchIndex } from '../search'
 import {
   dependencyFamilyLabel,
   dependenciesLabel,
@@ -33,6 +33,7 @@ export interface JokerCollectionDialogProps {
   open: boolean
   locale: Locale
   jokers: readonly Joker[]
+  searchIndex: JokerSearchIndex
   requiresConfirmation: boolean
   onClose: () => void
   onConfirm: () => void
@@ -42,6 +43,7 @@ export default function JokerCollectionDialog({
   open,
   locale,
   jokers,
+  searchIndex,
   requiresConfirmation,
   onClose,
   onConfirm,
@@ -58,7 +60,6 @@ export default function JokerCollectionDialog({
   const [dependencyFilter, setDependencyFilter] = useState<GameDependencyFamily | ''>('')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
-  const searchIndex = useMemo(() => buildJokerSearchIndex(jokers), [jokers])
   const matchingIds = useMemo<Set<string> | null>(() => {
     if (!query.trim()) return null
     return new Set(

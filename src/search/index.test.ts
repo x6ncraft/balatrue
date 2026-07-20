@@ -21,7 +21,16 @@ const fixtures = [
   joker('j_mr_bones', 'Mr. Bones', '骷髅先生'),
 ] as const
 
-const index = buildJokerSearchIndex(fixtures)
+const fixtureAliases = {
+  j_joker: ['xiaochou', 'xc'],
+  j_stencil: ['mojuxiaochou', 'mjxc'],
+  j_greedy: ['tanlanxiaochou', 'tlxc'],
+  j_blueprint: ['lantu', 'lt'],
+  j_brainstorm: ['tounaofengbao', 'tnfb'],
+  j_mr_bones: ['kulouxiansheng', 'klxs'],
+} as const
+
+const index = buildJokerSearchIndex(fixtures, fixtureAliases)
 
 describe('normalizeSearchText', () => {
   it('normalizes case, whitespace, punctuation, and compatibility characters', () => {
@@ -31,6 +40,10 @@ describe('normalizeSearchText', () => {
 })
 
 describe('searchJokers', () => {
+  it('fails closed when a Joker has no generated aliases', () => {
+    expect(() => buildJokerSearchIndex(fixtures, {})).toThrow('Missing search aliases for j_joker')
+  })
+
   it('finds official Chinese names', () => {
     expect(searchJokers(index, '蓝图').map(({ id }) => id)).toEqual(['j_blueprint'])
   })
@@ -67,10 +80,13 @@ describe('searchJokers', () => {
   })
 
   it('preserves source order when matches have the same rank', () => {
-    const stableIndex = buildJokerSearchIndex([
-      joker('j_zulu', 'Joker Zulu', '祖鲁小丑'),
-      joker('j_alpha', 'Joker Alpha', '阿尔法小丑'),
-    ])
+    const stableIndex = buildJokerSearchIndex(
+      [joker('j_zulu', 'Joker Zulu', '祖鲁小丑'), joker('j_alpha', 'Joker Alpha', '阿尔法小丑')],
+      {
+        j_zulu: ['zuluxiaochou', 'zlxc'],
+        j_alpha: ['aerfaxiaochou', 'aefxc'],
+      },
+    )
 
     expect(searchJokers(stableIndex, 'joker').map(({ id }) => id)).toEqual(['j_zulu', 'j_alpha'])
   })

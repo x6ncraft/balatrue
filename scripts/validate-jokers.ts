@@ -22,9 +22,12 @@ import {
 } from '../src/data/types'
 import { gameplayClueSignature, projectJokerTimings } from '../src/game/clue-model'
 import { hasDependencyValueLabel } from '../src/ui/labels'
+import { JOKER_SEARCH_ALIASES } from '../src/search/joker-search.generated'
+import { generateJokerSearchAliases } from './generate-joker-search'
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
+const searchAliasesFile = join(projectRoot, 'src/search/joker-search.generated.ts')
 const provenanceFile = join(projectRoot, 'data/jokers.provenance.generated.json')
 const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 const imageDirectory = join(projectRoot, 'public/jokers')
@@ -102,6 +105,9 @@ function isOneOf<T extends string>(value: unknown, allowed: readonly T[]): value
 if (!existsSync(generatedFile)) {
   throw new Error('[data] generated runtime data is missing')
 }
+if (!existsSync(searchAliasesFile)) {
+  throw new Error('[data] generated search aliases are missing')
+}
 if (!existsSync(provenanceFile)) {
   throw new Error('[data] public provenance data is missing')
 }
@@ -128,6 +134,16 @@ check(JOKER_DATA_META.source.zhCNLocalizationRevision > 0, 'Missing zh-CN locali
 check(Boolean(JOKER_DATA_META.source.enLocalizationVersion), 'Missing English localization version')
 check(Boolean(JOKER_DATA_META.source.zhCNLocalizationVersion), 'Missing zh-CN localization version')
 check(jokers.length === 150, `Expected 150 Jokers, found ${jokers.length}`)
+const expectedSearchAliases = generateJokerSearchAliases(jokers)
+const expectedSearchIds = new Set(jokers.map((joker) => joker.id))
+const actualSearchIds = Object.keys(JOKER_SEARCH_ALIASES)
+check(
+  actualSearchIds.length === jokers.length,
+  `Expected ${jokers.length} search aliases, found ${actualSearchIds.length}`,
+)
+for (const id of actualSearchIds) {
+  check(expectedSearchIds.has(id), `Unexpected search aliases for ${id}`)
+}
 check(provenance.schemaVersion === 1, 'Unsupported public provenance schema')
 check(
   provenance.rightsNotice.includes('excluded from the project MIT license'),
@@ -213,6 +229,20 @@ for (const [index, joker] of jokers.entries()) {
   check(joker.name.zhCN.trim().length > 0, `${label}: missing zh-CN name`)
   check(joker.name.en === joker.name.en.trim(), `${label}: English name has outer whitespace`)
   check(joker.name.zhCN === joker.name.zhCN.trim(), `${label}: zh-CN name has outer whitespace`)
+  const searchAliases = JOKER_SEARCH_ALIASES[joker.id]
+  const expectedAliases = expectedSearchAliases[joker.id]
+  check(Boolean(searchAliases), `${label}: missing search aliases`)
+  check(
+    Boolean(searchAliases?.[0] && searchAliases[1]),
+    `${label}: search aliases must be non-empty`,
+  )
+  check(
+    searchAliases !== undefined &&
+      expectedAliases !== undefined &&
+      searchAliases[0] === expectedAliases[0] &&
+      searchAliases[1] === expectedAliases[1],
+    `${label}: stale search aliases`,
+  )
   const provenanceRecord = provenanceById.get(joker.id)
   check(Boolean(provenanceRecord), `${label}: missing public provenance record`)
   if (provenanceRecord) {
@@ -487,6 +517,6 @@ if (errors.length > 0) {
   process.exitCode = 1
 } else {
   console.log(
-    `[data] valid: ${jokers.length} Jokers, 150 in-game names in EN/zh-CN, rarity 61/64/20/5, ${gameplaySignatures.size}/150 unique player clue signatures, ${actualImageFiles.length} verified images, 300 repository source fields verified`,
+    `[data] valid: ${jokers.length} Jokers, 150 in-game names in EN/zh-CN, ${actualSearchIds.length} search aliases, rarity 61/64/20/5, ${gameplaySignatures.size}/150 unique player clue signatures, ${actualImageFiles.length} verified images, 300 repository source fields verified`,
   )
 }

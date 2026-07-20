@@ -11,10 +11,10 @@ import { Search, X } from 'lucide-react'
 
 import type { Joker } from '../data/types'
 import { t, type Locale } from '../i18n'
-import { buildJokerSearchIndex, searchJokers } from '../search'
+import { searchJokers, type JokerSearchIndex } from '../search'
 
 export interface JokerComboboxProps {
-  readonly jokers: readonly Joker[]
+  readonly searchIndex: JokerSearchIndex
   readonly locale: Locale
   readonly guessedIds: readonly string[]
   readonly disabled?: boolean
@@ -25,7 +25,7 @@ export interface JokerComboboxProps {
 const LISTBOX_ID = 'joker-suggestions'
 
 export function JokerCombobox({
-  jokers,
+  searchIndex,
   locale,
   guessedIds,
   disabled = false,
@@ -45,7 +45,6 @@ export function JokerCombobox({
     [locale],
   )
   const inputValue = selected ? displayName(selected) : query
-  const searchIndex = useMemo(() => buildJokerSearchIndex(jokers), [jokers])
   const options = useMemo(
     () =>
       searchJokers(searchIndex, inputValue, {

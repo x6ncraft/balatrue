@@ -15,7 +15,6 @@ const requiredArtifacts = [
   'dist/legal/licenses/React-DOM-MIT.txt',
   'dist/legal/licenses/Scheduler-MIT.txt',
   'dist/legal/licenses/Lucide-ISC.txt',
-  'dist/legal/licenses/pinyin-pro-MIT.txt',
   'dist/legal/licenses/Silkscreen-OFL-1.1.txt',
 ] as const
 
