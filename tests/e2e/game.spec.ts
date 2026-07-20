@@ -171,7 +171,7 @@ test('reveals the answer after six wrong guesses', async ({ page }) => {
 test('switches the full interface to English and opens practice mode', async ({ page }) => {
   await page.getByRole('button', { name: '猜猜看' }).click()
   await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
-  await page.getByRole('button', { name: '选择界面语言' }).click()
+  await page.getByRole('button', { name: '选择界面语言：EN' }).click()
   await expect(page.getByRole('region', { name: "Guess today's Joker" })).toBeVisible()
   await expect(page.getByRole('combobox', { name: 'Choose a Joker' })).toBeVisible()
   await expect(page.getByText('Choose a Joker from the suggestions first.')).toBeVisible()

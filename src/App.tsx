@@ -473,7 +473,7 @@ export default function App() {
           <button
             className="language-button"
             type="button"
-            aria-label={t(locale, 'a11y.openLanguageMenu')}
+            aria-label={`${t(locale, 'a11y.openLanguageMenu')}${locale === 'zh-CN' ? '：EN' : ': 中文'}`}
             onClick={() => setLocale((current) => (current === 'zh-CN' ? 'en' : 'zh-CN'))}
           >
             <Languages size={18} aria-hidden="true" />

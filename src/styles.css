@@ -9,9 +9,9 @@
   --paper: #f7f1e5;
   --paper-strong: #fffaf0;
   --ink: #172421;
-  --muted: #697671;
+  --muted: #5f6d67;
   --line: #d5cebf;
-  --red: #d65345;
+  --red: #c74a3d;
   --red-deep: #9e342c;
   --blue: #3b8799;
   --gold: #d49b35;
@@ -230,7 +230,7 @@ img {
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #6b716d;
+  color: #5f6662;
   font-size: 13px;
   font-weight: 600;
 }
@@ -424,7 +424,7 @@ img {
 
 .deal-button:hover:not(:disabled),
 .primary-button:hover:not(:disabled) {
-  background: #e45e4f;
+  background: #bd4337;
   transform: translateY(-1px);
 }
 

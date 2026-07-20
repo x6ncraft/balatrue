@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Balatrue">
+  <rect width="64" height="64" rx="12" fill="#12322e" />
+  <path fill="#fff8e8" d="M11 13h22v7h6v10h-6v5h6v10h-6v6H11zm8 7v9h11v-9zm0 16v8h11v-8z" />
+  <path fill="#f26a58" d="M42 13h15v8h-4v30h-8V21h-3z" />
+</svg>
