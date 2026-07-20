@@ -20,7 +20,7 @@ const zhCN = {
   'game.endlessTitle': '无尽牌局',
   'game.dailyDescription': '每天六次机会，找出同一张小丑牌。',
   'game.endlessDescription': '不限次数开局，练熟每一张小丑牌。',
-  'game.instructions': '选一张小丑牌出牌，根据五项线索继续缩小范围。',
+  'game.instructions': '搜索想猜的牌，或从下方随手出一张；每次出牌都会给出五项线索。',
   'game.startingAttempts': '{count} 次机会',
   'game.remaining': '剩余：{count}',
   'game.progress': '第 {current} / {total} 次',
@@ -30,7 +30,7 @@ const zhCN = {
   'game.assisted': '图鉴辅助局 · 不计战绩',
 
   'search.label': '选择一张小丑牌',
-  'search.placeholder': '输入中文、英文或拼音',
+  'search.placeholder': '搜索小丑牌名…',
   'search.hint': '可输入游戏内中英文名、全拼或拼音首字母',
   'search.results': '候选小丑牌',
   'search.noResults': '没有找到这张牌',
@@ -39,7 +39,13 @@ const zhCN = {
   'search.clear': '清除选择',
   'search.keyboardHint': '用方向键选择，按回车确认',
 
+  'quickStart.title': '随手出一张作为第一猜',
+  'quickStart.shuffle': '换一组',
+  'quickStart.shuffleLabel': '换一组随机牌',
+  'quickStart.play': '用{name}作为第一猜',
+
   'action.guess': '猜猜看',
+  'action.chooseJoker': '先选牌',
   'action.submitGuess': '打出这张牌',
   'action.newGame': '再开一局',
   'action.nextGame': '下一局',
@@ -156,12 +162,11 @@ const zhCN = {
   'settings.soundOn': '开启',
   'settings.soundOff': '关闭',
 
-  'state.empty': '从上方选一张小丑牌开始',
   'state.savedLocally': '进度已保存在这台设备上',
   'state.offline': '当前离线，仍可继续这局。',
 
   'error.generic': '出了点问题，请再试一次。',
-  'error.invalidGuess': '请先选择一张候选牌。',
+  'error.invalidGuess': '请从联想结果中选择一张牌。',
   'error.duplicateGuess': '这张牌已经出过了。',
   'error.imageUnavailable': '卡图暂不可用',
   'error.storageUnavailable': '无法保存进度，本次牌局仍可继续。',
@@ -197,7 +202,7 @@ const en = {
   'game.endlessTitle': 'Endless',
   'game.dailyDescription': 'Six guesses. The same hidden Joker for everyone, every day.',
   'game.endlessDescription': 'Start as many rounds as you like and learn every Joker.',
-  'game.instructions': 'Play a Joker, read the five clues, and narrow down the answer.',
+  'game.instructions': 'Search for a Joker or pick one below. Each guess reveals five clues.',
   'game.startingAttempts': '{count} guesses',
   'game.remaining': 'Remaining: {count}',
   'game.progress': 'Guess {current} of {total}',
@@ -207,7 +212,7 @@ const en = {
   'game.assisted': 'Collection-assisted · not scored',
 
   'search.label': 'Choose a Joker',
-  'search.placeholder': 'Search by name or pinyin',
+  'search.placeholder': 'Search for a Joker…',
   'search.hint': 'Search the in-game English or Chinese name, full pinyin, or initials',
   'search.results': 'Joker suggestions',
   'search.noResults': 'No Joker found',
@@ -216,7 +221,13 @@ const en = {
   'search.clear': 'Clear selection',
   'search.keyboardHint': 'Use the arrow keys to choose, then press Enter',
 
+  'quickStart.title': 'Pick your first guess',
+  'quickStart.shuffle': 'Shuffle',
+  'quickStart.shuffleLabel': 'Shuffle the random Jokers',
+  'quickStart.play': 'Use {name} as the first guess',
+
   'action.guess': 'Guess',
+  'action.chooseJoker': 'Choose first',
   'action.submitGuess': 'Play this Joker',
   'action.newGame': 'New round',
   'action.nextGame': 'Next round',
@@ -341,7 +352,6 @@ const en = {
   'settings.soundOn': 'On',
   'settings.soundOff': 'Off',
 
-  'state.empty': 'Choose a Joker above to begin',
   'state.savedLocally': 'Progress is saved on this device',
   'state.offline': 'You are offline, but this round is still playable.',
 

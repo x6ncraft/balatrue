@@ -1,8 +1,16 @@
 import type { Joker } from '../data/types'
 import type { GuessComparison } from '../game/types'
 import { t, type Locale } from '../i18n'
-import { dependenciesLabel, effectLabel, listLabel, rarityLabel, timingLabel } from '../ui/labels'
+import {
+  compactDependenciesLabel,
+  dependenciesLabel,
+  effectLabel,
+  listLabel,
+  rarityLabel,
+  timingLabel,
+} from '../ui/labels'
 import FeedbackCell from './FeedbackCell'
+import JokerImage from './JokerImage'
 
 export interface GuessRowProps {
   readonly joker: Joker
@@ -21,14 +29,16 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       : `$${comparison.acquisition.shopPrice ?? '—'}`
   const effectsLabel = listLabel(comparison.effects.values, effectLabel, locale)
   const timingsLabel = listLabel(comparison.timings.values, timingLabel, locale)
-  const dependencySummary = dependenciesLabel(comparison.dependencies.values, locale)
+  const fullDependencySummary = dependenciesLabel(comparison.dependencies.values, locale)
+  const dependencySummary = compactDependenciesLabel(comparison.dependencies.values, locale)
 
   return (
     <article className="guess-row" aria-label={primaryName}>
       <div className="joker-cell">
-        <img
-          src={joker.imagePath}
+        <JokerImage
+          joker={joker}
           alt={t(locale, 'a11y.jokerImage', { name: primaryName })}
+          fallbackLabel={t(locale, 'error.imageUnavailable')}
           width="44"
           height="60"
         />
@@ -70,6 +80,7 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       <FeedbackCell
         label={t(locale, 'clue.dependency')}
         value={dependencySummary}
+        accessibleValue={fullDependencySummary}
         result={comparison.dependencies.result}
         cellIndex={4}
         locale={locale}

@@ -6,6 +6,7 @@ import { t, type Locale } from '../i18n'
 export interface FeedbackCellProps {
   readonly label: string
   readonly value: string
+  readonly accessibleValue?: string
   readonly result: MatchResult
   readonly direction?: Direction | null
   readonly cellIndex: number
@@ -15,6 +16,7 @@ export interface FeedbackCellProps {
 export function FeedbackCell({
   label,
   value,
+  accessibleValue = value,
   result,
   direction,
   cellIndex,
@@ -28,7 +30,7 @@ export function FeedbackCell({
   const separator = locale === 'zh-CN' ? '，' : ', '
   const labelSeparator = locale === 'zh-CN' ? '：' : ': '
   const accessibleLabel = [
-    `${label}${labelSeparator}${value}`,
+    `${label}${labelSeparator}${accessibleValue}`,
     statusText,
     ...(direction ? [directionText] : []),
   ].join(separator)
@@ -38,7 +40,9 @@ export function FeedbackCell({
     <div
       className={`feedback-cell feedback-cell--${result}`}
       style={style}
+      role="group"
       aria-label={accessibleLabel}
+      title={accessibleValue !== value ? `${label}${labelSeparator}${accessibleValue}` : undefined}
     >
       <span className="feedback-cell__mobile-label" aria-hidden="true">
         {label}

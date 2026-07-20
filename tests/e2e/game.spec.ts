@@ -12,6 +12,15 @@ import { buildJokerSearchIndex, searchJokers } from '../../src/search'
 
 const browserErrors = new WeakMap<Page, string[]>()
 
+function discardExpectedImageFailure(page: Page): void {
+  const recordedErrors = browserErrors.get(page)
+  if (!recordedErrors) return
+  browserErrors.set(
+    page,
+    recordedErrors.filter((message) => !message.includes('ERR_FAILED')),
+  )
+}
+
 test.beforeEach(async ({ page }) => {
   const errors: string[] = []
   browserErrors.set(page, errors)
@@ -28,14 +37,24 @@ test.afterEach(async ({ page }) => {
 
 test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
   await expect(page.getByRole('region', { name: '猜猜今天是哪张小丑牌' })).toBeVisible()
-  await expect(page.getByText('选一张小丑牌出牌，根据五项线索继续缩小范围。')).toBeVisible()
+  await expect(
+    page.getByText('搜索想猜的牌，或从下方随手出一张；每次出牌都会给出五项线索。'),
+  ).toBeVisible()
   await expect(page.getByText('6 次机会')).toBeVisible()
 
   const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
-  await page.getByRole('button', { name: '猜猜看' }).click()
-  await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
+  const chooseFirst = page.getByRole('button', { name: '先选牌' })
+  const quickStart = page.getByRole('region', { name: '随手出一张作为第一猜' })
+  await expect(search).toHaveAttribute('placeholder', '搜索小丑牌名…')
+  await expect(search).not.toBeFocused()
+  await expect(chooseFirst).toHaveAttribute('data-ready', 'false')
+  await expect(quickStart.getByRole('button', { name: /作为第一猜$/ })).toHaveCount(5)
+
+  await chooseFirst.click()
+  await expect(search).toBeFocused()
 
   await search.fill('joker')
+  await expect(quickStart).toBeHidden()
   const expectedBroadMatches = searchJokers(buildJokerSearchIndex(jokers), 'joker').length
   expect(expectedBroadMatches).toBeGreaterThan(8)
   await expect(page.getByRole('option')).toHaveCount(expectedBroadMatches)
@@ -52,6 +71,8 @@ test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
   await expect(page.getByRole('option', { name: '蓝图 Blueprint' })).toBeVisible()
   await page.getByRole('option', { name: '蓝图 Blueprint' }).click()
   await expect(page.getByRole('button', { name: '清除选择' })).toBeVisible()
+  await expect(page.getByRole('status')).toContainText('已选择：蓝图')
+  await expect(page.getByRole('button', { name: '猜猜看' })).toHaveAttribute('data-ready', 'true')
   await search.press('Enter')
 
   await expect(page.getByRole('article', { name: '蓝图' })).toBeVisible()
@@ -62,6 +83,105 @@ test('starts clearly and supports pinyin autocomplete', async ({ page }) => {
   await search.fill('lantu')
   const repeated = page.getByRole('option').filter({ hasText: '蓝图' })
   await expect(repeated).toHaveAttribute('aria-disabled', 'true')
+})
+
+test('rerolls all five quick choices and starts with one tap', async ({ page }) => {
+  const quickStart = page.getByRole('region', { name: '随手出一张作为第一猜' })
+  const quickCards = quickStart.getByRole('button', { name: /作为第一猜$/ })
+  const before = await quickCards.evaluateAll((buttons) =>
+    buttons.map((button) => button.getAttribute('aria-label')),
+  )
+
+  await quickStart.getByRole('button', { name: '换一组随机牌' }).click()
+
+  await expect
+    .poll(() =>
+      quickCards.evaluateAll((buttons) =>
+        buttons.map((button) => button.getAttribute('aria-label')),
+      ),
+    )
+    .not.toEqual(before)
+  const after = await quickCards.evaluateAll((buttons) =>
+    buttons.map((button) => button.getAttribute('aria-label')),
+  )
+  expect(after).toHaveLength(5)
+  expect(after.every((label) => !before.includes(label))).toBe(true)
+
+  await quickCards.first().click()
+  await expect(quickStart).toBeHidden()
+  await expect(page.locator('.guess-row')).toHaveCount(1)
+})
+
+test('retries a transient Joker image failure with a fresh URL', async ({ page }) => {
+  let requestCount = 0
+  const requestTimes: number[] = []
+  await page.route('**/jokers/j_cloud_9.png*', async (route) => {
+    requestCount += 1
+    requestTimes.push(Date.now())
+    if (requestCount === 1) {
+      await route.abort('failed')
+      return
+    }
+    await route.continue()
+  })
+
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await search.fill('9霄云外')
+  const cloudNineImage = page
+    .getByRole('option', { name: '9霄云外 Cloud 9' })
+    .locator('.suggestion__image')
+  await expect(cloudNineImage).toHaveAttribute('src', /retry=1/)
+  await expect
+    .poll(() =>
+      cloudNineImage.evaluate((image) => image instanceof HTMLImageElement && image.naturalWidth),
+    )
+    .toBeGreaterThan(0)
+  expect(requestCount).toBe(2)
+  expect((requestTimes[1] ?? 0) - (requestTimes[0] ?? 0)).toBeGreaterThanOrEqual(300)
+  discardExpectedImageFailure(page)
+})
+
+test('uses a quiet placeholder after two failed decorative image requests', async ({ page }) => {
+  let requestCount = 0
+  await page.route('**/jokers/j_cloud_9.png*', async (route) => {
+    requestCount += 1
+    await route.abort('failed')
+  })
+
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await search.fill('9霄云外')
+  const cloudNineOption = page.getByRole('option', { name: '9霄云外 Cloud 9' })
+  const fallback = cloudNineOption.locator('.joker-image--unavailable')
+  await expect(fallback).toHaveAttribute('aria-hidden', 'true')
+  await expect(cloudNineOption.locator('[role="img"]')).toHaveCount(0)
+  await page.waitForTimeout(600)
+  expect(requestCount).toBe(2)
+  discardExpectedImageFailure(page)
+})
+
+test('keeps a complex dependency readable without losing its full meaning', async ({ page }) => {
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await search.fill('马戏团长')
+  await page.getByRole('option', { name: '马戏团长 Showman' }).click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
+
+  const dependency = page
+    .getByRole('article', { name: '马戏团长' })
+    .locator('.feedback-cell')
+    .nth(4)
+  await expect(dependency).toContainText('其他小丑 · 三类消耗牌')
+  await expect(dependency).toHaveAttribute(
+    'aria-label',
+    /小丑\/栏位：其他小丑；消耗牌：星球牌、幻灵牌、塔罗牌/,
+  )
+  await expect(
+    page.getByRole('group', {
+      name: /依赖条件：小丑\/栏位：其他小丑；消耗牌：星球牌、幻灵牌、塔罗牌/,
+    }),
+  ).toBeVisible()
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+    .toBe(true)
 })
 
 test('migrates the previous clue model without losing the active daily game', async ({ page }) => {
@@ -169,12 +289,18 @@ test('reveals the answer after six wrong guesses', async ({ page }) => {
 })
 
 test('switches the full interface to English and opens practice mode', async ({ page }) => {
-  await page.getByRole('button', { name: '猜猜看' }).click()
-  await expect(page.getByText('请先选择一张候选牌。')).toBeVisible()
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await search.fill('not-a-joker')
+  await page.getByRole('button', { name: '先选牌' }).click()
+  await expect(page.getByText('请从联想结果中选择一张牌。')).toBeVisible()
   await page.getByRole('button', { name: '选择界面语言：EN' }).click()
   await expect(page.getByRole('region', { name: "Guess today's Joker" })).toBeVisible()
   await expect(page.getByRole('combobox', { name: 'Choose a Joker' })).toBeVisible()
   await expect(page.getByText('Choose a Joker from the suggestions first.')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Choose first' })).toHaveAttribute(
+    'data-ready',
+    'false',
+  )
 
   await page.getByRole('button', { name: 'Endless' }).click()
   await expect(page.getByRole('region', { name: 'Endless' })).toBeVisible()
@@ -615,6 +741,24 @@ test('keeps touch form controls zoom-safe in phone landscape', async ({ page }, 
     .toBe(true)
 })
 
+test('keeps the mobile brand clear of the action buttons', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium')
+
+  for (const width of [390, 375, 360, 340, 320]) {
+    await page.setViewportSize({ width, height: 568 })
+    const [brandBox, actionsBox] = await Promise.all([
+      page.locator('.brand').boundingBox(),
+      page.locator('.top-actions').boundingBox(),
+    ])
+    expect(brandBox, `brand box at ${width}px`).not.toBeNull()
+    expect(actionsBox, `action box at ${width}px`).not.toBeNull()
+    expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0) + 4).toBeLessThanOrEqual(actionsBox?.x ?? 0)
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+      .toBe(true)
+  }
+})
+
 test('keeps the 320px layout readable without zoom or overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium')
   await page.setViewportSize({ width: 320, height: 568 })
@@ -631,7 +775,7 @@ test('keeps the 320px layout readable without zoom or overflow', async ({ page }
     page.locator('.brand').boundingBox(),
     page.locator('.top-actions').boundingBox(),
     search.boundingBox(),
-    page.getByRole('button', { name: '猜猜看' }).boundingBox(),
+    page.getByRole('button', { name: '先选牌' }).boundingBox(),
   ])
   expect(brandBox).not.toBeNull()
   expect(actionsBox).not.toBeNull()
@@ -643,7 +787,18 @@ test('keeps the 320px layout readable without zoom or overflow', async ({ page }
   expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0) + 4).toBeLessThanOrEqual(actionsBox?.x ?? 0)
   expect(Math.abs((inputBox?.y ?? 0) - (guessBox?.y ?? 0))).toBeLessThan(2)
   await expect(page.getByText('6 次机会')).toBeVisible()
-  await expect(page.locator('.empty-board')).toBeInViewport()
+  const quickStart = page.getByRole('region', { name: '随手出一张作为第一猜' })
+  const quickCards = quickStart.getByRole('button', { name: /作为第一猜$/ })
+  await expect(quickStart).toBeInViewport()
+  await expect(quickCards).toHaveCount(5)
+  const quickCardBoxes = await quickCards.evaluateAll((cards) =>
+    cards.map((card) => {
+      const box = card.getBoundingClientRect()
+      return { x: box.x, y: box.y, width: box.width, height: box.height }
+    }),
+  )
+  expect(quickCardBoxes.every((box) => Math.abs(box.y - quickCardBoxes[0]!.y) < 2)).toBe(true)
+  expect(quickCardBoxes.every((box) => box.width >= 44 && box.height >= 44)).toBe(true)
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true)

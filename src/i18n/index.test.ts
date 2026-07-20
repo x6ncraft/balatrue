@@ -15,12 +15,14 @@ describe('translations', () => {
   it('uses natural Chinese copy as the default language', () => {
     expect(DEFAULT_LOCALE).toBe('zh-CN')
     expect(t('zh-CN', 'brand.tagline')).toBe('猜猜今天是哪张小丑牌')
-    expect(t('zh-CN', 'search.placeholder')).toBe('输入中文、英文或拼音')
+    expect(t('zh-CN', 'search.placeholder')).toBe('搜索小丑牌名…')
+    expect(t('zh-CN', 'quickStart.title')).toBe('随手出一张作为第一猜')
   })
 
   it('returns the English copy for the same message key', () => {
     expect(t('en', 'brand.tagline')).toBe("Guess today's Joker")
-    expect(t('en', 'search.placeholder')).toBe('Search by name or pinyin')
+    expect(t('en', 'search.placeholder')).toBe('Search for a Joker…')
+    expect(t('en', 'quickStart.title')).toBe('Pick your first guess')
   })
 
   it('interpolates named values without hiding missing parameters', () => {

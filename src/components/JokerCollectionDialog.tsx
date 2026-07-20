@@ -28,6 +28,7 @@ import {
   timingLabel,
 } from '../ui/labels'
 import { jokerPriceLabel } from '../ui/joker-facts'
+import JokerImage from './JokerImage'
 
 export interface JokerCollectionDialogProps {
   open: boolean
@@ -343,9 +344,10 @@ export default function JokerCollectionDialog({
                     aria-label={primaryName(joker)}
                   >
                     <div className="collection-card__identity">
-                      <img
-                        src={joker.imagePath}
+                      <JokerImage
+                        joker={joker}
                         alt={t(locale, 'a11y.jokerImage', { name: primaryName(joker) })}
+                        fallbackLabel={t(locale, 'error.imageUnavailable')}
                         width={52}
                         height={70}
                         loading="lazy"

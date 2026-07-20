@@ -165,6 +165,7 @@ const contextualAnyLabels: Record<string, [string, string]> = {
 }
 
 const allSuitsLabel: readonly [string, string] = ['四种花色', 'All four suits']
+const allConsumablesLabel: readonly [string, string] = ['三类消耗牌', 'All 3 consumables']
 
 function localized(pair: readonly [string, string], locale: Locale): string {
   return locale === 'zh-CN' ? pair[0] : pair[1]
@@ -240,9 +241,22 @@ export function gameDependencyDetailLabel(value: string, locale: Locale): string
   return dependencyValueLabel(sourceValue, locale)
 }
 
-function compactDependencyValues(values: readonly string[], locale: Locale): string[] {
+function compactDependencyValues(
+  values: readonly string[],
+  locale: Locale,
+  collapseConsumables = false,
+): string[] {
   const uniqueValues = [...new Set(values)]
   const suitValues = ['suit:clubs', 'suit:diamonds', 'suit:hearts', 'suit:spades']
+  const consumableValues = ['consumable:planet', 'consumable:spectral', 'consumable:tarot']
+  if (collapseConsumables && consumableValues.every((value) => uniqueValues.includes(value))) {
+    return [
+      localized(allConsumablesLabel, locale),
+      ...uniqueValues
+        .filter((value) => !consumableValues.includes(value))
+        .map((value) => gameDependencyDetailLabel(value, locale)),
+    ]
+  }
   if (suitValues.every((value) => uniqueValues.includes(value))) {
     return [
       localized(allSuitsLabel, locale),
@@ -277,6 +291,24 @@ export function dependenciesLabel(values: readonly GameDependency[], locale: Loc
     const detailList = details.join(locale === 'zh-CN' ? '、' : ', ')
     return [locale === 'zh-CN' ? `${familyLabel}：${detailList}` : `${familyLabel}: ${detailList}`]
   }).join(locale === 'zh-CN' ? '；' : '; ')
+}
+
+export function compactDependenciesLabel(
+  values: readonly GameDependency[],
+  locale: Locale,
+): string {
+  return GAME_DEPENDENCY_FAMILIES.flatMap((family) => {
+    const matches = values.filter((value) => value.family === family)
+    if (matches.length === 0) return []
+    if (family === 'none') return [dependencyFamilyLabel(family, locale)]
+
+    const details = compactDependencyValues(
+      matches.flatMap((value) => (value.value ? [value.value] : [])),
+      locale,
+      true,
+    )
+    return details.length > 0 ? [details.join(locale === 'zh-CN' ? '／' : ' / ')] : []
+  }).join(' · ')
 }
 
 export function listLabel(

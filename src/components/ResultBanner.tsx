@@ -4,6 +4,7 @@ import type { Joker } from '../data/types'
 import type { GameState } from '../game/types'
 import { t, type Locale } from '../i18n'
 import { jokerFacts } from '../ui/joker-facts'
+import JokerImage from './JokerImage'
 
 export interface ResultBannerProps {
   readonly state: GameState
@@ -29,9 +30,10 @@ export function ResultBanner({
 
   return (
     <section className={`result-banner${won ? ' result-banner--won' : ''}`}>
-      <img
-        src={answer.imagePath}
+      <JokerImage
+        joker={answer}
         alt={t(locale, 'a11y.jokerImage', { name: primaryName })}
+        fallbackLabel={t(locale, 'error.imageUnavailable')}
         width="70"
         height="94"
       />
@@ -56,7 +58,12 @@ export function ResultBanner({
         {facts.map((fact) => (
           <div key={fact.key}>
             <dt>{fact.label}</dt>
-            <dd>{fact.value}</dd>
+            <dd
+              aria-label={fact.accessibleValue}
+              title={fact.accessibleValue !== fact.value ? fact.accessibleValue : undefined}
+            >
+              {fact.value}
+            </dd>
           </div>
         ))}
       </dl>

@@ -22,6 +22,8 @@ license; see the rights section below. No authorization from the Balatro rights 
 
 - **Daily Joker:** one answer per Beijing calendar day, six guesses, and restorable local progress.
 - **Endless:** a local shuffle bag cycles through all 150 Jokers without repeating within a round.
+- **Quick first guess:** type any Joker you have in mind, or play one of five random cards with a
+  single tap; reroll all five whenever none feels right.
 - **Five clues:** rarity, price or acquisition, main effect, trigger timing, and dependency.
 - **Search:** in-game English and Simplified Chinese names, full pinyin, and pinyin initials; every
   match remains available in a scrollable list.

@@ -557,48 +557,41 @@ export default function App() {
           ) : null}
         </header>
 
-        <div className="guess-area">
-          {state.status !== 'playing' ? (
-            <ResultBanner
-              state={state}
-              answer={answer}
-              locale={locale}
-              copied={copied}
-              onShare={() => void copyResult()}
-              onNext={startNext}
-            />
-          ) : null}
+        {state.status !== 'playing' || guessRows.length > 0 ? (
+          <div className="guess-area">
+            {state.status !== 'playing' ? (
+              <ResultBanner
+                state={state}
+                answer={answer}
+                locale={locale}
+                copied={copied}
+                onShare={() => void copyResult()}
+                onNext={startNext}
+              />
+            ) : null}
 
-          {guessRows.length === 0 ? (
-            <div className="empty-board">
-              <div>
-                <span className="empty-board__mark" aria-hidden="true">
-                  ?
-                </span>
-                <p>{t(locale, 'state.empty')}</p>
-              </div>
-            </div>
-          ) : (
-            <section className="guess-table" aria-label={t(locale, 'a11y.guessHistory')}>
-              <div className="guess-header" aria-hidden="true">
-                <span>{t(locale, 'clue.joker')}</span>
-                <span>{t(locale, 'clue.rarity')}</span>
-                <span>{t(locale, 'clue.price')}</span>
-                <span>{t(locale, 'clue.effect')}</span>
-                <span>{t(locale, 'clue.timing')}</span>
-                <span>{t(locale, 'clue.dependency')}</span>
-              </div>
-              {guessRows.map((row) => (
-                <GuessRow
-                  key={row.joker.id}
-                  joker={row.joker}
-                  comparison={row.comparison}
-                  locale={locale}
-                />
-              ))}
-            </section>
-          )}
-        </div>
+            {guessRows.length > 0 ? (
+              <section className="guess-table" aria-label={t(locale, 'a11y.guessHistory')}>
+                <div className="guess-header" aria-hidden="true">
+                  <span>{t(locale, 'clue.joker')}</span>
+                  <span>{t(locale, 'clue.rarity')}</span>
+                  <span>{t(locale, 'clue.price')}</span>
+                  <span>{t(locale, 'clue.effect')}</span>
+                  <span>{t(locale, 'clue.timing')}</span>
+                  <span>{t(locale, 'clue.dependency')}</span>
+                </div>
+                {guessRows.map((row) => (
+                  <GuessRow
+                    key={row.joker.id}
+                    joker={row.joker}
+                    comparison={row.comparison}
+                    locale={locale}
+                  />
+                ))}
+              </section>
+            ) : null}
+          </div>
+        ) : null}
       </section>
 
       <footer className="site-footer">

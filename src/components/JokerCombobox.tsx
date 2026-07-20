@@ -12,6 +12,9 @@ import { Search, X } from 'lucide-react'
 import type { Joker } from '../data/types'
 import { t, type Locale } from '../i18n'
 import { searchJokers, type JokerSearchIndex } from '../search'
+import { pickQuickStartJokers } from '../ui/quick-start'
+import JokerImage from './JokerImage'
+import QuickStartChoices from './QuickStartChoices'
 
 export interface JokerComboboxProps {
   readonly searchIndex: JokerSearchIndex
@@ -39,6 +42,8 @@ export function JokerCombobox({
   const [selected, setSelected] = useState<Joker | null>(null)
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
+  const jokerPool = useMemo(() => searchIndex.entries.map((entry) => entry.joker), [searchIndex])
+  const [quickChoices, setQuickChoices] = useState(() => pickQuickStartJokers(jokerPool))
 
   const displayName = useCallback(
     (joker: Joker): string => (locale === 'zh-CN' ? joker.name.zhCN : joker.name.en),
@@ -54,6 +59,9 @@ export function JokerCombobox({
     [guessedIds, inputValue, locale, searchIndex],
   )
   const activeOption = options[activeIndex]
+  const readyToSubmit = selected !== null && !disabled && !guessedIds.includes(selected.id)
+  const showQuickStart =
+    !disabled && guessedIds.length === 0 && selected === null && query.trim().length === 0
 
   const updateActiveIndex = useCallback((nextIndex: number): void => {
     activeIndexRef.current = nextIndex
@@ -62,7 +70,7 @@ export function JokerCombobox({
 
   const focusInputAfterRender = useCallback((): void => {
     window.setTimeout(() => inputRef.current?.focus(), 0)
-  }, [])
+  }, [inputRef])
 
   const scrollOptionIntoView = useCallback((id: string): void => {
     window.setTimeout(
@@ -137,7 +145,34 @@ export function JokerCombobox({
     }
     onSubmit(selected)
     clear(false)
-  }, [clear, disabled, guessedIds, onInvalid, onSubmit, selected])
+  }, [clear, disabled, guessedIds, inputRef, onInvalid, onSubmit, selected])
+
+  const handleAction = useCallback((): void => {
+    if (!selected) {
+      if (query.trim()) onInvalid()
+      inputRef.current?.focus()
+      return
+    }
+    submit()
+  }, [inputRef, onInvalid, query, selected, submit])
+
+  const chooseQuickStart = useCallback(
+    (joker: Joker): void => {
+      if (disabled) return
+      onSubmit(joker)
+      clear(false)
+    },
+    [clear, disabled, onSubmit],
+  )
+
+  const shuffleQuickStart = useCallback((): void => {
+    setQuickChoices((current) =>
+      pickQuickStartJokers(
+        jokerPool,
+        current.map((joker) => joker.id),
+      ),
+    )
+  }, [jokerPool])
 
   function handleInput(event: ChangeEvent<HTMLInputElement>): void {
     const nextQuery = event.currentTarget.value
@@ -203,101 +238,126 @@ export function JokerCombobox({
   }, [options, scrollOptionIntoView, updateActiveIndex])
 
   return (
-    <div className="play-area">
-      <div className="combobox">
-        <label className="sr-only" htmlFor="joker-search">
-          {t(locale, 'search.label')}
-        </label>
-        <div className="search-field">
-          <Search size={19} aria-hidden="true" />
-          <input
-            id="joker-search"
-            ref={inputRef}
-            value={inputValue}
-            type="text"
-            role="combobox"
-            autoComplete="off"
-            spellCheck={false}
-            placeholder={t(locale, 'search.placeholder')}
-            disabled={disabled}
-            aria-expanded={open}
-            aria-controls={LISTBOX_ID}
-            aria-activedescendant={
-              open && activeOption ? `joker-option-${activeOption.id}` : undefined
-            }
-            aria-autocomplete="list"
-            onChange={handleInput}
-            onFocus={() => setOpen(inputValue.trim().length > 0)}
-            onBlur={() => setOpen(false)}
-            onKeyDown={handleKeyDown}
-            onCompositionStart={() => {
-              isComposingRef.current = true
-            }}
-            onCompositionEnd={() => {
-              isComposingRef.current = false
-            }}
-          />
-          {inputValue ? (
-            <button
-              className="search-clear"
-              type="button"
-              aria-label={t(locale, 'search.clear')}
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => clear()}
+    <div className="entry-area">
+      <div className="play-area">
+        <div className="combobox">
+          <label className="sr-only" htmlFor="joker-search">
+            {t(locale, 'search.label')}
+          </label>
+          <div className="search-field">
+            <Search size={19} aria-hidden="true" />
+            <input
+              id="joker-search"
+              ref={inputRef}
+              value={inputValue}
+              type="text"
+              role="combobox"
+              autoComplete="off"
+              spellCheck={false}
+              placeholder={t(locale, 'search.placeholder')}
+              disabled={disabled}
+              aria-expanded={open}
+              aria-controls={LISTBOX_ID}
+              aria-activedescendant={
+                open && activeOption ? `joker-option-${activeOption.id}` : undefined
+              }
+              aria-autocomplete="list"
+              aria-describedby="joker-search-hint"
+              onChange={handleInput}
+              onFocus={() => setOpen(inputValue.trim().length > 0)}
+              onBlur={() => setOpen(false)}
+              onKeyDown={handleKeyDown}
+              onCompositionStart={() => {
+                isComposingRef.current = true
+              }}
+              onCompositionEnd={() => {
+                isComposingRef.current = false
+              }}
+            />
+            <span id="joker-search-hint" className="sr-only">
+              {t(locale, 'search.hint')}
+            </span>
+            <span className="sr-only" role="status" aria-live="polite">
+              {selected ? t(locale, 'search.selected', { name: displayName(selected) }) : ''}
+            </span>
+            {inputValue ? (
+              <button
+                className="search-clear"
+                type="button"
+                aria-label={t(locale, 'search.clear')}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => clear()}
+              >
+                <X size={17} aria-hidden="true" />
+              </button>
+            ) : null}
+          </div>
+
+          {open ? (
+            <ul
+              id={LISTBOX_ID}
+              className="suggestions"
+              role="listbox"
+              aria-label={t(locale, 'search.results')}
             >
-              <X size={17} aria-hidden="true" />
-            </button>
+              {options.length === 0 ? (
+                <li className="empty-suggestion">{t(locale, 'search.noResults')}</li>
+              ) : null}
+              {options.map((option, index) => (
+                <li
+                  id={`joker-option-${option.id}`}
+                  key={option.id}
+                  className="suggestion"
+                  role="option"
+                  aria-selected={index === activeIndex}
+                  aria-disabled={option.disabled}
+                  onMouseEnter={() => updateActiveIndex(index)}
+                  onMouseDown={(event) => {
+                    event.preventDefault()
+                    choose(option.joker, option.disabled)
+                  }}
+                >
+                  <JokerImage
+                    className="suggestion__image"
+                    joker={option.joker}
+                    alt=""
+                    fallbackLabel={t(locale, 'error.imageUnavailable')}
+                    width="30"
+                    height="40"
+                    loading="lazy"
+                  />
+                  <span className="suggestion__name">
+                    <strong>{option.primaryName}</strong>
+                    <small>{option.secondaryName}</small>
+                  </span>
+                  {option.disabled ? (
+                    <span className="suggestion__status">{t(locale, 'search.alreadyGuessed')}</span>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
           ) : null}
         </div>
 
-        {open ? (
-          <ul
-            id={LISTBOX_ID}
-            className="suggestions"
-            role="listbox"
-            aria-label={t(locale, 'search.results')}
-          >
-            {options.length === 0 ? (
-              <li className="empty-suggestion">{t(locale, 'search.noResults')}</li>
-            ) : null}
-            {options.map((option, index) => (
-              <li
-                id={`joker-option-${option.id}`}
-                key={option.id}
-                className="suggestion"
-                role="option"
-                aria-selected={index === activeIndex}
-                aria-disabled={option.disabled}
-                onMouseEnter={() => updateActiveIndex(index)}
-                onMouseDown={(event) => {
-                  event.preventDefault()
-                  choose(option.joker, option.disabled)
-                }}
-              >
-                <img
-                  className="suggestion__image"
-                  src={option.joker.imagePath}
-                  alt=""
-                  width="30"
-                  height="40"
-                  loading="lazy"
-                />
-                <span className="suggestion__name">
-                  <strong>{option.primaryName}</strong>
-                  <small>{option.secondaryName}</small>
-                </span>
-                {option.disabled ? (
-                  <span className="suggestion__status">{t(locale, 'search.alreadyGuessed')}</span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <button
+          className="deal-button"
+          type="button"
+          disabled={disabled}
+          data-ready={readyToSubmit}
+          onClick={handleAction}
+        >
+          {t(locale, disabled || readyToSubmit ? 'action.guess' : 'action.chooseJoker')}
+        </button>
       </div>
 
-      <button className="deal-button" type="button" disabled={disabled} onClick={submit}>
-        {t(locale, 'action.guess')}
-      </button>
+      {showQuickStart ? (
+        <QuickStartChoices
+          jokers={quickChoices}
+          locale={locale}
+          onChoose={chooseQuickStart}
+          onShuffle={shuffleQuickStart}
+        />
+      ) : null}
     </div>
   )
 }
