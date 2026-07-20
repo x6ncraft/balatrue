@@ -29,7 +29,7 @@ src/main.tsx
   ├─ src/search/joker-search.generated.ts          从简中名称生成的拼音检索词，随仓库提交
   ├─ data/jokers.provenance.generated.json         逐卡公开来源记录，随仓库提交
   ├─ public/jokers/*.png                           用于牌面识别的低分辨率卡图
-  └─ data/upstream/jokers.wiki.generated.json      完整英文来源文本，随仓库审查且不进入网页构建
+  └─ data/upstream/jokers.wiki.generated.json      完整离线生成输入，随仓库审查且不进入网页构建
 
 src/data/jokers.generated.ts
   → game/clue-model.ts  c9 原始分类投影为 g3 玩家线索
@@ -41,14 +41,16 @@ src/search/joker-search.generated.ts
   → React 界面
 ```
 
-生成器先用英文来源文本推导分类，再分别写出运行目录、名称检索词、逐卡来源记录和仓库审查
+`scripts/joker-data-model.ts` 是远程同步与离线发布门禁共用的纯转换层：它从来源记录推导价格、
+稀有度、来源摘要和项目分类。生成器再分别写出运行目录、名称检索词、逐卡来源记录和仓库审查
 快照。拼音和首字母在维护阶段由 `pinyin-pro` 生成，浏览器只读取结果，不加载整套拼音字典。
 运行数据只保留摘要、类型和玩法字段；逐卡来源记录保留参考页、图片 URL、摘要与尺寸；完整效果
 和解锁描述只留在 `data/upstream/`，供人和校验脚本复核，不由浏览器导入。
 
-`scripts/validate-jokers.ts` 核对运行目录、150 组检索词、150 条逐卡来源记录、150 条来源审查记录
-与本地图片，并重新计算拼音检索词和 300 个英文原文摘要。`scripts/public-provenance.ts` 只在维护者
-需要从仓库审查快照重建逐卡来源记录时使用。
+`scripts/check-generated-data.ts` 从已提交的来源审查快照和本地图片离线重建运行目录、150 组检索词
+与逐卡来源记录，并与仓库产物深比较；分类规则、价格、稀有度、来源 URL、图片摘要或搜索词任一
+漂移都会使生产构建失败。`scripts/validate-jokers.ts` 继续核对结构、业务不变量、300 个英文原文摘要
+与本地图片。`scripts/public-provenance.ts` 只在维护者需要重建逐卡来源记录时使用。
 
 远程同步默认拒绝执行，也不能进入 CI。只有在维护者确认数据源允许自动访问后，才显式设置
 `BALATRUE_REMOTE_SYNC_ALLOWED=1`。正常构建不访问任何远程数据源。

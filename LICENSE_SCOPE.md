@@ -3,6 +3,8 @@
 This repository is a collection of original Balatrue work and separately identified third-party
 material. The root [MIT License](LICENSE) applies only to Balatrue's original feature definitions,
 game logic, UI, engineering source, tooling, and project-authored portions of the documentation.
+The original Balatrue favicon, install icons, and social preview artwork are part of that UI and do
+not incorporate Joker artwork.
 
 It does not apply to:
 

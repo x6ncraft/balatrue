@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Balatrue · 猜丑牌</title>
+  <desc id="description">六次机会、五项线索的每日小丑牌猜谜游戏。</desc>
+  <defs>
+    <pattern id="felt" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#fff8e8" opacity="0.055" />
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#021210" flood-opacity="0.28" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#12322e" />
+  <rect width="1200" height="630" fill="url(#felt)" />
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="54" width="1072" height="522" rx="34" fill="#f7f1e5" />
+  </g>
+
+  <g font-family="Menlo, Monaco, monospace" font-weight="700">
+    <text x="112" y="132" fill="#172421" font-size="46" letter-spacing="-3">BALAT</text>
+    <text x="236" y="132" fill="#f26a58" font-size="46" letter-spacing="-3">RUE</text>
+  </g>
+  <text x="374" y="130" fill="#b67d17" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="23" font-weight="700" letter-spacing="5">猜丑牌</text>
+  <text x="1088" y="126" text-anchor="end" fill="#5f6d67" font-family="Menlo, Monaco, monospace" font-size="19">balatrue.x6n.me</text>
+
+  <text x="112" y="230" fill="#172421" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="52" font-weight="700">猜出今天的小丑牌</text>
+  <text x="112" y="275" fill="#5f6d67" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="24">6 次机会 · 5 项线索 · 每日一题</text>
+
+  <g transform="translate(112 330)" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-weight="700">
+    <g>
+      <rect width="176" height="142" rx="18" fill="#dcebd4" stroke="#75a168" stroke-width="3" />
+      <text x="88" y="54" text-anchor="middle" fill="#5a7d55" font-size="24">✓</text>
+      <text x="88" y="98" text-anchor="middle" fill="#244d2b" font-size="25">稀有度</text>
+    </g>
+    <g transform="translate(192)">
+      <rect width="176" height="142" rx="18" fill="#e9e2da" stroke="#b7aaa0" stroke-width="3" />
+      <text x="88" y="58" text-anchor="middle" fill="#5f5550" font-family="Menlo, Monaco, monospace" font-size="30">$5 ↑</text>
+      <text x="88" y="101" text-anchor="middle" fill="#5f5550" font-size="25">基础价格</text>
+    </g>
+    <g transform="translate(384)">
+      <rect width="176" height="142" rx="18" fill="#dcebd4" stroke="#75a168" stroke-width="3" />
+      <text x="88" y="58" text-anchor="middle" fill="#244d2b" font-family="Menlo, Monaco, monospace" font-size="29">× MULT</text>
+      <text x="88" y="101" text-anchor="middle" fill="#244d2b" font-size="25">主效果</text>
+    </g>
+    <g transform="translate(576)">
+      <rect width="176" height="142" rx="18" fill="#f4dfaa" stroke="#bd8a26" stroke-width="3" />
+      <text x="88" y="55" text-anchor="middle" fill="#8d6517" font-size="23">◐</text>
+      <text x="88" y="99" text-anchor="middle" fill="#65480e" font-size="25">触发时机</text>
+    </g>
+    <g transform="translate(768)">
+      <rect width="176" height="142" rx="18" fill="#e9e2da" stroke="#b7aaa0" stroke-width="3" />
+      <text x="88" y="55" text-anchor="middle" fill="#867a70" font-size="24">×</text>
+      <text x="88" y="99" text-anchor="middle" fill="#5f5550" font-size="25">依赖条件</text>
+    </g>
+  </g>
+
+  <text x="112" y="535" fill="#3b8799" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="19" font-weight="700">免费 · 非商业 · 粉丝自制</text>
+  <text x="1088" y="535" text-anchor="end" fill="#5f6d67" font-family="Menlo, Monaco, monospace" font-size="17">A DAILY JOKER PUZZLE</text>
+</svg>

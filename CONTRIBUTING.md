@@ -25,8 +25,10 @@ rights boundary, or release contract changes.
 
 ## Data and assets
 
-- Do not edit `src/data/jokers.generated.ts`, `data/jokers.provenance.generated.json`, or
-  `data/upstream/jokers.wiki.generated.json` by hand.
+- Do not edit `src/data/jokers.generated.ts`, `src/search/joker-search.generated.ts`,
+  `data/jokers.provenance.generated.json`, or `data/upstream/jokers.wiki.generated.json` by hand.
+- Keep deterministic classification and runtime projection logic in `scripts/joker-data-model.ts` so
+  remote synchronization and the offline generated-data release gate use the same implementation.
 - Keep upstream effect and unlock wording in the generated `data/upstream/` snapshot with its
   attribution and rights notice; do not copy it into browser code or production assets.
 - Do not commit game packages, original game source code, logos, music, or sound effects.

@@ -1,10 +1,17 @@
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { extname, join } from 'node:path'
 
 const projectRoot = join(import.meta.dir, '..')
 const requiredArtifacts = [
   'dist/index.html',
+  'dist/robots.txt',
+  'dist/sitemap.xml',
+  'dist/site.webmanifest',
+  'dist/social-card.png',
+  'dist/apple-touch-icon.png',
+  'dist/app-icon-192.png',
+  'dist/app-icon-512.png',
   'dist/legal/LICENSE',
   'dist/legal/LICENSE_SCOPE.md',
   'dist/legal/ASSET_NOTICE.md',
@@ -37,6 +44,7 @@ interface PublicProvenanceFile {
 }
 
 interface SourceReviewFile {
+  schemaVersion: number
   metadata: unknown
   jokers: Array<{
     id: string
@@ -45,11 +53,25 @@ interface SourceReviewFile {
   }>
 }
 
-const textFiles = await Array.fromAsync(
-  new Bun.Glob('dist/**/*.{css,html,js,json,md,mjs,cjs,txt}').scan({
+const releaseFiles = await Array.fromAsync(
+  new Bun.Glob('dist/**/*').scan({
     cwd: projectRoot,
     onlyFiles: true,
   }),
+)
+const knownBinaryExtensions = new Set([
+  '.avif',
+  '.gif',
+  '.ico',
+  '.jpeg',
+  '.jpg',
+  '.png',
+  '.webp',
+  '.woff',
+  '.woff2',
+])
+const textFiles = releaseFiles.filter(
+  (path) => !knownBinaryExtensions.has(extname(path).toLowerCase()),
 )
 if (!textFiles.some((path) => path.endsWith('.js'))) {
   throw new Error('[build] production JavaScript bundle is missing')
@@ -71,6 +93,20 @@ if (leakedMarkers.length > 0) {
   )
 }
 
+const indexHtml = await readFile(join(projectRoot, 'dist/index.html'), 'utf8')
+const requiredSiteMetadata = [
+  'rel="canonical" href="https://balatrue.x6n.me/"',
+  'property="og:url" content="https://balatrue.x6n.me/"',
+  'property="og:image" content="https://balatrue.x6n.me/social-card.png"',
+  'rel="manifest" href="/site.webmanifest"',
+] as const
+const missingSiteMetadata = requiredSiteMetadata.filter((marker) => !indexHtml.includes(marker))
+if (missingSiteMetadata.length > 0) {
+  throw new Error(
+    `[build] canonical site metadata is incomplete:\n${missingSiteMetadata.join('\n')}`,
+  )
+}
+
 const provenance = JSON.parse(
   await readFile(join(projectRoot, 'dist/legal/data/jokers.provenance.generated.json'), 'utf8'),
 ) as PublicProvenanceFile
@@ -89,6 +125,7 @@ if (!existsSync(sourceReviewPath)) {
 }
 const sourceReview = JSON.parse(await readFile(sourceReviewPath, 'utf8')) as SourceReviewFile
 if (
+  sourceReview.schemaVersion !== 2 ||
   sourceReview.jokers.length !== 150 ||
   new Set(sourceReview.jokers.map(({ id }) => id)).size !== 150 ||
   JSON.stringify(sourceReview.metadata) !== JSON.stringify(provenance.metadata)

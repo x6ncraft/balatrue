@@ -40,10 +40,14 @@ interface SourceAuditRecord {
   referencePageUrl: string
   effectTextEn: string
   unlockRequirementEn: string
+  cost: number | null
+  rarity: (typeof JOKER_RARITIES)[number]
   wikiType: WikiJokerType
   wikiActivation: WikiJokerActivation
   imageUrl: string
   imageSha1: string
+  imageWidth: number
+  imageHeight: number
 }
 
 interface SourceAuditFile {
@@ -157,7 +161,7 @@ check(
   JSON.stringify(provenance.metadata) === JSON.stringify(JOKER_DATA_META),
   'Public provenance metadata differs from runtime metadata',
 )
-check(sourceReview.schemaVersion === 1, 'Unsupported source-review schema')
+check(sourceReview.schemaVersion === 2, 'Unsupported source-review schema')
 check(
   sourceReview.distribution === 'upstream-source-review-data',
   'Source-review data has no upstream distribution marker',
@@ -313,6 +317,11 @@ for (const [index, joker] of jokers.entries()) {
         joker.source.unlockRequirementSha256,
       `${label}: unlock source digest mismatch`,
     )
+    check(sourceReviewRecord.cost === joker.official.cost, `${label}: source-review cost mismatch`)
+    check(
+      sourceReviewRecord.rarity === joker.official.rarity,
+      `${label}: source-review rarity mismatch`,
+    )
     check(sourceReviewRecord.wikiType === joker.source.wikiType, `${label}: Wiki type mismatch`)
     check(
       sourceReviewRecord.wikiActivation === joker.source.wikiActivation,
@@ -322,6 +331,21 @@ for (const [index, joker] of jokers.entries()) {
       sourceReviewRecord.imageSha1 === joker.source.imageSha1,
       `${label}: source image SHA-1 mismatch`,
     )
+    check(
+      sourceReviewRecord.imageWidth === joker.source.imageWidth &&
+        sourceReviewRecord.imageHeight === joker.source.imageHeight,
+      `${label}: source-review image dimensions mismatch`,
+    )
+    if (provenanceRecord) {
+      check(
+        provenanceRecord.referencePageUrl === sourceReviewRecord.referencePageUrl,
+        `${label}: provenance reference URL mismatch`,
+      )
+      check(
+        provenanceRecord.imageSourceUrl === sourceReviewRecord.imageUrl,
+        `${label}: provenance image URL mismatch`,
+      )
+    }
     check(sourceReviewRecord.effectTextEn.trim().length > 0, `${label}: empty effect source text`)
     check(
       sourceReviewRecord.unlockRequirementEn.trim().length > 0,

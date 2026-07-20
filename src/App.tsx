@@ -37,6 +37,7 @@ import {
   type MessageKey,
 } from './i18n'
 import { buildJokerSearchIndex } from './search'
+import { PUBLIC_SITE_URL } from './site'
 import {
   STATS_STORAGE_KEY,
   parseStats,
@@ -410,7 +411,7 @@ export default function App() {
   async function copyResult(): Promise<void> {
     const result = formatShareResult(state, {
       title: 'Balatrue',
-      url: window.location.origin,
+      url: PUBLIC_SITE_URL,
     })
     let didCopy = false
     try {

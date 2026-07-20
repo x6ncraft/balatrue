@@ -1,6 +1,6 @@
 # Balatrue
 
-[简体中文](README.zh-CN.md)
+[Play Balatrue](https://balatrue.x6n.me/) · [简体中文](README.zh-CN.md)
 
 Balatrue is a daily web puzzle about Balatro Jokers. You have six guesses. After each guess, five
 clues—rarity, base price or acquisition, primary effect, trigger timing, and dependency—help narrow
@@ -12,8 +12,9 @@ The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.ht
 
 ## Status
 
-The game is a tested, client-side release candidate. A clean checkout produces a self-contained
-static build. Its original source code is available under the MIT License. The repository
+The game is published at [balatrue.x6n.me](https://balatrue.x6n.me/) as a tested, client-side
+static site. A clean checkout produces the same self-contained build. Its original source code is
+available under the MIT License. The repository
 intentionally preserves separately identified upstream review data and Joker artwork outside that
 license; see the rights section below. No authorization from the Balatro rights holders is claimed.
 

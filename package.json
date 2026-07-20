@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "description": "A daily Balatro Joker guessing game inspired by Wordle, Handle, and Counter-Strikle.",
+  "homepage": "https://balatrue.x6n.me/",
   "repository": "github:x6ncraft/balatrue",
   "packageManager": "bun@1.3.11",
   "type": "module",
@@ -21,7 +22,8 @@
     "data:sync": "bun scripts/sync-jokers.ts && bun run data:search",
     "data:search": "bun scripts/generate-joker-search.ts",
     "data:provenance": "bun scripts/public-provenance.ts",
-    "data:validate": "bun scripts/validate-jokers.ts",
+    "data:generated:check": "bun scripts/check-generated-data.ts",
+    "data:validate": "bun run data:generated:check && bun scripts/validate-jokers.ts",
     "check": "bun scripts/check.ts"
   },
   "dependencies": {

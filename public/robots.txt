@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://balatrue.x6n.me/sitemap.xml

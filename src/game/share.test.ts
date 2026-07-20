@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { PUBLIC_SITE_URL } from '../site'
 import { comparisonToEmoji, formatShareResult } from './share'
 import type { GameState, GuessComparison, MatchResult } from './types'
 
@@ -80,6 +81,21 @@ describe('share results', () => {
     expect(formatShareResult(state, { url: 'https://example.com' })).toBe(
       ['Balatrue practice:round X/1', '⬛⬛🟨⬛🟨', '', 'https://example.com'].join('\n'),
     )
+  })
+
+  it('can append the canonical public game URL', () => {
+    const state: GameState = {
+      version: 2,
+      mode: 'daily',
+      puzzleKey: '2026-07-18',
+      answerId: 'j_answer',
+      maxAttempts: 6,
+      status: 'won',
+      guesses: [winningGuess],
+      usedCollection: false,
+    }
+
+    expect(formatShareResult(state, { url: PUBLIC_SITE_URL })).toContain(PUBLIC_SITE_URL)
   })
 
   it('does not share an unfinished game', () => {

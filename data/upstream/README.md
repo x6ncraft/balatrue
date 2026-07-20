@@ -1,9 +1,10 @@
 # Upstream Joker source review data
 
-`jokers.wiki.generated.json` preserves the English effect and unlock wording that Balatrue used to
-review and reproduce its Joker classifications. Keeping this source snapshot in the repository
-makes later audits, corrections, and data-version upgrades reproducible. The browser application
-does not import it, and the production build does not distribute it.
+`jokers.wiki.generated.json` preserves the price, rarity, image metadata, English effect, and unlock
+wording that Balatrue used to reproduce its runtime Joker catalog and classifications. Keeping this
+source snapshot in the repository makes later audits, corrections, and data-version upgrades
+reproducible. The browser application does not import it, and the production build does not
+distribute it.
 
 ## Source and transformation
 
@@ -13,7 +14,8 @@ does not import it, and the production build does not distribute it.
 - Per-card traceability: every record links to its Joker page and records source-text and image
   hashes through `data/jokers.provenance.generated.json`.
 - Transformation: `scripts/sync-jokers.ts` removes MediaWiki presentation markup and normalizes the
-  relevant table cells to JSON. Balatrue's classification fields are maintained separately.
+  relevant table cells to JSON. `scripts/joker-data-model.ts` applies Balatrue's reviewed inference
+  rules, and the production build recreates all generated artifacts offline to reject drift.
 
 The recorded `Jokers` revision identifies the parsed container page. The table may obtain fields
 from individual Joker pages dynamically, so it is not a substitute for a revision ID for every

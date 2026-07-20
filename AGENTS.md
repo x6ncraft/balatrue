@@ -29,6 +29,8 @@
 - 纯前端答案可以被检查，因此不承诺防作弊，也不设计有奖排名。
 - `src/data/jokers.generated.ts` 只能由 `scripts/sync-jokers.ts` 生成；
   `src/search/joker-search.generated.ts` 只能由 `scripts/generate-joker-search.ts` 生成，均禁止手改。
+- 分类、价格、稀有度、来源记录和搜索词都要能从已提交的来源审查快照、纯转换逻辑与本地图片离线
+  重建；`bun run data:generated:check` 必须在生产构建中逐项拒绝漂移。
 - 修改原始分类或玩家投影时，递增相应版本，迁移存档，并重新验证 150 张五维签名唯一。
 
 ## 数据与素材边界
@@ -38,8 +40,9 @@
 - 浏览器目录只保留玩法字段、来源记录和不可逆摘要，不打包完整英文效果或解锁原文。
 - `data/jokers.provenance.generated.json` 是随仓库公开的逐卡来源记录；标准安装、校验与构建依赖它，
   并同时依赖仓库内的来源审查快照。
-- `data/upstream/jokers.wiki.generated.json` 随仓库公开，保留用于分类复核的完整英文效果与解锁
-  描述；它属于排除在根 MIT 之外的第三方来源资料，不能被浏览器代码导入或进入 `dist/`。来源站
+- `data/upstream/jokers.wiki.generated.json` 随仓库公开，保留用于离线重建的价格、稀有度、图片
+  元数据、完整英文效果与解锁描述；它属于排除在根 MIT 之外的第三方来源资料，不能被浏览器代码
+  导入或进入 `dist/`。来源站
   许可声明、迁移沿革、转换方式和原作文本权利边界以 `data/upstream/README.md` 为准。
 - `public/jokers/` 的 150 张低分辨率卡图来自社区资料站 Balatro Wiki，用于当前免费、无广告、
   无付费、无赞助的粉丝猜谜中的牌面识别。Wiki 是获取与追溯来源，不被写成原作权利人或卡图
