@@ -14,8 +14,9 @@ The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.ht
 
 The game is a tested, client-side release candidate. Its original source code is available under the
 MIT License. The repository intentionally preserves separately identified upstream review data and
-Joker artwork outside that license; see the rights section below. No public production site has been
-deployed, and no authorization from the Balatro rights holders is claimed.
+Joker artwork outside that license; see the rights section below. The first hosted production build
+has passed, while the permanent public URL is still pending domain registration and custom-domain
+validation. No authorization from the Balatro rights holders is claimed.
 
 ## Features
 
