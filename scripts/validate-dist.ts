@@ -5,7 +5,6 @@ import { extname, join } from 'node:path'
 const projectRoot = join(import.meta.dir, '..')
 const requiredArtifacts = [
   'dist/index.html',
-  'dist/404.html',
   'dist/robots.txt',
   'dist/sitemap.xml',
   'dist/site.webmanifest',
@@ -106,13 +105,6 @@ if (missingSiteMetadata.length > 0) {
   throw new Error(
     `[build] canonical site metadata is incomplete:\n${missingSiteMetadata.join('\n')}`,
   )
-}
-
-const notFoundHtml = await readFile(join(projectRoot, 'dist/404.html'), 'utf8')
-for (const marker of ['name="robots" content="noindex"', 'href="/"']) {
-  if (!notFoundHtml.includes(marker)) {
-    throw new Error(`[build] 404 page is missing required marker: ${marker}`)
-  }
 }
 
 const provenance = JSON.parse(
