@@ -1,6 +1,9 @@
+/// <reference types="node" />
+
+import { readFileSync } from 'node:fs'
+
 import { expect, test, type Page } from '@playwright/test'
 
-import packageManifest from '../../package.json'
 import { JOKER_DATA_META, jokers } from '../../src/data'
 import {
   createDailyGame,
@@ -18,6 +21,10 @@ import {
   submitGuess,
 } from '../../src/game'
 import { buildJokerSearchIndex, searchJokers } from '../../src/search'
+
+const packageManifest = JSON.parse(
+  readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
+) as { readonly version: string }
 
 const browserErrors = new WeakMap<Page, string[]>()
 const currentPracticeStorageKey = gameStorageKey(
