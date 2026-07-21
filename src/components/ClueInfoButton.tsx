@@ -6,6 +6,7 @@ import type { JokerFactKey } from '../ui/joker-facts'
 export interface ClueInfoButtonProps {
   readonly section: JokerFactKey
   readonly label: string
+  readonly compactLabel?: string
   readonly categoryCount: number
   readonly locale: Locale
   readonly onOpen: (section: JokerFactKey) => void
@@ -14,6 +15,7 @@ export interface ClueInfoButtonProps {
 export default function ClueInfoButton({
   section,
   label,
+  compactLabel,
   categoryCount,
   locale,
   onOpen,
@@ -32,7 +34,12 @@ export default function ClueInfoButton({
       title={accessibleLabel}
       onClick={() => onOpen(section)}
     >
-      <span>{label}</span>
+      <span className={compactLabel ? 'clue-info-button__label--full' : undefined}>{label}</span>
+      {compactLabel ? (
+        <span className="clue-info-button__label--compact" aria-hidden="true">
+          {compactLabel}
+        </span>
+      ) : null}
       <CircleHelp size={12} aria-hidden="true" />
     </button>
   )

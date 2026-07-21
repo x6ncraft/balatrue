@@ -396,7 +396,7 @@ describe('game state persistence', () => {
     expect(refreshCalls).toBe(0)
   })
 
-  it('skips current-key states with clue values outside the g8 vocabulary', () => {
+  it('skips current-key states with clue values outside the current player vocabulary', () => {
     const pool = Array.from({ length: 150 }, (_, index) => makeJoker(index + 1))
     const current = createDailyGame(pool, '2026-07-19T12:00:00+08:00')
     const answer = pool.find((joker) => joker.id === current.answerId)

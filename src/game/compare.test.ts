@@ -151,7 +151,7 @@ describe('compareJokers', () => {
     expect(compareJokers(miss, answer).effects.result).toBe('miss')
   })
 
-  it('compares the playable timing-family sets instead of singleton events', () => {
+  it('uses broad timing families for partial overlap while preserving exact-event equality', () => {
     const answer = makeJoker({ timings: ['card_scored', 'round_end'] })
     const partial = makeJoker({ id: 'j_partial', timings: ['card_played', 'round_start'] })
     const empty = makeJoker({ id: 'j_empty', timings: [] })
@@ -164,7 +164,18 @@ describe('compareJokers', () => {
     expect(compareJokers(empty, makeJoker({ timings: [] })).timings.result).toBe('exact')
   })
 
-  it('does not mark different play events as an exact timing match', () => {
+  it('marks different events in the same timing family as partial', () => {
+    const answer = makeJoker({ timings: ['card_played'] })
+    const guess = makeJoker({ id: 'j_guess', timings: ['card_held'] })
+
+    expect(compareJokers(guess, answer).timings).toEqual({
+      values: ['hand_action'],
+      matches: ['hand_action'],
+      result: 'partial',
+    })
+  })
+
+  it('marks disjoint timing families as a miss', () => {
     const answer = makeJoker({ timings: ['card_scored', 'joker_triggered'] })
     const guess = makeJoker({ id: 'j_guess', timings: ['card_played'] })
 

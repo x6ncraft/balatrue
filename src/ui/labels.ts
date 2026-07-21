@@ -131,16 +131,6 @@ const effectCategoryLabels: Record<GameEffectCategory, [string, string]> = {
   mechanic: ['规则／再触发', 'Rules / retriggers'],
 }
 
-const narrowEffectCategoryLabels: Record<GameEffectCategory, [string, string]> = {
-  chips: ['筹码', 'Chips'],
-  mult: ['+倍率', '+Mult'],
-  x_mult: ['×倍率', 'X Mult'],
-  economy: ['经济', 'Money'],
-  generate: ['生成', 'Create'],
-  adjust: ['调整', 'Adjust'],
-  mechanic: ['机制', 'Rules'],
-}
-
 const effectCategoryDescriptions: Record<GameEffectCategory, [string, string]> = {
   chips: effectFamilyDescriptions.chips,
   mult: effectFamilyDescriptions.mult,
@@ -218,17 +208,6 @@ const timingFamilyLabels: Record<GameTimingFamily, [string, string]> = {
   round_boundary: ['回合交界', 'Round start / end'],
 }
 
-const narrowTimingFamilyLabels: Record<GameTimingFamily, [string, string]> = {
-  always: ['常驻', 'Always'],
-  hand_scored: ['整手', 'Hand'],
-  card_scored: ['逐牌', 'Card'],
-  hand_action: ['手牌', 'Action'],
-  card_management: ['牌组', 'Cards'],
-  blind: ['盲注', 'Blind'],
-  shop: ['商店', 'Shop'],
-  round_boundary: ['回合', 'Round'],
-}
-
 const timingFamilyDescriptions: Record<GameTimingFamily, [string, string]> = {
   always: ['持续影响牌局，不等待某个事件。', 'Continuously affects the run.'],
   hand_scored: [
@@ -260,16 +239,6 @@ const dependencyFamilyLabels: Record<GameDependencyFamily, [string, string]> = {
   other_cards: ['小丑／消耗牌', 'Jokers / consumables'],
   progress: ['盲注／回合', 'Blinds / rounds'],
   none: ['无需额外条件', 'No extra condition'],
-}
-
-const narrowDependencyFamilyLabels: Record<GameDependencyFamily, [string, string]> = {
-  cards: ['牌组', 'Deck'],
-  hand: ['出牌', 'Hand'],
-  discard: ['弃牌', 'Discard'],
-  economy: ['经济', 'Money'],
-  other_cards: ['其他牌', 'Other cards'],
-  progress: ['进度', 'Progress'],
-  none: ['无条件', 'None'],
 }
 
 const dependencyFamilyDescriptions: Record<GameDependencyFamily, [string, string]> = {
@@ -454,21 +423,6 @@ const contextualDetailLabels: Record<string, [string, string]> = {
   'consumable:available_slot': ['空消耗牌栏', 'Open consumable slot'],
 }
 
-const matchingDetailPrefix: readonly [string, string] = ['吻合：', 'Matches: ']
-const differingDetailPrefix: readonly [string, string] = ['不同：', 'Different: ']
-const answerHasMoreEffectLabel: readonly [string, string] = [
-  '答案另有效果',
-  'Answer has another effect',
-]
-const answerHasMoreTimingLabel: readonly [string, string] = [
-  '答案另有时机',
-  'Answer has another trigger',
-]
-const answerHasMoreDependencyLabel: readonly [string, string] = [
-  '答案另有条件',
-  'Answer has another condition',
-]
-
 const dependencyDetailGroupLabels: Record<GameDependencyDetailGroupKey, readonly [string, string]> =
   {
     steel_full_deck: ['全牌组中的钢铁牌数量', 'Steel Cards in your full deck'],
@@ -530,13 +484,6 @@ export function effectValuesLabel(values: readonly GameEffectValue[], locale: Lo
   return listLabel(values, effectValueLabel, locale)
 }
 
-export function narrowEffectValuesLabel(
-  values: readonly GameEffectValue[],
-  locale: Locale,
-): string {
-  return values.map((value) => localized(narrowEffectCategoryLabels[value], locale)).join(' · ')
-}
-
 export function effectMechanismsLabel(values: readonly JokerEffect[], locale: Locale): string {
   return GAME_EFFECT_CATEGORIES.flatMap((category) => {
     const matches = values.filter((effect) => gameEffectCategory(effect) === category)
@@ -556,57 +503,26 @@ export function effectMechanismsLabel(values: readonly JokerEffect[], locale: Lo
   }).join(locale === 'zh-CN' ? '；' : '; ')
 }
 
+/** Exact guessed-side mechanisms shown beneath the board's canonical effect category. */
+export function effectMechanismDetailsLabel(
+  values: readonly JokerEffect[],
+  locale: Locale,
+): string {
+  const details = GAME_EFFECT_CATEGORIES.flatMap((category) =>
+    values
+      .filter((effect) => gameEffectCategory(effect) === category)
+      .map((effect) => effectMechanismLabel(effect, locale))
+      .filter((detail) => detail !== effectCategoryLabel(category, locale)),
+  )
+  return joinedDetails(details, locale)
+}
+
 function uniqueLabels(values: readonly string[]): string[] {
   return [...new Set(values)]
 }
 
 function joinedDetails(values: readonly string[], locale: Locale): string {
   return uniqueLabels(values).join(locale === 'zh-CN' ? '、' : ', ')
-}
-
-function partialDetailSummary(
-  exactDetails: readonly string[],
-  relatedDetails: readonly string[],
-  answerHasMore: readonly [string, string] | null,
-  locale: Locale,
-): string | undefined {
-  if (answerHasMore) return localized(answerHasMore, locale)
-
-  const parts: string[] = []
-  if (exactDetails.length > 0) {
-    parts.push(`${localized(matchingDetailPrefix, locale)}${joinedDetails(exactDetails, locale)}`)
-  }
-  if (relatedDetails.length > 0) {
-    parts.push(
-      `${localized(differingDetailPrefix, locale)}${joinedDetails(relatedDetails, locale)}`,
-    )
-  }
-  return parts.length > 0 ? parts.join(locale === 'zh-CN' ? '；' : '; ') : undefined
-}
-
-/** Explains a yellow effect using only mechanisms already present on the guessed Joker. */
-export function partialEffectDetailLabel(
-  values: readonly JokerEffect[],
-  exactMatches: readonly JokerEffect[],
-  categoryOnlyMatches: readonly JokerEffect[],
-  locale: Locale,
-): string | undefined {
-  const exactSet = new Set(exactMatches)
-  const relatedSet = new Set(categoryOnlyMatches)
-  const exactDetails = values
-    .filter((effect) => exactSet.has(effect))
-    .map((effect) => effectMechanismLabel(effect, locale))
-  const relatedDetails = values
-    .filter((effect) => relatedSet.has(effect))
-    .map((effect) => effectMechanismLabel(effect, locale))
-  const answerHasMore = values.length > 0 && exactMatches.length === values.length
-
-  return partialDetailSummary(
-    exactDetails,
-    relatedDetails,
-    answerHasMore ? answerHasMoreEffectLabel : null,
-    locale,
-  )
 }
 
 export function timingLabel(value: string, locale: Locale): string {
@@ -634,29 +550,6 @@ export function timingFamiliesLabel(values: readonly GameTimingFamily[], locale:
   return listLabel(values, timingFamilyLabel, locale)
 }
 
-export function narrowTimingFamiliesLabel(
-  values: readonly GameTimingFamily[],
-  locale: Locale,
-): string {
-  return values.map((value) => localized(narrowTimingFamilyLabels[value], locale)).join(' · ')
-}
-
-/** Explains which guessed trigger family caused a yellow result without revealing a new one. */
-export function partialTimingDetailLabel(
-  values: readonly GameTimingFamily[],
-  matches: readonly GameTimingFamily[],
-  locale: Locale,
-): string | undefined {
-  if (values.length > 0 && matches.length === values.length) {
-    return localized(answerHasMoreTimingLabel, locale)
-  }
-  const matchSet = new Set(matches)
-  const exactDetails = values
-    .filter((value) => matchSet.has(value))
-    .map((value) => timingFamilyLabel(value, locale))
-  return partialDetailSummary(exactDetails, [], null, locale)
-}
-
 export function timingDetailsLabel(values: readonly GameTiming[], locale: Locale): string {
   return GAME_TIMING_FAMILIES.flatMap((family) => {
     const matches = values.filter((timing) => gameTimingFamily(timing) === family)
@@ -670,6 +563,17 @@ export function timingDetailsLabel(values: readonly GameTiming[], locale: Locale
     const detailList = details.join(locale === 'zh-CN' ? '、' : ', ')
     return [locale === 'zh-CN' ? `${familyLabel}：${detailList}` : `${familyLabel}: ${detailList}`]
   }).join(locale === 'zh-CN' ? '；' : '; ')
+}
+
+/** Exact guessed-side trigger events shown beneath the board's canonical trigger category. */
+export function timingDetailValuesLabel(values: readonly GameTiming[], locale: Locale): string {
+  const details = GAME_TIMING_FAMILIES.flatMap((family) =>
+    values
+      .filter((timing) => gameTimingFamily(timing) === family)
+      .map((timing) => timingLabel(timing, locale))
+      .filter((detail) => detail !== timingFamilyLabel(family, locale)),
+  )
+  return joinedDetails(details, locale)
 }
 
 export function dependencyFamilyLabel(family: GameDependencyFamily, locale: Locale): string {
@@ -757,6 +661,20 @@ export function dependencyDetailLabels(
   return dependencyDetailUnits(values, locale, collapseConsumables).map((unit) => unit.label)
 }
 
+/** Exact guessed-side conditions shown beneath the board's canonical condition category. */
+export function dependencyDetailsLabel(values: readonly GameDependency[], locale: Locale): string {
+  const details = GAME_DEPENDENCY_FAMILIES.flatMap((family) =>
+    dependencyDetailLabels(
+      values.flatMap((dependency) =>
+        dependency.family === family && dependency.value ? [dependency.value] : [],
+      ),
+      locale,
+      true,
+    ),
+  )
+  return joinedDetails(details, locale)
+}
+
 export function dependencyLabel(value: GameDependency, locale: Locale): string {
   const family = dependencyFamilyLabel(value.family, locale)
   if (!value.value || value.family === 'none') return family
@@ -782,47 +700,6 @@ export function dependenciesLabel(values: readonly GameDependency[], locale: Loc
   }).join(locale === 'zh-CN' ? '；' : '; ')
 }
 
-function dependencyKeyForLabel(dependency: GameDependency): string {
-  return `${dependency.family}\u0000${dependency.value ?? ''}`
-}
-
-/** Explains a yellow condition using only exact or related details from the guessed Joker. */
-export function partialDependencyDetailLabel(
-  values: readonly GameDependency[],
-  exactMatches: readonly GameDependency[],
-  familyMatches: readonly GameDependency[],
-  locale: Locale,
-): string | undefined {
-  if (values.length > 0 && exactMatches.length === values.length) {
-    return localized(answerHasMoreDependencyLabel, locale)
-  }
-
-  const dependenciesByValue = new Map(
-    values.flatMap((dependency) =>
-      dependency.value ? ([[dependency.value, dependency]] as const) : [],
-    ),
-  )
-  const exactKeys = new Set(exactMatches.map(dependencyKeyForLabel))
-  const relatedKeys = new Set(familyMatches.map(dependencyKeyForLabel))
-  const exactDetails: string[] = []
-  const relatedDetails: string[] = []
-
-  for (const unit of dependencyDetailUnits([...dependenciesByValue.keys()], locale, true)) {
-    const dependencies = unit.values.flatMap((value) => {
-      const dependency = dependenciesByValue.get(value)
-      return dependency ? [dependency] : []
-    })
-    const keys = dependencies.map(dependencyKeyForLabel)
-    if (keys.length > 0 && keys.every((key) => exactKeys.has(key))) {
-      exactDetails.push(unit.label)
-    } else if (keys.some((key) => exactKeys.has(key) || relatedKeys.has(key))) {
-      relatedDetails.push(unit.label)
-    }
-  }
-
-  return partialDetailSummary(exactDetails, relatedDetails, null, locale)
-}
-
 export function compactDependenciesLabel(
   values: readonly GameDependency[],
   locale: Locale,
@@ -830,13 +707,6 @@ export function compactDependenciesLabel(
   const selected = new Set(values.map((value) => value.family))
   return GAME_DEPENDENCY_FAMILIES.filter((family) => selected.has(family))
     .map((family) => dependencyFamilyLabel(family, locale))
-    .join(' · ')
-}
-
-export function narrowDependenciesLabel(values: readonly GameDependency[], locale: Locale): string {
-  const selected = new Set(values.map((value) => value.family))
-  return GAME_DEPENDENCY_FAMILIES.filter((family) => selected.has(family))
-    .map((family) => localized(narrowDependencyFamilyLabels[family], locale))
     .join(' · ')
 }
 

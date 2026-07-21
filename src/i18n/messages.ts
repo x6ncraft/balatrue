@@ -61,6 +61,7 @@ const zhCN = {
   'clue.joker': '小丑牌',
   'clue.rarity': '稀有度',
   'clue.price': '基础价格',
+  'clue.priceShort': '价格',
   'clue.effect': '主效果',
   'clue.timing': '触发时机',
   'clue.dependency': '依赖条件',
@@ -73,10 +74,10 @@ const zhCN = {
   'feedback.exact': '完全吻合',
   'feedback.partial': '部分吻合',
   'feedback.miss': '不吻合',
-  'feedback.detail': '格内补充：{detail}',
+  'feedback.detail': '细项：{detail}',
   'feedback.higher': '答案更高',
   'feedback.lower': '答案更低',
-  'feedback.legend': '绿色完全吻合，黄色部分吻合，箭头指向答案。',
+  'feedback.legend': '绿色完全吻合，黄色部分吻合，灰色不吻合；箭头指向答案。',
 
   'result.winTitle': '猜中了！',
   'result.winMessage': '你在第 {count} 次出牌找到了答案。',
@@ -96,15 +97,16 @@ const zhCN = {
 
   'help.title': '怎么玩',
   'help.intro': '你有 {count} 次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
-  'help.exact': '绿色表示这一项完全吻合。',
-  'help.partial': '黄色表示部分相关；格内会说明已吻合的细项、同类差异，或答案另有内容。',
-  'help.miss': '灰红色表示这一项不吻合。',
+  'help.exact': '绿色表示这一项完全吻合；分类线索的大类和完整细项都相同。',
+  'help.partial':
+    '黄色表示分类线索的细项不完全相同，但大类仍有交集。格内只展示这张猜测牌自己的大类和完整细项；具体哪里相关，留给你判断。',
+  'help.miss': '灰色表示这一项不吻合；分类线索的大类没有交集。',
   'help.arrow': '价格或稀有度旁的箭头始终指向正确答案。',
 
   'glossary.kicker': '线索参考',
   'glossary.title': '线索字典',
   'glossary.intro':
-    '棋盘以便于推理的大类为主，黄色格只在有帮助时说明猜测中的吻合细项、同类差异或答案另有内容；这里列出全部大类、覆盖牌数和完整细节。查字典不会影响战绩。',
+    '棋盘的三项分类线索都展示猜测牌自身的大类和完整细项；颜色负责比较，不逐项标注哪里吻合或不同，也不透露谜底独有的内容。这里列出全部大类、覆盖牌数和完整细项。查字典不会影响战绩。',
   'glossary.categoryCount': '{count} 类',
   'glossary.jokerCount': '{count} 张',
   'glossary.rarityHint': '稀有度和价格不同时，箭头会从你的猜测指向答案。',
@@ -113,7 +115,7 @@ const zhCN = {
   'glossary.soulDescription':
     '传奇小丑没有官方商店价格，通过灵魂牌获取。在 Balatrue 的方向提示中，灵魂牌排在所有商店价格之上，但不换算成具体金额。',
   'glossary.note':
-    '这些是 Balatrue 为猜谜整理的分类，不是《小丑牌》官方属性。主效果写“做什么”，触发时机写“何时结算”，依赖条件只写结算前还需满足的已有状态。棋盘用大类提供方向；同类牌之间，绿色表示具体机制或条件也相同，黄色表示仍有细节差别。图鉴和字典保留完整细节，方便理解与追溯。',
+    '这些是 Balatrue 为猜谜整理的分类，不是《小丑牌》官方属性。主效果写“做什么”，触发时机写“何时结算”，依赖条件只写结算前还需满足的已有状态。大类提供推理方向，完整细项描述猜测牌自身；三列都是细项集合相同为绿、细项不同但大类有交集为黄、大类无交集为灰。格内不逐个判定细项。图鉴和字典保留完整分类，方便理解与追溯。',
 
   'footer.links': '项目链接',
   'footer.madeByPrefix': '',
@@ -148,7 +150,7 @@ const zhCN = {
   'collection.searchPlaceholder': '中文、英文或拼音',
   'collection.all': '全部',
   'collection.results': '找到 {count} 张小丑牌',
-  'collection.classificationNote': '大类用于推理；细项区分绿与黄，并保留完整说明。',
+  'collection.classificationNote': '大类用于推理，完整细项说明每张牌自身；比较结果由棋盘颜色表达。',
   'collection.soul': '灵魂牌',
   'collection.noResults': '没有符合这些条件的小丑牌。',
   'collection.clearFilters': '清空',
@@ -248,6 +250,7 @@ const en = {
   'clue.joker': 'Joker',
   'clue.rarity': 'Rarity',
   'clue.price': 'Base price',
+  'clue.priceShort': 'Price',
   'clue.effect': 'Effect',
   'clue.timing': 'Trigger',
   'clue.dependency': 'Condition',
@@ -260,10 +263,11 @@ const en = {
   'feedback.exact': 'Exact match',
   'feedback.partial': 'Partial match',
   'feedback.miss': 'No match',
-  'feedback.detail': 'Shown detail: {detail}',
+  'feedback.detail': 'Detail: {detail}',
   'feedback.higher': 'The answer is higher',
   'feedback.lower': 'The answer is lower',
-  'feedback.legend': 'Green is exact, yellow is partial, and arrows point toward the answer.',
+  'feedback.legend':
+    'Green is exact, yellow is partial, and gray is a miss; arrows point toward the answer.',
 
   'result.winTitle': 'You got it!',
   'result.winMessage': 'You found the answer on guess {count}.',
@@ -284,16 +288,17 @@ const en = {
   'help.title': 'How to play',
   'help.intro':
     "You have {count} tries to find today's Joker. After each guess, five clues show how close you are.",
-  'help.exact': 'Green means the clue matches exactly.',
+  'help.exact':
+    'Green means the clue matches exactly; for category clues, both the broad category and complete details are the same.',
   'help.partial':
-    'Yellow means a partial match. The cell calls out an exact detail, a related-but-different detail, or something extra on the answer.',
-  'help.miss': 'Muted red means there is no match.',
+    "Yellow means a category clue's details differ but still share a broad category. The cell only shows the guessed Joker's own category and complete details; deciding what overlaps is up to you.",
+  'help.miss': 'Gray means there is no match; category clues share no broad category.',
   'help.arrow': 'Arrows beside price or rarity always point toward the answer.',
 
   'glossary.kicker': 'Clue reference',
   'glossary.title': 'Clue glossary',
   'glossary.intro':
-    'The board leads with broad, useful categories. When helpful, a yellow cell identifies a matching guessed detail, a related-but-different detail, or something extra on the answer. This lists every category, its coverage, and the exact details grouped beneath it. Opening it does not affect scoring.',
+    "Each of the three category clues shows the guessed Joker's own category and complete details. Color carries the comparison without marking individual details or exposing anything found only on the answer. This glossary lists every category, its coverage, and the details grouped beneath it. Opening it does not affect scoring.",
   'glossary.categoryCount': '{count} categories',
   'glossary.jokerCount': '{count} Jokers',
   'glossary.rarityHint':
@@ -304,7 +309,7 @@ const en = {
   'glossary.soulDescription':
     "Legendary Jokers have no official shop price and come from The Soul. In Balatrue's directional clues, The Soul ranks above every shop price without being assigned a dollar value.",
   'glossary.note':
-    'These are Balatrue puzzle categories, not official Balatro attributes. Effect says what a Joker does, Trigger says when it resolves, and Condition lists only pre-existing state still required at that point. The board gives direction with broad categories. Within one category, green means the exact mechanism or condition also matches; yellow explains the useful part of a partial match without revealing an unguessed answer detail. The collection and glossary retain the full breakdown for explanation and traceability.',
+    'These are Balatrue puzzle categories, not official Balatro attributes. Effect says what a Joker does, Trigger says when it resolves, and Condition lists only pre-existing state still required at that point. Broad categories guide deduction, while complete details describe the guessed Joker itself. For all three clues, green means the complete detail sets match, yellow means the sets differ but share a broad category, and gray means no category overlaps. Cells do not judge each detail separately. The collection and glossary retain the full breakdown for explanation and traceability.',
 
   'footer.links': 'Project links',
   'footer.madeByPrefix': 'A little project by ',
@@ -342,7 +347,7 @@ const en = {
   'collection.all': 'All',
   'collection.results': '{count} Jokers found',
   'collection.classificationNote':
-    'Categories guide deduction; exact details separate green from yellow and preserve the full explanation.',
+    "Categories guide deduction, while complete details describe each Joker itself. The board's colors carry the comparison.",
   'collection.soul': 'The Soul',
   'collection.noResults': 'No Jokers match these filters.',
   'collection.clearFilters': 'Clear all',

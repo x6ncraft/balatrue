@@ -6,7 +6,6 @@ import { t, type Locale } from '../i18n'
 export interface FeedbackCellProps {
   readonly label: string
   readonly value: string
-  readonly compactValue?: string
   readonly detail?: string
   readonly accessibleValue?: string
   readonly result: MatchResult
@@ -18,7 +17,6 @@ export interface FeedbackCellProps {
 export function FeedbackCell({
   label,
   value,
-  compactValue,
   detail,
   accessibleValue = value,
   result,
@@ -60,9 +58,7 @@ export function FeedbackCell({
           direction ? ' feedback-cell__readout--directional' : ''
         }`}
       >
-        <span className="feedback-cell__value" data-compact-value={compactValue}>
-          {value}
-        </span>
+        <span className="feedback-cell__value">{value}</span>
         {direction ? (
           <span className="feedback-cell__direction" aria-hidden="true">
             {directionIcon}

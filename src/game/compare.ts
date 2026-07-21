@@ -1,5 +1,5 @@
 import type { Joker, JokerEffect } from '../data/types'
-import { gameEffectCategory } from './clue-model'
+import { gameEffectCategory, type GameTimingFamily } from './clue-model'
 import {
   dependencyKey,
   getJokerAcquisition,
@@ -9,6 +9,7 @@ import {
   getJokerId,
   getJokerRarity,
   getJokerTimingFamilies,
+  getJokerTimings,
 } from './joker-access'
 import type {
   AcquisitionComparison,
@@ -53,24 +54,20 @@ function sameSet(left: Set<string>, right: Set<string>): boolean {
   return left.size === right.size && [...left].every((value) => right.has(value))
 }
 
-function compareTags<TValue extends string>(
-  guessValues: TValue[],
-  answerValues: TValue[],
-  familyOf: (value: TValue) => string,
-): TagComparison<TValue> {
-  const guessSet = new Set(guessValues)
-  const answerSet = new Set(answerValues)
-  const matches = guessValues.filter((value) => answerSet.has(value))
-  const familyMatches = guessValues.filter((guessValue) =>
-    answerValues.some((answerValue) => familyOf(guessValue) === familyOf(answerValue)),
-  )
+function compareTimings(guess: Joker, answer: Joker): TagComparison<GameTimingFamily> {
+  const guessTimings = getJokerTimings(guess)
+  const answerTimings = getJokerTimings(answer)
+  const guessFamilies = getJokerTimingFamilies(guess)
+  const answerFamilies = getJokerTimingFamilies(answer)
+  const answerFamilySet = new Set(answerFamilies)
+  const matches = guessFamilies.filter((family) => answerFamilySet.has(family))
 
   return {
-    values: [...guessValues],
+    values: guessFamilies,
     matches,
-    result: sameSet(guessSet, answerSet)
+    result: sameSet(new Set(guessTimings), new Set(answerTimings))
       ? 'exact'
-      : matches.length > 0 || familyMatches.length > 0
+      : matches.length > 0
         ? 'partial'
         : 'miss',
   }
@@ -155,11 +152,7 @@ export function compareJokers(guess: Joker, answer: Joker): GuessComparison {
     rarity: compareRarity(guess, answer),
     acquisition: compareAcquisition(guess, answer),
     effects: compareEffects(guess, answer),
-    timings: compareTags(
-      getJokerTimingFamilies(guess),
-      getJokerTimingFamilies(answer),
-      (value) => value,
-    ),
+    timings: compareTimings(guess, answer),
     dependencies: compareDependencies(getJokerDependencies(guess), getJokerDependencies(answer)),
   }
 }

@@ -25,22 +25,22 @@ license; see the rights section below. No authorization from the Balatro rights 
 - **Quick first guess:** type any Joker you have in mind, or play one of five random cards with a
   single tap; reroll all five whenever none feels right.
 - **Five clues:** rarity, price or acquisition, effect, trigger, and condition.
-- **Readable clue model:** effects and dependencies each show seven broad categories on the board;
-  when useful, a yellow cell identifies a matching guessed detail, a related-but-different detail,
-  or something extra on the answer. It never names an answer detail the player has not guessed.
-  Timing compares eight broad phases while retaining 22 exact events for reference.
-- **Compact mobile feedback:** narrow layouts keep all five clue columns aligned, move longer yellow
-  explanations into a full-width line below the guess, and never truncate clue text.
+- **Readable clue model:** effects and conditions each use seven broad categories, while triggers use
+  eight. Each of these three category clues shows the guessed Joker's own category and complete
+  details. Green, yellow, and gray carry the comparison without marking individual details or
+  exposing anything found only on the answer.
+- **Compact mobile feedback:** narrow layouts keep all five clue columns aligned. Category names stay
+  identical to the glossary, complete details stay inside their cells, and clue text wraps without
+  truncation.
 - **Search:** in-game English and Simplified Chinese names, full pinyin, and pinyin initials; every
   match remains available in a scrollable list.
 - **Clue glossary:** all comparison categories and their underlying mechanisms, events, and condition
   details, available without affecting the score; every clue header opens its matching section.
 - **Joker collection:** searchable and filterable; opening it during an active Daily round marks that
-  round as assisted and excludes it from stats. Each entry keeps the fuller audited clue explanation
-  behind the compact board labels.
+  round as assisted and excludes it from stats. Each entry keeps the full audited clue breakdown.
 - **Local stats and sharing:** win rate, streaks, average guesses, and spoiler-free result sharing.
-- **Responsive play:** the Joker identity and five clue cells stay aligned as six columns on common
-  phone widths; screens at 340px and below use a more readable fallback.
+- **Responsive play:** the Joker identity and five clue cells stay aligned as six columns down to
+  320px; spacing tightens and the price header shortens without changing any clue category.
 
 Balatrue is a client-side game. Its answer can be inspected, so it does not promise anti-cheat or
 support prize-based competition.

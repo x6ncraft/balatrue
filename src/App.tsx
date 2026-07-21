@@ -99,6 +99,10 @@ const previousClassificationVersions = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERS
 const previousClueModels = [
   {
     classificationVersion: 11,
+    clueModelVersion: 8,
+  },
+  {
+    classificationVersion: 11,
     clueModelVersion: 7,
   },
   {
@@ -627,6 +631,9 @@ export default function App() {
                       key={header.key}
                       section={header.key}
                       label={t(locale, header.message)}
+                      compactLabel={
+                        header.key === 'price' ? t(locale, 'clue.priceShort') : undefined
+                      }
                       categoryCount={header.categoryCount}
                       locale={locale}
                       onOpen={setGlossaryTarget}

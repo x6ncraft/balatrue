@@ -12,10 +12,10 @@ import {
  *
  * Families keep the vocabulary approachable. Effects and conditions retain
  * auditable details so related clues can be yellow without making sibling
- * Jokers indistinguishable. Trigger events are projected to player-facing
- * phases before comparison; exact events remain available for explanations.
+ * Jokers indistinguishable. Trigger events keep player-facing phases as their
+ * broad categories while exact events decide whether a clue is fully equal.
  */
-export const GAME_CLUE_MODEL_VERSION = 8 as const
+export const GAME_CLUE_MODEL_VERSION = 9 as const
 
 export const GAME_EFFECT_FAMILIES = [
   'chips',
@@ -103,7 +103,7 @@ export const GAME_DEPENDENCY_DETAIL_GROUPS = [
   },
 ] as const
 
-export const GAME_DEPENDENCY_PARTIAL_DETAIL_GROUPS = [
+export const GAME_DEPENDENCY_BOARD_DETAIL_GROUPS = [
   ...GAME_DEPENDENCY_DETAIL_GROUPS,
   {
     key: 'all_consumables',
@@ -112,7 +112,7 @@ export const GAME_DEPENDENCY_PARTIAL_DETAIL_GROUPS = [
 ] as const
 
 export type GameDependencyDetailGroupKey =
-  (typeof GAME_DEPENDENCY_PARTIAL_DETAIL_GROUPS)[number]['key']
+  (typeof GAME_DEPENDENCY_BOARD_DETAIL_GROUPS)[number]['key']
 
 export interface GameDependencyDetailUnit {
   readonly values: readonly string[]
@@ -121,9 +121,9 @@ export interface GameDependencyDetailUnit {
 }
 
 /**
- * Groups dependency atoms exactly as the player-facing yellow explanation does.
- * Keeping this projection locale-free lets candidate counts compare only clues
- * that the board actually reveals.
+ * Groups dependency atoms into the natural phrases shown beneath the board's
+ * broad condition category. Keeping the projection locale-free ensures every
+ * feedback color and every reference view use the same detail structure.
  */
 export function gameDependencyDetailUnits(
   values: readonly string[],
@@ -133,7 +133,7 @@ export function gameDependencyDetailUnits(
   const consumed = new Set<string>()
   const units: GameDependencyDetailUnit[] = []
   const groups = collapseConsumables
-    ? GAME_DEPENDENCY_PARTIAL_DETAIL_GROUPS
+    ? GAME_DEPENDENCY_BOARD_DETAIL_GROUPS
     : GAME_DEPENDENCY_DETAIL_GROUPS
 
   for (const group of groups) {

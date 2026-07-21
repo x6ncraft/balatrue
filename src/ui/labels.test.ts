@@ -3,15 +3,12 @@ import { describe, expect, it } from 'vitest'
 import type { GameDependency, GameEffectValue } from '../game/clue-model'
 import {
   compactDependenciesLabel,
+  dependencyDetailsLabel,
   dependenciesLabel,
+  effectMechanismDetailsLabel,
   effectMechanismsLabel,
   effectValuesLabel,
-  narrowDependenciesLabel,
-  narrowEffectValuesLabel,
-  narrowTimingFamiliesLabel,
-  partialDependencyDetailLabel,
-  partialEffectDetailLabel,
-  partialTimingDetailLabel,
+  timingDetailValuesLabel,
   timingDetailsLabel,
   timingFamiliesLabel,
 } from './labels'
@@ -53,25 +50,6 @@ describe('compactDependenciesLabel', () => {
   })
 })
 
-describe('narrow board labels', () => {
-  it('keeps 320px categories short without changing their order', () => {
-    expect(narrowEffectValuesLabel(['generate', 'adjust'], 'en')).toBe('Create · Adjust')
-    expect(narrowTimingFamiliesLabel(['hand_action', 'round_boundary'], 'zh-CN')).toBe(
-      '手牌 · 回合',
-    )
-    expect(
-      narrowDependenciesLabel(
-        [
-          { family: 'cards', value: 'rank:6' },
-          { family: 'hand', value: 'hand:first_hand' },
-          { family: 'other_cards', value: 'consumable:available_slot' },
-        ],
-        'en',
-      ),
-    ).toBe('Deck · Hand · Other cards')
-  })
-})
-
 describe('player-facing clue labels', () => {
   it('uses concise Balatro-native English category terms', () => {
     expect(effectValuesLabel(['x_mult', 'economy', 'generate'], 'en')).toBe(
@@ -95,9 +73,12 @@ describe('player-facing clue labels', () => {
     const scopedRule: GameEffectValue[] = ['mechanic']
     expect(effectValuesLabel(scopedRule, 'zh-CN')).toBe('规则／再触发')
     expect(effectMechanismsLabel(['generate:sealed_card'], 'zh-CN')).toBe('生成：蜡封牌')
+    expect(effectMechanismDetailsLabel(['rules:straight_gap'], 'zh-CN')).toBe('顺子间隔')
     expect(
-      partialEffectDetailLabel(['rules:straight_gap'], [], ['rules:straight_gap'], 'zh-CN'),
-    ).toBe('不同：顺子间隔')
+      effectMechanismDetailsLabel(['generate:spectral', 'modify:destroy_playing_card'], 'zh-CN'),
+    ).toBe('幻灵牌、摧毁扑克牌')
+    expect(effectMechanismDetailsLabel(['modify:gold_card'], 'zh-CN')).toBe('黄金牌')
+    expect(effectMechanismDetailsLabel(['chips'], 'zh-CN')).toBe('')
   })
 
   it('separates timing categories from their exact events', () => {
@@ -105,10 +86,12 @@ describe('player-facing clue labels', () => {
     expect(timingDetailsLabel(['blind_skipped', 'round_end'], 'zh-CN')).toBe(
       '盲注阶段：跳过盲注；回合交界：回合结束',
     )
-    expect(
-      partialTimingDetailLabel(['hand_scored', 'card_management'], ['hand_scored'], 'zh-CN'),
-    ).toBe('吻合：整手结算')
-    expect(partialTimingDetailLabel(['hand_scored'], ['hand_scored'], 'zh-CN')).toBe('答案另有时机')
+    expect(timingDetailValuesLabel(['blind_skipped', 'round_end'], 'zh-CN')).toBe(
+      '跳过盲注、回合结束',
+    )
+    expect(timingDetailValuesLabel(['blind_skipped', 'round_end'], 'en')).toBe(
+      'Blind skipped, End of round',
+    )
   })
 
   it('keeps every dependency dimension visible for multi-part conditions', () => {
@@ -121,42 +104,34 @@ describe('player-facing clue labels', () => {
         'zh-CN',
       ),
     ).toBe('单牌／牌组 · 出牌／牌型')
-  })
-
-  it('spells out every useful guessed-side detail in a yellow dependency cell', () => {
     expect(
-      partialDependencyDetailLabel(
+      dependencyDetailsLabel(
         [
-          { family: 'cards', value: 'rank:face' },
+          { family: 'cards', value: 'rank:face_card' },
           { family: 'hand', value: 'playing_card:first_scoring' },
         ],
-        [],
+        'zh-CN',
+      ),
+    ).toBe('人头牌、首张计分牌')
+  })
+
+  it('spells out every useful guessed-side dependency detail without judging each one', () => {
+    expect(
+      dependencyDetailsLabel(
         [
           { family: 'cards', value: 'rank:face' },
           { family: 'hand', value: 'playing_card:first_scoring' },
         ],
         'zh-CN',
       ),
-    ).toBe('不同：人头牌、首张计分牌')
-  })
-
-  it('turns exact dependency subsets into a directional clue', () => {
-    const face = { family: 'cards', value: 'rank:face' } as const
-    expect(partialDependencyDetailLabel([face], [face], [], 'zh-CN')).toBe('答案另有条件')
-    expect(partialDependencyDetailLabel([face], [face], [], 'en')).toBe(
-      'Answer has another condition',
-    )
+    ).toBe('人头牌、首张计分牌')
   })
 
   it('recombines full-deck count atoms into natural player language', () => {
     const steel = { family: 'cards', value: 'card_modifier:steel' } as const
     const fullDeck = { family: 'cards', value: 'deck:full_count' } as const
-    expect(partialDependencyDetailLabel([steel, fullDeck], [], [steel, fullDeck], 'zh-CN')).toBe(
-      '不同：全牌组中的钢铁牌数量',
-    )
-    expect(partialDependencyDetailLabel([steel, fullDeck], [], [steel, fullDeck], 'en')).toBe(
-      'Different: Steel Cards in your full deck',
-    )
+    expect(dependencyDetailsLabel([steel, fullDeck], 'zh-CN')).toBe('全牌组中的钢铁牌数量')
+    expect(dependencyDetailsLabel([steel, fullDeck], 'en')).toBe('Steel Cards in your full deck')
   })
 
   it('shortens dense board details without changing their categories', () => {
