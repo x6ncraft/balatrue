@@ -15,8 +15,8 @@
       `THIRD_PARTY_NOTICES.md` 和运行依赖许可证。
 - [ ] `dist/` 包含正式域名 canonical、社交预览图、站点地图、安装清单和应用图标；分享结果使用
       正式地址，不泄漏本地或临时预览域名。
-- [ ] `package.json` 是 Balatrue 产品版本的唯一来源；页脚明确区分 `Balatrue vX.Y.Z` 与 Balatro
-      数据版本，生产构建会拒绝产品版本未进入页面。
+- [ ] `package.json` 是 Balatrue 产品版本的唯一来源；页脚只展示 `Balatrue vX.Y.Z` 与本机存档
+      提示，生产构建会拒绝产品版本未进入页面。
 - [ ] `dist/` 不包含 `data/upstream/` 的完整英文效果与解锁描述、环境文件、密钥、账号资料或内部
       文档。
 - [ ] 静态托管使用根目录 `edgeone.json` 中固定的 Node、Bun 锁文件安装、构建命令与 `dist` 输出；

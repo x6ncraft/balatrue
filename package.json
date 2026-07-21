@@ -1,6 +1,6 @@
 {
   "name": "balatrue",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "license": "MIT",
   "description": "A daily Balatro Joker guessing game inspired by Wordle, Handle, and Counter-Strikle.",

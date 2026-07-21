@@ -657,13 +657,8 @@ export default function App() {
             {t(locale, 'footer.madeBySuffix')}
           </p>
           <p>{t(locale, 'brand.disclaimer')}</p>
-          <p>
-            {t(locale, 'footer.versionLine', {
-              versionLabel: BALATRUE_VERSION_LABEL,
-              dataVersion: JOKER_DATA_META.gameVersion,
-              count: jokers.length,
-              progress: t(locale, 'footer.localProgress'),
-            })}
+          <p className="site-footer__meta">
+            {BALATRUE_VERSION_LABEL} · {t(locale, 'footer.localProgress')}
           </p>
         </div>
         <nav className="site-footer__links" aria-label={t(locale, 'footer.links')}>

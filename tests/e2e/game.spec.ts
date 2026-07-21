@@ -990,10 +990,7 @@ test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
     'https://balatrowiki.org/',
   )
   await expect(
-    page.getByText(
-      `Balatrue v${packageManifest.version} · Balatro 数据 ${JOKER_DATA_META.gameVersion} · 150 张小丑牌 · 进度仅保存在本机`,
-      { exact: true },
-    ),
+    page.getByText(`Balatrue v${packageManifest.version} · 进度仅保存在本机`, { exact: true }),
   ).toBeVisible()
 
   const legalDetails = page.locator('.site-footer__legal')
@@ -1017,10 +1014,9 @@ test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
   await expect(page.getByText('Rights & privacy', { exact: true })).toBeVisible()
   await expect(page.getByText(/The site is not operated for profit/)).toBeVisible()
   await expect(
-    page.getByText(
-      `Balatrue v${packageManifest.version} · Balatro data ${JOKER_DATA_META.gameVersion} · 150 Jokers · Progress stays on this device`,
-      { exact: true },
-    ),
+    page.getByText(`Balatrue v${packageManifest.version} · Progress saved locally`, {
+      exact: true,
+    }),
   ).toBeVisible()
 })
 
@@ -1308,6 +1304,17 @@ test('keeps the mobile brand clear of the action buttons', async ({ page }, test
 test('keeps the 320px layout readable without zoom or overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium')
   await page.setViewportSize({ width: 320, height: 568 })
+
+  const footerMeta = page.locator('.site-footer__meta')
+  await expect(footerMeta).toHaveText(`Balatrue v${packageManifest.version} · 进度仅保存在本机`)
+  await page.locator('.language-button').click()
+  await expect(footerMeta).toHaveText(
+    `Balatrue v${packageManifest.version} · Progress saved locally`,
+  )
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+    .toBe(true)
+  await page.locator('.language-button').click()
 
   const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
   await expect

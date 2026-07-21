@@ -122,8 +122,6 @@ const zhCN = {
   'footer.bilibili': 'B 站',
   'footer.dataSource': '资料来源',
   'footer.official': 'Balatro 官网',
-  'footer.versionLine':
-    '{versionLabel} · Balatro 数据 {dataVersion} · {count} 张小丑牌 · {progress}',
   'footer.localProgress': '进度仅保存在本机',
   'footer.rightsPrivacy': '权利与隐私',
   'footer.rightsNotice':
@@ -315,8 +313,7 @@ const en = {
   'footer.bilibili': 'Bilibili',
   'footer.dataSource': 'Data source',
   'footer.official': 'Official Balatro',
-  'footer.versionLine': '{versionLabel} · Balatro data {dataVersion} · {count} Jokers · {progress}',
-  'footer.localProgress': 'Progress stays on this device',
+  'footer.localProgress': 'Progress saved locally',
   'footer.rightsPrivacy': 'Rights & privacy',
   'footer.rightsNotice':
     'This project is not affiliated with, sponsored, endorsed, or approved by LocalThunk or Playstack. Balatro and related names and artwork belong to their respective rights holders.',

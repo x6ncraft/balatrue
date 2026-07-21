@@ -1010,6 +1010,10 @@ img {
   max-width: 760px;
 }
 
+.site-footer__meta {
+  white-space: nowrap;
+}
+
 .site-footer__legal {
   grid-column: 1 / -1;
   width: 100%;
