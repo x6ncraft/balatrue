@@ -1991,6 +1991,16 @@ img {
     -webkit-line-clamp: unset;
   }
 
+  .feedback-cell__value[data-compact-value] {
+    font-size: 0;
+  }
+
+  .feedback-cell__value[data-compact-value]::after {
+    content: attr(data-compact-value);
+    font-size: clamp(9px, 2.55vw, 11px);
+    line-height: 1.2;
+  }
+
   .feedback-cell__status {
     top: 3px;
     right: 4px;
@@ -2435,14 +2445,8 @@ img {
     font-size: 10px;
   }
 
-  .feedback-cell__value[data-compact-value] {
-    font-size: 0;
-  }
-
   .feedback-cell__value[data-compact-value]::after {
-    content: attr(data-compact-value);
     font-size: 10px;
-    line-height: 1.2;
   }
 }
 
