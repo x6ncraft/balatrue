@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
+import packageManifest from '../../package.json'
 import { JOKER_DATA_META, jokers } from '../../src/data'
 import {
   createDailyGame,
@@ -981,6 +982,12 @@ test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
     'href',
     'https://balatrowiki.org/',
   )
+  await expect(
+    page.getByText(
+      `Balatrue v${packageManifest.version} · Balatro 数据 ${JOKER_DATA_META.gameVersion} · 150 张小丑牌 · 进度仅保存在本机`,
+      { exact: true },
+    ),
+  ).toBeVisible()
 
   const legalDetails = page.locator('.site-footer__legal')
   const legalSummary = page.getByText('权利与隐私', { exact: true })
@@ -1002,6 +1009,12 @@ test('fits the viewport and exposes the how-to dialog', async ({ page }) => {
   await page.getByRole('button', { name: '选择界面语言' }).click()
   await expect(page.getByText('Rights & privacy', { exact: true })).toBeVisible()
   await expect(page.getByText(/The site is not operated for profit/)).toBeVisible()
+  await expect(
+    page.getByText(
+      `Balatrue v${packageManifest.version} · Balatro data ${JOKER_DATA_META.gameVersion} · 150 Jokers · Progress stays on this device`,
+      { exact: true },
+    ),
+  ).toBeVisible()
 })
 
 test('reports storage failures when starting Endless', async ({ page }) => {

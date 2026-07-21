@@ -53,6 +53,10 @@ interface SourceReviewFile {
   }>
 }
 
+interface PackageManifest {
+  version: string
+}
+
 const releaseFiles = await Array.fromAsync(
   new Bun.Glob('dist/**/*').scan({
     cwd: projectRoot,
@@ -80,6 +84,15 @@ if (!textFiles.some((path) => path.endsWith('.js'))) {
 const publicText = (
   await Promise.all(textFiles.map((path) => readFile(join(projectRoot, path), 'utf8')))
 ).join('\n')
+const packageManifest = JSON.parse(
+  await readFile(join(projectRoot, 'package.json'), 'utf8'),
+) as PackageManifest
+if (
+  typeof packageManifest.version !== 'string' ||
+  !publicText.includes(`Balatrue v${packageManifest.version}`)
+) {
+  throw new Error('[build] footer does not expose the package.json version')
+}
 
 const forbiddenSourceMarkers = [
   'effectTextEn',

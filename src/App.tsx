@@ -41,7 +41,7 @@ import {
   type MessageKey,
 } from './i18n'
 import { buildJokerSearchIndex } from './search'
-import { PUBLIC_SITE_URL } from './site'
+import { BALATRUE_VERSION_LABEL, PUBLIC_SITE_URL } from './site'
 import {
   STATS_STORAGE_KEY,
   parseStats,
@@ -658,7 +658,12 @@ export default function App() {
           </p>
           <p>{t(locale, 'brand.disclaimer')}</p>
           <p>
-            {JOKER_DATA_META.gameVersion} · 150 Jokers · {t(locale, 'footer.localProgress')}
+            {t(locale, 'footer.versionLine', {
+              versionLabel: BALATRUE_VERSION_LABEL,
+              dataVersion: JOKER_DATA_META.gameVersion,
+              count: jokers.length,
+              progress: t(locale, 'footer.localProgress'),
+            })}
           </p>
         </div>
         <nav className="site-footer__links" aria-label={t(locale, 'footer.links')}>

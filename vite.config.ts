@@ -1,10 +1,24 @@
 /// <reference types="vitest/config" />
 
+import { readFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath, URL } from 'node:url'
 
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
+
+interface PackageManifest {
+  readonly version?: unknown
+}
+
+const packageManifest = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
+) as PackageManifest
+if (typeof packageManifest.version !== 'string' || packageManifest.version.length === 0) {
+  throw new Error('package.json must declare a non-empty version')
+}
+const balatrueVersion = packageManifest.version
+const balatrueVersionLabel = `Balatrue v${balatrueVersion}`
 
 const legalAssets = [
   ['legal/LICENSE', new URL('./LICENSE', import.meta.url)],
@@ -48,6 +62,9 @@ function emitLegalAssets(): Plugin {
 
 export default defineConfig({
   plugins: [react(), emitLegalAssets()],
+  define: {
+    __BALATRUE_VERSION_LABEL__: JSON.stringify(balatrueVersionLabel),
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
