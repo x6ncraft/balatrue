@@ -3,24 +3,39 @@ import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 import { JOKER_EFFECTS, JOKER_RARITIES, type Joker } from '../data/types'
-import { GAME_DEPENDENCY_FAMILIES, GAME_TIMINGS, projectJokerDependencies } from '../game'
+import {
+  GAME_DEPENDENCY_FAMILIES,
+  GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
+  GAME_TIMINGS,
+  gameEffectCategory,
+  gameTimingFamily,
+  projectJokerDependencies,
+  projectJokerEffectCategories,
+  projectJokerTimingFamilies,
+} from '../game'
 import { t, type Locale } from '../i18n'
 import {
   dependencyFamilyDescription,
   dependencyFamilyLabel,
-  effectDescription,
-  effectLabel,
+  dependencySourceLabel,
+  effectCategoryDescription,
+  effectCategoryLabel,
+  effectMechanismLabel,
   gameDependencyDetailLabel,
   rarityDescription,
   rarityLabel,
-  timingDescription,
+  timingFamilyDescription,
+  timingFamilyLabel,
   timingLabel,
 } from '../ui/labels'
+import type { JokerFactKey } from '../ui/joker-facts'
 
 export interface ClueGlossaryDialogProps {
   open: boolean
   locale: Locale
   jokers: readonly Joker[]
+  initialSection?: JokerFactKey
   onClose: () => void
 }
 
@@ -28,20 +43,25 @@ export default function ClueGlossaryDialog({
   open,
   locale,
   jokers,
+  initialSection,
   onClose,
 }: ClueGlossaryDialogProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const dialogRef = useRef<HTMLElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const sectionHeadingRefs = useRef<Partial<Record<JokerFactKey, HTMLHeadingElement | null>>>({})
   const onCloseRef = useRef(onClose)
 
   const timingEntries = useMemo(
     () =>
-      GAME_TIMINGS.map((timing) => ({
-        id: timing,
-        label: timingLabel(timing, locale),
-        description: timingDescription(timing, locale),
+      GAME_TIMING_FAMILIES.map((family) => ({
+        id: family,
+        label: timingFamilyLabel(family, locale),
+        description: timingFamilyDescription(family, locale),
+        values: GAME_TIMINGS.filter((timing) => gameTimingFamily(timing) === family),
+        count: jokers.filter((joker) => projectJokerTimingFamilies(joker).includes(family)).length,
       })),
-    [locale],
+    [jokers, locale],
   )
 
   const rarityEntries = useMemo(
@@ -57,12 +77,15 @@ export default function ClueGlossaryDialog({
 
   const effectEntries = useMemo(
     () =>
-      JOKER_EFFECTS.map((effect) => ({
-        id: effect,
-        label: effectLabel(effect, locale),
-        description: effectDescription(effect, locale),
+      GAME_EFFECT_CATEGORIES.map((category) => ({
+        id: category,
+        label: effectCategoryLabel(category, locale),
+        description: effectCategoryDescription(category, locale),
+        values: JOKER_EFFECTS.filter((effect) => gameEffectCategory(effect) === category),
+        count: jokers.filter((joker) => projectJokerEffectCategories(joker).includes(category))
+          .length,
       })),
-    [locale],
+    [jokers, locale],
   )
 
   const shopPrices = useMemo(
@@ -87,18 +110,33 @@ export default function ClueGlossaryDialog({
             dependency.family === family && dependency.value ? [dependency.value] : [],
           ),
         )
-        const uniqueValues = [...new Set(values)].sort((left, right) =>
-          gameDependencyDetailLabel(left, locale).localeCompare(
-            gameDependencyDetailLabel(right, locale),
-            locale,
-          ),
-        )
+        const groupedValues = new Map<string, string[]>()
+        for (const value of new Set(values)) {
+          const separatorIndex = value.indexOf(':')
+          const source = separatorIndex === -1 ? value : value.slice(0, separatorIndex)
+          groupedValues.set(source, [...(groupedValues.get(source) ?? []), value])
+        }
+        const groups = [...groupedValues.entries()]
+          .map(([source, sourceValues]) => ({
+            id: source,
+            label: dependencySourceLabel(source, locale, family),
+            values: sourceValues.sort((left, right) =>
+              gameDependencyDetailLabel(left, locale).localeCompare(
+                gameDependencyDetailLabel(right, locale),
+                locale,
+              ),
+            ),
+          }))
+          .sort((left, right) => left.label.localeCompare(right.label, locale))
 
         return {
           id: family,
           label: dependencyFamilyLabel(family, locale),
           description: dependencyFamilyDescription(family, locale),
-          values: uniqueValues,
+          groups,
+          count: jokers.filter((joker) =>
+            projectJokerDependencies(joker).some((dependency) => dependency.family === family),
+          ).length,
         }
       }),
     [jokers, locale],
@@ -128,6 +166,15 @@ export default function ClueGlossaryDialog({
     }
   }, [open])
 
+  useLayoutEffect(() => {
+    if (!open || !initialSection) return
+    const heading = sectionHeadingRefs.current[initialSection]
+    if (!heading) return
+    const section = heading.closest('section')
+    heading.focus({ preventScroll: true })
+    section?.scrollIntoView({ block: 'start', behavior: 'auto' })
+  }, [initialSection, open])
+
   useEffect(() => {
     if (!open) return
 
@@ -144,6 +191,15 @@ export default function ClueGlossaryDialog({
       const first = focusable[0]
       const last = focusable.at(-1)
       if (!first || !last) return
+      if (
+        document.activeElement instanceof HTMLElement &&
+        dialogRef.current.contains(document.activeElement) &&
+        !focusable.includes(document.activeElement)
+      ) {
+        event.preventDefault()
+        ;(event.shiftKey ? last : first).focus()
+        return
+      }
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault()
         last.focus()
@@ -188,17 +244,28 @@ export default function ClueGlossaryDialog({
           </button>
         </header>
 
-        <div className="dialog__body glossary-body">
+        <div ref={bodyRef} className="dialog__body glossary-body">
           <p className="glossary-intro">{t(locale, 'glossary.intro')}</p>
 
-          <section aria-labelledby="rarity-glossary-title">
+          <section
+            aria-labelledby="rarity-glossary-title"
+            data-targeted={initialSection === 'rarity' || undefined}
+          >
             <div className="glossary-section__head">
-              <h3 id="rarity-glossary-title">{t(locale, 'clue.rarity')}</h3>
-              <span>{rarityEntries.length}</span>
+              <h3
+                ref={(node) => {
+                  sectionHeadingRefs.current.rarity = node
+                }}
+                id="rarity-glossary-title"
+                tabIndex={-1}
+              >
+                {t(locale, 'clue.rarity')}
+              </h3>
+              <span>{t(locale, 'glossary.categoryCount', { count: rarityEntries.length })}</span>
             </div>
             <div className="glossary-grid glossary-grid--rarity">
               {rarityEntries.map((entry) => (
-                <article key={entry.id} className="glossary-entry">
+                <article key={entry.id} className="glossary-entry" aria-label={entry.label}>
                   <div className="glossary-entry__title">
                     <strong>{entry.label}</strong>
                     <small>
@@ -212,10 +279,21 @@ export default function ClueGlossaryDialog({
             <p className="glossary-hint">{t(locale, 'glossary.rarityHint')}</p>
           </section>
 
-          <section aria-labelledby="price-glossary-title">
+          <section
+            aria-labelledby="price-glossary-title"
+            data-targeted={initialSection === 'price' || undefined}
+          >
             <div className="glossary-section__head">
-              <h3 id="price-glossary-title">{t(locale, 'clue.price')}</h3>
-              <span>2</span>
+              <h3
+                ref={(node) => {
+                  sectionHeadingRefs.current.price = node
+                }}
+                id="price-glossary-title"
+                tabIndex={-1}
+              >
+                {t(locale, 'clue.price')}
+              </h3>
+              <span>{t(locale, 'glossary.categoryCount', { count: 2 })}</span>
             </div>
             <div className="glossary-grid">
               <article className="glossary-entry">
@@ -234,53 +312,118 @@ export default function ClueGlossaryDialog({
             </div>
           </section>
 
-          <section aria-labelledby="effect-glossary-title">
+          <section
+            aria-labelledby="effect-glossary-title"
+            data-targeted={initialSection === 'effect' || undefined}
+          >
             <div className="glossary-section__head">
-              <h3 id="effect-glossary-title">{t(locale, 'clue.effect')}</h3>
-              <span>{effectEntries.length}</span>
+              <h3
+                ref={(node) => {
+                  sectionHeadingRefs.current.effect = node
+                }}
+                id="effect-glossary-title"
+                tabIndex={-1}
+              >
+                {t(locale, 'clue.effect')}
+              </h3>
+              <span>{t(locale, 'glossary.categoryCount', { count: effectEntries.length })}</span>
             </div>
             <div className="glossary-grid glossary-grid--timing">
               {effectEntries.map((entry) => (
-                <article key={entry.id} className="glossary-entry">
-                  <strong>{entry.label}</strong>
+                <article key={entry.id} className="glossary-entry" aria-label={entry.label}>
+                  <div className="glossary-entry__title">
+                    <strong>{entry.label}</strong>
+                    <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
+                  </div>
                   <p>{entry.description}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section aria-labelledby="timing-glossary-title">
-            <div className="glossary-section__head">
-              <h3 id="timing-glossary-title">{t(locale, 'clue.timing')}</h3>
-              <span>{timingEntries.length}</span>
-            </div>
-            <div className="glossary-grid glossary-grid--timing">
-              {timingEntries.map((entry) => (
-                <article key={entry.id} className="glossary-entry">
-                  <strong>{entry.label}</strong>
-                  <p>{entry.description}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section aria-labelledby="dependency-glossary-title">
-            <div className="glossary-section__head">
-              <h3 id="dependency-glossary-title">{t(locale, 'clue.dependency')}</h3>
-              <span>{dependencyEntries.length}</span>
-            </div>
-            <div className="glossary-grid">
-              {dependencyEntries.map((entry) => (
-                <article key={entry.id} className="glossary-entry">
-                  <strong>{entry.label}</strong>
-                  <p>{entry.description}</p>
-                  {entry.values.length > 0 && (
+                  {entry.values.length > 1 && (
                     <ul className="glossary-values">
                       {entry.values.map((value) => (
-                        <li key={value}>{gameDependencyDetailLabel(value, locale)}</li>
+                        <li key={value}>{effectMechanismLabel(value, locale)}</li>
                       ))}
                     </ul>
                   )}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section
+            aria-labelledby="timing-glossary-title"
+            data-targeted={initialSection === 'timing' || undefined}
+          >
+            <div className="glossary-section__head">
+              <h3
+                ref={(node) => {
+                  sectionHeadingRefs.current.timing = node
+                }}
+                id="timing-glossary-title"
+                tabIndex={-1}
+              >
+                {t(locale, 'clue.timing')}
+              </h3>
+              <span>{t(locale, 'glossary.categoryCount', { count: timingEntries.length })}</span>
+            </div>
+            <div className="glossary-grid glossary-grid--timing">
+              {timingEntries.map((entry) => (
+                <article key={entry.id} className="glossary-entry" aria-label={entry.label}>
+                  <div className="glossary-entry__title">
+                    <strong>{entry.label}</strong>
+                    <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
+                  </div>
+                  <p>{entry.description}</p>
+                  {entry.values.length > 1 ? (
+                    <ul className="glossary-values">
+                      {entry.values.map((value) => (
+                        <li key={value}>{timingLabel(value, locale)}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section
+            aria-labelledby="dependency-glossary-title"
+            data-targeted={initialSection === 'dependency' || undefined}
+          >
+            <div className="glossary-section__head">
+              <h3
+                ref={(node) => {
+                  sectionHeadingRefs.current.dependency = node
+                }}
+                id="dependency-glossary-title"
+                tabIndex={-1}
+              >
+                {t(locale, 'clue.dependency')}
+              </h3>
+              <span>
+                {t(locale, 'glossary.categoryCount', { count: dependencyEntries.length })}
+              </span>
+            </div>
+            <div className="glossary-grid">
+              {dependencyEntries.map((entry) => (
+                <article key={entry.id} className="glossary-entry" aria-label={entry.label}>
+                  <div className="glossary-entry__title">
+                    <strong>{entry.label}</strong>
+                    <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
+                  </div>
+                  <p>{entry.description}</p>
+                  {entry.groups.length > 0 ? (
+                    <div className="glossary-detail-groups">
+                      {entry.groups.map((group) => (
+                        <div key={group.id} className="glossary-detail-group">
+                          <span>{group.label}</span>
+                          <ul className="glossary-values">
+                            {group.values.map((value) => (
+                              <li key={value}>{gameDependencyDetailLabel(value, locale)}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </article>
               ))}
             </div>

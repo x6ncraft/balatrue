@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BarChart3, BookOpen, CircleHelp, Languages, ListTree } from 'lucide-react'
 
 import ClueGlossaryDialog from './components/ClueGlossaryDialog'
+import ClueInfoButton from './components/ClueInfoButton'
 import GuessRow from './components/GuessRow'
 import HelpDialog from './components/HelpDialog'
 import JokerCombobox from './components/JokerCombobox'
@@ -9,24 +10,27 @@ import JokerCollectionDialog from './components/JokerCollectionDialog'
 import ResultBanner from './components/ResultBanner'
 import StatsDialog from './components/StatsDialog'
 import { JOKER_DATA_META, jokers } from './data'
-import type { Joker } from './data/types'
+import { JOKER_RARITIES, type Joker } from './data/types'
 import {
   compareJokers,
   createDailyGame,
   createPracticeGame,
   avoidImmediatePracticeRepeat,
   formatShareResult,
+  GAME_DEPENDENCY_FAMILIES,
   GAME_CLUE_MODEL_VERSION,
+  GAME_EFFECT_CATEGORIES,
   GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS,
+  GAME_TIMING_FAMILIES,
   gameStorageKey,
   getBeijingDateKey,
   markCollectionUsed,
   restoreStoredGame,
   serializeGameState,
+  sameVisibleFeedback,
   submitGuess,
   type GameMode,
   type GameState,
-  type GuessComparison,
 } from './game'
 import {
   LOCALE_STORAGE_KEY,
@@ -44,6 +48,7 @@ import {
   recordCompletedDailyGame,
   type PlayerStats,
 } from './state/stats'
+import type { JokerFactKey } from './ui/joker-facts'
 
 const PROJECT_LINKS = {
   source: 'https://github.com/x6ncraft/balatrue',
@@ -52,6 +57,22 @@ const PROJECT_LINKS = {
   balatro: 'https://www.playbalatro.com/',
   wiki: 'https://balatrowiki.org/',
 } as const
+
+const CLUE_HEADERS = [
+  { key: 'rarity', message: 'clue.rarity', categoryCount: JOKER_RARITIES.length },
+  { key: 'price', message: 'clue.price', categoryCount: 2 },
+  { key: 'effect', message: 'clue.effect', categoryCount: GAME_EFFECT_CATEGORIES.length },
+  { key: 'timing', message: 'clue.timing', categoryCount: GAME_TIMING_FAMILIES.length },
+  {
+    key: 'dependency',
+    message: 'clue.dependency',
+    categoryCount: GAME_DEPENDENCY_FAMILIES.length,
+  },
+] as const satisfies ReadonlyArray<{
+  key: JokerFactKey
+  message: MessageKey
+  categoryCount: number
+}>
 
 const bootTime = new Date()
 const today = getBeijingDateKey(bootTime)
@@ -75,42 +96,75 @@ const practiceStorageKey = gameStorageKey(
 const previousClassificationVersions = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS.filter(
   (version) => version < JOKER_DATA_META.classificationVersion,
 )
-const previousClueModel = { classificationVersion: 8, clueModelVersion: 2 } as const
+const previousClueModels = [
+  {
+    classificationVersion: 11,
+    clueModelVersion: 7,
+  },
+  {
+    classificationVersion: 10,
+    clueModelVersion: 7,
+  },
+  {
+    classificationVersion: 10,
+    clueModelVersion: 6,
+  },
+  {
+    classificationVersion: 10,
+    clueModelVersion: 5,
+  },
+  {
+    classificationVersion: 9,
+    clueModelVersion: 4,
+  },
+  {
+    classificationVersion: 9,
+    clueModelVersion: 3,
+  },
+  { classificationVersion: 8, clueModelVersion: 2 },
+] as const
 const previousDailyStorageKeys = [
+  ...previousClueModels.map((model) =>
+    gameStorageKey(
+      JOKER_DATA_META.gameVersion,
+      model.classificationVersion,
+      'daily',
+      today,
+      model.clueModelVersion,
+    ),
+  ),
   gameStorageKey(
     JOKER_DATA_META.gameVersion,
     JOKER_DATA_META.classificationVersion,
     'daily',
     today,
   ),
-  gameStorageKey(
-    JOKER_DATA_META.gameVersion,
-    previousClueModel.classificationVersion,
-    'daily',
-    today,
-    previousClueModel.clueModelVersion,
-  ),
   ...previousClassificationVersions.map((version) =>
     gameStorageKey(JOKER_DATA_META.gameVersion, version, 'daily', today),
   ),
 ]
 const previousPracticeStorageKeys = [
-  gameStorageKey(JOKER_DATA_META.gameVersion, JOKER_DATA_META.classificationVersion, 'practice'),
-  gameStorageKey(
-    JOKER_DATA_META.gameVersion,
-    previousClueModel.classificationVersion,
-    'practice',
-    undefined,
-    previousClueModel.clueModelVersion,
+  ...previousClueModels.map((model) =>
+    gameStorageKey(
+      JOKER_DATA_META.gameVersion,
+      model.classificationVersion,
+      'practice',
+      undefined,
+      model.clueModelVersion,
+    ),
   ),
+  gameStorageKey(JOKER_DATA_META.gameVersion, JOKER_DATA_META.classificationVersion, 'practice'),
   ...previousClassificationVersions.map((version) =>
     gameStorageKey(JOKER_DATA_META.gameVersion, version, 'practice'),
   ),
 ]
 const practiceBagKey = `balatrue:practice-bag:${dataKey}`
 const previousPracticeBagKeys = [
+  ...previousClueModels.map(
+    (model) =>
+      `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${model.classificationVersion}:g${model.clueModelVersion}`,
+  ),
   `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${JOKER_DATA_META.classificationVersion}`,
-  `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${previousClueModel.classificationVersion}:g${previousClueModel.clueModelVersion}`,
   ...previousClassificationVersions.map(
     (version) => `balatrue:practice-bag:${JOKER_DATA_META.gameVersion}:c${version}`,
   ),
@@ -229,18 +283,6 @@ function nextPracticeGame(avoidId?: string): GameState {
   })
 }
 
-function sameVisibleFeedback(left: GuessComparison, right: GuessComparison): boolean {
-  return (
-    left.rarity.result === right.rarity.result &&
-    left.rarity.direction === right.rarity.direction &&
-    left.acquisition.result === right.acquisition.result &&
-    left.acquisition.direction === right.acquisition.direction &&
-    left.effects.result === right.effects.result &&
-    left.timings.result === right.timings.result &&
-    left.dependencies.result === right.dependencies.result
-  )
-}
-
 export default function App() {
   const [locale, setLocale] = useState<Locale>(() =>
     resolveLocale({
@@ -259,7 +301,7 @@ export default function App() {
   )
   const [helpOpen, setHelpOpen] = useState(false)
   const [statsOpen, setStatsOpen] = useState(false)
-  const [glossaryOpen, setGlossaryOpen] = useState(false)
+  const [glossaryTarget, setGlossaryTarget] = useState<JokerFactKey | 'overview' | null>(null)
   const [collectionOpen, setCollectionOpen] = useState(false)
   const [notice, setNotice] = useState<MessageKey | null>(null)
   const [copied, setCopied] = useState(false)
@@ -286,6 +328,7 @@ export default function App() {
     [state.guesses],
   )
   const remainingAttempts = state.maxAttempts - state.guesses.length
+  const hasFeedback = state.status !== 'playing' || guessRows.length > 0
   const requiresCollectionConfirmation =
     mode === 'daily' && state.status === 'playing' && !state.usedCollection
 
@@ -486,7 +529,7 @@ export default function App() {
       </header>
 
       <section className="game-card" aria-labelledby="puzzle-title">
-        <header className="game-card__head">
+        <header className={`game-card__head${hasFeedback ? ' game-card__head--divided' : ''}`}>
           <div className="game-heading-row">
             <div className="mode-switch" aria-label={locale === 'zh-CN' ? '游戏模式' : 'Game mode'}>
               <button
@@ -524,7 +567,12 @@ export default function App() {
 
           <div className="game-meta">
             <div className="game-meta__right">
-              <button className="glossary-link" type="button" onClick={() => setGlossaryOpen(true)}>
+              <button
+                className="glossary-link"
+                type="button"
+                aria-haspopup="dialog"
+                onClick={() => setGlossaryTarget('overview')}
+              >
                 <ListTree size={15} aria-hidden="true" />
                 {t(locale, 'action.openGlossary')}
               </button>
@@ -557,7 +605,7 @@ export default function App() {
           ) : null}
         </header>
 
-        {state.status !== 'playing' || guessRows.length > 0 ? (
+        {hasFeedback ? (
           <div className="guess-area">
             {state.status !== 'playing' ? (
               <ResultBanner
@@ -572,13 +620,18 @@ export default function App() {
 
             {guessRows.length > 0 ? (
               <section className="guess-table" aria-label={t(locale, 'a11y.guessHistory')}>
-                <div className="guess-header" aria-hidden="true">
+                <div className="guess-header">
                   <span>{t(locale, 'clue.joker')}</span>
-                  <span>{t(locale, 'clue.rarity')}</span>
-                  <span>{t(locale, 'clue.price')}</span>
-                  <span>{t(locale, 'clue.effect')}</span>
-                  <span>{t(locale, 'clue.timing')}</span>
-                  <span>{t(locale, 'clue.dependency')}</span>
+                  {CLUE_HEADERS.map((header) => (
+                    <ClueInfoButton
+                      key={header.key}
+                      section={header.key}
+                      label={t(locale, header.message)}
+                      categoryCount={header.categoryCount}
+                      locale={locale}
+                      onOpen={setGlossaryTarget}
+                    />
+                  ))}
                 </div>
                 {guessRows.map((row) => (
                   <GuessRow
@@ -666,12 +719,13 @@ export default function App() {
         stats={stats}
         onClose={() => setStatsOpen(false)}
       />
-      {glossaryOpen ? (
+      {glossaryTarget ? (
         <ClueGlossaryDialog
           open
           locale={locale}
           jokers={jokers}
-          onClose={() => setGlossaryOpen(false)}
+          initialSection={glossaryTarget === 'overview' ? undefined : glossaryTarget}
+          onClose={() => setGlossaryTarget(null)}
         />
       ) : null}
       <JokerCollectionDialog

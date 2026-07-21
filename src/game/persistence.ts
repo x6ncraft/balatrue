@@ -1,7 +1,19 @@
-import type { GameMode, GameState, GuessComparison, MatchResult } from './types'
+import { JOKER_EFFECTS } from '../data/types'
+import {
+  GAME_DEPENDENCY_FAMILIES,
+  GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
+  gameDependencyKey,
+} from './clue-model'
+import type { GameDependency, GameMode, GameState, GuessComparison, MatchResult } from './types'
 
 const LEGACY_MAX_ATTEMPTS = 8
-export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [8, 7, 6, 5, 4, 3, 2] as const
+export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [10, 9, 8, 7, 6, 5, 4, 3, 2] as const
+
+const currentEffectValues = new Set<string>(GAME_EFFECT_CATEGORIES)
+const currentTimingValues = new Set<string>(GAME_TIMING_FAMILIES)
+const currentDependencyFamilies = new Set<string>(GAME_DEPENDENCY_FAMILIES)
+const currentEffectMechanisms = new Set<string>(JOKER_EFFECTS)
 
 export type StoredGameContext =
   { mode: 'daily'; puzzleKey: string; answerId: string } | { mode: 'practice' }
@@ -76,6 +88,20 @@ function isTagComparison(value: unknown): boolean {
   )
 }
 
+function isOptionalStringArray(value: unknown): boolean {
+  return value === undefined || isStringArray(value)
+}
+
+function isEffectComparison(value: unknown): boolean {
+  const comparison = asRecord(value)
+  return (
+    isTagComparison(value) &&
+    comparison !== null &&
+    isOptionalStringArray(comparison.exactMechanismMatches) &&
+    isOptionalStringArray(comparison.categoryOnlyMatches)
+  )
+}
+
 function isGuessComparison(value: unknown): value is GuessComparison {
   const comparison = asRecord(value)
   const rarity = asRecord(comparison?.rarity)
@@ -97,7 +123,7 @@ function isGuessComparison(value: unknown): value is GuessComparison {
     (acquisition.shopPrice === null || typeof acquisition.shopPrice === 'number') &&
     isMatchResult(acquisition.result) &&
     isDirection(acquisition.direction) &&
-    isTagComparison(comparison.effects) &&
+    isEffectComparison(comparison.effects) &&
     isTagComparison(comparison.timings) &&
     dependencies !== null &&
     isDependencyArray(dependencies.values) &&
@@ -219,6 +245,44 @@ function preservesStoredGameIdentity(source: GameState, refreshed: GameState): b
   )
 }
 
+function isCurrentDependency(dependency: GameDependency): boolean {
+  if (!currentDependencyFamilies.has(dependency.family)) return false
+  if (dependency.family === 'none') return dependency.value === undefined
+  return typeof dependency.value === 'string' && dependency.value.length > 0
+}
+
+function hasCurrentClueValues(state: GameState): boolean {
+  return state.guesses.every((guess) => {
+    const effectValues = new Set(guess.effects.values)
+    const timingValues = new Set(guess.timings.values)
+    const dependencyValues = new Set(guess.dependencies.values.map(gameDependencyKey))
+
+    return (
+      Array.isArray(guess.effects.exactMechanismMatches) &&
+      Array.isArray(guess.effects.categoryOnlyMatches) &&
+      guess.effects.values.every((value) => currentEffectValues.has(value)) &&
+      guess.effects.matches.every(
+        (value) => currentEffectValues.has(value) && effectValues.has(value),
+      ) &&
+      guess.effects.exactMechanismMatches.every((effect) => currentEffectMechanisms.has(effect)) &&
+      guess.effects.categoryOnlyMatches.every((effect) => currentEffectMechanisms.has(effect)) &&
+      guess.timings.values.every((value) => currentTimingValues.has(value)) &&
+      guess.timings.matches.every(
+        (value) => currentTimingValues.has(value) && timingValues.has(value),
+      ) &&
+      guess.dependencies.values.every(isCurrentDependency) &&
+      guess.dependencies.exactMatches.every(
+        (dependency) =>
+          isCurrentDependency(dependency) && dependencyValues.has(gameDependencyKey(dependency)),
+      ) &&
+      guess.dependencies.familyMatches.every(
+        (dependency) =>
+          isCurrentDependency(dependency) && dependencyValues.has(gameDependencyKey(dependency)),
+      )
+    )
+  })
+}
+
 /**
  * Restores from the current key first, then only from explicitly supplied historical keys.
  * A historical state is refreshed by the caller and written under the current key after
@@ -250,6 +314,7 @@ export function restoreStoredGame(options: RestoreStoredGameOptions): GameState 
       if (
         !refreshed ||
         !isGameState(refreshed) ||
+        !hasCurrentClueValues(refreshed) ||
         !preservesStoredGameIdentity(state, refreshed) ||
         !matchesStoredGameContext(refreshed, options.context, options.validJokerIds)
       ) {
@@ -262,6 +327,7 @@ export function restoreStoredGame(options: RestoreStoredGameOptions): GameState 
       }
       return refreshed
     }
+    if (!hasCurrentClueValues(state)) continue
     return state
   }
   return null

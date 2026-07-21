@@ -1,13 +1,20 @@
 import type { Joker } from '../data/types'
+import { getJokerEffects } from '../game'
 import type { GuessComparison } from '../game/types'
 import { t, type Locale } from '../i18n'
 import {
   compactDependenciesLabel,
   dependenciesLabel,
-  effectLabel,
-  listLabel,
+  effectMechanismsLabel,
+  effectValuesLabel,
+  narrowDependenciesLabel,
+  narrowEffectValuesLabel,
+  narrowTimingFamiliesLabel,
+  partialDependencyDetailLabel,
+  partialEffectDetailLabel,
+  partialTimingDetailLabel,
   rarityLabel,
-  timingLabel,
+  timingFamiliesLabel,
 } from '../ui/labels'
 import FeedbackCell from './FeedbackCell'
 import JokerImage from './JokerImage'
@@ -27,10 +34,41 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
         ? '灵魂牌'
         : 'The Soul'
       : `$${comparison.acquisition.shopPrice ?? '—'}`
-  const effectsLabel = listLabel(comparison.effects.values, effectLabel, locale)
-  const timingsLabel = listLabel(comparison.timings.values, timingLabel, locale)
-  const fullDependencySummary = dependenciesLabel(comparison.dependencies.values, locale)
+  const effectsLabel = effectValuesLabel(comparison.effects.values, locale)
+  const timingsLabel = timingFamiliesLabel(comparison.timings.values, locale)
   const dependencySummary = compactDependenciesLabel(comparison.dependencies.values, locale)
+  const narrowEffectsLabel = narrowEffectValuesLabel(comparison.effects.values, locale)
+  const narrowTimingsLabel = narrowTimingFamiliesLabel(comparison.timings.values, locale)
+  const narrowDependencySummary = narrowDependenciesLabel(comparison.dependencies.values, locale)
+  const exactEffectsLabel = effectMechanismsLabel(getJokerEffects(joker), locale)
+  const exactDependenciesLabel = dependenciesLabel(comparison.dependencies.values, locale)
+  const effectDetail =
+    comparison.effects.result === 'partial'
+      ? partialEffectDetailLabel(
+          getJokerEffects(joker),
+          comparison.effects.exactMechanismMatches,
+          comparison.effects.categoryOnlyMatches,
+          locale,
+        )
+      : undefined
+  const timingDetail =
+    comparison.timings.result === 'partial'
+      ? partialTimingDetailLabel(comparison.timings.values, comparison.timings.matches, locale)
+      : undefined
+  const dependencyDetail =
+    comparison.dependencies.result === 'partial'
+      ? partialDependencyDetailLabel(
+          comparison.dependencies.values,
+          comparison.dependencies.exactMatches,
+          comparison.dependencies.familyMatches,
+          locale,
+        )
+      : undefined
+  const partialDetails = [
+    { key: 'effect', label: t(locale, 'clue.effect'), detail: effectDetail },
+    { key: 'timing', label: t(locale, 'clue.timing'), detail: timingDetail },
+    { key: 'dependency', label: t(locale, 'clue.dependency'), detail: dependencyDetail },
+  ].filter((item): item is typeof item & { detail: string } => Boolean(item.detail))
 
   return (
     <article className="guess-row" aria-label={primaryName}>
@@ -66,6 +104,9 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       <FeedbackCell
         label={t(locale, 'clue.effect')}
         value={effectsLabel}
+        compactValue={narrowEffectsLabel}
+        detail={effectDetail}
+        accessibleValue={exactEffectsLabel}
         result={comparison.effects.result}
         cellIndex={2}
         locale={locale}
@@ -73,6 +114,8 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       <FeedbackCell
         label={t(locale, 'clue.timing')}
         value={timingsLabel}
+        compactValue={narrowTimingsLabel}
+        detail={timingDetail}
         result={comparison.timings.result}
         cellIndex={3}
         locale={locale}
@@ -80,11 +123,23 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       <FeedbackCell
         label={t(locale, 'clue.dependency')}
         value={dependencySummary}
-        accessibleValue={fullDependencySummary}
+        compactValue={narrowDependencySummary}
+        detail={dependencyDetail}
+        accessibleValue={exactDependenciesLabel}
         result={comparison.dependencies.result}
         cellIndex={4}
         locale={locale}
       />
+      {partialDetails.length > 0 ? (
+        <div className="guess-row__details" aria-hidden="true">
+          {partialDetails.map((item) => (
+            <span className="guess-row__detail" key={item.key}>
+              <strong>{item.label}</strong>
+              <span className="guess-row__detail-text">{item.detail}</span>
+            </span>
+          ))}
+        </div>
+      ) : null}
     </article>
   )
 }

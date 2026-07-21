@@ -126,7 +126,7 @@ img {
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 13px;
   min-width: 0;
 }
@@ -150,6 +150,7 @@ img {
   font-weight: 600;
   letter-spacing: 0.16em;
   line-height: 1;
+  transform: translateY(2px);
 }
 
 .top-actions {
@@ -200,7 +201,11 @@ img {
   position: relative;
   z-index: 4;
   padding: 24px 26px 18px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 0 solid var(--line);
+}
+
+.game-card__head--divided {
+  border-bottom-width: 1px;
 }
 
 .game-heading-row {
@@ -617,18 +622,20 @@ img {
 .glossary-link {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 2px 0;
-  border: 0;
-  border-bottom: 1px solid #9aaaa3;
-  background: transparent;
+  gap: 6px;
+  padding: 6px 9px;
+  border: 1px solid #9aaaa3;
+  border-radius: 8px;
+  background: #f8f3e9;
   color: #3d6968;
   font-size: 12px;
   font-weight: 700;
+  min-height: 36px;
 }
 
 .glossary-link:hover {
-  border-bottom-color: #3d6968;
+  border-color: #3d6968;
+  background: #fffaf0;
 }
 
 .assisted-badge {
@@ -661,7 +668,7 @@ img {
 }
 
 .guess-header {
-  align-items: end;
+  align-items: center;
   padding: 0 2px 2px;
   color: #6d7772;
   font-size: 11px;
@@ -671,6 +678,45 @@ img {
 
 .guess-header > :first-child {
   text-align: left;
+}
+
+.clue-info-button {
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 2px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-align: center;
+}
+
+.clue-info-button span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.clue-info-button svg {
+  flex: none;
+  color: #8b958f;
+}
+
+.clue-info-button:hover {
+  background: #eee7da;
+  color: #355f5c;
+}
+
+.clue-info-button:focus-visible {
+  outline: 2px solid #397a75;
+  outline-offset: 1px;
 }
 
 .guess-row {
@@ -770,6 +816,20 @@ img {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.35;
+}
+
+.feedback-cell__detail {
+  max-width: 100%;
+  color: currentColor;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.25;
+  opacity: 0.78;
+  overflow-wrap: anywhere;
+}
+
+.guess-row__details {
+  display: none;
 }
 
 .feedback-cell__readout {
@@ -1188,6 +1248,15 @@ img {
   margin-top: 26px;
 }
 
+.glossary-body > section {
+  scroll-margin-top: 10px;
+}
+
+.glossary-body > section[data-targeted='true'] .glossary-section__head {
+  padding-left: 8px;
+  border-left: 3px solid var(--gold);
+}
+
 .glossary-intro {
   max-width: 740px;
 }
@@ -1204,6 +1273,10 @@ img {
   margin: 0;
   color: var(--ink);
   font-size: 16px;
+}
+
+.glossary-section__head h3:focus {
+  outline: none;
 }
 
 .glossary-section__head span {
@@ -1281,6 +1354,22 @@ img {
   color: #596660;
   font-size: 11px;
   line-height: 1.4;
+}
+
+.glossary-detail-groups {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.glossary-detail-group > span {
+  color: #826d4e;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.glossary-detail-group .glossary-values {
+  margin-top: 3px;
 }
 
 .glossary-hint {
@@ -1595,17 +1684,17 @@ img {
 
 @media (max-width: 900px) {
   .guess-header {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: minmax(120px, 1.25fr) repeat(5, minmax(0, 1fr));
     gap: 6px;
     padding: 0 9px 2px;
   }
 
   .guess-header > :first-child {
-    display: none;
+    display: block;
   }
 
   .guess-row {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: minmax(120px, 1.25fr) repeat(5, minmax(0, 1fr));
     gap: 6px;
     padding: 8px;
     border: 1px solid #c9c1b4;
@@ -1614,7 +1703,7 @@ img {
   }
 
   .joker-cell {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   .feedback-cell__value {
@@ -1627,6 +1716,47 @@ img {
   .guess-header > span {
     min-width: 0;
     overflow-wrap: anywhere;
+  }
+
+  .clue-info-button {
+    min-height: 38px;
+    gap: 2px;
+    padding: 1px;
+  }
+
+  .clue-info-button svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .feedback-cell__detail {
+    display: none;
+  }
+
+  .guess-row__details {
+    grid-column: 1 / -1;
+    display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 3px 12px;
+    margin: 1px 3px 0;
+    padding: 5px 4px 1px;
+    border-top: 1px solid rgb(197 146 50 / 35%);
+    color: var(--partial-ink);
+    font-size: clamp(9px, 2.35vw, 10px);
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .guess-row__detail {
+    display: inline-flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 0 4px;
+  }
+
+  .guess-row__detail strong {
+    color: #7a5816;
   }
 
   .collection-toolbar {
@@ -1777,8 +1907,8 @@ img {
 
   .guess-header {
     grid-template-columns:
-      minmax(48px, 0.95fr) minmax(0, 0.72fr) minmax(0, 0.8fr) minmax(0, 0.86fr)
-      minmax(0, 0.98fr) minmax(0, 1.28fr);
+      minmax(48px, 0.95fr) minmax(0, 0.82fr) minmax(0, 0.82fr) minmax(0, 0.88fr)
+      minmax(0, 0.96fr) minmax(0, 1.15fr);
     align-items: center;
     gap: 2px;
     padding: 0 5px 1px;
@@ -1802,8 +1932,8 @@ img {
 
   .guess-row {
     grid-template-columns:
-      minmax(48px, 0.95fr) minmax(0, 0.72fr) minmax(0, 0.8fr) minmax(0, 0.86fr)
-      minmax(0, 0.98fr) minmax(0, 1.28fr);
+      minmax(48px, 0.95fr) minmax(0, 0.82fr) minmax(0, 0.82fr) minmax(0, 0.88fr)
+      minmax(0, 0.96fr) minmax(0, 1.15fr);
     gap: 2px;
     padding: 4px;
     border: 1px solid #c9c1b4;
@@ -2266,7 +2396,9 @@ img {
 
   .guess-header,
   .guess-row {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns:
+      minmax(0, 0.84fr) minmax(0, 0.84fr) minmax(0, 0.9fr) minmax(0, 1fr)
+      minmax(0, 1.42fr);
   }
 
   .guess-header {
@@ -2301,6 +2433,16 @@ img {
   .joker-cell__name strong,
   .feedback-cell__value {
     font-size: 10px;
+  }
+
+  .feedback-cell__value[data-compact-value] {
+    font-size: 0;
+  }
+
+  .feedback-cell__value[data-compact-value]::after {
+    content: attr(data-compact-value);
+    font-size: 10px;
+    line-height: 1.2;
   }
 }
 

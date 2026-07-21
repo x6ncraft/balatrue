@@ -54,7 +54,7 @@ function makeJoker(options: FixtureOptions = {}): Joker {
         kind: acquisition,
         unlockState: acquisition === 'soul' ? 'legendary' : 'starting',
       },
-      effects: options.effects ?? ['mechanism'],
+      effects: options.effects ?? ['rules:probability'],
       timings: options.timings ?? ['passive'],
       dependencies: options.dependencies ?? [{ family: 'none' }],
     },
@@ -101,7 +101,7 @@ describe('compareJokers', () => {
     expect(compareJokers(expensive, cheap).acquisition.direction).toBe('down')
   })
 
-  it('treats Soul as a separate acquisition kind without a numeric arrow', () => {
+  it('orders Soul above shop prices without inventing a numeric price', () => {
     const soul = makeJoker({
       id: 'j_soul',
       rarity: 'legendary',
@@ -124,7 +124,13 @@ describe('compareJokers', () => {
       kind: 'shop',
       shopPrice: 9,
       result: 'miss',
-      direction: null,
+      direction: 'up',
+    })
+    expect(compareJokers(soul, shop).acquisition).toEqual({
+      kind: 'soul',
+      shopPrice: null,
+      result: 'miss',
+      direction: 'down',
     })
   })
 
@@ -138,32 +144,73 @@ describe('compareJokers', () => {
     expect(compareJokers(partial, answer).effects).toEqual({
       values: ['chips', 'economy'],
       matches: ['chips'],
+      exactMechanismMatches: ['chips'],
+      categoryOnlyMatches: [],
       result: 'partial',
     })
     expect(compareJokers(miss, answer).effects.result).toBe('miss')
   })
 
-  it('compares the smaller player timing vocabulary while preserving set semantics', () => {
+  it('compares the playable timing-family sets instead of singleton events', () => {
     const answer = makeJoker({ timings: ['card_scored', 'round_end'] })
-    const partial = makeJoker({ id: 'j_partial', timings: ['hand_scored', 'shop'] })
+    const partial = makeJoker({ id: 'j_partial', timings: ['card_played', 'round_start'] })
     const empty = makeJoker({ id: 'j_empty', timings: [] })
 
     expect(compareJokers(partial, answer).timings).toEqual({
-      values: ['play', 'shop'],
-      matches: ['play'],
+      values: ['hand_action', 'round_boundary'],
+      matches: ['round_boundary'],
       result: 'partial',
     })
     expect(compareJokers(empty, makeJoker({ timings: [] })).timings.result).toBe('exact')
   })
 
-  it('treats related raw play triggers as the same player-facing timing', () => {
+  it('does not mark different play events as an exact timing match', () => {
     const answer = makeJoker({ timings: ['card_scored', 'joker_triggered'] })
     const guess = makeJoker({ id: 'j_guess', timings: ['card_played'] })
 
     expect(compareJokers(guess, answer).timings).toEqual({
-      values: ['play'],
-      matches: ['play'],
-      result: 'exact',
+      values: ['hand_action'],
+      matches: [],
+      result: 'miss',
+    })
+  })
+
+  it('marks different mechanisms in the same broad effect category as partial', () => {
+    const answer = makeJoker({ effects: ['generate:tarot'] })
+    const guess = makeJoker({ id: 'j_guess', effects: ['generate:spectral'] })
+
+    expect(compareJokers(guess, answer).effects).toEqual({
+      values: ['generate'],
+      matches: ['generate'],
+      exactMechanismMatches: [],
+      categoryOnlyMatches: ['generate:spectral'],
+      result: 'partial',
+    })
+  })
+
+  it('marks different broad effect categories as a miss', () => {
+    const answer = makeJoker({ effects: ['generate:tarot'] })
+    const guess = makeJoker({ id: 'j_guess', effects: ['modify:gold_card'] })
+
+    expect(compareJokers(guess, answer).effects).toEqual({
+      values: ['adjust'],
+      matches: [],
+      exactMechanismMatches: [],
+      categoryOnlyMatches: [],
+      result: 'miss',
+    })
+  })
+
+  it('keeps comparable scopes for the otherwise identical hand-rule Jokers', () => {
+    const fourFingers = makeJoker({ effects: ['rules:poker_hand_size'] })
+    const shortcut = makeJoker({ id: 'j_shortcut', effects: ['rules:straight_gap'] })
+
+    expect(compareJokers(fourFingers, shortcut).effects).toEqual({
+      values: ['mechanic'],
+      matches: ['mechanic'],
+      exactMechanismMatches: [],
+      categoryOnlyMatches: ['rules:poker_hand_size'],
+      result: 'partial',
     })
   })
 
@@ -199,10 +246,10 @@ describe('compareJokers', () => {
     })
   })
 
-  it('marks different raw dependencies in one player family as partial', () => {
+  it('merges related source conditions while separating different player directions', () => {
     const moneyAnswer = makeJoker({ dependencies: [{ family: 'money' }] })
     const shopGuess = makeJoker({ id: 'j_shop', dependencies: [{ family: 'shop' }] })
-    const suitAnswer = makeJoker({ dependencies: [{ family: 'suit', value: 'hearts' }] })
+    const handAnswer = makeJoker({ dependencies: [{ family: 'poker_hand', value: 'straight' }] })
     const rankGuess = makeJoker({ id: 'j_rank', dependencies: [{ family: 'rank', value: 'ace' }] })
 
     expect(compareJokers(shopGuess, moneyAnswer).dependencies).toEqual({
@@ -211,26 +258,29 @@ describe('compareJokers', () => {
       familyMatches: [{ family: 'economy', value: 'shop' }],
       result: 'partial',
     })
-    expect(compareJokers(rankGuess, suitAnswer).dependencies).toMatchObject({
-      familyMatches: [{ family: 'cards', value: 'rank:ace' }],
-      result: 'partial',
+    expect(compareJokers(rankGuess, handAnswer).dependencies).toMatchObject({
+      familyMatches: [],
+      result: 'miss',
     })
   })
 
-  it('hides a generic playing-card dependency when a specific card condition exists', () => {
+  it('preserves an independent playing-card condition beside a rank condition', () => {
     const answer = makeJoker({
-      dependencies: [{ family: 'playing_card' }, { family: 'suit', value: 'hearts' }],
+      dependencies: [
+        { family: 'rank', value: 'face' },
+        { family: 'playing_card', value: 'first_scoring' },
+      ],
     })
     const guess = makeJoker({
       id: 'j_guess',
-      dependencies: [{ family: 'suit', value: 'hearts' }],
+      dependencies: [{ family: 'rank', value: 'face' }],
     })
 
     expect(compareJokers(guess, answer).dependencies).toEqual({
-      values: [{ family: 'cards', value: 'suit:hearts' }],
-      exactMatches: [{ family: 'cards', value: 'suit:hearts' }],
+      values: [{ family: 'cards', value: 'rank:face' }],
+      exactMatches: [{ family: 'cards', value: 'rank:face' }],
       familyMatches: [],
-      result: 'exact',
+      result: 'partial',
     })
   })
 

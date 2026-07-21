@@ -24,10 +24,16 @@ function comparison(
       result: acquisition,
       direction: acquisition === 'exact' ? null : 'up',
     },
-    effects: { values: ['chips'], matches: effects === 'miss' ? [] : ['chips'], result: effects },
+    effects: {
+      values: ['chips'],
+      matches: effects === 'miss' ? [] : ['chips'],
+      exactMechanismMatches: effects === 'miss' ? [] : ['chips'],
+      categoryOnlyMatches: [],
+      result: effects,
+    },
     timings: {
-      values: ['passive'],
-      matches: timings === 'miss' ? [] : ['passive'],
+      values: ['always'],
+      matches: timings === 'miss' ? [] : ['always'],
       result: timings,
     },
     dependencies: {

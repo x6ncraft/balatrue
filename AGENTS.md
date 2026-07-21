@@ -27,7 +27,8 @@
 - 反馈算法只读取版本化字段，不根据名称或图片做隐式特判。
 - 绿色表示完全吻合，黄色表示集合或同类条件部分吻合；图标、文字和边框共同表达状态。
 - 纯前端答案可以被检查，因此不承诺防作弊，也不设计有奖排名。
-- `src/data/jokers.generated.ts` 只能由 `scripts/sync-jokers.ts` 生成；
+- `src/data/jokers.generated.ts` 只能由远程维护命令 `scripts/sync-jokers.ts`，或读取已提交来源快照的
+  `scripts/regenerate-jokers.ts` 生成；
   `src/search/joker-search.generated.ts` 只能由 `scripts/generate-joker-search.ts` 生成，均禁止手改。
 - 分类、价格、稀有度、来源记录和搜索词都要能从已提交的来源审查快照、纯转换逻辑与本地图片离线
   重建；`bun run data:generated:check` 必须在生产构建中逐项拒绝漂移。

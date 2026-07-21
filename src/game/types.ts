@@ -1,4 +1,5 @@
-import type { GameDependency } from './clue-model'
+import type { JokerEffect } from '../data/types'
+import type { GameDependency, GameEffectValue, GameTimingFamily } from './clue-model'
 
 export type { GameDependency } from './clue-model'
 
@@ -6,7 +7,7 @@ export const MAX_ATTEMPTS = 6 as const
 
 export type MatchResult = 'exact' | 'partial' | 'miss'
 
-/** Direction always points from the guessed numeric value toward the answer. */
+/** Direction points from the guessed value toward the answer in the clue's documented order. */
 export type Direction = 'up' | 'down'
 
 export type RarityCode = 'common' | 'uncommon' | 'rare' | 'legendary'
@@ -25,10 +26,17 @@ export interface AcquisitionComparison {
   direction: Direction | null
 }
 
-export interface TagComparison {
-  values: string[]
-  matches: string[]
+export interface TagComparison<TValue extends string = string> {
+  values: TValue[]
+  matches: TValue[]
   result: MatchResult
+}
+
+export interface EffectComparison extends TagComparison<GameEffectValue> {
+  /** Guessed mechanisms that are also present verbatim on the answer. */
+  exactMechanismMatches: JokerEffect[]
+  /** Guessed mechanisms whose broad effect category exists on the answer, but whose detail differs. */
+  categoryOnlyMatches: JokerEffect[]
 }
 
 export interface DependencyComparison {
@@ -43,8 +51,8 @@ export interface GuessComparison {
   correct: boolean
   rarity: RarityComparison
   acquisition: AcquisitionComparison
-  effects: TagComparison
-  timings: TagComparison
+  effects: EffectComparison
+  timings: TagComparison<GameTimingFamily>
   dependencies: DependencyComparison
 }
 

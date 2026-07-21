@@ -73,6 +73,7 @@ const zhCN = {
   'feedback.exact': '完全吻合',
   'feedback.partial': '部分吻合',
   'feedback.miss': '不吻合',
+  'feedback.detail': '格内补充：{detail}',
   'feedback.higher': '答案更高',
   'feedback.lower': '答案更低',
   'feedback.legend': '绿色完全吻合，黄色部分吻合，箭头指向答案。',
@@ -96,20 +97,23 @@ const zhCN = {
   'help.title': '怎么玩',
   'help.intro': '你有 {count} 次机会猜出今天的小丑牌。每次出牌后，五项线索会告诉你离答案有多近。',
   'help.exact': '绿色表示这一项完全吻合。',
-  'help.partial': '黄色表示这一项有交集；“依赖条件”里的相近条件也算部分吻合。',
+  'help.partial': '黄色表示部分相关；格内会说明已吻合的细项、同类差异，或答案另有内容。',
   'help.miss': '灰红色表示这一项不吻合。',
   'help.arrow': '价格或稀有度旁的箭头始终指向正确答案。',
 
   'glossary.kicker': '线索参考',
   'glossary.title': '线索字典',
   'glossary.intro':
-    '这里列出五项线索的完整取值，以及 150 张牌里实际出现的依赖细项。查字典不会影响战绩。',
+    '棋盘以便于推理的大类为主，黄色格只在有帮助时说明猜测中的吻合细项、同类差异或答案另有内容；这里列出全部大类、覆盖牌数和完整细节。查字典不会影响战绩。',
+  'glossary.categoryCount': '{count} 类',
+  'glossary.jokerCount': '{count} 张',
   'glossary.rarityHint': '稀有度和价格不同时，箭头会从你的猜测指向答案。',
   'glossary.shopPrice': '商店价格',
   'glossary.shopPriceDescription': '可购买小丑牌的基础价格；相同为完全吻合。',
-  'glossary.soulDescription': '传奇小丑不显示商店价格，统一归为灵魂牌获取。',
+  'glossary.soulDescription':
+    '传奇小丑没有官方商店价格，通过灵魂牌获取。在 Balatrue 的方向提示中，灵魂牌排在所有商店价格之上，但不换算成具体金额。',
   'glossary.note':
-    '这些是 Balatrue 为猜谜整理的易懂分类，不是《小丑牌》官方属性。触发时机描述小丑牌实际生效或发生变化的动作，同一张牌可能有多个时机。',
+    '这些是 Balatrue 为猜谜整理的分类，不是《小丑牌》官方属性。主效果写“做什么”，触发时机写“何时结算”，依赖条件只写结算前还需满足的已有状态。棋盘用大类提供方向；同类牌之间，绿色表示具体机制或条件也相同，黄色表示仍有细节差别。图鉴和字典保留完整细节，方便理解与追溯。',
 
   'footer.links': '项目链接',
   'footer.madeByPrefix': '',
@@ -144,7 +148,7 @@ const zhCN = {
   'collection.searchPlaceholder': '中文、英文或拼音',
   'collection.all': '全部',
   'collection.results': '找到 {count} 张小丑牌',
-  'collection.classificationNote': '名称、稀有度和价格为资料字段；其余为 Balatrue 分类。',
+  'collection.classificationNote': '大类用于推理；细项区分绿与黄，并保留完整说明。',
   'collection.soul': '灵魂牌',
   'collection.noResults': '没有符合这些条件的小丑牌。',
   'collection.clearFilters': '清空',
@@ -175,6 +179,7 @@ const zhCN = {
   'a11y.openLanguageMenu': '选择界面语言',
   'a11y.openHelp': '打开玩法说明',
   'a11y.openCollection': '打开小丑图鉴',
+  'a11y.openClueGlossary': '查看“{clue}”的 {count} 类说明',
   'a11y.guessHistory': '出牌记录',
 } as const
 
@@ -243,9 +248,9 @@ const en = {
   'clue.joker': 'Joker',
   'clue.rarity': 'Rarity',
   'clue.price': 'Base price',
-  'clue.effect': 'Main effect',
+  'clue.effect': 'Effect',
   'clue.timing': 'Trigger',
-  'clue.dependency': 'Depends on',
+  'clue.dependency': 'Condition',
 
   'rarity.common': 'Common',
   'rarity.uncommon': 'Uncommon',
@@ -255,6 +260,7 @@ const en = {
   'feedback.exact': 'Exact match',
   'feedback.partial': 'Partial match',
   'feedback.miss': 'No match',
+  'feedback.detail': 'Shown detail: {detail}',
   'feedback.higher': 'The answer is higher',
   'feedback.lower': 'The answer is lower',
   'feedback.legend': 'Green is exact, yellow is partial, and arrows point toward the answer.',
@@ -278,24 +284,27 @@ const en = {
   'help.title': 'How to play',
   'help.intro':
     "You have {count} tries to find today's Joker. After each guess, five clues show how close you are.",
-  'help.exact': 'Green means an exact match.',
+  'help.exact': 'Green means the clue matches exactly.',
   'help.partial':
-    'Yellow means the clues overlap; related values under “Depends on” also count as partial.',
+    'Yellow means a partial match. The cell calls out an exact detail, a related-but-different detail, or something extra on the answer.',
   'help.miss': 'Muted red means there is no match.',
   'help.arrow': 'Arrows beside price or rarity always point toward the answer.',
 
   'glossary.kicker': 'Clue reference',
   'glossary.title': 'Clue glossary',
   'glossary.intro':
-    'This lists every value across all five clues, plus the condition details used by the current 150 Jokers. Opening the glossary does not affect scoring.',
+    'The board leads with broad, useful categories. When helpful, a yellow cell identifies a matching guessed detail, a related-but-different detail, or something extra on the answer. This lists every category, its coverage, and the exact details grouped beneath it. Opening it does not affect scoring.',
+  'glossary.categoryCount': '{count} categories',
+  'glossary.jokerCount': '{count} Jokers',
   'glossary.rarityHint':
     'When rarity or price differs, the arrow points from your guess toward the answer.',
   'glossary.shopPrice': 'Shop price',
   'glossary.shopPriceDescription':
     'The base price of purchasable Jokers; equal prices are an exact match.',
-  'glossary.soulDescription': 'Legendary Jokers have no shop price and are grouped under The Soul.',
+  'glossary.soulDescription':
+    "Legendary Jokers have no official shop price and come from The Soul. In Balatrue's directional clues, The Soul ranks above every shop price without being assigned a dollar value.",
   'glossary.note':
-    'These are approachable categories created by Balatrue for this puzzle, not official Balatro attributes. Trigger timing describes the actions where a Joker applies or changes, so one Joker may have several timings.',
+    'These are Balatrue puzzle categories, not official Balatro attributes. Effect says what a Joker does, Trigger says when it resolves, and Condition lists only pre-existing state still required at that point. The board gives direction with broad categories. Within one category, green means the exact mechanism or condition also matches; yellow explains the useful part of a partial match without revealing an unguessed answer detail. The collection and glossary retain the full breakdown for explanation and traceability.',
 
   'footer.links': 'Project links',
   'footer.madeByPrefix': 'A little project by ',
@@ -333,7 +342,7 @@ const en = {
   'collection.all': 'All',
   'collection.results': '{count} Jokers found',
   'collection.classificationNote':
-    'Names, rarity, and price are source facts; the remaining fields are Balatrue categories.',
+    'Categories guide deduction; exact details separate green from yellow and preserve the full explanation.',
   'collection.soul': 'The Soul',
   'collection.noResults': 'No Jokers match these filters.',
   'collection.clearFilters': 'Clear all',
@@ -365,6 +374,7 @@ const en = {
   'a11y.openLanguageMenu': 'Choose interface language',
   'a11y.openHelp': 'Open how to play',
   'a11y.openCollection': 'Open Joker collection',
+  'a11y.openClueGlossary': 'Open the {count} {clue} categories',
   'a11y.guessHistory': 'Guess history',
 } as const satisfies Record<MessageKey, string>
 

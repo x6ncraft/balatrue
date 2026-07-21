@@ -1,6 +1,6 @@
 {
   "name": "balatrue",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "license": "MIT",
   "description": "A daily Balatro Joker guessing game inspired by Wordle, Handle, and Counter-Strikle.",
@@ -20,6 +20,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "data:sync": "bun scripts/sync-jokers.ts && bun run data:search",
+    "data:regenerate": "bun scripts/regenerate-jokers.ts",
     "data:search": "bun scripts/generate-joker-search.ts",
     "data:provenance": "bun scripts/public-provenance.ts",
     "data:generated:check": "bun scripts/check-generated-data.ts",

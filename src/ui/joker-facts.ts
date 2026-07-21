@@ -1,14 +1,7 @@
 import type { Joker } from '../data/types'
 import { getJokerDependencies, getJokerEffects, getJokerTimings } from '../game/joker-access'
 import { t, type Locale } from '../i18n'
-import {
-  compactDependenciesLabel,
-  dependenciesLabel,
-  effectLabel,
-  listLabel,
-  rarityLabel,
-  timingLabel,
-} from './labels'
+import { dependenciesLabel, effectMechanismsLabel, rarityLabel, timingDetailsLabel } from './labels'
 
 export type JokerFactKey = 'rarity' | 'price' | 'effect' | 'timing' | 'dependency'
 
@@ -40,18 +33,17 @@ export function jokerFacts(joker: Joker, locale: Locale): JokerFact[] {
     {
       key: 'effect',
       label: t(locale, 'clue.effect'),
-      value: listLabel(getJokerEffects(joker), effectLabel, locale),
+      value: effectMechanismsLabel(getJokerEffects(joker), locale),
     },
     {
       key: 'timing',
       label: t(locale, 'clue.timing'),
-      value: listLabel(getJokerTimings(joker), timingLabel, locale),
+      value: timingDetailsLabel(getJokerTimings(joker), locale),
     },
     {
       key: 'dependency',
       label: t(locale, 'clue.dependency'),
-      value: compactDependenciesLabel(getJokerDependencies(joker), locale),
-      accessibleValue: dependenciesLabel(getJokerDependencies(joker), locale),
+      value: dependenciesLabel(getJokerDependencies(joker), locale),
     },
   ]
 }

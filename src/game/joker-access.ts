@@ -1,5 +1,16 @@
-import type { Joker, JokerRarity } from '../data/types'
-import { gameDependencyKey, projectJokerDependencies, projectJokerTimings } from './clue-model'
+import type { Joker, JokerEffect, JokerRarity, JokerTiming } from '../data/types'
+import {
+  gameDependencyKey,
+  projectJokerDependencies,
+  projectJokerEffectCategories,
+  projectJokerEffectValues,
+  projectJokerEffects,
+  projectJokerTimingFamilies,
+  projectJokerTimings,
+  type GameTimingFamily,
+  type GameEffectCategory,
+  type GameEffectValue,
+} from './clue-model'
 import type { GameDependency, RarityCode } from './types'
 
 const RARITY_RANK: Record<JokerRarity, number> = {
@@ -40,12 +51,24 @@ export function getJokerAcquisition(
   return { kind, shopPrice: joker.official.cost }
 }
 
-export function getJokerEffects(joker: Joker): string[] {
-  return [...joker.classification.effects]
+export function getJokerEffects(joker: Joker): JokerEffect[] {
+  return projectJokerEffects(joker)
 }
 
-export function getJokerTimings(joker: Joker): string[] {
+export function getJokerEffectCategories(joker: Joker): GameEffectCategory[] {
+  return projectJokerEffectCategories(joker)
+}
+
+export function getJokerEffectValues(joker: Joker): GameEffectValue[] {
+  return projectJokerEffectValues(joker)
+}
+
+export function getJokerTimings(joker: Joker): JokerTiming[] {
   return projectJokerTimings(joker)
+}
+
+export function getJokerTimingFamilies(joker: Joker): GameTimingFamily[] {
+  return projectJokerTimingFamilies(joker)
 }
 
 export function getJokerDependencies(joker: Joker): GameDependency[] {

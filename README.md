@@ -3,7 +3,7 @@
 [Play Balatrue](https://balatrue.x6n.me/) · [简体中文](README.zh-CN.md)
 
 Balatrue is a daily web puzzle about Balatro Jokers. You have six guesses. After each guess, five
-clues—rarity, base price or acquisition, primary effect, trigger timing, and dependency—help narrow
+clues—rarity, base price or acquisition, effect, trigger, and condition—help narrow
 down the answer.
 
 The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html),
@@ -24,12 +24,20 @@ license; see the rights section below. No authorization from the Balatro rights 
 - **Endless:** a local shuffle bag cycles through all 150 Jokers without repeating within a round.
 - **Quick first guess:** type any Joker you have in mind, or play one of five random cards with a
   single tap; reroll all five whenever none feels right.
-- **Five clues:** rarity, price or acquisition, main effect, trigger timing, and dependency.
+- **Five clues:** rarity, price or acquisition, effect, trigger, and condition.
+- **Readable clue model:** effects and dependencies each show seven broad categories on the board;
+  when useful, a yellow cell identifies a matching guessed detail, a related-but-different detail,
+  or something extra on the answer. It never names an answer detail the player has not guessed.
+  Timing compares eight broad phases while retaining 22 exact events for reference.
+- **Compact mobile feedback:** narrow layouts keep all five clue columns aligned, move longer yellow
+  explanations into a full-width line below the guess, and never truncate clue text.
 - **Search:** in-game English and Simplified Chinese names, full pinyin, and pinyin initials; every
   match remains available in a scrollable list.
-- **Clue glossary:** every player-facing clue value, available without affecting the score.
+- **Clue glossary:** all comparison categories and their underlying mechanisms, events, and condition
+  details, available without affecting the score; every clue header opens its matching section.
 - **Joker collection:** searchable and filterable; opening it during an active Daily round marks that
-  round as assisted and excludes it from stats.
+  round as assisted and excludes it from stats. Each entry keeps the fuller audited clue explanation
+  behind the compact board labels.
 - **Local stats and sharing:** win rate, streaks, average guesses, and spoiler-free result sharing.
 - **Responsive play:** the Joker identity and five clue cells stay aligned as six columns on common
   phone widths; screens at 340px and below use a more readable fallback.
@@ -60,6 +68,14 @@ Build and preview the static site:
 ```bash
 bun run build
 bun run preview
+```
+
+After changing audited classification rules, rebuild and verify the checked-in runtime data without
+network access:
+
+```bash
+bun run data:regenerate
+bun run data:validate
 ```
 
 The deployable output is `dist/`. Remote data synchronization is a maintainer-only operation and is

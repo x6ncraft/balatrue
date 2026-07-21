@@ -2,30 +2,30 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { BookOpen, Search, ShieldAlert, SlidersHorizontal, X } from 'lucide-react'
 
-import {
-  JOKER_EFFECTS,
-  JOKER_RARITIES,
-  type Joker,
-  type JokerEffect,
-  type JokerRarity,
-} from '../data/types'
+import { JOKER_RARITIES, type Joker, type JokerRarity } from '../data/types'
 import {
   GAME_DEPENDENCY_FAMILIES,
-  GAME_TIMINGS,
+  GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
   getJokerDependencies,
+  getJokerEffectCategories,
+  getJokerEffects,
+  getJokerTimingFamilies,
   getJokerTimings,
   type GameDependencyFamily,
-  type GameTiming,
+  type GameEffectCategory,
+  type GameTimingFamily,
 } from '../game'
 import { t, type Locale } from '../i18n'
 import { searchJokers, type JokerSearchIndex } from '../search'
 import {
   dependencyFamilyLabel,
   dependenciesLabel,
-  effectLabel,
-  listLabel,
+  effectCategoryLabel,
+  effectMechanismsLabel,
   rarityLabel,
-  timingLabel,
+  timingDetailsLabel,
+  timingFamilyLabel,
 } from '../ui/labels'
 import { jokerPriceLabel } from '../ui/joker-facts'
 import JokerImage from './JokerImage'
@@ -56,8 +56,8 @@ export default function JokerCollectionDialog({
   const previousRequiresConfirmationRef = useRef(requiresConfirmation)
   const [query, setQuery] = useState('')
   const [rarityFilter, setRarityFilter] = useState<JokerRarity | ''>('')
-  const [effectFilter, setEffectFilter] = useState<JokerEffect | ''>('')
-  const [timingFilter, setTimingFilter] = useState<GameTiming | ''>('')
+  const [effectFilter, setEffectFilter] = useState<GameEffectCategory | ''>('')
+  const [timingFilter, setTimingFilter] = useState<GameTimingFamily | ''>('')
   const [dependencyFilter, setDependencyFilter] = useState<GameDependencyFamily | ''>('')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
@@ -76,8 +76,8 @@ export default function JokerCollectionDialog({
       [...jokers]
         .filter((joker) => matchingIds === null || matchingIds.has(joker.id))
         .filter((joker) => !rarityFilter || joker.official.rarity === rarityFilter)
-        .filter((joker) => !effectFilter || joker.classification.effects.includes(effectFilter))
-        .filter((joker) => !timingFilter || getJokerTimings(joker).includes(timingFilter))
+        .filter((joker) => !effectFilter || getJokerEffectCategories(joker).includes(effectFilter))
+        .filter((joker) => !timingFilter || getJokerTimingFamilies(joker).includes(timingFilter))
         .filter(
           (joker) =>
             !dependencyFilter ||
@@ -251,6 +251,7 @@ export default function JokerCollectionDialog({
                 className="collection-filter-toggle"
                 type="button"
                 aria-expanded={filtersOpen}
+                aria-controls="collection-filters"
                 onClick={() => setFiltersOpen((current) => !current)}
               >
                 <SlidersHorizontal size={17} aria-hidden="true" />
@@ -258,7 +259,7 @@ export default function JokerCollectionDialog({
                 {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
               </button>
 
-              <div className="collection-filters" data-open={filtersOpen}>
+              <div id="collection-filters" className="collection-filters" data-open={filtersOpen}>
                 <label>
                   <span>{t(locale, 'clue.rarity')}</span>
                   <select
@@ -277,12 +278,14 @@ export default function JokerCollectionDialog({
                   <span>{t(locale, 'clue.effect')}</span>
                   <select
                     value={effectFilter}
-                    onChange={(event) => setEffectFilter(event.target.value as JokerEffect | '')}
+                    onChange={(event) =>
+                      setEffectFilter(event.target.value as GameEffectCategory | '')
+                    }
                   >
                     <option value="">{t(locale, 'collection.all')}</option>
-                    {JOKER_EFFECTS.map((effect) => (
-                      <option key={effect} value={effect}>
-                        {effectLabel(effect, locale)}
+                    {GAME_EFFECT_CATEGORIES.map((category) => (
+                      <option key={category} value={category}>
+                        {effectCategoryLabel(category, locale)}
                       </option>
                     ))}
                   </select>
@@ -291,12 +294,14 @@ export default function JokerCollectionDialog({
                   <span>{t(locale, 'clue.timing')}</span>
                   <select
                     value={timingFilter}
-                    onChange={(event) => setTimingFilter(event.target.value as GameTiming | '')}
+                    onChange={(event) =>
+                      setTimingFilter(event.target.value as GameTimingFamily | '')
+                    }
                   >
                     <option value="">{t(locale, 'collection.all')}</option>
-                    {GAME_TIMINGS.map((timing) => (
+                    {GAME_TIMING_FAMILIES.map((timing) => (
                       <option key={timing} value={timing}>
-                        {timingLabel(timing, locale)}
+                        {timingFamilyLabel(timing, locale)}
                       </option>
                     ))}
                   </select>
@@ -372,11 +377,11 @@ export default function JokerCollectionDialog({
                       </div>
                       <div>
                         <dt>{t(locale, 'clue.effect')}</dt>
-                        <dd>{listLabel(joker.classification.effects, effectLabel, locale)}</dd>
+                        <dd>{effectMechanismsLabel(getJokerEffects(joker), locale)}</dd>
                       </div>
                       <div>
                         <dt>{t(locale, 'clue.timing')}</dt>
-                        <dd>{listLabel(getJokerTimings(joker), timingLabel, locale)}</dd>
+                        <dd>{timingDetailsLabel(getJokerTimings(joker), locale)}</dd>
                       </div>
                       <div className="collection-card__wide">
                         <dt>{t(locale, 'clue.dependency')}</dt>

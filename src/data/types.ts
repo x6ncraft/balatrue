@@ -1,5 +1,5 @@
 export const JOKER_DATA_GAME_VERSION = '1.0.1o-FULL' as const
-export const JOKER_CLASSIFICATION_VERSION = 9 as const
+export const JOKER_CLASSIFICATION_VERSION = 11 as const
 
 export const JOKER_RARITIES = ['common', 'uncommon', 'rare', 'legendary'] as const
 export type JokerRarity = (typeof JOKER_RARITIES)[number]
@@ -16,7 +16,32 @@ export const JOKER_EFFECTS = [
   'x_mult',
   'economy',
   'retrigger',
-  'mechanism',
+  'generate:stone_card',
+  'generate:tarot',
+  'generate:playing_card_copy',
+  'generate:spectral',
+  'generate:joker',
+  'generate:tag',
+  'generate:sealed_card',
+  'generate:joker_copy',
+  'generate:consumable_copy',
+  'modify:poker_hand_level',
+  'modify:destroy_playing_card',
+  'modify:gold_card',
+  'resource:reroll',
+  'resource:hands',
+  'resource:discards',
+  'resource:hand_size',
+  'rules:poker_hand_size',
+  'rules:face_identity',
+  'rules:all_cards_score',
+  'rules:straight_gap',
+  'rules:boss_blind',
+  'rules:survival',
+  'rules:suit_identity',
+  'rules:duplicates',
+  'rules:copy_ability',
+  'rules:probability',
 ] as const
 export type JokerEffect = (typeof JOKER_EFFECTS)[number]
 
@@ -35,6 +60,10 @@ export const JOKER_TIMINGS = [
   'blind_defeated',
   'blind_failed',
   'shop',
+  'booster_opened',
+  'booster_skipped',
+  'shop_rerolled',
+  'shop_ended',
   'round_start',
   'round_end',
   'sold',

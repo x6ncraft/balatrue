@@ -3,14 +3,64 @@ import { expect, test, type Page } from '@playwright/test'
 import { JOKER_DATA_META, jokers } from '../../src/data'
 import {
   createDailyGame,
+  createPracticeGame,
+  GAME_DEPENDENCY_FAMILIES,
   GAME_CLUE_MODEL_VERSION,
+  GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
   gameStorageKey,
   getDailyAnswer,
+  projectJokerDependencies,
+  projectJokerEffectCategories,
+  projectJokerTimingFamilies,
   serializeGameState,
+  submitGuess,
 } from '../../src/game'
 import { buildJokerSearchIndex, searchJokers } from '../../src/search'
 
 const browserErrors = new WeakMap<Page, string[]>()
+const currentPracticeStorageKey = gameStorageKey(
+  JOKER_DATA_META.gameVersion,
+  JOKER_DATA_META.classificationVersion,
+  'practice',
+  undefined,
+  GAME_CLUE_MODEL_VERSION,
+)
+
+function jokerFixture(id: string) {
+  const joker = jokers.find((candidate) => candidate.id === id)
+  if (!joker) throw new Error(`Expected Joker fixture '${id}'`)
+  return joker
+}
+
+async function submitJoker(page: Page, joker: (typeof jokers)[number]): Promise<void> {
+  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
+  await search.fill(joker.name.en)
+  await page
+    .getByRole('option', { name: `${joker.name.zhCN} ${joker.name.en}`, exact: true })
+    .click()
+  await page.getByRole('button', { name: '猜猜看' }).click()
+}
+
+async function startPracticeWithAnswer(
+  page: Page,
+  answerId: string,
+  puzzleKey: string,
+): Promise<void> {
+  const answer = jokerFixture(answerId)
+  const ordered = [...jokers].sort((left, right) => left.number - right.number)
+  const answerIndex = ordered.findIndex((joker) => joker.id === answer.id)
+  const state = createPracticeGame(jokers, () => (answerIndex + 0.5) / ordered.length, {
+    puzzleKey,
+  })
+
+  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+    key: currentPracticeStorageKey,
+    value: serializeGameState(state),
+  })
+  await page.reload()
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+}
 
 function discardExpectedImageFailure(page: Page): void {
   const recordedErrors = browserErrors.get(page)
@@ -112,6 +162,37 @@ test('rerolls all five quick choices and starts with one tap', async ({ page }) 
   await expect(page.locator('.guess-row')).toHaveCount(1)
 })
 
+test('keeps the deliberate bilingual brand offset and only divides real feedback', async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chromium')
+  await page.evaluate(() => document.fonts.ready)
+
+  const brandCenters = await page.locator('.brand').evaluate((brand) => {
+    const latin = brand.querySelector('.brand__name')?.getBoundingClientRect()
+    const chinese = brand.querySelector('.brand__zh')?.getBoundingClientRect()
+    return {
+      latin: latin ? latin.y + latin.height / 2 : null,
+      chinese: chinese ? chinese.y + chinese.height / 2 : null,
+    }
+  })
+  expect(brandCenters.latin).not.toBeNull()
+  expect(brandCenters.chinese).not.toBeNull()
+  expect((brandCenters.chinese ?? 0) - (brandCenters.latin ?? 0)).toBeCloseTo(2, 1)
+
+  const cardHead = page.locator('.game-card__head')
+  await expect(page.locator('.guess-area')).toHaveCount(0)
+  await expect(cardHead).toHaveCSS('border-bottom-width', '0px')
+
+  await page
+    .getByRole('region', { name: '随手出一张作为第一猜' })
+    .getByRole('button', { name: /作为第一猜$/ })
+    .first()
+    .click()
+  await expect(page.locator('.guess-area')).toBeVisible()
+  await expect(cardHead).toHaveCSS('border-bottom-width', '1px')
+})
+
 test('retries a transient Joker image failure with a fresh URL', async ({ page }) => {
   let requestCount = 0
   const requestTimes: number[] = []
@@ -159,34 +240,239 @@ test('uses a quiet placeholder after two failed decorative image requests', asyn
   discardExpectedImageFailure(page)
 })
 
-test('keeps a complex dependency readable without losing its full meaning', async ({ page }) => {
+test('keeps Showman output categories out of its dependency clue', async ({ page }) => {
   const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
   await search.fill('马戏团长')
   await page.getByRole('option', { name: '马戏团长 Showman' }).click()
   await page.getByRole('button', { name: '猜猜看' }).click()
 
-  const dependency = page
-    .getByRole('article', { name: '马戏团长' })
-    .locator('.feedback-cell')
-    .nth(4)
-  await expect(dependency).toContainText('其他小丑 · 三类消耗牌')
-  await expect(dependency).toHaveAttribute(
-    'aria-label',
-    /小丑\/栏位：其他小丑；消耗牌：星球牌、幻灵牌、塔罗牌/,
-  )
-  await expect(
-    page.getByRole('group', {
-      name: /依赖条件：小丑\/栏位：其他小丑；消耗牌：星球牌、幻灵牌、塔罗牌/,
-    }),
-  ).toBeVisible()
+  const cells = page.getByRole('article', { name: '马戏团长' }).locator('.feedback-cell')
+  await expect(cells.nth(2).locator('.feedback-cell__value')).toHaveText('规则／再触发')
+  await expect(cells.nth(4)).toContainText('无需额外条件')
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true)
 })
 
-test('migrates the previous clue model without losing the active daily game', async ({ page }) => {
+test('uses broad board categories while preserving exact reference details', async ({ page }) => {
+  await startPracticeWithAnswer(page, 'j_stone', 'practice:g8-board-semantics')
+
+  const fixtures = [
+    {
+      joker: jokerFixture('j_certificate'),
+      effect: '生成',
+      timing: '回合交界',
+      dependency: '无需额外条件',
+    },
+    {
+      joker: jokerFixture('j_four_fingers'),
+      effect: '规则／再触发',
+      timing: '持续生效',
+      dependency: '无需额外条件',
+    },
+    {
+      joker: jokerFixture('j_shortcut'),
+      effect: '规则／再触发',
+      timing: '持续生效',
+      dependency: '无需额外条件',
+    },
+    {
+      joker: jokerFixture('j_photograph'),
+      effect: '×倍率',
+      timing: '逐牌计分',
+      dependency: '单牌／牌组 · 出牌／牌型',
+    },
+  ]
+
+  for (const fixture of fixtures) {
+    await submitJoker(page, fixture.joker)
+    const cells = page
+      .getByRole('article', { name: fixture.joker.name.zhCN })
+      .locator('.feedback-cell')
+    await expect(cells.nth(2).locator('.feedback-cell__value')).toHaveText(fixture.effect)
+    await expect(cells.nth(3).locator('.feedback-cell__value')).toHaveText(fixture.timing)
+    await expect(cells.nth(4).locator('.feedback-cell__value')).toHaveText(fixture.dependency)
+  }
+
+  const photographDependency = page
+    .getByRole('article', { name: '照片' })
+    .locator('.feedback-cell')
+    .nth(4)
+  await expect(photographDependency).toHaveAttribute(
+    'aria-label',
+    /依赖条件：单牌／牌组：人头牌；出牌／牌型：首张计分牌/,
+  )
+  await expect(photographDependency.locator('.feedback-cell__detail')).toHaveText('不同：人头牌')
+})
+
+test('shows the guessed-side detail that makes a dependency yellow', async ({ page }) => {
+  await startPracticeWithAnswer(page, 'j_mime', 'practice:yellow-dependency-detail')
+  await submitJoker(page, jokerFixture('j_midas_mask'))
+
+  const row = page.getByRole('article', { name: '迈达斯面具' })
+  const dependency = row.locator('.feedback-cell').nth(4)
+  await expect(dependency).toHaveClass(/feedback-cell--partial/)
+  await expect(dependency.locator('.feedback-cell__value')).toHaveText('单牌／牌组')
+  await expect(dependency.locator('.feedback-cell__detail')).toHaveText('不同：人头牌')
+  await expect(dependency).toHaveAttribute(
+    'aria-label',
+    /单牌／牌组：人头牌，部分吻合，格内补充：不同：人头牌/,
+  )
+  await expect(row.getByText('手牌中的能力', { exact: true })).toHaveCount(0)
+})
+
+test('turns an exact dependency subset into a directional yellow clue', async ({ page }) => {
+  await startPracticeWithAnswer(page, 'j_photograph', 'practice:yellow-exact-subset')
+  await submitJoker(page, jokerFixture('j_midas_mask'))
+
+  const row = page.getByRole('article', { name: '迈达斯面具' })
+  const dependency = row.locator('.feedback-cell').nth(4)
+  await expect(dependency).toHaveClass(/feedback-cell--partial/)
+  await expect(dependency.locator('.feedback-cell__detail')).toHaveText('答案另有条件')
+  await expect(row.getByText('首张计分牌', { exact: true })).toHaveCount(0)
+})
+
+test('shows a guessed-side mechanism for a yellow main effect', async ({ page }) => {
+  await startPracticeWithAnswer(page, 'j_certificate', 'practice:yellow-effect-detail')
+  await submitJoker(page, jokerFixture('j_marble'))
+
+  const effect = page.getByRole('article', { name: '大理石小丑' }).locator('.feedback-cell').nth(2)
+  await expect(effect).toHaveClass(/feedback-cell--partial/)
+  await expect(effect.locator('.feedback-cell__value')).toHaveText('生成')
+  await expect(effect.locator('.feedback-cell__detail')).toHaveText('不同：石头牌')
+  await expect(effect).toHaveAttribute('aria-label', /格内补充：不同：石头牌/)
+})
+
+test('explains yellow timing and full-deck conditions without opaque counters', async ({
+  page,
+}) => {
+  await startPracticeWithAnswer(page, 'j_lucky_cat', 'practice:yellow-natural-language')
+  await submitJoker(page, jokerFixture('j_hologram'))
+  await submitJoker(page, jokerFixture('j_steel_joker'))
+
+  const hologramTiming = page
+    .getByRole('article', { name: '全息影像' })
+    .locator('.feedback-cell')
+    .nth(3)
+  await expect(hologramTiming).toHaveClass(/feedback-cell--partial/)
+  await expect(hologramTiming.locator('.feedback-cell__detail')).toHaveText('吻合：整手结算')
+
+  const steelRow = page.getByRole('article', { name: '钢铁小丑' })
+  await expect(
+    steelRow.locator('.feedback-cell').nth(3).locator('.feedback-cell__detail'),
+  ).toHaveText('答案另有时机')
+  await expect(
+    steelRow.locator('.feedback-cell').nth(4).locator('.feedback-cell__detail'),
+  ).toHaveText('不同：全牌组中的钢铁牌数量')
+  await expect(steelRow).not.toContainText('+1')
+  await expect(steelRow).not.toContainText('组合不同')
+
+  await page.getByRole('button', { name: '选择界面语言：EN' }).click()
+  await expect(page.locator('.guess-header')).toContainText('Effect')
+  await expect(page.locator('.guess-header')).toContainText('Trigger')
+  await expect(page.locator('.guess-header')).toContainText('Condition')
+  const steelRowEnglish = page.getByRole('article', { name: 'Steel Joker' })
+  await expect(
+    steelRowEnglish.locator('.feedback-cell').nth(3).locator('.feedback-cell__detail'),
+  ).toHaveText('Answer has another trigger')
+  const steelConditionEnglish = steelRowEnglish
+    .locator('.feedback-cell')
+    .nth(4)
+    .locator('.feedback-cell__detail')
+  await expect(steelConditionEnglish).toHaveText('Different: Steel Cards in your full deck')
+  const clippedEnglishDetail = await steelConditionEnglish.evaluate(
+    (detail) => detail.scrollHeight > detail.clientHeight + 1,
+  )
+  expect(clippedEnglishDetail).toBe(false)
+})
+
+test('recomputes c10:g6 feedback under c11:g8 board semantics', async ({ page }) => {
+  const answer = jokers.find((joker) => joker.id === 'j_stone')
+  const guess = jokers.find((joker) => joker.id === 'j_certificate')
+  if (!answer || !guess) throw new Error('Expected Certificate migration fixtures')
+
+  const answerIndex = [...jokers]
+    .sort((left, right) => left.number - right.number)
+    .findIndex((joker) => joker.id === answer.id)
+  const initial = createPracticeGame(jokers, () => (answerIndex + 0.5) / jokers.length, {
+    puzzleKey: 'practice:c9-g4-semantics',
+  })
+  const played = submitGuess(initial, guess, answer)
+  const comparison = played.guesses[0]
+  if (!comparison) throw new Error('Expected one comparison')
+  const oldState = {
+    ...played,
+    guesses: [
+      {
+        ...comparison,
+        effects: {
+          values: ['create_playing_card'],
+          matches: [],
+          result: 'miss' as const,
+        },
+        timings: { values: ['round_boundary'], matches: [], result: 'miss' as const },
+        dependencies: {
+          values: [{ family: 'none' as const }],
+          exactMatches: [],
+          familyMatches: [],
+          result: 'miss' as const,
+        },
+      },
+    ],
+  }
+  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 10, 'practice', undefined, 6)
+  const currentKey = gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    JOKER_DATA_META.classificationVersion,
+    'practice',
+    undefined,
+    GAME_CLUE_MODEL_VERSION,
+  )
+
+  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+    key: oldKey,
+    value: JSON.stringify(oldState),
+  })
+  await page.reload()
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+
+  const cells = page.getByRole('article', { name: '证书' }).locator('.feedback-cell')
+  await expect(cells.nth(2).locator('.feedback-cell__value')).toHaveText('生成')
+  await expect(cells.nth(3).locator('.feedback-cell__value')).toHaveText('回合交界')
+  await expect(cells.nth(4).locator('.feedback-cell__value')).toHaveText('无需额外条件')
+  await expect
+    .poll(() =>
+      page.evaluate((key) => {
+        const stored = localStorage.getItem(key)
+        if (!stored) return null
+        const guess = (
+          JSON.parse(stored) as {
+            guesses?: {
+              effects?: { values?: string[] }
+              timings?: { values?: string[] }
+              dependencies?: { values?: { family?: string; value?: string }[] }
+            }[]
+          }
+        ).guesses?.[0]
+        return guess
+          ? {
+              effects: guess.effects?.values,
+              timings: guess.timings?.values,
+              dependencies: guess.dependencies?.values,
+            }
+          : null
+      }, currentKey),
+    )
+    .toEqual({
+      effects: ['generate'],
+      timings: ['round_boundary'],
+      dependencies: [{ family: 'none' }],
+    })
+})
+
+test('migrates c10:g7 without losing the active daily game', async ({ page }) => {
   const oldState = createDailyGame(jokers)
-  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 8, 'daily', oldState.puzzleKey, 2)
+  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 10, 'daily', oldState.puzzleKey, 7)
   const currentKey = gameStorageKey(
     JOKER_DATA_META.gameVersion,
     JOKER_DATA_META.classificationVersion,
@@ -205,6 +491,126 @@ test('migrates the previous clue model without losing the active daily game', as
   await expect
     .poll(() => page.evaluate((key) => localStorage.getItem(key), currentKey))
     .not.toBeNull()
+})
+
+test('replays c11:g7 guesses to add g8 yellow-detail evidence', async ({ page }) => {
+  const initial = createDailyGame(jokers)
+  const answer = jokerFixture(initial.answerId)
+  const guess = jokers.find((joker) => joker.id !== answer.id)
+  if (!guess) throw new Error('Expected a non-answer Joker')
+  const played = submitGuess(initial, guess, answer)
+  const legacyState = {
+    ...played,
+    guesses: played.guesses.map((comparison) => ({
+      ...comparison,
+      effects: {
+        values: comparison.effects.values,
+        matches: comparison.effects.matches,
+        result: comparison.effects.result,
+      },
+    })),
+  }
+  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 11, 'daily', initial.puzzleKey, 7)
+  const currentKey = gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    JOKER_DATA_META.classificationVersion,
+    'daily',
+    initial.puzzleKey,
+    GAME_CLUE_MODEL_VERSION,
+  )
+
+  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+    key: oldKey,
+    value: JSON.stringify(legacyState),
+  })
+  await page.reload()
+
+  await expect(page.getByRole('article', { name: guess.name.zhCN })).toBeVisible()
+  await expect
+    .poll(() =>
+      page.evaluate((key) => {
+        const stored = localStorage.getItem(key)
+        if (!stored) return null
+        const effects = (
+          JSON.parse(stored) as {
+            guesses?: {
+              effects?: { exactMechanismMatches?: string[]; categoryOnlyMatches?: string[] }
+            }[]
+          }
+        ).guesses?.[0]?.effects
+        return effects
+          ? [effects.exactMechanismMatches ?? null, effects.categoryOnlyMatches ?? null]
+          : null
+      }, currentKey),
+    )
+    .not.toBeNull()
+})
+
+test('replays g3 Soul-price feedback with the new direction', async ({ page }) => {
+  const answer = jokers.find((joker) => joker.classification.acquisition.kind === 'soul')
+  const guess = jokers.find(
+    (joker) => joker.classification.acquisition.kind === 'shop' && joker.official.cost === 10,
+  )
+  if (!answer || !guess) throw new Error('Expected Soul and $10 fixtures')
+
+  const answerIndex = [...jokers]
+    .sort((left, right) => left.number - right.number)
+    .findIndex((joker) => joker.id === answer.id)
+  const initial = createPracticeGame(jokers, () => (answerIndex + 0.5) / jokers.length, {
+    puzzleKey: 'practice:g3-soul-price',
+  })
+  const currentComparison = submitGuess(initial, guess, answer).guesses[0]
+  if (!currentComparison) throw new Error('Expected one comparison')
+  const oldState = {
+    ...submitGuess(initial, guess, answer),
+    guesses: [
+      {
+        ...currentComparison,
+        acquisition: { ...currentComparison.acquisition, direction: null },
+      },
+    ],
+  }
+  const oldKey = gameStorageKey(JOKER_DATA_META.gameVersion, 9, 'practice', undefined, 3)
+  const legacyUnversionedKey = gameStorageKey(JOKER_DATA_META.gameVersion, 9, 'practice')
+  const currentKey = gameStorageKey(
+    JOKER_DATA_META.gameVersion,
+    JOKER_DATA_META.classificationVersion,
+    'practice',
+    undefined,
+    GAME_CLUE_MODEL_VERSION,
+  )
+
+  await page.evaluate(
+    ({ oldKey, oldValue, legacyKey, legacyValue }) => {
+      localStorage.setItem(oldKey, oldValue)
+      localStorage.setItem(legacyKey, legacyValue)
+    },
+    {
+      oldKey,
+      oldValue: serializeGameState(oldState),
+      legacyKey: legacyUnversionedKey,
+      legacyValue: serializeGameState(initial),
+    },
+  )
+  await page.reload()
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+
+  const price = page
+    .getByRole('article', { name: guess.name.zhCN })
+    .locator('.feedback-cell')
+    .nth(1)
+  await expect(price).toContainText(`$${guess.official.cost}↑`)
+  await expect(price).toHaveAttribute('aria-label', /更高/)
+  await expect
+    .poll(() =>
+      page.evaluate((key) => {
+        const stored = localStorage.getItem(key)
+        if (!stored) return null
+        return (JSON.parse(stored) as { guesses?: { acquisition?: { direction?: string } }[] })
+          .guesses?.[0]?.acquisition?.direction
+      }, currentKey),
+    )
+    .toBe('up')
 })
 
 test('continues the previous clue model practice bag in order', async ({ page }) => {
@@ -305,6 +711,25 @@ test('switches the full interface to English and opens practice mode', async ({ 
   await page.getByRole('button', { name: 'Endless' }).click()
   await expect(page.getByRole('region', { name: 'Endless' })).toBeVisible()
   await expect(page.getByText('6 guesses')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Clue glossary' }).click()
+  const glossary = page.getByRole('dialog', { name: 'Clue glossary' })
+  for (const heading of ['Effect', 'Trigger', 'Condition']) {
+    await expect(glossary.getByRole('heading', { name: heading, exact: true })).toBeVisible()
+  }
+  for (const category of [
+    'Money',
+    'Create / copy',
+    'Always active',
+    'Play / hold / discard',
+    'Blind events',
+    'Shop / packs',
+    'Round start / end',
+    'Card traits / deck',
+    'Played cards / poker hand',
+  ]) {
+    await expect(glossary.getByText(category, { exact: true }).first()).toBeVisible()
+  }
 })
 
 test('explains every clue family without affecting the score', async ({ page }) => {
@@ -316,26 +741,96 @@ test('explains every clue family without affecting the score', async ({ page }) 
     await expect(dialog.getByRole('heading', { name: heading, exact: true })).toBeVisible()
   }
   await expect(dialog.getByText('普通', { exact: true })).toBeVisible()
-  for (const timing of [
-    '常驻',
-    '出牌时',
-    '留在手牌',
-    '弃牌时',
-    '使用消耗牌时',
-    '加入牌组时',
-    '卡牌摧毁时',
-    '盲注阶段',
-    '商店/出售',
-    '回合开始',
-    '回合结束',
-  ]) {
-    await expect(dialog.getByText(timing, { exact: true })).toBeVisible()
+
+  expect(GAME_EFFECT_CATEGORIES).toHaveLength(7)
+  const effectSection = dialog.locator('section[aria-labelledby="effect-glossary-title"]')
+  await expect(effectSection.getByText('7 类', { exact: true })).toBeVisible()
+  const generateEffectCount = jokers.filter((joker) =>
+    projectJokerEffectCategories(joker).includes('generate'),
+  ).length
+  const generateEffectEntry = effectSection.getByRole('article', { name: '生成', exact: true })
+  await expect(
+    generateEffectEntry.getByText(`${generateEffectCount} 张`, { exact: true }),
+  ).toBeVisible()
+  for (const detail of ['石头牌', '复制扑克牌', '蜡封牌']) {
+    await expect(generateEffectEntry.getByText(detail, { exact: true })).toBeVisible()
   }
-  await expect(dialog.getByText('同花顺', { exact: true })).toBeVisible()
+
+  expect(GAME_TIMING_FAMILIES).toHaveLength(8)
+  const timingSection = dialog.locator('section[aria-labelledby="timing-glossary-title"]')
+  await expect(timingSection.getByText('8 类', { exact: true })).toBeVisible()
+  const shopTimingCount = jokers.filter((joker) =>
+    projectJokerTimingFamilies(joker).includes('shop'),
+  ).length
+  const shopTimingEntry = timingSection.locator('.glossary-entry').filter({ hasText: '商店相关' })
+  await expect(shopTimingEntry.getByText(`${shopTimingCount} 张`, { exact: true })).toBeVisible()
+  for (const detail of ['商店中', '打开补充包', '跳过补充包', '商店重掷', '离开商店', '出售卡牌']) {
+    await expect(shopTimingEntry.getByText(detail, { exact: true })).toBeVisible()
+  }
+
+  expect(GAME_DEPENDENCY_FAMILIES).toHaveLength(7)
+  const dependencySection = dialog.locator('section[aria-labelledby="dependency-glossary-title"]')
+  await expect(dependencySection.getByText('7 类', { exact: true })).toBeVisible()
+  const playedCardsCount = jokers.filter((joker) =>
+    projectJokerDependencies(joker).some((dependency) => dependency.family === 'hand'),
+  ).length
+  const playedCardsEntry = dependencySection.getByRole('article', {
+    name: '出牌／牌型',
+    exact: true,
+  })
+  await expect(playedCardsEntry.getByText(`${playedCardsCount} 张`, { exact: true })).toBeVisible()
+  await expect(playedCardsEntry.getByText('牌型', { exact: true })).toBeVisible()
+  await expect(playedCardsEntry.getByText('出牌情况', { exact: true })).toBeVisible()
+  await expect(playedCardsEntry.getByText('首张计分牌', { exact: true })).toBeVisible()
 
   await page.keyboard.press('Escape')
   await expect(dialog).toBeHidden()
   await expect(page.getByText('图鉴辅助局 · 不计战绩')).toHaveCount(0)
+})
+
+test('opens each clue header at its matching glossary section and restores focus', async ({
+  page,
+}) => {
+  await startPracticeWithAnswer(page, 'j_mime', 'practice:header-glossary')
+  await submitJoker(page, jokerFixture('j_midas_mask'))
+
+  const headerItems = page.locator('.guess-header > *:visible')
+  await expect(headerItems).toHaveCount(6)
+  await expect(page.locator('.guess-header > span').first()).not.toHaveClass(/clue-info-button/)
+  await expect(page.locator('.guess-header .clue-info-button')).toHaveCount(5)
+  const headerCenters = await headerItems.evaluateAll((items) =>
+    items.map((item) => {
+      const box = item.getBoundingClientRect()
+      return box.y + box.height / 2
+    }),
+  )
+  expect(Math.max(...headerCenters) - Math.min(...headerCenters)).toBeLessThan(2)
+
+  const fixtures = [
+    { key: 'rarity', label: '稀有度', count: 4 },
+    { key: 'price', label: '基础价格', count: 2 },
+    { key: 'effect', label: '主效果', count: 7 },
+    { key: 'timing', label: '触发时机', count: 8 },
+    { key: 'dependency', label: '依赖条件', count: 7 },
+  ] as const
+
+  for (const fixture of fixtures) {
+    const trigger = page.getByRole('button', {
+      name: `查看“${fixture.label}”的 ${fixture.count} 类说明`,
+    })
+    await trigger.click()
+
+    const dialog = page.getByRole('dialog', { name: '线索字典' })
+    const heading = dialog.getByRole('heading', { name: fixture.label, exact: true })
+    const section = dialog.locator(`section[aria-labelledby="${fixture.key}-glossary-title"]`)
+    await expect(dialog).toBeVisible()
+    await expect(heading).toBeFocused()
+    await expect(section).toHaveAttribute('data-targeted', 'true')
+    await expect(section).toBeInViewport()
+
+    await dialog.getByRole('button', { name: '关闭' }).click()
+    await expect(trigger).toBeFocused()
+  }
 })
 
 test('marks a daily game unscored before revealing the collection', async ({ page }) => {
@@ -366,6 +861,54 @@ test('marks a daily game unscored before revealing the collection', async ({ pag
   await page.getByRole('button', { name: '战绩' }).click()
   const statsDialog = page.getByRole('dialog', { name: '战绩' })
   await expect(statsDialog.getByText('0%', { exact: true })).toBeVisible()
+})
+
+test('keeps exact collection details while filtering by clue categories', async ({ page }) => {
+  await page.getByRole('button', { name: '无尽牌局' }).click()
+  await page.getByRole('button', { name: '打开小丑图鉴' }).click()
+
+  const dialog = page.getByRole('dialog', { name: '小丑图鉴' })
+  const filterToggle = dialog.getByRole('button', { name: /筛选/ })
+  if (await filterToggle.isVisible()) await filterToggle.click()
+  const search = dialog.getByRole('searchbox', { name: '搜索图鉴' })
+
+  await search.fill('Certificate')
+  const certificate = dialog.getByRole('article', { name: '证书' })
+  await expect(certificate.getByText('生成：蜡封牌', { exact: true })).toBeVisible()
+  await expect(certificate.getByText('回合交界：回合开始', { exact: true })).toBeVisible()
+  await expect(certificate.getByText('无需额外条件', { exact: true })).toBeVisible()
+
+  await search.fill('')
+  await dialog.getByLabel('主效果').selectOption('generate')
+  const createPlayingCardCount = jokers.filter((joker) =>
+    projectJokerEffectCategories(joker).includes('generate'),
+  ).length
+  await expect(
+    dialog.getByText(`找到 ${createPlayingCardCount} 张小丑牌`, { exact: true }),
+  ).toBeVisible()
+  await expect(certificate).toBeVisible()
+
+  await dialog.getByLabel('主效果').selectOption('')
+  await dialog.getByLabel('触发时机').selectOption('round_boundary')
+  const roundBoundaryCount = jokers.filter((joker) =>
+    projectJokerTimingFamilies(joker).includes('round_boundary'),
+  ).length
+  await expect(
+    dialog.getByText(`找到 ${roundBoundaryCount} 张小丑牌`, { exact: true }),
+  ).toBeVisible()
+  await expect(certificate.getByText('回合交界：回合开始', { exact: true })).toBeVisible()
+
+  await dialog.getByLabel('触发时机').selectOption('')
+  await dialog.getByLabel('依赖条件').selectOption('hand')
+  const playedCardsCount = jokers.filter((joker) =>
+    projectJokerDependencies(joker).some((dependency) => dependency.family === 'hand'),
+  ).length
+  await expect(dialog.getByText(`找到 ${playedCardsCount} 张小丑牌`, { exact: true })).toBeVisible()
+  await search.fill('Photograph')
+  const photograph = dialog.getByRole('article', { name: '照片' })
+  await expect(
+    photograph.getByText('单牌／牌组：人头牌；出牌／牌型：首张计分牌', { exact: true }),
+  ).toBeVisible()
 })
 
 test('keeps collection criteria for the page session and clears them in one action', async ({
@@ -496,14 +1039,12 @@ test('keeps clue records readable across desktop widths', async ({ page }, testI
 
     const jokerPosition = await guessArticle.locator('.joker-cell').evaluate((element) => ({
       top: (element as HTMLElement).offsetTop,
-      bottom: (element as HTMLElement).offsetTop + (element as HTMLElement).offsetHeight,
     }))
     const cellTops = await clueCells.evaluateAll((cells) =>
       cells.map((cell) => (cell as HTMLElement).offsetTop),
     )
     expect(new Set(cellTops).size).toBe(1)
-    if (width <= 900) expect(cellTops[0] ?? 0).toBeGreaterThanOrEqual(jokerPosition.bottom)
-    else expect(cellTops[0]).toBe(jokerPosition.top)
+    expect(cellTops[0]).toBe(jokerPosition.top)
 
     const valueMetrics = await clueCells.locator('.feedback-cell__value').evaluateAll((values) =>
       values.map((value) => ({
@@ -528,27 +1069,9 @@ test('keeps the newest feedback visible on a short phone screen', async ({ page 
   test.skip(testInfo.project.name !== 'mobile-chromium')
   await page.setViewportSize({ width: 375, height: 667 })
 
-  const answer = getDailyAnswer(jokers)
-  const directionalGuess = jokers.find(
-    (joker) =>
-      joker.id !== answer.id &&
-      (joker.official.rarity !== answer.official.rarity ||
-        (joker.classification.acquisition.kind === 'shop' &&
-          answer.classification.acquisition.kind === 'shop' &&
-          joker.official.cost !== answer.official.cost)),
-  )
-  expect(directionalGuess).toBeDefined()
-  if (!directionalGuess) throw new Error('Expected a Joker with a directional clue')
-
-  const search = page.getByRole('combobox', { name: '选择一张小丑牌' })
-  await search.fill(directionalGuess.name.en)
-  await page
-    .getByRole('option', {
-      name: `${directionalGuess.name.zhCN} ${directionalGuess.name.en}`,
-      exact: true,
-    })
-    .click()
-  await page.getByRole('button', { name: '猜猜看' }).click()
+  await startPracticeWithAnswer(page, 'j_certificate', 'practice:375-layout')
+  const directionalGuess = jokerFixture('j_photograph')
+  await submitJoker(page, directionalGuess)
 
   const guessArticle = page.getByRole('article', { name: directionalGuess.name.zhCN })
   await expect
@@ -574,6 +1097,9 @@ test('keeps the newest feedback visible on a short phone screen', async ({ page 
       (values) => values.filter((value) => value.scrollHeight > value.clientHeight + 1).length,
     )
   expect(clippedValues).toBe(0)
+  await expect(clueCells.nth(4).locator('.feedback-cell__value')).toHaveText(
+    '单牌／牌组 · 出牌／牌型',
+  )
   const directionalReadout = guessArticle.locator('.feedback-cell__readout--directional').first()
   await expect(directionalReadout).toBeVisible()
   await expect
@@ -803,13 +1329,9 @@ test('keeps the 320px layout readable without zoom or overflow', async ({ page }
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true)
 
-  const joker = jokers[0]
-  if (!joker) throw new Error('Expected a Joker fixture')
-  await search.fill(joker.name.en)
-  await page
-    .getByRole('option', { name: `${joker.name.zhCN} ${joker.name.en}`, exact: true })
-    .click()
-  await page.getByRole('button', { name: '猜猜看' }).click()
+  await startPracticeWithAnswer(page, 'j_certificate', 'practice:320-layout')
+  const joker = jokerFixture('j_photograph')
+  await submitJoker(page, joker)
 
   const row = page.locator('.guess-row').first()
   const [rowBox, jokerCellBox, feedbackBoxes] = await Promise.all([
@@ -830,7 +1352,131 @@ test('keeps the 320px layout readable without zoom or overflow', async ({ page }
   expect(feedbackBoxes[0]!.y).toBeGreaterThanOrEqual(
     (jokerCellBox?.y ?? 0) + (jokerCellBox?.height ?? 0),
   )
+  const clippedValues = await row
+    .locator('.feedback-cell__value')
+    .evaluateAll(
+      (values) => values.filter((value) => value.scrollHeight > value.clientHeight + 1).length,
+    )
+  expect(clippedValues).toBe(0)
+  await expect(row.locator('.feedback-cell').nth(4).locator('.feedback-cell__value')).toHaveText(
+    '单牌／牌组 · 出牌／牌型',
+  )
+
+  const headerButtons = page.locator('.guess-header .clue-info-button')
+  await expect(headerButtons).toHaveCount(5)
+  const [headerBoxes, headerIconSizes] = await Promise.all([
+    headerButtons.evaluateAll((buttons) =>
+      buttons.map((button) => {
+        const box = button.getBoundingClientRect()
+        return { y: box.y, width: box.width, height: box.height }
+      }),
+    ),
+    headerButtons.locator('svg').evaluateAll((icons) =>
+      icons.map((icon) => {
+        const box = icon.getBoundingClientRect()
+        return { width: box.width, height: box.height }
+      }),
+    ),
+  ])
+  expect(headerBoxes.every((box) => Math.abs(box.y - headerBoxes[0]!.y) < 2)).toBe(true)
+  expect(headerBoxes.every((box) => box.width >= 44 && box.height >= 38)).toBe(true)
+  expect(headerIconSizes.every((box) => box.width >= 12 && box.height >= 12)).toBe(true)
+
+  await submitJoker(page, jokerFixture('j_marble'))
+  const yellowEffectDetail = page
+    .getByRole('article', { name: '大理石小丑' })
+    .locator('.feedback-cell')
+    .nth(2)
+    .locator('.feedback-cell__detail')
+  await expect(yellowEffectDetail).toHaveText('不同：石头牌')
+  await expect
+    .poll(() =>
+      yellowEffectDetail.evaluate((detail) => Number.parseFloat(getComputedStyle(detail).fontSize)),
+    )
+    .toBeGreaterThanOrEqual(9)
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true)
+
+  await startPracticeWithAnswer(page, 'j_lucky_cat', 'practice:320-long-yellow-detail')
+  await submitJoker(page, jokerFixture('j_steel_joker'))
+  await page.getByRole('button', { name: '选择界面语言：EN' }).click()
+  const steelConditionDetail = page
+    .getByRole('article', { name: 'Steel Joker' })
+    .locator('.feedback-cell')
+    .nth(4)
+    .locator('.feedback-cell__detail')
+  await expect(steelConditionDetail).toHaveText('Different: Steel Cards in your full deck')
+  expect(
+    await steelConditionDetail.evaluate((detail) => detail.scrollHeight > detail.clientHeight + 1),
+  ).toBe(false)
+})
+
+test('keeps the longest yellow condition readable on narrow screens', async ({
+  page,
+}, testInfo) => {
+  const widths = testInfo.project.name === 'mobile-chromium' ? [375, 320] : [900, 844, 761]
+
+  await startPracticeWithAnswer(page, 'j_superposition', 'practice:long-yellow-condition')
+  await submitJoker(page, jokerFixture('j_sixth_sense'))
+  const conditionDetail = page
+    .getByRole('article', { name: '第六感' })
+    .locator('.feedback-cell')
+    .nth(4)
+    .locator('.feedback-cell__detail')
+  await expect(conditionDetail).toHaveText('吻合：空消耗牌栏；不同：6、首手单张')
+  const mobileConditionDetail = page
+    .getByRole('article', { name: '第六感' })
+    .locator('.guess-row__detail')
+    .filter({ hasText: '依赖条件' })
+    .locator('.guess-row__detail-text')
+  await expect(mobileConditionDetail).toHaveText('吻合：空消耗牌栏；不同：6、首手单张')
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: 568 })
+    await expect(mobileConditionDetail).toBeVisible()
+    expect(
+      await mobileConditionDetail.evaluate(
+        (detail) => detail.scrollHeight > detail.clientHeight + 1,
+      ),
+    ).toBe(false)
+    const rowBox = await page.getByRole('article', { name: '第六感' }).boundingBox()
+    expect(rowBox?.height ?? Number.POSITIVE_INFINITY).toBeLessThan(width === 375 ? 160 : 220)
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+      .toBe(true)
+  }
+
+  await page.getByRole('button', { name: '选择界面语言：EN' }).click()
+  const englishConditionDetail = page
+    .getByRole('article', { name: 'Sixth Sense' })
+    .locator('.feedback-cell')
+    .nth(4)
+    .locator('.feedback-cell__detail')
+  await expect(englishConditionDetail).toHaveText(
+    'Matches: Open consumable slot; Different: 6, First hand is exactly 1 card',
+  )
+  const mobileEnglishConditionDetail = page
+    .getByRole('article', { name: 'Sixth Sense' })
+    .locator('.guess-row__detail')
+    .filter({ hasText: 'Condition' })
+    .locator('.guess-row__detail-text')
+  await expect(mobileEnglishConditionDetail).toHaveText(
+    'Matches: Open consumable slot; Different: 6, First hand is exactly 1 card',
+  )
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: 568 })
+    await expect(mobileEnglishConditionDetail).toBeVisible()
+    expect(
+      await mobileEnglishConditionDetail.evaluate(
+        (detail) => detail.scrollHeight > detail.clientHeight + 1,
+      ),
+    ).toBe(false)
+    const rowBox = await page.getByRole('article', { name: 'Sixth Sense' }).boundingBox()
+    expect(rowBox?.height ?? Number.POSITIVE_INFINITY).toBeLessThan(width === 375 ? 160 : 220)
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+      .toBe(true)
+  }
 })

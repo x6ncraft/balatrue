@@ -6,6 +6,8 @@ import { t, type Locale } from '../i18n'
 export interface FeedbackCellProps {
   readonly label: string
   readonly value: string
+  readonly compactValue?: string
+  readonly detail?: string
   readonly accessibleValue?: string
   readonly result: MatchResult
   readonly direction?: Direction | null
@@ -16,6 +18,8 @@ export interface FeedbackCellProps {
 export function FeedbackCell({
   label,
   value,
+  compactValue,
+  detail,
   accessibleValue = value,
   result,
   direction,
@@ -32,13 +36,14 @@ export function FeedbackCell({
   const accessibleLabel = [
     `${label}${labelSeparator}${accessibleValue}`,
     statusText,
+    ...(detail ? [t(locale, 'feedback.detail', { detail })] : []),
     ...(direction ? [directionText] : []),
   ].join(separator)
   const style = { '--cell-index': cellIndex } as CSSProperties
 
   return (
     <div
-      className={`feedback-cell feedback-cell--${result}`}
+      className={`feedback-cell feedback-cell--${result}${detail ? ' feedback-cell--has-detail' : ''}`}
       style={style}
       role="group"
       aria-label={accessibleLabel}
@@ -55,13 +60,20 @@ export function FeedbackCell({
           direction ? ' feedback-cell__readout--directional' : ''
         }`}
       >
-        <span className="feedback-cell__value">{value}</span>
+        <span className="feedback-cell__value" data-compact-value={compactValue}>
+          {value}
+        </span>
         {direction ? (
           <span className="feedback-cell__direction" aria-hidden="true">
             {directionIcon}
           </span>
         ) : null}
       </span>
+      {detail ? (
+        <span className="feedback-cell__detail" aria-hidden="true">
+          {detail}
+        </span>
+      ) : null}
     </div>
   )
 }

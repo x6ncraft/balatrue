@@ -37,7 +37,7 @@ function makeJoker(number: number): Joker {
     classification: {
       version: JOKER_CLASSIFICATION_VERSION,
       acquisition: { kind: 'shop', unlockState: 'starting' },
-      effects: number % 3 === 0 ? ['chips'] : ['mechanism'],
+      effects: number % 3 === 0 ? ['chips'] : ['rules:probability'],
       timings: ['passive'],
       dependencies: [{ family: 'none' }],
     },
@@ -293,7 +293,7 @@ describe('game state persistence', () => {
         gameStorageKey(JOKER_DATA_GAME_VERSION, version, 'daily', current.puzzleKey),
       ),
     ]
-    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([8, 7, 6, 5, 4, 3, 2])
+    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([10, 9, 8, 7, 6, 5, 4, 3, 2])
 
     const restored = restoreStoredGame({
       currentKey,
@@ -394,6 +394,75 @@ describe('game state persistence', () => {
 
     expect(restored).toEqual(stored)
     expect(refreshCalls).toBe(0)
+  })
+
+  it('skips current-key states with clue values outside the g8 vocabulary', () => {
+    const pool = Array.from({ length: 150 }, (_, index) => makeJoker(index + 1))
+    const current = createDailyGame(pool, '2026-07-19T12:00:00+08:00')
+    const answer = pool.find((joker) => joker.id === current.answerId)
+    const wrong = pool.find((joker) => joker.id !== current.answerId)
+    if (!answer || !wrong) throw new Error('Fixture setup failed')
+    const stored = submitGuess(current, wrong, answer)
+    const comparison = stored.guesses[0]
+    if (!comparison) throw new Error('Fixture setup failed')
+    const currentKey = gameStorageKey(
+      JOKER_DATA_GAME_VERSION,
+      JOKER_CLASSIFICATION_VERSION,
+      'daily',
+      current.puzzleKey,
+      GAME_CLUE_MODEL_VERSION,
+    )
+    const invalidStates = [
+      {
+        ...stored,
+        guesses: [
+          {
+            ...comparison,
+            effects: { ...comparison.effects, values: ['unknown_effect'] },
+          },
+        ],
+      },
+      {
+        ...stored,
+        guesses: [
+          {
+            ...comparison,
+            timings: { ...comparison.timings, values: ['unknown_timing'] },
+          },
+        ],
+      },
+      {
+        ...stored,
+        guesses: [
+          {
+            ...comparison,
+            dependencies: {
+              ...comparison.dependencies,
+              values: [{ family: 'unknown_dependency', value: 'unknown:value' }],
+            },
+          },
+        ],
+      },
+    ]
+
+    for (const invalid of invalidStates) {
+      let refreshCalls = 0
+      const restored = restoreStoredGame({
+        currentKey,
+        fallbackKeys: [],
+        context: { mode: 'daily', puzzleKey: current.puzzleKey, answerId: current.answerId },
+        validJokerIds: new Set(pool.map((joker) => joker.id)),
+        read: (key) => (key === currentKey ? JSON.stringify(invalid) : null),
+        write: () => undefined,
+        refreshFallback: () => {
+          refreshCalls += 1
+          return null
+        },
+      })
+
+      expect(restored).toBeNull()
+      expect(refreshCalls).toBe(0)
+    }
   })
 
   it('rejects historical keys whose mode, date, answer, or Joker IDs do not match', () => {

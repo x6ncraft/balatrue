@@ -20,8 +20,19 @@ import {
   type WikiJokerActivation,
   type WikiJokerType,
 } from '../src/data/types'
-import { gameplayClueSignature, projectJokerTimings } from '../src/game/clue-model'
-import { hasDependencyValueLabel } from '../src/ui/labels'
+import {
+  GAME_DEPENDENCY_FAMILIES,
+  GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
+  gameEffectFamily,
+  gameTimingFamily,
+  gameplayClueSignature,
+  projectJokerDependencies,
+  projectJokerEffectCategories,
+  projectJokerTimingFamilies,
+  projectJokerTimings,
+} from '../src/game/clue-model'
+import { hasDependencyValueLabel, hasEffectLabel, hasTimingLabel } from '../src/ui/labels'
 import { JOKER_SEARCH_ALIASES } from '../src/search/joker-search.generated'
 import { generateJokerSearchAliases } from './generate-joker-search'
 
@@ -434,11 +445,22 @@ for (const [index, joker] of jokers.entries()) {
   check(hasUniqueValues(joker.classification.effects), `${label}: duplicate effect classification`)
   for (const effect of joker.classification.effects) {
     check(isOneOf(effect, JOKER_EFFECTS), `${label}: illegal effect '${effect}'`)
+    check(hasEffectLabel(effect), `${label}: effect '${effect}' has no localized label`)
+    try {
+      gameEffectFamily(effect)
+    } catch {
+      check(false, `${label}: effect '${effect}' has no player-facing family`)
+    }
   }
   check(joker.classification.timings.length > 0, `${label}: empty timing classification`)
   check(hasUniqueValues(joker.classification.timings), `${label}: duplicate timing classification`)
   for (const timing of joker.classification.timings) {
     check(isOneOf(timing, JOKER_TIMINGS), `${label}: illegal timing '${timing}'`)
+    check(hasTimingLabel(timing), `${label}: timing '${timing}' has no localized label`)
+    check(
+      Boolean(gameTimingFamily(timing)),
+      `${label}: timing '${timing}' has no player-facing family`,
+    )
   }
   check(projectJokerTimings(joker).length > 0, `${label}: no player-facing trigger timing`)
   check(joker.classification.dependencies.length > 0, `${label}: empty dependency classification`)
@@ -460,6 +482,10 @@ for (const [index, joker] of jokers.entries()) {
     check(
       dependency.value === undefined || hasDependencyValueLabel(dependency.value),
       `${label}: dependency value '${dependency.value}' has no localized label`,
+    )
+    check(
+      dependency.family === 'none' || dependency.value !== undefined,
+      `${label}: dependency '${dependency.family}' is only a scope, not a narrowing condition`,
     )
   }
   if (joker.classification.dependencies.some(({ family }) => family === 'none')) {
@@ -512,6 +538,30 @@ for (const rarity of JOKER_RARITIES) {
     rarityCounts.get(rarity) === expectedRarityCounts[rarity],
     `Expected ${expectedRarityCounts[rarity]} ${rarity} Jokers, found ${rarityCounts.get(rarity) ?? 0}`,
   )
+}
+
+const effectCategoryCounts = new Map(GAME_EFFECT_CATEGORIES.map((category) => [category, 0]))
+const timingFamilyCounts = new Map(GAME_TIMING_FAMILIES.map((family) => [family, 0]))
+const dependencyFamilyCounts = new Map(GAME_DEPENDENCY_FAMILIES.map((family) => [family, 0]))
+for (const joker of jokers) {
+  for (const category of projectJokerEffectCategories(joker)) {
+    effectCategoryCounts.set(category, (effectCategoryCounts.get(category) ?? 0) + 1)
+  }
+  for (const family of projectJokerTimingFamilies(joker)) {
+    timingFamilyCounts.set(family, (timingFamilyCounts.get(family) ?? 0) + 1)
+  }
+  for (const family of new Set(projectJokerDependencies(joker).map(({ family }) => family))) {
+    dependencyFamilyCounts.set(family, (dependencyFamilyCounts.get(family) ?? 0) + 1)
+  }
+}
+for (const [category, count] of effectCategoryCounts) {
+  check(count >= 10, `Player effect category '${category}' only covers ${count} Joker(s)`)
+}
+for (const [family, count] of timingFamilyCounts) {
+  check(count >= 5, `Player timing category '${family}' only covers ${count} Joker(s)`)
+}
+for (const [family, count] of dependencyFamilyCounts) {
+  check(count >= 8, `Player dependency category '${family}' only covers ${count} Joker(s)`)
 }
 
 const gameplaySignatures = new Map<string, string[]>()
