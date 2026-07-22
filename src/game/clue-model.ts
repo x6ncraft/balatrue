@@ -1,21 +1,24 @@
 import {
+  deriveJokerAbilityBehaviors,
+  JOKER_ABILITY_BEHAVIORS,
   JOKER_EFFECTS,
   JOKER_TIMINGS,
   type Joker,
+  type JokerAbilityBehavior,
   type JokerDependency,
   type JokerEffect,
   type JokerTiming,
 } from '../data/types'
 
 /**
- * Player-facing clue semantics for audited c11 classifications.
+ * Player-facing clue semantics for the current audited ability clauses.
  *
- * Families keep the vocabulary approachable. Effects and conditions retain
+ * Families keep the vocabulary approachable. Effects and checks retain
  * auditable details so related clues can be yellow without making sibling
- * Jokers indistinguishable. Trigger events keep player-facing phases as their
- * broad categories while exact events decide whether a clue is fully equal.
+ * Jokers indistinguishable. Trigger timing deliberately stops at broad phases;
+ * exact actions become player checks only when they meaningfully narrow a phase.
  */
-export const GAME_CLUE_MODEL_VERSION = 9 as const
+export const GAME_CLUE_MODEL_VERSION = 11 as const
 
 export const GAME_EFFECT_FAMILIES = [
   'chips',
@@ -43,19 +46,23 @@ export const GAME_EFFECT_CATEGORIES = [
 export type GameEffectCategory = (typeof GAME_EFFECT_CATEGORIES)[number]
 export type GameEffectValue = GameEffectCategory
 
+/** Player-visible lifecycle details derived from audited ability clauses. */
+export const GAME_EFFECT_BEHAVIORS = JOKER_ABILITY_BEHAVIORS
+export type GameEffectBehavior = JokerAbilityBehavior
+export type GameEffectDetail = JokerEffect | `behavior:${GameEffectBehavior}`
+
 export const GAME_TIMING_FAMILIES = [
   'always',
   'hand_scored',
   'card_scored',
-  'hand_action',
-  'card_management',
+  'card_action',
   'blind',
   'shop',
   'round_boundary',
 ] as const
 export type GameTimingFamily = (typeof GAME_TIMING_FAMILIES)[number]
 
-/** Exact audited timing events retained for explanations and source review. */
+/** Exact audited timing events retained for source review, not player comparison. */
 export const GAME_TIMINGS = JOKER_TIMINGS
 export type GameTiming = JokerTiming
 
@@ -96,6 +103,14 @@ export const GAME_DEPENDENCY_DETAIL_GROUPS = [
   {
     key: 'first_single_discard',
     values: ['discard:card_count_1', 'discard:first'],
+  },
+  {
+    key: 'scoring_face_state',
+    values: ['playing_card:no_scoring_face', 'playing_card:scoring_face'],
+  },
+  {
+    key: 'most_played_state',
+    values: ['poker_hand:most_played', 'poker_hand:not_most_played'],
   },
   {
     key: 'all_suits',
@@ -180,16 +195,28 @@ export function gameEffectCategory(effect: JokerEffect): GameEffectCategory {
   return effectCategoryProjection[gameEffectFamily(effect)]
 }
 
+export function gameEffectBehaviorDetail(
+  behavior: GameEffectBehavior,
+): `behavior:${GameEffectBehavior}` {
+  return `behavior:${behavior}`
+}
+
+export function isGameEffectBehaviorDetail(
+  detail: GameEffectDetail,
+): detail is `behavior:${GameEffectBehavior}` {
+  return detail.startsWith('behavior:')
+}
+
 const timingProjection: Record<JokerTiming, GameTimingFamily> = {
   passive: 'always',
   hand_scored: 'hand_scored',
   card_scored: 'card_scored',
-  card_played: 'hand_action',
-  card_held: 'hand_action',
-  card_discarded: 'hand_action',
-  consumable_used: 'card_management',
-  card_added: 'card_management',
-  card_destroyed: 'card_management',
+  card_played: 'card_action',
+  card_held: 'card_action',
+  card_discarded: 'card_action',
+  consumable_used: 'card_action',
+  card_added: 'card_action',
+  card_destroyed: 'card_action',
   blind_selected: 'blind',
   blind_skipped: 'blind',
   blind_defeated: 'blind',
@@ -233,9 +260,54 @@ function gameDependencyFamily(dependency: JokerDependency): GameDependencyFamily
   return dependencyProjection[dependency.family]
 }
 
+const hiddenCapacityDependencies = new Set([
+  'consumable\u0000available_slot',
+  'joker_slot\u0000available',
+])
+
+const eventDependencyProjection: Partial<
+  Record<JokerTiming, { family: GameDependencyFamily; value: string }>
+> = {
+  card_played: { family: 'hand', value: 'event:card_played' },
+  card_held: { family: 'cards', value: 'event:card_held' },
+  card_discarded: { family: 'discard', value: 'event:card_discarded' },
+  consumable_used: { family: 'other_cards', value: 'event:consumable_used' },
+  card_added: { family: 'cards', value: 'event:card_added' },
+  card_destroyed: { family: 'cards', value: 'event:card_destroyed' },
+  blind_selected: { family: 'progress', value: 'event:blind_selected' },
+  blind_skipped: { family: 'progress', value: 'event:blind_skipped' },
+  blind_defeated: { family: 'progress', value: 'event:blind_defeated' },
+  blind_failed: { family: 'progress', value: 'event:blind_failed' },
+  shop: { family: 'economy', value: 'event:shop' },
+  booster_opened: { family: 'economy', value: 'event:booster_opened' },
+  booster_skipped: { family: 'economy', value: 'event:booster_skipped' },
+  shop_rerolled: { family: 'economy', value: 'event:shop_rerolled' },
+  shop_ended: { family: 'economy', value: 'event:shop_ended' },
+  sold: { family: 'economy', value: 'event:sold' },
+  round_start: { family: 'progress', value: 'event:round_start' },
+  round_end: { family: 'progress', value: 'event:round_end' },
+  joker_triggered: { family: 'other_cards', value: 'event:joker_triggered' },
+}
+
+function rawDependencyKey(dependency: JokerDependency): string {
+  return `${dependency.family}\u0000${dependency.value ?? ''}`
+}
+
 export function projectJokerEffects(joker: Joker): JokerEffect[] {
-  const selected = new Set(joker.classification.effects)
+  const selected = new Set(joker.classification.abilities.flatMap((ability) => ability.effects))
   return JOKER_EFFECTS.filter((effect) => selected.has(effect))
+}
+
+export function projectJokerEffectBehaviors(joker: Joker): GameEffectBehavior[] {
+  const selected = new Set(deriveJokerAbilityBehaviors(joker.classification.abilities))
+  return GAME_EFFECT_BEHAVIORS.filter((behavior) => selected.has(behavior))
+}
+
+export function projectJokerEffectDetails(joker: Joker): GameEffectDetail[] {
+  return [
+    ...projectJokerEffects(joker),
+    ...projectJokerEffectBehaviors(joker).map(gameEffectBehaviorDetail),
+  ]
 }
 
 export function projectJokerEffectCategories(joker: Joker): GameEffectCategory[] {
@@ -248,7 +320,7 @@ export function projectJokerEffectValues(joker: Joker): GameEffectValue[] {
 }
 
 export function projectJokerTimings(joker: Joker): JokerTiming[] {
-  const selected = new Set(joker.classification.timings)
+  const selected = new Set(joker.classification.abilities.map((ability) => ability.event))
   return JOKER_TIMINGS.filter((timing) => selected.has(timing))
 }
 
@@ -258,16 +330,33 @@ export function projectJokerTimingFamilies(joker: Joker): GameTimingFamily[] {
 }
 
 export function projectJokerDependencies(joker: Joker): GameDependency[] {
-  const rawDependencies = joker.classification.dependencies
+  const projected = joker.classification.abilities.flatMap<GameDependency>((ability) => {
+    const concreteDependencies = [
+      ...ability.eventFilters,
+      ...ability.externalReads,
+      ...ability.selfGates.flatMap((gate) => (gate.dependency ? [gate.dependency] : [])),
+    ].filter(
+      (dependency) =>
+        dependency.family !== 'none' &&
+        !hiddenCapacityDependencies.has(rawDependencyKey(dependency)),
+    )
 
-  const projected = rawDependencies.map<GameDependency>((dependency) => {
-    const family = gameDependencyFamily(dependency)
-    if (family === 'none') return { family }
-    return {
-      family,
-      value: dependency.value ? `${dependency.family}:${dependency.value}` : dependency.family,
+    if (concreteDependencies.length === 0) {
+      const eventDependency = eventDependencyProjection[ability.event]
+      return eventDependency ? [{ ...eventDependency }] : []
     }
+
+    return concreteDependencies.map<GameDependency>((dependency) => {
+      const family = gameDependencyFamily(dependency)
+      if (family === 'none') return { family }
+      return {
+        family,
+        value: dependency.value ? `${dependency.family}:${dependency.value}` : dependency.family,
+      }
+    })
   })
+
+  if (projected.length === 0) return [{ family: 'none' }]
 
   const unique = new Map(projected.map((dependency) => [gameDependencyKey(dependency), dependency]))
   const familyOrder = new Map(GAME_DEPENDENCY_FAMILIES.map((family, index) => [family, index]))
@@ -289,7 +378,7 @@ export function gameplayClueSignature(joker: Joker): string {
   return [
     joker.official.rarity,
     price,
-    projectJokerEffects(joker).join('+'),
+    projectJokerEffectDetails(joker).join('+'),
     projectJokerTimingFamilies(joker).join('+'),
     projectJokerDependencies(joker).map(gameDependencyKey).join('+'),
   ].join('|')

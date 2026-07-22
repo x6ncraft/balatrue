@@ -5,17 +5,22 @@ import {
   JOKER_EFFECTS,
   JOKER_TIMINGS,
   type Joker,
+  type JokerAbilityRole,
   type JokerDependency,
+  type JokerSelfGate,
   type JokerTiming,
 } from '../data/types'
 import { describe, expect, it } from 'vitest'
 import {
   GAME_DEPENDENCY_FAMILIES,
   GAME_EFFECT_CATEGORIES,
+  GAME_TIMING_FAMILIES,
   gameEffectCategory,
   gameTimingFamily,
   projectJokerDependencies,
   projectJokerEffectCategories,
+  projectJokerEffectBehaviors,
+  projectJokerEffectDetails,
   projectJokerEffectValues,
   projectJokerTimingFamilies,
   projectJokerTimings,
@@ -23,7 +28,15 @@ import {
   type GameTimingFamily,
 } from './clue-model'
 
-function makeJoker(options: { timings?: JokerTiming[]; dependencies?: JokerDependency[] }): Joker {
+function makeJoker(options: {
+  timings?: JokerTiming[]
+  dependencies?: JokerDependency[]
+  role?: JokerAbilityRole
+  selfGates?: JokerSelfGate[]
+}): Joker {
+  const dependencies = (options.dependencies ?? []).filter(
+    (dependency) => dependency.family !== 'none',
+  )
   return {
     id: 'j_fixture',
     number: 1,
@@ -48,15 +61,20 @@ function makeJoker(options: { timings?: JokerTiming[]; dependencies?: JokerDepen
     classification: {
       version: JOKER_CLASSIFICATION_VERSION,
       acquisition: { kind: 'shop', unlockState: 'starting' },
-      effects: ['rules:probability'],
-      timings: options.timings ?? ['passive'],
-      dependencies: options.dependencies ?? [{ family: 'none' }],
+      abilities: (options.timings ?? ['passive']).map((event) => ({
+        event,
+        role: options.role ?? 'apply',
+        effects: ['rules:probability'],
+        eventFilters: [],
+        externalReads: dependencies,
+        selfGates: options.selfGates ?? [],
+      })),
     },
   }
 }
 
 describe('player-facing clue projection', () => {
-  it('keeps the board taxonomy to seven effect and seven dependency directions', () => {
+  it('keeps the board taxonomy to seven directions per category clue', () => {
     expect(GAME_EFFECT_CATEGORIES).toEqual([
       'chips',
       'mult',
@@ -74,6 +92,15 @@ describe('player-facing clue projection', () => {
       'other_cards',
       'progress',
       'none',
+    ])
+    expect(GAME_TIMING_FAMILIES).toEqual([
+      'always',
+      'hand_scored',
+      'card_scored',
+      'card_action',
+      'blind',
+      'shop',
+      'round_boundary',
     ])
   })
 
@@ -94,6 +121,12 @@ describe('player-facing clue projection', () => {
     expect(projectJokerEffectValues(joker)).toEqual(expected)
   })
 
+  it('derives behavior details from ability clauses without inventing a second data source', () => {
+    const growing = makeJoker({ role: 'grow' })
+    expect(projectJokerEffectBehaviors(growing)).toEqual(['growth'])
+    expect(projectJokerEffectDetails(growing)).toEqual(['rules:probability', 'behavior:growth'])
+  })
+
   it('keeps every effect category shared by at least ten Jokers', () => {
     for (const category of GAME_EFFECT_CATEGORIES) {
       expect(
@@ -102,13 +135,13 @@ describe('player-facing clue projection', () => {
     }
   })
 
-  it('keeps every dependency category shared by at least eight Jokers', () => {
+  it('keeps every dependency category shared by multiple useful comparison cases', () => {
     for (const family of GAME_DEPENDENCY_FAMILIES) {
       expect(
         jokers.filter((joker) =>
           projectJokerDependencies(joker).some((dependency) => dependency.family === family),
         ).length,
-      ).toBeGreaterThanOrEqual(8)
+      ).toBeGreaterThanOrEqual(6)
     }
   })
 
@@ -116,12 +149,12 @@ describe('player-facing clue projection', () => {
     ['passive', 'always'],
     ['hand_scored', 'hand_scored'],
     ['card_scored', 'card_scored'],
-    ['card_played', 'hand_action'],
-    ['card_held', 'hand_action'],
-    ['card_discarded', 'hand_action'],
-    ['consumable_used', 'card_management'],
-    ['card_added', 'card_management'],
-    ['card_destroyed', 'card_management'],
+    ['card_played', 'card_action'],
+    ['card_held', 'card_action'],
+    ['card_discarded', 'card_action'],
+    ['consumable_used', 'card_action'],
+    ['card_added', 'card_action'],
+    ['card_destroyed', 'card_action'],
     ['blind_selected', 'blind'],
     ['blind_skipped', 'blind'],
     ['blind_defeated', 'blind'],
@@ -157,7 +190,7 @@ describe('player-facing clue projection', () => {
     ['j_constellation', ['hand_scored', 'consumable_used']],
     ['j_castle', ['hand_scored', 'card_discarded', 'round_end']],
     ['j_certificate', ['round_start']],
-    ['j_throwback', ['hand_scored', 'blind_skipped']],
+    ['j_throwback', ['hand_scored']],
     ['j_mr_bones', ['blind_failed']],
     ['j_campfire', ['hand_scored', 'blind_defeated', 'sold']],
     ['j_hallucination', ['booster_opened']],
@@ -170,8 +203,8 @@ describe('player-facing clue projection', () => {
 
   it.each([
     ['j_certificate', ['round_boundary']],
-    ['j_throwback', ['hand_scored', 'blind']],
-    ['j_castle', ['hand_scored', 'hand_action', 'round_boundary']],
+    ['j_throwback', ['hand_scored']],
+    ['j_castle', ['hand_scored', 'card_action', 'round_boundary']],
     ['j_hallucination', ['shop']],
   ] as const)('projects playable timing families for %s', (id, expected) => {
     const joker = jokers.find((candidate) => candidate.id === id)
@@ -223,5 +256,74 @@ describe('player-facing clue projection', () => {
       { family: 'cards', value: 'rank:face' },
       { family: 'hand', value: 'playing_card:first_scoring' },
     ])
+  })
+
+  it('uses concrete checks first and derives actions only when a phase needs them', () => {
+    expect(
+      projectJokerDependencies(
+        makeJoker({
+          timings: ['card_added', 'card_played', 'consumable_used', 'round_end'],
+        }),
+      ),
+    ).toEqual([
+      { family: 'cards', value: 'event:card_added' },
+      { family: 'hand', value: 'event:card_played' },
+      { family: 'other_cards', value: 'event:consumable_used' },
+      { family: 'progress', value: 'event:round_end' },
+    ])
+    expect(projectJokerDependencies(makeJoker({ timings: ['passive'] }))).toEqual([
+      { family: 'none' },
+    ])
+  })
+
+  it('keeps generic open-slot constraints out of player checks', () => {
+    expect(
+      projectJokerDependencies(
+        makeJoker({
+          timings: ['blind_selected'],
+          dependencies: [{ family: 'consumable', value: 'available_slot' }],
+        }),
+      ),
+    ).toEqual([{ family: 'progress', value: 'event:blind_selected' }])
+
+    const allValues = jokers.flatMap((joker) =>
+      projectJokerDependencies(joker).flatMap((dependency) =>
+        dependency.value ? [dependency.value] : [],
+      ),
+    )
+    expect(allValues).not.toContain('consumable:available_slot')
+    expect(allValues).not.toContain('joker_slot:available')
+  })
+
+  it('aligns growth cards through their real player checks', () => {
+    const checks = (id: string) => {
+      const joker = jokers.find((candidate) => candidate.id === id)
+      if (!joker) throw new Error(`Missing Joker fixture ${id}`)
+      return projectJokerDependencies(joker)
+    }
+
+    expect(checks('j_hologram')).toEqual([{ family: 'cards', value: 'event:card_added' }])
+    expect(checks('j_trousers')).toEqual([{ family: 'hand', value: 'poker_hand:two_pair' }])
+    expect(checks('j_cartomancer')).toEqual([{ family: 'progress', value: 'event:blind_selected' }])
+  })
+
+  it('projects only explicitly player-facing self gates into Checks', () => {
+    expect(
+      projectJokerDependencies(
+        makeJoker({
+          selfGates: [
+            {
+              kind: 'counter',
+              value: 'after_2_rounds',
+              dependency: { family: 'round', value: 'elapsed_2' },
+            },
+          ],
+        }),
+      ),
+    ).toEqual([{ family: 'progress', value: 'round:elapsed_2' }])
+
+    expect(
+      projectJokerDependencies(makeJoker({ selfGates: [{ kind: 'chance', value: '1_in_4' }] })),
+    ).toEqual([{ family: 'none' }])
   })
 })

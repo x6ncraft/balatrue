@@ -3,7 +3,7 @@ import type { Joker, JokerDataMeta } from './types'
 
 export const JOKER_DATA_META: JokerDataMeta = {
   gameVersion: '1.0.1o-FULL',
-  classificationVersion: 11,
+  classificationVersion: 12,
   source: {
     wikiPageUrl: 'https://balatrowiki.org/w/Jokers?oldid=26120',
     wikiPageRevision: 26120,
@@ -44,16 +44,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -83,17 +86,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'diamonds',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'diamonds',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -123,17 +133,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'hearts',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'hearts',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -163,17 +180,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'spades',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'spades',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -203,17 +227,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'clubs',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'clubs',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -243,17 +274,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -283,17 +321,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'three_of_a_kind',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'three_of_a_kind',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -323,17 +368,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'two_pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'two_pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -363,17 +415,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'straight',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'straight',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -403,17 +462,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'flush',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'flush',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -443,17 +509,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -483,17 +556,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'three_of_a_kind',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'three_of_a_kind',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -523,17 +603,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'two_pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'two_pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -563,17 +650,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'straight',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'straight',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -603,17 +697,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'flush',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'flush',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -643,17 +744,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'card_count_lte_3',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'hand',
+              value: 'card_count_lte_3',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -683,17 +791,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker_slot',
-          value: 'empty_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker_slot',
+              value: 'empty_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -723,16 +838,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['rules:poker_hand_size'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:poker_hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -762,17 +880,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['retrigger'],
-      timings: ['card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_ability',
+          event: 'card_held',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'held_ability',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -802,16 +927,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -841,21 +969,50 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'sell_value',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'joker',
-          value: 'right',
+          event: 'blind_selected',
+          role: 'remove',
+          effects: ['modify:destroy_joker'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'right',
+            },
+          ],
+          selfGates: [],
+          removal: 'joker',
+        },
+        {
+          event: 'blind_selected',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'right',
+            },
+            {
+              family: 'money',
+              value: 'sell_value',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -885,17 +1042,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'remaining_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'discard',
+              value: 'remaining_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -925,17 +1089,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'none_remaining',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'discard',
+              value: 'none_remaining',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -965,16 +1136,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:stone_card'],
-      timings: ['blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'blind_selected',
+          role: 'apply',
+          effects: ['generate:stone_card'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1004,17 +1178,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'every_6_hands',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'counter',
+              value: 'every_6_hands',
+              dependency: {
+                family: 'hand',
+                value: 'every_6_hands',
+              },
+            },
+          ],
         },
       ],
     },
@@ -1044,21 +1229,34 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:tarot'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '8',
-        },
-        {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['generate:tarot'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '8',
+            },
+          ],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_4',
+            },
+          ],
         },
       ],
     },
@@ -1088,16 +1286,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1127,17 +1328,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['retrigger'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'final_hand',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [
+            {
+              family: 'hand',
+              value: 'final_hand',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1167,17 +1375,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_lowest_rank',
+          event: 'card_held',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'playing_card',
+              value: 'held_lowest_rank',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1207,16 +1422,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['resource:reroll'],
-      timings: ['shop'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'shop',
+          role: 'apply',
+          effects: ['resource:reroll'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1246,33 +1464,40 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '2',
-        },
-        {
-          family: 'rank',
-          value: '3',
-        },
-        {
-          family: 'rank',
-          value: '5',
-        },
-        {
-          family: 'rank',
-          value: '8',
-        },
-        {
-          family: 'rank',
-          value: 'ace',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '2',
+            },
+            {
+              family: 'rank',
+              value: '3',
+            },
+            {
+              family: 'rank',
+              value: '5',
+            },
+            {
+              family: 'rank',
+              value: '8',
+            },
+            {
+              family: 'rank',
+              value: 'ace',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1302,21 +1527,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'steel',
-        },
-        {
-          family: 'deck',
-          value: 'full_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'card_modifier',
+              value: 'steel',
+            },
+            {
+              family: 'deck',
+              value: 'full_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1346,17 +1578,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1386,17 +1625,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker',
-          value: 'owned_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'owned_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1426,17 +1672,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'none_used',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'discard',
+              value: 'none_used',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1466,29 +1719,36 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['retrigger'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '2',
-        },
-        {
-          family: 'rank',
-          value: '3',
-        },
-        {
-          family: 'rank',
-          value: '4',
-        },
-        {
-          family: 'rank',
-          value: '5',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '2',
+            },
+            {
+              family: 'rank',
+              value: '3',
+            },
+            {
+              family: 'rank',
+              value: '4',
+            },
+            {
+              family: 'rank',
+              value: '5',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1518,16 +1778,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['rules:face_identity'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:face_identity'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1557,16 +1820,33 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'remove',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_6',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -1596,17 +1876,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'even',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'even',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1636,17 +1923,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'odd',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'odd',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1676,17 +1970,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips', 'mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'ace',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['chips', 'mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'ace',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1716,17 +2017,29 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_2',
+            },
+          ],
         },
       ],
     },
@@ -1756,17 +2069,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'played_hand_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'hand',
+              value: 'played_hand_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1796,21 +2116,45 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'hand',
-          value: 'consecutive_without_face',
+          event: 'card_played',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'no_scoring_face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'reset',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'scoring_face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1840,16 +2184,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['modify:poker_hand_level'],
-      timings: ['card_played'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'card_played',
+          role: 'apply',
+          effects: ['modify:poker_hand_level'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_4',
+            },
+          ],
         },
       ],
     },
@@ -1879,16 +2231,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'round_end',
+          role: 'grow',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1918,16 +2273,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['resource:hands', 'resource:discards'],
-      timings: ['blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'blind_selected',
+          role: 'apply',
+          effects: ['resource:hands', 'resource:discards'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -1957,17 +2315,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_clubs_or_spades',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'playing_card',
+              value: 'held_clubs_or_spades',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -1997,17 +2362,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'straight',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'grow',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'straight',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2037,17 +2417,46 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'played_hand_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'decay',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '20_hands',
+            },
+          ],
+        },
+        {
+          event: 'card_played',
+          role: 'remove',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '20_hands',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -2077,21 +2486,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:playing_card_copy'],
-      timings: ['card_played'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'card_count_1',
-        },
-        {
-          family: 'hand',
-          value: 'first_hand',
+          event: 'card_played',
+          role: 'apply',
+          effects: ['generate:playing_card_copy'],
+          eventFilters: [
+            {
+              family: 'hand',
+              value: 'card_count_1',
+            },
+            {
+              family: 'hand',
+              value: 'first_hand',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2121,16 +2537,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['rules:all_cards_score'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:all_cards_score'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2160,17 +2579,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'deck',
-          value: 'remaining_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'deck',
+              value: 'remaining_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2200,29 +2626,59 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:spectral', 'modify:destroy_playing_card'],
-      timings: ['card_played'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '6',
+          event: 'card_played',
+          role: 'remove',
+          effects: ['modify:destroy_playing_card'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '6',
+            },
+            {
+              family: 'hand',
+              value: 'card_count_1',
+            },
+            {
+              family: 'hand',
+              value: 'first_hand',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+          removal: 'playing_card',
         },
         {
-          family: 'consumable',
-          value: 'available_slot',
-        },
-        {
-          family: 'hand',
-          value: 'card_count_1',
-        },
-        {
-          family: 'hand',
-          value: 'first_hand',
+          event: 'card_played',
+          role: 'apply',
+          effects: ['generate:spectral'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '6',
+            },
+            {
+              family: 'hand',
+              value: 'card_count_1',
+            },
+            {
+              family: 'hand',
+              value: 'first_hand',
+            },
+          ],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2252,17 +2708,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'consumable_used'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'planet_used_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'consumable_used',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'consumable',
+              value: 'planet',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2292,16 +2763,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'card_scored',
+          role: 'grow',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2331,21 +2805,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
-        },
-        {
-          family: 'discard',
-          value: 'card_count_gte_3',
+          event: 'card_discarded',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+            {
+              family: 'discard',
+              value: 'card_count_gte_3',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2375,21 +2856,35 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'used_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'hand',
-          value: 'played_hand_count',
+          event: 'card_played',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_discarded',
+          role: 'decay',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2419,25 +2914,33 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:tarot'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'ace',
-        },
-        {
-          family: 'poker_hand',
-          value: 'straight',
-        },
-        {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['generate:tarot'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'ace',
+            },
+            {
+              family: 'poker_hand',
+              value: 'straight',
+            },
+          ],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2467,17 +2970,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['card_played', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'rotating_target',
+          event: 'card_played',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'rotating_target',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'retarget',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2507,16 +3025,33 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'remove',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_1000',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -2546,17 +3081,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'played_before_this_round',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'played_before_this_round',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2586,16 +3128,27 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'booster_skipped'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'booster_skipped',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2625,17 +3178,46 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'small_or_big',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'blind_selected',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'blind',
+              value: 'small_or_big',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'blind_selected',
+          role: 'remove',
+          effects: ['modify:destroy_joker'],
+          eventFilters: [
+            {
+              family: 'blind',
+              value: 'small_or_big',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+          removal: 'joker',
         },
       ],
     },
@@ -2665,17 +3247,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'card_count_4',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'grow',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'hand',
+              value: 'card_count_4',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2705,21 +3302,29 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:spectral'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'straight_flush',
-        },
-        {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['generate:spectral'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'straight_flush',
+            },
+          ],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2749,17 +3354,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:joker'],
-      timings: ['blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker_slot',
-          value: 'available',
+          event: 'blind_selected',
+          role: 'apply',
+          effects: ['generate:joker'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker_slot',
+              value: 'available',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2789,17 +3401,46 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'enhancement',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'card_modifier',
+              value: 'enhancement',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'remove',
+          effects: ['modify:remove_enhancement'],
+          eventFilters: [
+            {
+              family: 'card_modifier',
+              value: 'enhancement',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+          removal: 'enhancement',
         },
       ],
     },
@@ -2829,16 +3470,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['rules:straight_gap'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:straight_gap'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2868,16 +3512,27 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_added'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_added',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2907,21 +3562,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:tarot'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'cash_lte_4',
-        },
-        {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['generate:tarot'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'money',
+              value: 'cash_lte_4',
+            },
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -2951,17 +3613,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_king',
+          event: 'card_held',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'held_king',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -2991,21 +3660,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '9',
-        },
-        {
-          family: 'deck',
-          value: 'full_count',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'rank',
+              value: '9',
+            },
+            {
+              family: 'deck',
+              value: 'full_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3035,17 +3711,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['blind_defeated', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'boss_defeated_count',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'blind_defeated',
+          role: 'grow',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'blind',
+              value: 'boss',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3075,21 +3766,45 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'most_played',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'hand',
-          value: 'consecutive_plays',
+          event: 'card_played',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'not_most_played',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'reset',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'most_played',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3119,17 +3834,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['modify:gold_card'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['modify:gold_card'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3159,17 +3881,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['rules:boss_blind'],
-      timings: ['sold'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'current_boss',
+          event: 'sold',
+          role: 'apply',
+          effects: ['rules:boss_blind'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'blind',
+              value: 'current_boss',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3199,21 +3928,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
-        },
-        {
-          family: 'playing_card',
-          value: 'first_scoring',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+            {
+              family: 'playing_card',
+              value: 'first_scoring',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3243,16 +3979,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'round_end',
+          role: 'grow',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3282,17 +4021,51 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['resource:hand_size'],
-      timings: ['passive', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'round',
-          value: 'elapsed',
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+        },
+        {
+          event: 'round_end',
+          role: 'decay',
+          effects: ['resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+        },
+        {
+          event: 'round_end',
+          role: 'remove',
+          effects: ['resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -3322,17 +4095,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'deck',
-          value: 'below_starting_size',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'deck',
+              value: 'below_starting_size',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3362,17 +4142,29 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_face',
+          event: 'card_held',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'held_face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_2',
+            },
+          ],
         },
       ],
     },
@@ -3402,17 +4194,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['card_discarded', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'rotating_target',
+          event: 'card_discarded',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'rotating_target',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'retarget',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3442,17 +4249,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'cash_for_interest',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'money',
+              value: 'cash_for_interest',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3482,17 +4296,29 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:tarot'],
-      timings: ['booster_opened'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'booster_opened',
+          role: 'apply',
+          effects: ['generate:tarot'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_2',
+            },
+          ],
         },
       ],
     },
@@ -3522,17 +4348,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'consumable_used'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'tarot_used_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'tarot_used_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3562,16 +4395,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['resource:hand_size'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3601,16 +4437,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['resource:discards'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:discards'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3640,21 +4479,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'stone',
-        },
-        {
-          family: 'deck',
-          value: 'full_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'card_modifier',
+              value: 'stone',
+            },
+            {
+              family: 'deck',
+              value: 'full_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3684,16 +4530,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy'],
-      timings: ['round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3723,17 +4572,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'lucky_triggered',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_scored',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'card_modifier',
+              value: 'lucky_triggered',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3763,17 +4627,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['joker_triggered'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker',
-          value: 'uncommon',
+          event: 'joker_triggered',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'joker',
+              value: 'uncommon',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3803,17 +4674,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'cash',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'money',
+              value: 'cash',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -3843,16 +4721,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['generate:tag'],
-      timings: ['sold'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'sold',
+          role: 'apply',
+          effects: ['generate:tag'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3882,21 +4763,46 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['economy', 'modify:destroy_playing_card'],
-      timings: ['card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'card_count_1',
+          event: 'card_discarded',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'discard',
+              value: 'card_count_1',
+            },
+            {
+              family: 'discard',
+              value: 'first',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'discard',
-          value: 'first',
+          event: 'card_discarded',
+          role: 'remove',
+          effects: ['modify:destroy_playing_card'],
+          eventFilters: [
+            {
+              family: 'discard',
+              value: 'card_count_1',
+            },
+            {
+              family: 'discard',
+              value: 'first',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+          removal: 'playing_card',
         },
       ],
     },
@@ -3926,17 +4832,27 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'shop_rerolled'],
-      dependencies: [
+      abilities: [
         {
-          family: 'shop',
-          value: 'reroll_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'shop_rerolled',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -3966,17 +4882,51 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'round',
-          value: 'played_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+        },
+        {
+          event: 'round_end',
+          role: 'decay',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+        },
+        {
+          event: 'round_end',
+          role: 'remove',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '5_rounds',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -4006,17 +4956,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'two_pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_played',
+          role: 'grow',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'two_pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4046,17 +5011,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['card_scored', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'rotating_target',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'rotating_target',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'retarget',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4086,17 +5066,51 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'used_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '100_discards',
+            },
+          ],
+        },
+        {
+          event: 'card_discarded',
+          role: 'decay',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '100_discards',
+            },
+          ],
+        },
+        {
+          event: 'card_discarded',
+          role: 'remove',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '100_discards',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -4126,21 +5140,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips', 'mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '10',
-        },
-        {
-          family: 'rank',
-          value: '4',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['chips', 'mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '10',
+            },
+            {
+              family: 'rank',
+              value: '4',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4170,17 +5191,51 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['retrigger'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'next_10_hands',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '10_hands',
+            },
+          ],
+        },
+        {
+          event: 'card_played',
+          role: 'decay',
+          effects: ['retrigger'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '10_hands',
+            },
+          ],
+        },
+        {
+          event: 'card_played',
+          role: 'remove',
+          effects: ['retrigger'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'remaining_uses',
+              value: '10_hands',
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -4210,21 +5265,40 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['chips'],
-      timings: ['hand_scored', 'card_discarded', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'rotating_target',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'discard',
-          value: 'matching_count',
+          event: 'card_discarded',
+          role: 'grow',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'rotating_target',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'retarget',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4254,17 +5328,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4294,21 +5375,40 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'starting',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'blind_defeated', 'sold'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'boss',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'shop',
-          value: 'sold_card_count',
+          event: 'sold',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'blind_defeated',
+          role: 'reset',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'blind',
+              value: 'boss',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4338,17 +5438,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['economy'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'gold',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'card_modifier',
+              value: 'gold',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4378,17 +5485,46 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:survival'],
-      timings: ['blind_failed'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'score_gte_25_percent',
+          event: 'blind_failed',
+          role: 'apply',
+          effects: ['rules:survival'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'score_threshold',
+              value: 'score_gte_25_percent',
+              dependency: {
+                family: 'blind',
+                value: 'score_gte_25_percent',
+              },
+            },
+          ],
+        },
+        {
+          event: 'blind_failed',
+          role: 'remove',
+          effects: ['rules:survival'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'score_threshold',
+              value: 'score_gte_25_percent',
+              dependency: {
+                family: 'blind',
+                value: 'score_gte_25_percent',
+              },
+            },
+          ],
+          removal: 'self',
         },
       ],
     },
@@ -4418,17 +5554,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'hand',
-          value: 'final_hand',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'hand',
+              value: 'final_hand',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4458,17 +5601,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['retrigger'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4498,21 +5648,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'sell_value',
-        },
-        {
-          family: 'joker',
-          value: 'owned',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'money',
+              value: 'sell_value',
+            },
+            {
+              family: 'joker',
+              value: 'owned',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -4542,16 +5699,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['resource:hands', 'resource:hand_size'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:hands', 'resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4581,16 +5741,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['generate:sealed_card'],
-      timings: ['round_start'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'round_start',
+          role: 'apply',
+          effects: ['generate:sealed_card'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4620,16 +5783,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:suit_identity'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:suit_identity'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4659,17 +5825,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'blind_skipped'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'skipped_count',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'blind',
+              value: 'skipped_count',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -4699,17 +5872,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['retrigger'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'first_scoring',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['retrigger'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'first_scoring',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4739,17 +5919,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['economy'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'diamonds',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'diamonds',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4779,17 +5966,29 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'hearts',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'hearts',
+            },
+          ],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'chance',
+              value: '1_in_2',
+            },
+          ],
         },
       ],
     },
@@ -4819,17 +6018,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['chips'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'spades',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'spades',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4859,17 +6065,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'clubs',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'clubs',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4899,17 +6112,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_destroyed'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'glass',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_destroyed',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'card_modifier',
+              value: 'glass',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4939,16 +6167,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:duplicates'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:duplicates'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -4978,29 +6209,36 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'clubs',
-        },
-        {
-          family: 'suit',
-          value: 'diamonds',
-        },
-        {
-          family: 'suit',
-          value: 'hearts',
-        },
-        {
-          family: 'suit',
-          value: 'spades',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'clubs',
+            },
+            {
+              family: 'suit',
+              value: 'diamonds',
+            },
+            {
+              family: 'suit',
+              value: 'hearts',
+            },
+            {
+              family: 'suit',
+              value: 'spades',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5030,17 +6268,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:copy_ability'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker',
-          value: 'right',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:copy_ability'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'right',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5070,17 +6315,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 271,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['chips'],
-      timings: ['hand_scored', 'card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: '2',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_scored',
+          role: 'grow',
+          effects: ['chips'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: '2',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5110,16 +6370,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['resource:discards', 'resource:hand_size'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:discards', 'resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5149,16 +6412,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:probability'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:probability'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5188,21 +6454,36 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['card_scored', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'rotating_target',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'rotating_target',
+            },
+            {
+              family: 'rank',
+              value: 'rotating_target',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'rank',
-          value: 'rotating_target',
+          event: 'round_end',
+          role: 'retarget',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5232,21 +6513,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'suit',
-          value: 'clubs',
-        },
-        {
-          family: 'suit',
-          value: 'other',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'suit',
+              value: 'clubs',
+            },
+            {
+              family: 'suit',
+              value: 'other',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5276,17 +6564,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['economy'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'blind',
-          value: 'boss_ability_triggered',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [
+            {
+              family: 'blind',
+              value: 'boss_ability_triggered',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5316,21 +6611,40 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_discarded', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'jack',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
         {
-          family: 'discard',
-          value: 'jack_count_this_round',
+          event: 'card_discarded',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'jack',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'round_end',
+          role: 'reset',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5360,17 +6674,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'pair',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'pair',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5400,17 +6721,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'three_of_a_kind',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'three_of_a_kind',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5440,17 +6768,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'four_of_a_kind',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'four_of_a_kind',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5480,17 +6815,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'straight',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'straight',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5520,17 +6862,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'poker_hand',
-          value: 'flush',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'poker_hand',
+              value: 'flush',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5560,16 +6909,27 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['chips', 'resource:hand_size'],
-      timings: ['passive', 'hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['chips'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'passive',
+          role: 'apply',
+          effects: ['resource:hand_size'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5599,21 +6959,33 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['generate:joker_copy'],
-      timings: ['round_end', 'sold'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker',
-          value: 'other_random',
-        },
-        {
-          family: 'round',
-          value: 'elapsed_2',
+          event: 'sold',
+          role: 'apply',
+          effects: ['generate:joker_copy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'other_random',
+            },
+          ],
+          selfGates: [
+            {
+              kind: 'counter',
+              value: 'after_2_rounds',
+              dependency: {
+                family: 'round',
+                value: 'elapsed_2',
+              },
+            },
+          ],
         },
       ],
     },
@@ -5643,17 +7015,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['rules:copy_ability'],
-      timings: ['passive'],
-      dependencies: [
+      abilities: [
         {
-          family: 'joker',
-          value: 'leftmost',
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:copy_ability'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'joker',
+              value: 'leftmost',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5683,17 +7062,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['economy'],
-      timings: ['consumable_used', 'round_end'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'unique_planets_used',
+          event: 'round_end',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'unique_planets_used',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5723,17 +7109,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['mult'],
-      timings: ['card_held'],
-      dependencies: [
+      abilities: [
         {
-          family: 'playing_card',
-          value: 'held_queen',
+          event: 'card_held',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [
+            {
+              family: 'playing_card',
+              value: 'held_queen',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5763,17 +7156,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'card_modifier',
-          value: 'enhancement_count_gte_16',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'card_modifier',
+              value: 'enhancement_count_gte_16',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5803,17 +7203,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['generate:tarot'],
-      timings: ['blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'available_slot',
+          event: 'blind_selected',
+          role: 'apply',
+          effects: ['generate:tarot'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'available_slot',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5843,16 +7250,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['economy'],
-      timings: ['shop'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'shop',
+          role: 'apply',
+          effects: ['economy'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5882,17 +7292,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['modify:poker_hand_level'],
-      timings: ['card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'first',
+          event: 'card_discarded',
+          role: 'apply',
+          effects: ['modify:poker_hand_level'],
+          eventFilters: [
+            {
+              family: 'discard',
+              value: 'first',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -5922,17 +7339,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'shop',
         unlockState: 'unlock_required',
       },
-      effects: ['mult'],
-      timings: ['hand_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'money',
-          value: 'cash',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['mult'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'money',
+              value: 'cash',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },
@@ -5962,17 +7386,32 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_destroyed'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'face',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_destroyed',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'face',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -6002,21 +7441,28 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
       },
-      effects: ['x_mult'],
-      timings: ['card_scored'],
-      dependencies: [
+      abilities: [
         {
-          family: 'rank',
-          value: 'king',
-        },
-        {
-          family: 'rank',
-          value: 'queen',
+          event: 'card_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [
+            {
+              family: 'rank',
+              value: 'king',
+            },
+            {
+              family: 'rank',
+              value: 'queen',
+            },
+          ],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -6046,17 +7492,36 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
       },
-      effects: ['x_mult'],
-      timings: ['hand_scored', 'card_discarded'],
-      dependencies: [
+      abilities: [
         {
-          family: 'discard',
-          value: 'history_count_23',
+          event: 'hand_scored',
+          role: 'apply',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+        {
+          event: 'card_discarded',
+          role: 'grow',
+          effects: ['x_mult'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [
+            {
+              kind: 'counter',
+              value: 'every_23_discards',
+              dependency: {
+                family: 'discard',
+                value: 'history_count_23',
+              },
+            },
+          ],
         },
       ],
     },
@@ -6086,16 +7551,19 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
       },
-      effects: ['rules:boss_blind'],
-      timings: ['blind_selected'],
-      dependencies: [
+      abilities: [
         {
-          family: 'none',
+          event: 'blind_selected',
+          role: 'apply',
+          effects: ['rules:boss_blind'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
         },
       ],
     },
@@ -6125,17 +7593,24 @@ export const jokers: readonly Joker[] = [
       imageHeight: 190,
     },
     classification: {
-      version: 11,
+      version: 12,
       acquisition: {
         kind: 'soul',
         unlockState: 'legendary',
       },
-      effects: ['generate:consumable_copy'],
-      timings: ['shop_ended'],
-      dependencies: [
+      abilities: [
         {
-          family: 'consumable',
-          value: 'owned',
+          event: 'shop_ended',
+          role: 'apply',
+          effects: ['generate:consumable_copy'],
+          eventFilters: [],
+          externalReads: [
+            {
+              family: 'consumable',
+              value: 'owned',
+            },
+          ],
+          selfGates: [],
         },
       ],
     },

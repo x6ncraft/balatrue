@@ -9,9 +9,8 @@ import {
   GAME_TIMING_FAMILIES,
   getJokerDependencies,
   getJokerEffectCategories,
-  getJokerEffects,
+  getJokerEffectDetails,
   getJokerTimingFamilies,
-  getJokerTimings,
   type GameDependencyFamily,
   type GameEffectCategory,
   type GameTimingFamily,
@@ -22,9 +21,9 @@ import {
   dependencyFamilyLabel,
   dependenciesLabel,
   effectCategoryLabel,
-  effectMechanismsLabel,
+  effectDetailsLabel,
   rarityLabel,
-  timingDetailsLabel,
+  timingFamiliesLabel,
   timingFamilyLabel,
 } from '../ui/labels'
 import { jokerPriceLabel } from '../ui/joker-facts'
@@ -377,11 +376,11 @@ export default function JokerCollectionDialog({
                       </div>
                       <div>
                         <dt>{t(locale, 'clue.effect')}</dt>
-                        <dd>{effectMechanismsLabel(getJokerEffects(joker), locale)}</dd>
+                        <dd>{effectDetailsLabel(getJokerEffectDetails(joker), locale)}</dd>
                       </div>
                       <div>
                         <dt>{t(locale, 'clue.timing')}</dt>
-                        <dd>{timingDetailsLabel(getJokerTimings(joker), locale)}</dd>
+                        <dd>{timingFamiliesLabel(getJokerTimingFamilies(joker), locale)}</dd>
                       </div>
                       <div className="collection-card__wide">
                         <dt>{t(locale, 'clue.dependency')}</dt>

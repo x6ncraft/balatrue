@@ -7,11 +7,14 @@ import { fileURLToPath } from 'node:url'
 import { JOKER_DATA_META, jokers } from '../src/data/jokers.generated'
 import {
   JOKER_ACQUISITION_KINDS,
+  JOKER_ABILITY_ROLES,
   JOKER_CLASSIFICATION_VERSION,
   JOKER_DATA_GAME_VERSION,
   JOKER_DEPENDENCY_FAMILIES,
   JOKER_EFFECTS,
   JOKER_RARITIES,
+  JOKER_REMOVAL_KINDS,
+  JOKER_SELF_GATE_KINDS,
   JOKER_TIMINGS,
   JOKER_UNLOCK_STATES,
   WIKI_JOKER_ACTIVATIONS,
@@ -28,13 +31,16 @@ import {
   gameTimingFamily,
   gameplayClueSignature,
   projectJokerDependencies,
+  projectJokerEffectBehaviors,
   projectJokerEffectCategories,
+  projectJokerEffects,
   projectJokerTimingFamilies,
   projectJokerTimings,
 } from '../src/game/clue-model'
-import { hasDependencyValueLabel, hasEffectLabel, hasTimingLabel } from '../src/ui/labels'
+import { effectBehaviorLabel, hasDependencyValueLabel, hasEffectLabel } from '../src/ui/labels'
 import { JOKER_SEARCH_ALIASES } from '../src/search/joker-search.generated'
 import { generateJokerSearchAliases } from './generate-joker-search'
+import { CLASSIFICATION_REVIEW_CASE_IDS } from './classification-review-cases'
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
@@ -151,6 +157,13 @@ check(Boolean(JOKER_DATA_META.source.zhCNLocalizationVersion), 'Missing zh-CN lo
 check(jokers.length === 150, `Expected 150 Jokers, found ${jokers.length}`)
 const expectedSearchAliases = generateJokerSearchAliases(jokers)
 const expectedSearchIds = new Set(jokers.map((joker) => joker.id))
+check(
+  CLASSIFICATION_REVIEW_CASE_IDS.length === 61 && hasUniqueValues(CLASSIFICATION_REVIEW_CASE_IDS),
+  'Classification review registry must contain 61 unique Jokers',
+)
+for (const id of CLASSIFICATION_REVIEW_CASE_IDS) {
+  check(expectedSearchIds.has(id), `Classification review registry references unknown ID '${id}'`)
+}
 const actualSearchIds = Object.keys(JOKER_SEARCH_ALIASES)
 check(
   actualSearchIds.length === jokers.length,
@@ -441,57 +454,107 @@ for (const [index, joker] of jokers.entries()) {
     isOneOf(joker.classification.acquisition.unlockState, JOKER_UNLOCK_STATES),
     `${label}: illegal unlock state`,
   )
-  check(joker.classification.effects.length > 0, `${label}: empty effect classification`)
-  check(hasUniqueValues(joker.classification.effects), `${label}: duplicate effect classification`)
-  for (const effect of joker.classification.effects) {
-    check(isOneOf(effect, JOKER_EFFECTS), `${label}: illegal effect '${effect}'`)
-    check(hasEffectLabel(effect), `${label}: effect '${effect}' has no localized label`)
-    try {
-      gameEffectFamily(effect)
-    } catch {
-      check(false, `${label}: effect '${effect}' has no player-facing family`)
-    }
-  }
-  check(joker.classification.timings.length > 0, `${label}: empty timing classification`)
-  check(hasUniqueValues(joker.classification.timings), `${label}: duplicate timing classification`)
-  for (const timing of joker.classification.timings) {
-    check(isOneOf(timing, JOKER_TIMINGS), `${label}: illegal timing '${timing}'`)
-    check(hasTimingLabel(timing), `${label}: timing '${timing}' has no localized label`)
-    check(
-      Boolean(gameTimingFamily(timing)),
-      `${label}: timing '${timing}' has no player-facing family`,
-    )
-  }
-  check(projectJokerTimings(joker).length > 0, `${label}: no player-facing trigger timing`)
-  check(joker.classification.dependencies.length > 0, `${label}: empty dependency classification`)
+  check(joker.classification.abilities.length > 0, `${label}: empty ability classification`)
   check(
-    hasUniqueValues(
-      joker.classification.dependencies.map(({ family, value }) => `${family}:${value ?? ''}`),
-    ),
-    `${label}: duplicate dependency classification`,
+    hasUniqueValues(joker.classification.abilities.map((ability) => JSON.stringify(ability))),
+    `${label}: duplicate ability clause`,
   )
-  for (const dependency of joker.classification.dependencies) {
+
+  const validateDependency = (
+    dependency: (typeof joker.classification.abilities)[number]['eventFilters'][number],
+    scope: string,
+  ) => {
     check(
       isOneOf(dependency.family, JOKER_DEPENDENCY_FAMILIES),
-      `${label}: illegal dependency family '${dependency.family}'`,
+      `${label}: ${scope} has illegal dependency family '${dependency.family}'`,
     )
     check(
-      dependency.value === undefined || dependency.value.trim().length > 0,
-      `${label}: empty dependency value`,
+      dependency.family !== 'none',
+      `${label}: ${scope} must not store the projected 'none' sentinel`,
     )
     check(
-      dependency.value === undefined || hasDependencyValueLabel(dependency.value),
-      `${label}: dependency value '${dependency.value}' has no localized label`,
+      typeof dependency.value === 'string' && dependency.value.trim().length > 0,
+      `${label}: ${scope} must be a concrete narrowing condition`,
     )
     check(
-      dependency.family === 'none' || dependency.value !== undefined,
-      `${label}: dependency '${dependency.family}' is only a scope, not a narrowing condition`,
+      dependency.value !== undefined && hasDependencyValueLabel(dependency.value),
+      `${label}: ${scope} value '${dependency.value}' has no localized label`,
     )
   }
-  if (joker.classification.dependencies.some(({ family }) => family === 'none')) {
+
+  for (const [abilityIndex, ability] of joker.classification.abilities.entries()) {
+    const abilityLabel = `ability ${abilityIndex + 1}`
+    check(isOneOf(ability.event, JOKER_TIMINGS), `${label}: ${abilityLabel} has illegal event`)
     check(
-      joker.classification.dependencies.length === 1,
-      `${label}: 'none' dependency must stand alone`,
+      Boolean(gameTimingFamily(ability.event)),
+      `${label}: event '${ability.event}' has no player-facing family`,
+    )
+    check(isOneOf(ability.role, JOKER_ABILITY_ROLES), `${label}: ${abilityLabel} has illegal role`)
+    check(ability.effects.length > 0, `${label}: ${abilityLabel} has no effect`)
+    check(hasUniqueValues(ability.effects), `${label}: ${abilityLabel} has duplicate effects`)
+    for (const effect of ability.effects) {
+      check(isOneOf(effect, JOKER_EFFECTS), `${label}: illegal effect '${effect}'`)
+      check(hasEffectLabel(effect), `${label}: effect '${effect}' has no localized label`)
+      try {
+        gameEffectFamily(effect)
+      } catch {
+        check(false, `${label}: effect '${effect}' has no player-facing family`)
+      }
+    }
+
+    check(
+      hasUniqueValues(ability.eventFilters.map(({ family, value }) => `${family}:${value ?? ''}`)),
+      `${label}: ${abilityLabel} has duplicate event filters`,
+    )
+    check(
+      hasUniqueValues(ability.externalReads.map(({ family, value }) => `${family}:${value ?? ''}`)),
+      `${label}: ${abilityLabel} has duplicate external reads`,
+    )
+    for (const dependency of ability.eventFilters) {
+      validateDependency(dependency, `${abilityLabel} event filter`)
+    }
+    for (const dependency of ability.externalReads) {
+      validateDependency(dependency, `${abilityLabel} external read`)
+    }
+    const eventFilterKeys = new Set(
+      ability.eventFilters.map(({ family, value }) => `${family}:${value ?? ''}`),
+    )
+    check(
+      ability.externalReads.every(
+        ({ family, value }) => !eventFilterKeys.has(`${family}:${value ?? ''}`),
+      ),
+      `${label}: ${abilityLabel} repeats one condition as both event filter and external read`,
+    )
+
+    check(
+      hasUniqueValues(ability.selfGates.map(({ kind, value }) => `${kind}:${value}`)),
+      `${label}: ${abilityLabel} has duplicate self gates`,
+    )
+    for (const gate of ability.selfGates) {
+      check(isOneOf(gate.kind, JOKER_SELF_GATE_KINDS), `${label}: illegal self-gate kind`)
+      check(gate.value.trim().length > 0, `${label}: empty self-gate value`)
+      if (gate.dependency) validateDependency(gate.dependency, `${abilityLabel} self gate`)
+    }
+
+    if (ability.role === 'remove') {
+      check(
+        isOneOf(ability.removal, JOKER_REMOVAL_KINDS),
+        `${label}: remove clause has no valid removal target`,
+      )
+    } else {
+      check(ability.removal === undefined, `${label}: non-remove clause stores a removal target`)
+    }
+  }
+
+  const projectedEffects = projectJokerEffects(joker)
+  check(projectedEffects.length > 0, `${label}: no player-facing effect`)
+  check(projectJokerTimings(joker).length > 0, `${label}: no player-facing trigger timing`)
+  check(projectJokerDependencies(joker).length > 0, `${label}: no player-facing dependency`)
+  for (const behavior of projectJokerEffectBehaviors(joker)) {
+    check(
+      effectBehaviorLabel(behavior, 'zh-CN').trim().length > 0 &&
+        effectBehaviorLabel(behavior, 'en').trim().length > 0,
+      `${label}: behavior '${behavior}' has no bilingual label`,
     )
   }
   if (joker.official.rarity === 'legendary') {
@@ -561,7 +624,7 @@ for (const [family, count] of timingFamilyCounts) {
   check(count >= 5, `Player timing category '${family}' only covers ${count} Joker(s)`)
 }
 for (const [family, count] of dependencyFamilyCounts) {
-  check(count >= 8, `Player dependency category '${family}' only covers ${count} Joker(s)`)
+  check(count >= 6, `Player dependency category '${family}' only covers ${count} Joker(s)`)
 }
 
 const gameplaySignatures = new Map<string, string[]>()

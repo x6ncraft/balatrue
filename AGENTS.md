@@ -5,8 +5,9 @@
 ## 阅读顺序与权威位置
 
 - 面向访客的项目说明以英文 `README.md` 为默认入口，`README.zh-CN.md` 为同结构中文版本。
-- 产品规则、数据模型、视觉交互、实现结构和验收标准分别以 `docs/product.md`、
-  `docs/data-sources.md`、`docs/design.md`、`docs/architecture.md`、`docs/acceptance.md` 为准。
+- 产品规则、线索分类、数据来源、视觉交互、实现结构和验收标准分别以 `docs/product.md`、
+  `docs/clue-taxonomy.md`、`docs/data-sources.md`、`docs/design.md`、`docs/architecture.md`、
+  `docs/acceptance.md` 为准。
 - 权利边界与可复现发布检查分别以 `docs/legal-notice.md` 和 `docs/release-checklist.md` 为准。
   域名、注册商账号、实名认证、账单、控制台状态与单次部署流水属于维护者私有运维资料，不在
   本仓库维护。
@@ -33,6 +34,11 @@
 - 分类、价格、稀有度、来源记录和搜索词都要能从已提交的来源审查快照、纯转换逻辑与本地图片离线
   重建；`bun run data:generated:check` 必须在生产构建中逐项拒绝漂移。
 - 修改原始分类或玩家投影时，递增相应版本，迁移存档，并重新验证 150 张五维签名唯一。
+- 分类语义、能力子句、`7 / 7 / 7` 玩家标签和重点牌范围只在 `docs/clue-taxonomy.md` 维护；产品、
+  数据、设计和验收文件只保留各自关心的摘要与入口。
+- 每次分类规则升级都要从当前数据重新生成 `docs/classification-review.generated.md`，并人工逐张复核
+  其中全部代表牌和历史调整牌在玩家侧看到的最终五维。报告只保留一张玩家分类表；完整能力子句由
+  分类数据、规范和自动化测试承接。报告是生成产物，禁止手改；重点牌即使本次没有变化也必须确认。
 
 ## 数据与素材边界
 

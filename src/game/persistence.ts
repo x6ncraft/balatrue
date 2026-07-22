@@ -8,7 +8,9 @@ import {
 import type { GameDependency, GameMode, GameState, GuessComparison, MatchResult } from './types'
 
 const LEGACY_MAX_ATTEMPTS = 8
-export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [10, 9, 8, 7, 6, 5, 4, 3, 2] as const
+export const GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS = [
+  11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+] as const
 
 const currentEffectValues = new Set<string>(GAME_EFFECT_CATEGORIES)
 const currentTimingValues = new Set<string>(GAME_TIMING_FAMILIES)

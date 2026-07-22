@@ -1,5 +1,5 @@
 export const JOKER_DATA_GAME_VERSION = '1.0.1o-FULL' as const
-export const JOKER_CLASSIFICATION_VERSION = 11 as const
+export const JOKER_CLASSIFICATION_VERSION = 12 as const
 
 export const JOKER_RARITIES = ['common', 'uncommon', 'rare', 'legendary'] as const
 export type JokerRarity = (typeof JOKER_RARITIES)[number]
@@ -27,6 +27,8 @@ export const JOKER_EFFECTS = [
   'generate:consumable_copy',
   'modify:poker_hand_level',
   'modify:destroy_playing_card',
+  'modify:destroy_joker',
+  'modify:remove_enhancement',
   'modify:gold_card',
   'resource:reroll',
   'resource:hands',
@@ -125,6 +127,85 @@ export interface JokerDependency {
   value?: string
 }
 
+export const JOKER_ABILITY_ROLES = [
+  'apply',
+  'grow',
+  'decay',
+  'reset',
+  'retarget',
+  'remove',
+] as const
+export type JokerAbilityRole = (typeof JOKER_ABILITY_ROLES)[number]
+
+export const JOKER_REMOVAL_KINDS = ['self', 'joker', 'playing_card', 'enhancement'] as const
+export type JokerRemovalKind = (typeof JOKER_REMOVAL_KINDS)[number]
+
+export const JOKER_SELF_GATE_KINDS = [
+  'counter',
+  'remaining_uses',
+  'chance',
+  'score_threshold',
+] as const
+export type JokerSelfGateKind = (typeof JOKER_SELF_GATE_KINDS)[number]
+
+/**
+ * Internal state that controls an ability without being mistaken for an
+ * external dependency. `dependency` is present only when the gate is also a
+ * useful player-facing clue.
+ */
+export interface JokerSelfGate {
+  kind: JokerSelfGateKind
+  value: string
+  dependency?: JokerDependency
+}
+
+/**
+ * One independently triggered part of a Joker's ability.
+ *
+ * - `eventFilters` narrow the triggering event itself.
+ * - `externalReads` are ambient game state read while resolving the ability.
+ * - `selfGates` are counters, uses, or chances owned by this ability.
+ * - `removal` is valid only for `remove` clauses and names what is removed.
+ */
+export interface JokerAbilityClause {
+  event: JokerTiming
+  role: JokerAbilityRole
+  effects: readonly JokerEffect[]
+  eventFilters: readonly JokerDependency[]
+  externalReads: readonly JokerDependency[]
+  selfGates: readonly JokerSelfGate[]
+  removal?: JokerRemovalKind
+}
+
+export const JOKER_ABILITY_BEHAVIORS = [
+  'growth',
+  'decay',
+  'reset',
+  'retarget',
+  'self_destruct',
+] as const
+export type JokerAbilityBehavior = (typeof JOKER_ABILITY_BEHAVIORS)[number]
+
+/** Player-facing behavior details are a projection, never a second authority. */
+export function deriveJokerAbilityBehaviors(
+  abilities: readonly JokerAbilityClause[],
+): readonly JokerAbilityBehavior[] {
+  const selected = new Set<JokerAbilityBehavior>()
+  for (const ability of abilities) {
+    if (ability.role === 'grow') selected.add('growth')
+    if (ability.role === 'decay') selected.add('decay')
+    if (ability.role === 'reset') selected.add('reset')
+    if (ability.role === 'retarget') selected.add('retarget')
+    if (
+      ability.role === 'remove' &&
+      ability.removal === 'self' &&
+      !ability.selfGates.some(({ kind }) => kind === 'remaining_uses')
+    )
+      selected.add('self_destruct')
+  }
+  return JOKER_ABILITY_BEHAVIORS.filter((behavior) => selected.has(behavior))
+}
+
 export interface Joker {
   /** Stable Balatro localization key, for example `j_greedy_joker`. */
   id: string
@@ -160,9 +241,8 @@ export interface Joker {
       kind: JokerAcquisitionKind
       unlockState: JokerUnlockState
     }
-    effects: readonly JokerEffect[]
-    timings: readonly JokerTiming[]
-    dependencies: readonly JokerDependency[]
+    /** The sole classification authority; all player clues are deterministic projections. */
+    abilities: readonly JokerAbilityClause[]
   }
 }
 

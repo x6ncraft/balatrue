@@ -2,11 +2,13 @@ import type { Joker, JokerEffect, JokerRarity, JokerTiming } from '../data/types
 import {
   gameDependencyKey,
   projectJokerDependencies,
+  projectJokerEffectDetails,
   projectJokerEffectCategories,
   projectJokerEffectValues,
   projectJokerEffects,
   projectJokerTimingFamilies,
   projectJokerTimings,
+  type GameEffectDetail,
   type GameTimingFamily,
   type GameEffectCategory,
   type GameEffectValue,
@@ -53,6 +55,10 @@ export function getJokerAcquisition(
 
 export function getJokerEffects(joker: Joker): JokerEffect[] {
   return projectJokerEffects(joker)
+}
+
+export function getJokerEffectDetails(joker: Joker): GameEffectDetail[] {
+  return projectJokerEffectDetails(joker)
 }
 
 export function getJokerEffectCategories(joker: Joker): GameEffectCategory[] {

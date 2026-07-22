@@ -1,15 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import type { GameDependency, GameEffectValue } from '../game/clue-model'
+import type { GameDependency, GameEffectDetail, GameEffectValue } from '../game/clue-model'
 import {
   compactDependenciesLabel,
   dependencyDetailsLabel,
   dependenciesLabel,
-  effectMechanismDetailsLabel,
-  effectMechanismsLabel,
+  effectDetailValuesLabel,
+  effectDetailsLabel,
   effectValuesLabel,
-  timingDetailValuesLabel,
-  timingDetailsLabel,
   timingFamiliesLabel,
 } from './labels'
 
@@ -55,8 +53,8 @@ describe('player-facing clue labels', () => {
     expect(effectValuesLabel(['x_mult', 'economy', 'generate'], 'en')).toBe(
       'X Mult, Money, Create / copy',
     )
-    expect(timingFamiliesLabel(['always', 'hand_action', 'blind', 'shop'], 'en')).toBe(
-      'Always active, Play / hold / discard, Blind events, Shop / packs',
+    expect(timingFamiliesLabel(['always', 'card_action', 'blind', 'shop'], 'en')).toBe(
+      'Always active, Card actions, Blind events, Shop / packs',
     )
     expect(
       compactDependenciesLabel(
@@ -66,31 +64,34 @@ describe('player-facing clue labels', () => {
         ],
         'en',
       ),
-    ).toBe('Card traits / deck · Played cards / poker hand')
+    ).toBe('Playing cards / deck · Played hand / poker hand')
   })
 
   it('keeps broad effects playable while preserving exact mechanisms for reference views', () => {
     const scopedRule: GameEffectValue[] = ['mechanic']
     expect(effectValuesLabel(scopedRule, 'zh-CN')).toBe('规则／再触发')
-    expect(effectMechanismsLabel(['generate:sealed_card'], 'zh-CN')).toBe('生成：蜡封牌')
-    expect(effectMechanismDetailsLabel(['rules:straight_gap'], 'zh-CN')).toBe('顺子间隔')
+    expect(effectDetailsLabel(['generate:sealed_card'], 'zh-CN')).toBe('生成／复制：蜡封牌')
+    expect(effectDetailValuesLabel(['rules:straight_gap'], 'zh-CN')).toBe('顺子间隔')
     expect(
-      effectMechanismDetailsLabel(['generate:spectral', 'modify:destroy_playing_card'], 'zh-CN'),
+      effectDetailValuesLabel(['generate:spectral', 'modify:destroy_playing_card'], 'zh-CN'),
     ).toBe('幻灵牌、摧毁扑克牌')
-    expect(effectMechanismDetailsLabel(['modify:gold_card'], 'zh-CN')).toBe('黄金牌')
-    expect(effectMechanismDetailsLabel(['chips'], 'zh-CN')).toBe('')
+    expect(effectDetailValuesLabel(['modify:gold_card'], 'zh-CN')).toBe('黄金牌')
+    expect(effectDetailValuesLabel(['chips'], 'zh-CN')).toBe('')
   })
 
-  it('separates timing categories from their exact events', () => {
-    expect(timingFamiliesLabel(['blind', 'round_boundary'], 'zh-CN')).toBe('盲注阶段、回合交界')
-    expect(timingDetailsLabel(['blind_skipped', 'round_end'], 'zh-CN')).toBe(
-      '盲注阶段：跳过盲注；回合交界：回合结束',
+  it('includes behavior details in the complete player-visible Effect clue', () => {
+    const details: GameEffectDetail[] = ['mult', 'behavior:growth', 'behavior:reset']
+    expect(effectDetailsLabel(details, 'zh-CN')).toBe('+倍率 · 成长 · 重置')
+    expect(effectDetailValuesLabel(details, 'zh-CN')).toBe('成长、重置')
+    expect(effectDetailsLabel(details, 'en')).toBe('+Mult · Scales up · Resets')
+  })
+
+  it('keeps timing as seven flat player phases', () => {
+    expect(timingFamiliesLabel(['blind', 'round_boundary'], 'zh-CN')).toBe(
+      '盲注阶段、回合开始／结束',
     )
-    expect(timingDetailValuesLabel(['blind_skipped', 'round_end'], 'zh-CN')).toBe(
-      '跳过盲注、回合结束',
-    )
-    expect(timingDetailValuesLabel(['blind_skipped', 'round_end'], 'en')).toBe(
-      'Blind skipped, End of round',
+    expect(timingFamiliesLabel(['hand_scored', 'card_scored'], 'en')).toBe(
+      'Hand scored, Card scored',
     )
   })
 
@@ -134,6 +135,27 @@ describe('player-facing clue labels', () => {
     expect(dependencyDetailsLabel([steel, fullDeck], 'en')).toBe('Steel Cards in your full deck')
   })
 
+  it('recombines complementary ability branches into one checked condition', () => {
+    expect(
+      dependencyDetailsLabel(
+        [
+          { family: 'cards', value: 'playing_card:no_scoring_face' },
+          { family: 'cards', value: 'playing_card:scoring_face' },
+        ],
+        'zh-CN',
+      ),
+    ).toBe('是否含计分人头牌')
+    expect(
+      dependenciesLabel(
+        [
+          { family: 'hand', value: 'poker_hand:most_played' },
+          { family: 'hand', value: 'poker_hand:not_most_played' },
+        ],
+        'en',
+      ),
+    ).toBe('Played hand / poker hand: Whether the hand is most-played')
+  })
+
   it('shortens dense board details without changing their categories', () => {
     expect(
       compactDependenciesLabel(
@@ -143,15 +165,15 @@ describe('player-facing clue labels', () => {
         ],
         'zh-CN',
       ),
-    ).toBe('小丑／消耗牌 · 盲注／回合')
+    ).toBe('小丑／消耗牌 · 盲注／进度')
   })
 
-  it('keeps exact English conditions natural in the collection and glossary', () => {
+  it('keeps exact English checks natural in the collection and glossary', () => {
     expect(dependenciesLabel([{ family: 'discard', value: 'discard:first' }], 'en')).toBe(
       'Discards: First discard each round',
     )
-    expect(
-      dependenciesLabel([{ family: 'other_cards', value: 'consumable:available_slot' }], 'en'),
-    ).toBe('Jokers / consumables: Open consumable slot')
+    expect(dependenciesLabel([{ family: 'progress', value: 'event:blind_selected' }], 'en')).toBe(
+      'Blinds / progress: Selecting a Blind',
+    )
   })
 })

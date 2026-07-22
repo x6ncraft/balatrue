@@ -58,7 +58,7 @@ describe('generated-data release gate', () => {
     const actual = clonedExpected()
     const castle = actual.jokers.find(({ id }) => id === 'j_castle')
     if (!castle) throw new Error('Missing Castle fixture')
-    ;(castle.classification.timings as string[]).pop()
+    castle.classification.abilities = castle.classification.abilities.slice(0, -1)
 
     expect(() => assertGeneratedArtifactsCurrent(actual, expected)).toThrow(
       /generated runtime Joker data is stale/,
@@ -97,6 +97,18 @@ describe('generated-data release gate', () => {
 
     expect(() => assertGeneratedArtifactsCurrent(actual, expected)).toThrow(
       /generated public provenance is stale/,
+    )
+  })
+
+  it('rejects a stale classification review report', () => {
+    const actual = clonedExpected()
+    actual.classificationReviewReport = actual.classificationReviewReport.replace(
+      '能力数据模型第 12 版',
+      '能力数据模型第 999 版',
+    )
+
+    expect(() => assertGeneratedArtifactsCurrent(actual, expected)).toThrow(
+      /generated classification review report is stale/,
     )
   })
 })

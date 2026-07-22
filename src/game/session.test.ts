@@ -8,7 +8,13 @@ import {
   restoreStoredGame,
   serializeGameState,
 } from './persistence'
-import { createDailyGame, createPracticeGame, markCollectionUsed, submitGuess } from './session'
+import {
+  createDailyGame,
+  createPracticeGame,
+  createPracticeGameForAnswer,
+  markCollectionUsed,
+  submitGuess,
+} from './session'
 import type { GameState } from './types'
 
 function makeJoker(number: number): Joker {
@@ -37,9 +43,16 @@ function makeJoker(number: number): Joker {
     classification: {
       version: JOKER_CLASSIFICATION_VERSION,
       acquisition: { kind: 'shop', unlockState: 'starting' },
-      effects: number % 3 === 0 ? ['chips'] : ['rules:probability'],
-      timings: ['passive'],
-      dependencies: [{ family: 'none' }],
+      abilities: [
+        {
+          event: 'passive',
+          role: 'apply',
+          effects: number % 3 === 0 ? ['chips'] : ['rules:probability'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+      ],
     },
   }
 }
@@ -74,6 +87,24 @@ describe('game sessions', () => {
     expect(() => createPracticeGame([makeJoker(1)], () => 0, { maxAttempts: 7 })).toThrow(
       'maxAttempts must be an integer between 1 and 6',
     )
+  })
+
+  it('creates a fresh unassisted practice game with an explicitly selected answer', () => {
+    const answer = makeJoker(98)
+    const state = createPracticeGameForAnswer(answer, {
+      puzzleKey: 'practice:demo:fixed',
+    })
+
+    expect(state).toEqual({
+      version: 2,
+      mode: 'practice',
+      puzzleKey: 'practice:demo:fixed',
+      answerId: 'j_098',
+      maxAttempts: 6,
+      status: 'playing',
+      guesses: [],
+      usedCollection: false,
+    })
   })
 
   it('marks only an active game as collection-assisted without mutating it', () => {
@@ -293,7 +324,7 @@ describe('game state persistence', () => {
         gameStorageKey(JOKER_DATA_GAME_VERSION, version, 'daily', current.puzzleKey),
       ),
     ]
-    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([10, 9, 8, 7, 6, 5, 4, 3, 2])
+    expect(GAME_STORAGE_FALLBACK_CLASSIFICATION_VERSIONS).toEqual([11, 10, 9, 8, 7, 6, 5, 4, 3, 2])
 
     const restored = restoreStoredGame({
       currentKey,

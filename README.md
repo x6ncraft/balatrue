@@ -3,7 +3,7 @@
 [Play Balatrue](https://balatrue.x6n.me/) · [简体中文](README.zh-CN.md)
 
 Balatrue is a daily web puzzle about Balatro Jokers. You have six guesses. After each guess, five
-clues—rarity, base price or acquisition, effect, trigger, and condition—help narrow
+clues—rarity, base price or acquisition, effect, trigger, and checks—help narrow
 down the answer.
 
 The format is inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html),
@@ -24,18 +24,18 @@ license; see the rights section below. No authorization from the Balatro rights 
 - **Endless:** a local shuffle bag cycles through all 150 Jokers without repeating within a round.
 - **Quick first guess:** type any Joker you have in mind, or play one of five random cards with a
   single tap; reroll all five whenever none feels right.
-- **Five clues:** rarity, price or acquisition, effect, trigger, and condition.
-- **Readable clue model:** effects and conditions each use seven broad categories, while triggers use
-  eight. Each of these three category clues shows the guessed Joker's own category and complete
-  details. Green, yellow, and gray carry the comparison without marking individual details or
-  exposing anything found only on the answer.
+- **Five clues:** rarity, price or acquisition, effect, trigger, and checks.
+- **Readable clue model:** Effect, Trigger, and Checks each use seven broad categories. Effect and
+  Checks show the guessed Joker's complete details; Trigger stays at seven clear phases. Green,
+  yellow, and gray carry the comparison without marking individual details or exposing anything
+  found only on the answer.
 - **Compact mobile feedback:** narrow layouts keep all five clue columns aligned. Category names stay
   identical to the glossary, complete details stay inside their cells, and clue text wraps without
   truncation.
 - **Search:** in-game English and Simplified Chinese names, full pinyin, and pinyin initials; every
   match remains available in a scrollable list.
-- **Clue glossary:** all comparison categories and their underlying mechanisms, events, and condition
-  details, available without affecting the score; every clue header opens its matching section.
+- **Clue glossary:** every comparison category, effect mechanism, behavior, and check detail,
+  available without affecting the score; every clue header opens its matching section.
 - **Joker collection:** searchable and filterable; opening it during an active Daily round marks that
   round as assisted and excludes it from stats. Each entry keeps the full audited clue breakdown.
 - **Local stats and sharing:** win rate, streaks, average guesses, and spoiler-free result sharing.
@@ -136,6 +136,7 @@ Read the [License scope](LICENSE_SCOPE.md), [Asset and data notice](ASSET_NOTICE
 ## Documentation
 
 - [Product and rules](docs/product.md)
+- [Clue taxonomy and review policy](docs/clue-taxonomy.md)
 - [Architecture](docs/architecture.md)
 - [Data sources and boundaries](docs/data-sources.md)
 - [Visual and interaction design](docs/design.md)

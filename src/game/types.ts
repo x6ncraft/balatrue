@@ -33,7 +33,10 @@ export interface TagComparison<TValue extends string = string> {
 }
 
 export interface EffectComparison extends TagComparison<GameEffectValue> {
-  /** Guessed mechanisms that are also present verbatim on the answer. */
+  /**
+   * `result` compares the complete player-visible mechanism and behavior detail set.
+   * This legacy field keeps the guessed mechanisms that also exist verbatim on the answer.
+   */
   exactMechanismMatches: JokerEffect[]
   /** Guessed mechanisms whose broad effect category exists on the answer, but whose detail differs. */
   categoryOnlyMatches: JokerEffect[]

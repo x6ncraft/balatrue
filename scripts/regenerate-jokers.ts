@@ -12,6 +12,7 @@ const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 const generatedFile = join(projectRoot, 'src/data/jokers.generated.ts')
 const provenanceFile = join(projectRoot, 'data/jokers.provenance.generated.json')
+const classificationReviewFile = join(projectRoot, 'docs/classification-review.generated.md')
 
 async function main(): Promise<void> {
   const sourceReview = JSON.parse(await readFile(sourceReviewFile, 'utf8')) as SourceReviewFile &
@@ -48,6 +49,7 @@ export const jokers: readonly Joker[] = ${JSON.stringify(generated.jokers, null,
     writeFile(generatedFile, await format(source, { ...prettierConfig, parser: 'typescript' })),
     writeFile(sourceReviewFile, `${JSON.stringify(nextSourceReview, null, 2)}\n`),
     writeFile(provenanceFile, `${JSON.stringify(generated.provenance, null, 2)}\n`),
+    writeFile(classificationReviewFile, generated.classificationReviewReport),
   ])
 
   console.log(

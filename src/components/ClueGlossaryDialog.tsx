@@ -5,13 +5,13 @@ import { X } from 'lucide-react'
 import { JOKER_EFFECTS, JOKER_RARITIES, type Joker } from '../data/types'
 import {
   GAME_DEPENDENCY_FAMILIES,
+  GAME_EFFECT_BEHAVIORS,
   GAME_EFFECT_CATEGORIES,
   GAME_TIMING_FAMILIES,
-  GAME_TIMINGS,
   gameEffectCategory,
-  gameTimingFamily,
   projectJokerDependencies,
   projectJokerEffectCategories,
+  projectJokerEffectBehaviors,
   projectJokerTimingFamilies,
 } from '../game'
 import { t, type Locale } from '../i18n'
@@ -19,6 +19,8 @@ import {
   dependencyFamilyDescription,
   dependencyFamilyLabel,
   dependencySourceLabel,
+  effectBehaviorDescription,
+  effectBehaviorLabel,
   effectCategoryDescription,
   effectCategoryLabel,
   effectMechanismLabel,
@@ -27,7 +29,6 @@ import {
   rarityLabel,
   timingFamilyDescription,
   timingFamilyLabel,
-  timingLabel,
 } from '../ui/labels'
 import type { JokerFactKey } from '../ui/joker-facts'
 
@@ -58,7 +59,6 @@ export default function ClueGlossaryDialog({
         id: family,
         label: timingFamilyLabel(family, locale),
         description: timingFamilyDescription(family, locale),
-        values: GAME_TIMINGS.filter((timing) => gameTimingFamily(timing) === family),
         count: jokers.filter((joker) => projectJokerTimingFamilies(joker).includes(family)).length,
       })),
     [jokers, locale],
@@ -83,6 +83,18 @@ export default function ClueGlossaryDialog({
         description: effectCategoryDescription(category, locale),
         values: JOKER_EFFECTS.filter((effect) => gameEffectCategory(effect) === category),
         count: jokers.filter((joker) => projectJokerEffectCategories(joker).includes(category))
+          .length,
+      })),
+    [jokers, locale],
+  )
+
+  const effectBehaviorEntries = useMemo(
+    () =>
+      GAME_EFFECT_BEHAVIORS.map((behavior) => ({
+        id: behavior,
+        label: effectBehaviorLabel(behavior, locale),
+        description: effectBehaviorDescription(behavior, locale),
+        count: jokers.filter((joker) => projectJokerEffectBehaviors(joker).includes(behavior))
           .length,
       })),
     [jokers, locale],
@@ -336,13 +348,31 @@ export default function ClueGlossaryDialog({
                     <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
                   </div>
                   <p>{entry.description}</p>
-                  {entry.values.length > 1 && (
+                  {entry.values.length > 0 && (
                     <ul className="glossary-values">
                       {entry.values.map((value) => (
                         <li key={value}>{effectMechanismLabel(value, locale)}</li>
                       ))}
                     </ul>
                   )}
+                </article>
+              ))}
+            </div>
+            <div className="glossary-section__head">
+              <h4>{t(locale, 'glossary.effectBehaviors')}</h4>
+              <span>
+                {t(locale, 'glossary.categoryCount', { count: effectBehaviorEntries.length })}
+              </span>
+            </div>
+            <p className="glossary-hint">{t(locale, 'glossary.effectBehaviorsDescription')}</p>
+            <div className="glossary-grid glossary-grid--timing">
+              {effectBehaviorEntries.map((entry) => (
+                <article key={entry.id} className="glossary-entry" aria-label={entry.label}>
+                  <div className="glossary-entry__title">
+                    <strong>{entry.label}</strong>
+                    <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
+                  </div>
+                  <p>{entry.description}</p>
                 </article>
               ))}
             </div>
@@ -372,13 +402,6 @@ export default function ClueGlossaryDialog({
                     <small>{t(locale, 'glossary.jokerCount', { count: entry.count })}</small>
                   </div>
                   <p>{entry.description}</p>
-                  {entry.values.length > 1 ? (
-                    <ul className="glossary-values">
-                      {entry.values.map((value) => (
-                        <li key={value}>{timingLabel(value, locale)}</li>
-                      ))}
-                    </ul>
-                  ) : null}
                 </article>
               ))}
             </div>

@@ -51,7 +51,7 @@
     <g transform="translate(768)">
       <rect width="176" height="142" rx="18" fill="#e9e2da" stroke="#b7aaa0" stroke-width="3" />
       <text x="88" y="55" text-anchor="middle" fill="#867a70" font-size="24">×</text>
-      <text x="88" y="99" text-anchor="middle" fill="#5f5550" font-size="25">依赖条件</text>
+      <text x="88" y="99" text-anchor="middle" fill="#5f5550" font-size="25">判定依据</text>
     </g>
   </g>
 

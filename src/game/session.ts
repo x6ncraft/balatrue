@@ -72,6 +72,20 @@ export function createPracticeGame(
   )
 }
 
+/** Creates a fresh local practice round with an explicitly selected answer. */
+export function createPracticeGameForAnswer(
+  answer: Joker,
+  options: CreatePracticeGameOptions = {},
+): GameState {
+  const answerId = getJokerId(answer)
+  return initialState(
+    'practice',
+    options.puzzleKey ?? `practice:${answerId}`,
+    answer,
+    options.maxAttempts ?? MAX_ATTEMPTS,
+  )
+}
+
 export function submitGuess(state: GameState, guess: Joker, answer: Joker): GameState {
   if (state.status !== 'playing') throw new Error('Cannot submit a guess to a completed game')
   if (getJokerId(answer) !== state.answerId) {

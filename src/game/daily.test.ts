@@ -37,9 +37,16 @@ function makeJoker(number: number): Joker {
     classification: {
       version: JOKER_CLASSIFICATION_VERSION,
       acquisition: { kind: 'shop', unlockState: 'starting' },
-      effects: ['rules:probability'],
-      timings: ['passive'],
-      dependencies: [{ family: 'none' }],
+      abilities: [
+        {
+          event: 'passive',
+          role: 'apply',
+          effects: ['rules:probability'],
+          eventFilters: [],
+          externalReads: [],
+          selfGates: [],
+        },
+      ],
     },
   }
 }

@@ -2,6 +2,7 @@ import {
   JOKER_CLASSIFICATION_VERSION,
   JOKER_DATA_GAME_VERSION,
   type Joker,
+  type JokerAbilityRole,
   type JokerDependency,
   type JokerEffect,
   type JokerRarity,
@@ -19,6 +20,7 @@ interface FixtureOptions {
   effects?: JokerEffect[]
   timings?: JokerTiming[]
   dependencies?: JokerDependency[]
+  role?: JokerAbilityRole
 }
 
 function makeJoker(options: FixtureOptions = {}): Joker {
@@ -26,6 +28,11 @@ function makeJoker(options: FixtureOptions = {}): Joker {
   const acquisition = options.acquisition ?? 'shop'
   const rarity = options.rarity ?? 'common'
   const cost = options.cost === undefined ? (acquisition === 'soul' ? null : 5) : options.cost
+
+  const timings = options.timings ?? ['passive']
+  const dependencies = (options.dependencies ?? []).filter(
+    (dependency) => dependency.family !== 'none',
+  )
 
   return {
     id,
@@ -54,9 +61,14 @@ function makeJoker(options: FixtureOptions = {}): Joker {
         kind: acquisition,
         unlockState: acquisition === 'soul' ? 'legendary' : 'starting',
       },
-      effects: options.effects ?? ['rules:probability'],
-      timings: options.timings ?? ['passive'],
-      dependencies: options.dependencies ?? [{ family: 'none' }],
+      abilities: timings.map((event) => ({
+        event,
+        role: options.role ?? 'apply',
+        effects: options.effects ?? ['rules:probability'],
+        eventFilters: [],
+        externalReads: dependencies,
+        selfGates: [],
+      })),
     },
   }
 }
@@ -151,27 +163,27 @@ describe('compareJokers', () => {
     expect(compareJokers(miss, answer).effects.result).toBe('miss')
   })
 
-  it('uses broad timing families for partial overlap while preserving exact-event equality', () => {
+  it('uses broad timing families for exactness, overlap, and disjointness', () => {
     const answer = makeJoker({ timings: ['card_scored', 'round_end'] })
     const partial = makeJoker({ id: 'j_partial', timings: ['card_played', 'round_start'] })
     const empty = makeJoker({ id: 'j_empty', timings: [] })
 
     expect(compareJokers(partial, answer).timings).toEqual({
-      values: ['hand_action', 'round_boundary'],
+      values: ['card_action', 'round_boundary'],
       matches: ['round_boundary'],
       result: 'partial',
     })
     expect(compareJokers(empty, makeJoker({ timings: [] })).timings.result).toBe('exact')
   })
 
-  it('marks different events in the same timing family as partial', () => {
+  it('marks different internal events in the same player timing family as exact', () => {
     const answer = makeJoker({ timings: ['card_played'] })
     const guess = makeJoker({ id: 'j_guess', timings: ['card_held'] })
 
     expect(compareJokers(guess, answer).timings).toEqual({
-      values: ['hand_action'],
-      matches: ['hand_action'],
-      result: 'partial',
+      values: ['card_action'],
+      matches: ['card_action'],
+      result: 'exact',
     })
   })
 
@@ -180,7 +192,7 @@ describe('compareJokers', () => {
     const guess = makeJoker({ id: 'j_guess', timings: ['card_played'] })
 
     expect(compareJokers(guess, answer).timings).toEqual({
-      values: ['hand_action'],
+      values: ['card_action'],
       matches: [],
       result: 'miss',
     })
@@ -196,6 +208,30 @@ describe('compareJokers', () => {
       exactMechanismMatches: [],
       categoryOnlyMatches: ['generate:spectral'],
       result: 'partial',
+    })
+  })
+
+  it('includes player-visible behavior details in exact Effect equality', () => {
+    const answer = makeJoker({ effects: ['mult'], role: 'grow' })
+    const same = makeJoker({ id: 'j_same', effects: ['mult'], role: 'grow' })
+    const different = makeJoker({ id: 'j_different', effects: ['mult'], role: 'apply' })
+
+    expect(compareJokers(same, answer).effects.result).toBe('exact')
+    expect(compareJokers(different, answer).effects).toMatchObject({
+      values: ['mult'],
+      matches: ['mult'],
+      result: 'partial',
+    })
+  })
+
+  it('does not use a shared behavior detail to create a yellow Effect match', () => {
+    const answer = makeJoker({ effects: ['mult'], role: 'grow' })
+    const guess = makeJoker({ id: 'j_guess', effects: ['chips'], role: 'grow' })
+
+    expect(compareJokers(guess, answer).effects).toMatchObject({
+      values: ['chips'],
+      matches: [],
+      result: 'miss',
     })
   })
 

@@ -2,18 +2,17 @@ import { JOKER_EFFECTS, type JokerEffect, type JokerRarity } from '../data/types
 import {
   GAME_DEPENDENCY_FAMILIES,
   GAME_EFFECT_CATEGORIES,
-  GAME_TIMING_FAMILIES,
-  GAME_TIMINGS,
   gameDependencyDetailUnits,
   gameEffectCategory,
-  gameTimingFamily,
+  isGameEffectBehaviorDetail,
   type GameDependency,
   type GameDependencyDetailGroupKey,
   type GameDependencyFamily,
   type GameEffectCategory,
+  type GameEffectBehavior,
+  type GameEffectDetail,
   type GameEffectFamily,
   type GameEffectValue,
-  type GameTiming,
   type GameTimingFamily,
 } from '../game/clue-model'
 import type { Locale } from '../i18n'
@@ -36,7 +35,7 @@ const effectLabels: Record<JokerEffect, [string, string]> = {
   chips: ['筹码', 'Chips'],
   mult: ['+倍率', '+Mult'],
   x_mult: ['×倍率', 'X Mult'],
-  economy: ['经济', 'Money'],
+  economy: ['金钱', 'Money'],
   retrigger: ['再触发', 'Retrigger'],
   'generate:stone_card': ['生成石头牌', 'Create Stone card'],
   'generate:tarot': ['生成塔罗牌', 'Create Tarot'],
@@ -49,6 +48,8 @@ const effectLabels: Record<JokerEffect, [string, string]> = {
   'generate:consumable_copy': ['复制消耗牌', 'Copy consumable'],
   'modify:poker_hand_level': ['升级牌型', 'Upgrade poker hand'],
   'modify:destroy_playing_card': ['摧毁扑克牌', 'Destroy playing card'],
+  'modify:destroy_joker': ['摧毁小丑牌', 'Destroy Joker'],
+  'modify:remove_enhancement': ['移除增强', 'Remove Enhancement'],
   'modify:gold_card': ['变为黄金牌', 'Turn cards Gold'],
   'resource:reroll': ['重掷次数', 'Rerolls'],
   'resource:hands': ['出牌次数', 'Hands'],
@@ -70,7 +71,7 @@ const effectMechanismLabels: Record<JokerEffect, [string, string]> = {
   chips: ['筹码', 'Chips'],
   mult: ['+倍率', '+Mult'],
   x_mult: ['×倍率', 'X Mult'],
-  economy: ['经济', 'Money'],
+  economy: ['金钱', 'Money'],
   retrigger: ['再触发', 'Retrigger'],
   'generate:stone_card': ['石头牌', 'Stone cards'],
   'generate:tarot': ['塔罗牌', 'Tarot cards'],
@@ -83,6 +84,8 @@ const effectMechanismLabels: Record<JokerEffect, [string, string]> = {
   'generate:consumable_copy': ['复制消耗牌', 'Consumable copies'],
   'modify:poker_hand_level': ['牌型等级', 'Poker-hand levels'],
   'modify:destroy_playing_card': ['摧毁扑克牌', 'Destroy playing cards'],
+  'modify:destroy_joker': ['摧毁小丑牌', 'Destroy Jokers'],
+  'modify:remove_enhancement': ['移除增强', 'Remove Enhancements'],
   'modify:gold_card': ['黄金牌', 'Gold cards'],
   'resource:reroll': ['重掷次数', 'Rerolls'],
   'resource:hands': ['出牌次数', 'Hands'],
@@ -92,12 +95,12 @@ const effectMechanismLabels: Record<JokerEffect, [string, string]> = {
   'rules:face_identity': ['人头牌判定', 'Face-card rules'],
   'rules:all_cards_score': ['所有出牌计分', 'All played cards score'],
   'rules:straight_gap': ['顺子间隔', 'Straight gaps'],
-  'rules:boss_blind': ['Boss 盲注', 'Boss Blinds'],
+  'rules:boss_blind': ['Boss 盲注规则', 'Boss Blind rules'],
   'rules:survival': ['免于失败', 'Avoid losing'],
   'rules:suit_identity': ['花色判定', 'Suit rules'],
   'rules:duplicates': ['允许重复出现', 'Allow duplicates'],
   'rules:copy_ability': ['复制能力', 'Copy Joker abilities'],
-  'rules:probability': ['概率', 'Chance / odds'],
+  'rules:probability': ['概率规则', 'Chance rules'],
 }
 
 const effectFamilyDescriptions: Record<GameEffectFamily, [string, string]> = {
@@ -125,9 +128,9 @@ const effectCategoryLabels: Record<GameEffectCategory, [string, string]> = {
   chips: ['筹码', 'Chips'],
   mult: ['+倍率', '+Mult'],
   x_mult: ['×倍率', 'X Mult'],
-  economy: ['经济', 'Money'],
-  generate: ['生成', 'Create / copy'],
-  adjust: ['改牌／资源', 'Card / resource changes'],
+  economy: ['金钱', 'Money'],
+  generate: ['生成／复制', 'Create / copy'],
+  adjust: ['改牌／资源', 'Cards / resources'],
   mechanic: ['规则／再触发', 'Rules / retriggers'],
 }
 
@@ -147,65 +150,30 @@ const effectCategoryDescriptions: Record<GameEffectCategory, [string, string]> =
   ],
 }
 
-const timingLabels: Record<GameTiming, [string, string]> = {
-  passive: ['持续生效', 'Always active'],
-  hand_scored: ['整手计分', 'Hand scored'],
-  card_scored: ['单牌计分', 'Card scored'],
-  card_played: ['打出手牌', 'Hand played'],
-  joker_triggered: ['其他小丑结算', 'Other Joker triggers'],
-  card_held: ['留在手牌', 'Held in hand'],
-  card_discarded: ['弃牌', 'Card discarded'],
-  consumable_used: ['使用消耗牌', 'Consumable used'],
-  card_added: ['加入牌组时', 'Card added to deck'],
-  card_destroyed: ['卡牌摧毁时', 'Card destroyed'],
-  blind_selected: ['选择盲注', 'Blind selected'],
-  blind_skipped: ['跳过盲注', 'Blind skipped'],
-  blind_defeated: ['击败盲注', 'Blind defeated'],
-  blind_failed: ['未过盲注', 'Blind failed'],
-  shop: ['商店中', 'In shop'],
-  booster_opened: ['打开补充包', 'Booster Pack opened'],
-  booster_skipped: ['跳过补充包', 'Booster Pack skipped'],
-  shop_rerolled: ['商店重掷', 'Shop rerolled'],
-  shop_ended: ['离开商店', 'Leaving shop'],
-  sold: ['出售卡牌', 'Card sold'],
-  round_start: ['回合开始', 'Start of round'],
-  round_end: ['回合结束', 'End of round'],
+const effectBehaviorLabels: Record<GameEffectBehavior, [string, string]> = {
+  growth: ['成长', 'Scales up'],
+  decay: ['递减', 'Decays'],
+  reset: ['重置', 'Resets'],
+  retarget: ['换目标', 'Changes target'],
+  self_destruct: ['自毁', 'Self-destructs'],
 }
 
-const timingDescriptions: Record<GameTiming, [string, string]> = {
-  passive: ['无需特定事件，持续影响牌局。', 'Continuously affects the run.'],
-  hand_scored: ['整手牌进入小丑牌计分结算时。', 'When a played hand reaches Joker scoring.'],
-  card_scored: ['单张已出牌参与计分时。', 'When an individual played card scores.'],
-  card_played: ['一手牌打出后、计分前检查。', 'After a hand is played and before scoring.'],
-  joker_triggered: ['其他小丑牌的能力结算时。', 'When another Joker ability resolves.'],
-  card_held: ['扑克牌留在手牌中时。', 'While a playing card is held in hand.'],
-  card_discarded: ['扑克牌被弃掉时。', 'When playing cards are discarded.'],
-  consumable_used: ['使用塔罗牌、星球牌或幻灵牌时。', 'When a consumable is used.'],
-  card_added: ['有扑克牌加入牌组时生效。', 'Applies when a playing card joins the deck.'],
-  card_destroyed: ['扑克牌被摧毁时生效。', 'Applies when a playing card is destroyed.'],
-  blind_selected: ['选择小盲注、大盲注或 Boss 盲注时。', 'When a Blind is selected.'],
-  blind_skipped: ['跳过一个可跳过的盲注时。', 'When a Blind is skipped.'],
-  blind_defeated: ['成功击败盲注时。', 'When a Blind is defeated.'],
-  blind_failed: ['当前得分不足以通过盲注时。', 'When the current Blind would be failed.'],
-  shop: ['停留在商店且符合对应物品规则时。', 'While in the shop.'],
-  booster_opened: ['打开任意补充包时。', 'When any Booster Pack is opened.'],
-  booster_skipped: ['放弃补充包内容时。', 'When a Booster Pack is skipped.'],
-  shop_rerolled: ['在商店进行重掷时。', 'When the shop is rerolled.'],
-  shop_ended: ['结束商店并准备进入下一盲注时。', 'When leaving the shop.'],
-  sold: ['出售一张牌或这张小丑牌时。', 'When a card or this Joker is sold.'],
-  round_start: ['新回合开始时生效。', 'Applies at the start of a round.'],
-  round_end: ['回合结束或离开盲注时触发。', 'Triggers at the end of a round.'],
+const effectBehaviorDescriptions: Record<GameEffectBehavior, [string, string]> = {
+  growth: ['能力数值会在牌局中提高。', 'Its stored effect becomes stronger during the run.'],
+  decay: ['能力数值或剩余效力会逐步降低。', 'Its stored effect or remaining power decreases.'],
+  reset: ['已经积累的能力数值会被重置。', 'Its accumulated effect can reset.'],
+  retarget: ['检查的花色、点数或牌型会变化。', 'Its checked suit, rank, or poker hand changes.'],
+  self_destruct: ['这张小丑牌可能自行摧毁。', 'The Joker can destroy itself.'],
 }
 
 const timingFamilyLabels: Record<GameTimingFamily, [string, string]> = {
   always: ['持续生效', 'Always active'],
-  hand_scored: ['整手结算', 'Hand scoring'],
-  card_scored: ['逐牌计分', 'Card scoring'],
-  hand_action: ['手牌动作', 'Play / hold / discard'],
-  card_management: ['消耗牌／牌组变化', 'Consumables / deck changes'],
+  hand_scored: ['整手计分', 'Hand scored'],
+  card_scored: ['逐牌计分', 'Card scored'],
+  card_action: ['卡牌动作', 'Card actions'],
   blind: ['盲注阶段', 'Blind events'],
-  shop: ['商店相关', 'Shop / packs'],
-  round_boundary: ['回合交界', 'Round start / end'],
+  shop: ['商店／补充包', 'Shop / packs'],
+  round_boundary: ['回合开始／结束', 'Round start / end'],
 }
 
 const timingFamilyDescriptions: Record<GameTimingFamily, [string, string]> = {
@@ -215,10 +183,9 @@ const timingFamilyDescriptions: Record<GameTimingFamily, [string, string]> = {
     'When the played hand or another Joker resolves.',
   ],
   card_scored: ['单张已出牌参与计分时。', 'When an individual played card scores.'],
-  hand_action: ['打出、留住或弃掉手牌时。', 'When cards are played, held in hand, or discarded.'],
-  card_management: [
-    '使用消耗牌，或扑克牌加入、离开牌组时。',
-    'When a consumable is used or playing cards enter or leave the deck.',
+  card_action: [
+    '打出、留住、弃掉、使用、加入或摧毁卡牌时。',
+    'When cards are played, held, discarded, used, added to the deck, or destroyed.',
   ],
   blind: [
     '选择、跳过、击败或未能通过盲注时。',
@@ -232,34 +199,34 @@ const timingFamilyDescriptions: Record<GameTimingFamily, [string, string]> = {
 }
 
 const dependencyFamilyLabels: Record<GameDependencyFamily, [string, string]> = {
-  cards: ['单牌／牌组', 'Card traits / deck'],
-  hand: ['出牌／牌型', 'Played cards / poker hand'],
+  cards: ['单牌／牌组', 'Playing cards / deck'],
+  hand: ['出牌／牌型', 'Played hand / poker hand'],
   discard: ['弃牌', 'Discards'],
   economy: ['金钱／商店', 'Money / shop'],
   other_cards: ['小丑／消耗牌', 'Jokers / consumables'],
-  progress: ['盲注／回合', 'Blinds / rounds'],
-  none: ['无需额外条件', 'No extra condition'],
+  progress: ['盲注／进度', 'Blinds / progress'],
+  none: ['无需额外判定', 'No extra check'],
 }
 
 const dependencyFamilyDescriptions: Record<GameDependencyFamily, [string, string]> = {
   cards: [
-    '看单张牌或牌组本身：花色、点数、牌面状态、留手状态与牌组数量。',
-    'Suit, rank, Enhancement, Seal, held-card state, or counts across the deck.',
+    '看单张牌或整副牌组：花色、点数、增强、蜡封、版本、留手状态或全牌组数量。',
+    'Checks individual playing cards or the full deck: suit, rank, Enhancement, Seal, held state, or deck-wide counts.',
   ],
   hand: [
-    '看这一手怎么出：出牌张数与顺序、计分牌、出牌记录或组成的牌型。',
-    'Which cards are played or scored, how many and in what order, and the poker hand they form.',
+    '看这一手如何打出：牌型、张数、顺序、首手／末手、计分牌或出牌记录。',
+    'Checks the played hand: its poker hand, card count, order, scoring cards, or play history.',
   ],
   discard: ['看弃牌次数、顺序或历史。', 'Looks at discard count, order, or history.'],
   economy: ['看金钱、出售价值或商店行为。', 'Looks at money, sell value, or shop actions.'],
-  other_cards: [
-    '看其他小丑牌、消耗牌或对应栏位。',
-    'Looks at other Jokers, consumables, or their slots.',
+  other_cards: ['看其他小丑牌或消耗牌。', 'Checks other Jokers or consumables.'],
+  progress: [
+    '看盲注类型、Boss 盲注、目标分数、跳过记录或回合门槛。',
+    'Looks at Blind type, Boss Blinds, score progress, skipped Blinds, or round thresholds.',
   ],
-  progress: ['看盲注、Boss 盲注或经过的回合。', 'Looks at Blinds or rounds played.'],
   none: [
-    '除触发时机外，不要求额外的牌、资源或局面。',
-    'Needs no extra card, resource, or state beyond its trigger.',
+    '到达所列时机后，无需再判断牌、资源或局面。',
+    'Needs no additional card, resource, or game-state check at the listed timing.',
   ],
 }
 
@@ -343,6 +310,8 @@ const valueLabels: Record<string, [string, string]> = {
   matching_count: ['匹配花色的弃牌数', 'Matching-suit discards'],
   most_played: ['最常用牌型', 'Most-played hand'],
   next_10_hands: ['接下来 10 手', 'Next 10 hands'],
+  no_scoring_face: ['无计分人头牌', 'No scoring face card'],
+  not_most_played: ['不是最常用牌型', 'Not most-played poker hand'],
   none_remaining: ['没有剩余弃牌', 'No discards remaining'],
   none_used: ['本回合未用弃牌', 'No discards used this round'],
   other: ['另一种花色', 'Another suit'],
@@ -358,6 +327,7 @@ const valueLabels: Record<string, [string, string]> = {
   reroll_count: ['累计商店重掷', 'Shop rerolls'],
   rotating_target: ['当回合指定目标', 'Current rotating target'],
   score_gte_25_percent: ['至少达到目标分数 25%', 'At least 25% of target score'],
+  scoring_face: ['含计分人头牌', 'Scoring face card present'],
   sell_value: ['出售价值', 'Sell value'],
   skipped_count: ['已跳过盲注数', 'Blinds skipped'],
   small_or_big: ['小盲注或大盲注', 'Small or Big Blind'],
@@ -378,6 +348,7 @@ const sourceOnlyDependencyLabels: Record<string, [string, string]> = {
   shop: ['商店', 'Shop'],
   round: ['回合', 'Rounds'],
   blind: ['盲注', 'Blinds'],
+  event: ['动作', 'Actions'],
 }
 
 const dependencySourceLabels: Record<string, [string, string]> = {
@@ -396,7 +367,8 @@ const dependencySourceLabels: Record<string, [string, string]> = {
   consumable: ['消耗牌', 'Consumables'],
   round: ['回合', 'Rounds'],
   blind: ['盲注', 'Blinds'],
-  none: ['无需额外条件', 'No extra condition'],
+  event: ['触发动作', 'Trigger actions'],
+  none: ['无需额外判定', 'No extra check'],
 }
 
 const contextualAnyLabels: Record<string, [string, string]> = {
@@ -419,8 +391,25 @@ const contextualDetailLabels: Record<string, [string, string]> = {
   'discard:card_count_gte_3': ['一次弃至少 3 张牌', 'At least 3 cards discarded'],
   'joker:owned': ['已有小丑牌', 'Owned Jokers'],
   'consumable:owned': ['已有消耗牌', 'Owned consumables'],
-  'joker_slot:available': ['空小丑栏', 'Open Joker slot'],
-  'consumable:available_slot': ['空消耗牌栏', 'Open consumable slot'],
+  'event:card_played': ['打出手牌', 'Playing a hand'],
+  'event:card_held': ['留在手牌', 'Cards held in hand'],
+  'event:card_discarded': ['弃牌动作', 'Discarding cards'],
+  'event:consumable_used': ['使用消耗牌', 'Using a consumable'],
+  'event:card_added': ['加入牌组', 'Adding cards to the deck'],
+  'event:card_destroyed': ['摧毁扑克牌', 'Destroying playing cards'],
+  'event:blind_selected': ['选择盲注', 'Selecting a Blind'],
+  'event:blind_skipped': ['跳过盲注', 'Skipping a Blind'],
+  'event:blind_defeated': ['击败盲注', 'Defeating a Blind'],
+  'event:blind_failed': ['未过盲注', 'Failing a Blind'],
+  'event:shop': ['商店中的物品', 'Items in the shop'],
+  'event:booster_opened': ['打开补充包', 'Opening a Booster Pack'],
+  'event:booster_skipped': ['跳过补充包', 'Skipping a Booster Pack'],
+  'event:shop_rerolled': ['商店重掷', 'Rerolling the shop'],
+  'event:shop_ended': ['离开商店', 'Leaving the shop'],
+  'event:sold': ['出售卡牌', 'Selling a card'],
+  'event:round_start': ['回合开始', 'Start of round'],
+  'event:round_end': ['回合结束', 'End of round'],
+  'event:joker_triggered': ['其他小丑结算', 'Another Joker resolving'],
 }
 
 const dependencyDetailGroupLabels: Record<GameDependencyDetailGroupKey, readonly [string, string]> =
@@ -430,6 +419,8 @@ const dependencyDetailGroupLabels: Record<GameDependencyDetailGroupKey, readonly
     nine_full_deck: ['全牌组中的 9 数量', '9s in your full deck'],
     first_single_hand: ['首手单张', 'First hand is exactly 1 card'],
     first_single_discard: ['首次弃 1 张牌', 'First discard is exactly 1 card'],
+    scoring_face_state: ['是否含计分人头牌', 'Whether scoring face cards are present'],
+    most_played_state: ['是否为最常用牌型', 'Whether the hand is most-played'],
     all_suits: ['四种花色', 'All four suits'],
     all_consumables: ['三类消耗牌', 'All 3 consumables'],
   }
@@ -459,6 +450,19 @@ export function effectMechanismLabel(value: JokerEffect, locale: Locale): string
   return localized(effectMechanismLabels[value], locale)
 }
 
+export function effectBehaviorLabel(value: GameEffectBehavior, locale: Locale): string {
+  return localized(effectBehaviorLabels[value], locale)
+}
+
+export function effectBehaviorDescription(value: GameEffectBehavior, locale: Locale): string {
+  return localized(effectBehaviorDescriptions[value], locale)
+}
+
+export function effectDetailLabel(value: GameEffectDetail, locale: Locale): string {
+  if (!isGameEffectBehaviorDetail(value)) return effectMechanismLabel(value, locale)
+  return effectBehaviorLabel(value.slice('behavior:'.length) as GameEffectBehavior, locale)
+}
+
 export function hasEffectLabel(value: string): boolean {
   return value in effectLabels
 }
@@ -484,9 +488,12 @@ export function effectValuesLabel(values: readonly GameEffectValue[], locale: Lo
   return listLabel(values, effectValueLabel, locale)
 }
 
-export function effectMechanismsLabel(values: readonly JokerEffect[], locale: Locale): string {
-  return GAME_EFFECT_CATEGORIES.flatMap((category) => {
-    const matches = values.filter((effect) => gameEffectCategory(effect) === category)
+export function effectDetailsLabel(values: readonly GameEffectDetail[], locale: Locale): string {
+  const mechanisms = values.filter(
+    (value): value is JokerEffect => !isGameEffectBehaviorDetail(value),
+  )
+  const categories = GAME_EFFECT_CATEGORIES.flatMap((category) => {
+    const matches = mechanisms.filter((effect) => gameEffectCategory(effect) === category)
     if (matches.length === 0) return []
 
     const categoryLabel = effectCategoryLabel(category, locale)
@@ -500,21 +507,31 @@ export function effectMechanismsLabel(values: readonly JokerEffect[], locale: Lo
     return [
       locale === 'zh-CN' ? `${categoryLabel}：${detailList}` : `${categoryLabel}: ${detailList}`,
     ]
-  }).join(locale === 'zh-CN' ? '；' : '; ')
+  })
+  const behaviors = values
+    .filter(isGameEffectBehaviorDetail)
+    .map((detail) => effectDetailLabel(detail, locale))
+  return [...categories, ...behaviors].join(locale === 'zh-CN' ? ' · ' : ' · ')
 }
 
-/** Exact guessed-side mechanisms shown beneath the board's canonical effect category. */
-export function effectMechanismDetailsLabel(
-  values: readonly JokerEffect[],
+/** Exact guessed-side mechanisms and behaviors shown beneath the broad Effect category. */
+export function effectDetailValuesLabel(
+  values: readonly GameEffectDetail[],
   locale: Locale,
 ): string {
+  const mechanisms = values.filter(
+    (value): value is JokerEffect => !isGameEffectBehaviorDetail(value),
+  )
   const details = GAME_EFFECT_CATEGORIES.flatMap((category) =>
-    values
+    mechanisms
       .filter((effect) => gameEffectCategory(effect) === category)
       .map((effect) => effectMechanismLabel(effect, locale))
       .filter((detail) => detail !== effectCategoryLabel(category, locale)),
   )
-  return joinedDetails(details, locale)
+  const behaviors = values
+    .filter(isGameEffectBehaviorDetail)
+    .map((detail) => effectDetailLabel(detail, locale))
+  return joinedDetails([...details, ...behaviors], locale)
 }
 
 function uniqueLabels(values: readonly string[]): string[] {
@@ -523,19 +540,6 @@ function uniqueLabels(values: readonly string[]): string[] {
 
 function joinedDetails(values: readonly string[], locale: Locale): string {
   return uniqueLabels(values).join(locale === 'zh-CN' ? '、' : ', ')
-}
-
-export function timingLabel(value: string, locale: Locale): string {
-  const pair = timingLabels[value as GameTiming]
-  return pair ? localized(pair, locale) : humanize(value)
-}
-
-export function hasTimingLabel(value: string): boolean {
-  return value in timingLabels
-}
-
-export function timingDescription(value: GameTiming, locale: Locale): string {
-  return localized(timingDescriptions[value], locale)
 }
 
 export function timingFamilyLabel(value: GameTimingFamily, locale: Locale): string {
@@ -548,32 +552,6 @@ export function timingFamilyDescription(value: GameTimingFamily, locale: Locale)
 
 export function timingFamiliesLabel(values: readonly GameTimingFamily[], locale: Locale): string {
   return listLabel(values, timingFamilyLabel, locale)
-}
-
-export function timingDetailsLabel(values: readonly GameTiming[], locale: Locale): string {
-  return GAME_TIMING_FAMILIES.flatMap((family) => {
-    const matches = values.filter((timing) => gameTimingFamily(timing) === family)
-    if (matches.length === 0) return []
-
-    const familyLabel = timingFamilyLabel(family, locale)
-    const availableDetails = GAME_TIMINGS.filter((timing) => gameTimingFamily(timing) === family)
-    if (availableDetails.length === 1) return [familyLabel]
-
-    const details = matches.map((timing) => timingLabel(timing, locale))
-    const detailList = details.join(locale === 'zh-CN' ? '、' : ', ')
-    return [locale === 'zh-CN' ? `${familyLabel}：${detailList}` : `${familyLabel}: ${detailList}`]
-  }).join(locale === 'zh-CN' ? '；' : '; ')
-}
-
-/** Exact guessed-side trigger events shown beneath the board's canonical trigger category. */
-export function timingDetailValuesLabel(values: readonly GameTiming[], locale: Locale): string {
-  const details = GAME_TIMING_FAMILIES.flatMap((family) =>
-    values
-      .filter((timing) => gameTimingFamily(timing) === family)
-      .map((timing) => timingLabel(timing, locale))
-      .filter((detail) => detail !== timingFamilyLabel(family, locale)),
-  )
-  return joinedDetails(details, locale)
 }
 
 export function dependencyFamilyLabel(family: GameDependencyFamily, locale: Locale): string {
@@ -661,7 +639,7 @@ export function dependencyDetailLabels(
   return dependencyDetailUnits(values, locale, collapseConsumables).map((unit) => unit.label)
 }
 
-/** Exact guessed-side conditions shown beneath the board's canonical condition category. */
+/** Complete guessed-side checks shown beneath the board's canonical check category. */
 export function dependencyDetailsLabel(values: readonly GameDependency[], locale: Locale): string {
   const details = GAME_DEPENDENCY_FAMILIES.flatMap((family) =>
     dependencyDetailLabels(

@@ -103,8 +103,8 @@ export default function HelpDialog({ open, locale, maxAttempts, onClose }: HelpD
             <li>{t(locale, 'help.arrow')}</li>
             <li>
               {locale === 'zh-CN'
-                ? '稀有度、价格、主效果、触发时机和依赖条件会逐项揭晓。'
-                : 'Rarity, price, effect, trigger, and dependencies are revealed after every guess.'}
+                ? '稀有度、价格、主效果、触发时机和判定依据会逐项揭晓。'
+                : 'Rarity, price, Effect, Trigger, and Checks are revealed after every guess.'}
             </li>
           </ol>
           <div

@@ -4,12 +4,12 @@ import {
   dependencyKey,
   getJokerAcquisition,
   getJokerDependencies,
+  getJokerEffectDetails,
   getJokerEffects,
   getJokerEffectValues,
   getJokerId,
   getJokerRarity,
   getJokerTimingFamilies,
-  getJokerTimings,
 } from './joker-access'
 import type {
   AcquisitionComparison,
@@ -30,6 +30,8 @@ function numericDirection(guess: number, answer: number): Direction | null {
 function compareEffects(guess: Joker, answer: Joker): EffectComparison {
   const guessMechanisms = getJokerEffects(guess)
   const answerMechanisms = getJokerEffects(answer)
+  const guessDetails = getJokerEffectDetails(guess)
+  const answerDetails = getJokerEffectDetails(answer)
   const guessValues = getJokerEffectValues(guess)
   const answerValues = getJokerEffectValues(answer)
   const answerSet = new Set(answerValues)
@@ -39,14 +41,14 @@ function compareEffects(guess: Joker, answer: Joker): EffectComparison {
   const categoryOnlyMatches = guessMechanisms.filter(
     (effect) => !answerMechanismSet.has(effect) && answerSet.has(gameEffectCategory(effect)),
   )
-  const exactMechanisms = sameSet(new Set(guessMechanisms), new Set(answerMechanisms))
+  const exactDetails = sameSet(new Set(guessDetails), new Set(answerDetails))
 
   return {
     values: guessValues,
     matches,
     exactMechanismMatches,
     categoryOnlyMatches,
-    result: exactMechanisms ? 'exact' : matches.length > 0 ? 'partial' : 'miss',
+    result: exactDetails ? 'exact' : matches.length > 0 ? 'partial' : 'miss',
   }
 }
 
@@ -55,8 +57,6 @@ function sameSet(left: Set<string>, right: Set<string>): boolean {
 }
 
 function compareTimings(guess: Joker, answer: Joker): TagComparison<GameTimingFamily> {
-  const guessTimings = getJokerTimings(guess)
-  const answerTimings = getJokerTimings(answer)
   const guessFamilies = getJokerTimingFamilies(guess)
   const answerFamilies = getJokerTimingFamilies(answer)
   const answerFamilySet = new Set(answerFamilies)
@@ -65,7 +65,7 @@ function compareTimings(guess: Joker, answer: Joker): TagComparison<GameTimingFa
   return {
     values: guessFamilies,
     matches,
-    result: sameSet(new Set(guessTimings), new Set(answerTimings))
+    result: sameSet(new Set(guessFamilies), new Set(answerFamilies))
       ? 'exact'
       : matches.length > 0
         ? 'partial'

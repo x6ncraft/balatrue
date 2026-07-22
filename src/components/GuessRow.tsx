@@ -1,14 +1,13 @@
 import type { Joker } from '../data/types'
-import { getJokerEffects, getJokerTimings } from '../game'
+import { getJokerEffectDetails } from '../game'
 import type { GuessComparison } from '../game/types'
 import { t, type Locale } from '../i18n'
 import {
   compactDependenciesLabel,
   dependencyDetailsLabel,
-  effectMechanismDetailsLabel,
+  effectDetailValuesLabel,
   effectValuesLabel,
   rarityLabel,
-  timingDetailValuesLabel,
   timingFamiliesLabel,
 } from '../ui/labels'
 import FeedbackCell from './FeedbackCell'
@@ -32,8 +31,7 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
   const effectsLabel = effectValuesLabel(comparison.effects.values, locale)
   const timingsLabel = timingFamiliesLabel(comparison.timings.values, locale)
   const dependencySummary = compactDependenciesLabel(comparison.dependencies.values, locale)
-  const guessedEffectDetails = effectMechanismDetailsLabel(getJokerEffects(joker), locale)
-  const guessedTimingDetails = timingDetailValuesLabel(getJokerTimings(joker), locale)
+  const guessedEffectDetails = effectDetailValuesLabel(getJokerEffectDetails(joker), locale)
   const guessedDependencyDetails = dependencyDetailsLabel(comparison.dependencies.values, locale)
   return (
     <article className="guess-row" aria-label={primaryName}>
@@ -77,7 +75,6 @@ export function GuessRow({ joker, comparison, locale }: GuessRowProps) {
       <FeedbackCell
         label={t(locale, 'clue.timing')}
         value={timingsLabel}
-        detail={guessedTimingDetails || undefined}
         result={comparison.timings.result}
         cellIndex={3}
         locale={locale}

@@ -11,10 +11,13 @@ import ResultBanner from './components/ResultBanner'
 import StatsDialog from './components/StatsDialog'
 import { JOKER_DATA_META, jokers } from './data'
 import { JOKER_RARITIES, type Joker } from './data/types'
+import { createBalatrueDemoApi, type DemoLocale } from './demo-console'
 import {
   compareJokers,
   createDailyGame,
   createPracticeGame,
+  createPracticeGameForAnswer,
+  deserializeGameState,
   avoidImmediatePracticeRepeat,
   formatShareResult,
   GAME_DEPENDENCY_FAMILIES,
@@ -98,6 +101,14 @@ const previousClassificationVersions = GAME_STORAGE_FALLBACK_CLASSIFICATION_VERS
 )
 const previousClueModels = [
   {
+    classificationVersion: 12,
+    clueModelVersion: 10,
+  },
+  {
+    classificationVersion: 11,
+    clueModelVersion: 9,
+  },
+  {
     classificationVersion: 11,
     clueModelVersion: 8,
   },
@@ -163,6 +174,7 @@ const previousPracticeStorageKeys = [
   ),
 ]
 const practiceBagKey = `balatrue:practice-bag:${dataKey}`
+const demoSessionKey = 'balatrue:demo-session:v1'
 const previousPracticeBagKeys = [
   ...previousClueModels.map(
     (model) =>
@@ -191,6 +203,48 @@ function safeStorageSet(key: string, value: string): boolean {
     return true
   } catch {
     return false
+  }
+}
+
+function safeStorageRemove(key: string): boolean {
+  try {
+    localStorage.removeItem(key)
+    return true
+  } catch {
+    return false
+  }
+}
+
+interface DemoSessionBackup {
+  readonly version: 1
+  readonly dataKey: string
+  readonly mode: GameMode
+  readonly locale: Locale
+  readonly practiceStorage: string | null
+  readonly practiceBag: string | null
+}
+
+function parseDemoSessionBackup(raw: string | null): DemoSessionBackup | null {
+  if (!raw) return null
+  try {
+    const value: unknown = JSON.parse(raw)
+    if (!value || typeof value !== 'object') return null
+    const candidate = value as Partial<DemoSessionBackup>
+    if (
+      candidate.version !== 1 ||
+      typeof candidate.dataKey !== 'string' ||
+      candidate.dataKey.length === 0 ||
+      (candidate.mode !== 'daily' && candidate.mode !== 'practice') ||
+      (candidate.locale !== 'en' && candidate.locale !== 'zh-CN') ||
+      (candidate.practiceStorage !== null && typeof candidate.practiceStorage !== 'string') ||
+      (candidate.practiceBag !== null && typeof candidate.practiceBag !== 'string')
+    ) {
+      return null
+    }
+    if (candidate.mode === 'practice' && candidate.practiceStorage === null) return null
+    return candidate as DemoSessionBackup
+  } catch {
+    return null
   }
 }
 
@@ -315,6 +369,9 @@ export default function App() {
   const statsRef = useRef(initialStats)
   const pendingReveal = useRef(false)
   const copyTimer = useRef<number | null>(null)
+  const demoBackupRef = useRef<DemoSessionBackup | null>(
+    parseDemoSessionBackup(safeStorageGet(demoSessionKey)),
+  )
 
   const state = mode === 'daily' || practiceState === null ? dailyState : practiceState
   const answer = useMemo(() => {
@@ -358,6 +415,124 @@ export default function App() {
       setNotice('error.storageUnavailable')
     }
   }, [])
+
+  const activatePracticeGame = useCallback(
+    (practice: GameState, nextLocale?: DemoLocale) => {
+      pendingReveal.current = false
+      setNotice(null)
+      setPracticeState(practice)
+      setModeState('practice')
+      saveState(practice)
+      setCopied(false)
+      setResetToken((current) => current + 1)
+      setHelpOpen(false)
+      setStatsOpen(false)
+      setGlossaryTarget(null)
+      setCollectionOpen(false)
+      if (nextLocale) setLocale(nextLocale)
+    },
+    [saveState],
+  )
+
+  const setDemoAnswer = useCallback(
+    (joker: Joker, nextLocale?: DemoLocale) => {
+      if (!demoBackupRef.current) {
+        const backup: DemoSessionBackup = {
+          version: 1,
+          dataKey,
+          mode,
+          locale,
+          practiceStorage: practiceState ? serializeGameState(practiceState) : null,
+          practiceBag: safeStorageGet(practiceBagKey),
+        }
+        if (!safeStorageSet(demoSessionKey, JSON.stringify(backup))) {
+          throw new Error(
+            'Local storage is unavailable; the existing endless round was not changed.',
+          )
+        }
+        demoBackupRef.current = backup
+      }
+      const practice = createPracticeGameForAnswer(joker, {
+        puzzleKey: `practice:demo:${joker.id}:${Date.now().toString(36)}`,
+      })
+      activatePracticeGame(practice, nextLocale)
+    },
+    [activatePracticeGame, locale, mode, practiceState],
+  )
+
+  const restartDemo = useCallback(
+    (nextLocale?: DemoLocale): Joker => {
+      if (!practiceState?.puzzleKey.startsWith('practice:demo:')) {
+        throw new Error('No scripted demo round is active. Run balatrueDemo.setAnswer(...) first.')
+      }
+      const nextAnswer = jokersById.get(practiceState.answerId)
+      if (!nextAnswer) throw new Error(`Missing answer ${practiceState.answerId}`)
+      const practice = createPracticeGameForAnswer(nextAnswer, {
+        puzzleKey: `practice:demo:${nextAnswer.id}:${Date.now().toString(36)}`,
+      })
+      activatePracticeGame(practice, nextLocale)
+      return nextAnswer
+    },
+    [activatePracticeGame, practiceState],
+  )
+
+  const restoreDemo = useCallback(() => {
+    const backup = demoBackupRef.current
+    if (!backup) {
+      throw new Error('No Balatrue demo backup is available to restore.')
+    }
+
+    let restoredPractice: GameState | null = null
+    if (backup.practiceStorage !== null) {
+      const parsedPractice = deserializeGameState(backup.practiceStorage)
+      if (!parsedPractice || parsedPractice.mode !== 'practice') {
+        throw new Error('The saved pre-demo endless round is damaged and was not restored.')
+      }
+      restoredPractice = refreshFallbackGame(parsedPractice)
+      if (!restoredPractice) {
+        throw new Error('The saved pre-demo endless round is no longer valid.')
+      }
+    }
+
+    const restoredPracticeStorage = restoredPractice
+      ? safeStorageSet(practiceStorageKey, serializeGameState(restoredPractice))
+      : safeStorageRemove(practiceStorageKey)
+    const restoredBagStorage = backup.practiceBag
+      ? safeStorageSet(practiceBagKey, backup.practiceBag)
+      : safeStorageRemove(practiceBagKey)
+    if (!restoredPracticeStorage || !restoredBagStorage) {
+      throw new Error('Local storage is unavailable; the demo backup was kept for another try.')
+    }
+    if (!safeStorageRemove(demoSessionKey)) {
+      throw new Error('The game was restored, but its demo backup could not be removed. Try again.')
+    }
+
+    pendingReveal.current = false
+    setNotice(null)
+    setPracticeState(restoredPractice)
+    setModeState(backup.mode)
+    setLocale(backup.locale)
+    setCopied(false)
+    setResetToken((current) => current + 1)
+    setHelpOpen(false)
+    setStatsOpen(false)
+    setGlossaryTarget(null)
+    setCollectionOpen(false)
+    demoBackupRef.current = null
+  }, [])
+
+  useEffect(() => {
+    const demoApi = createBalatrueDemoApi({
+      jokers,
+      onSetAnswer: setDemoAnswer,
+      onRestart: restartDemo,
+      onRestore: restoreDemo,
+    })
+    window.balatrueDemo = demoApi
+    return () => {
+      if (window.balatrueDemo === demoApi) delete window.balatrueDemo
+    }
+  }, [restartDemo, restoreDemo, setDemoAnswer])
 
   const finishDaily = useCallback((next: GameState) => {
     if (next.mode !== 'daily' || next.status === 'playing') return
@@ -438,12 +613,7 @@ export default function App() {
 
   function startNext(): void {
     const practice = nextPracticeGame(state.mode === 'practice' ? state.answerId : undefined)
-    setNotice(null)
-    setPracticeState(practice)
-    setModeState('practice')
-    saveState(practice)
-    setCopied(false)
-    setResetToken((current) => current + 1)
+    activatePracticeGame(practice)
   }
 
   function confirmCollection(): void {

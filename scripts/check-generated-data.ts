@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { JOKER_DATA_META, jokers } from '../src/data/jokers.generated'
 import type { Joker, JokerDataMeta } from '../src/data/types'
 import { JOKER_SEARCH_ALIASES } from '../src/search/joker-search.generated'
+import { generateClassificationReviewReport } from './classification-review-report'
 import {
   generateJokerSearchAliases,
   type GeneratedJokerSearchAliases,
@@ -20,6 +21,7 @@ import { createPublicProvenance } from './public-provenance'
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)))
 const sourceReviewFile = join(projectRoot, 'data/upstream/jokers.wiki.generated.json')
 const provenanceFile = join(projectRoot, 'data/jokers.provenance.generated.json')
+const classificationReviewFile = join(projectRoot, 'docs/classification-review.generated.md')
 
 export interface SourceReviewFile {
   schemaVersion: number
@@ -32,6 +34,7 @@ export interface GeneratedArtifacts {
   jokers: readonly Joker[]
   searchAliases: GeneratedJokerSearchAliases
   provenance: ReturnType<typeof createPublicProvenance>
+  classificationReviewReport: string
 }
 
 function firstDifference(actual: unknown, expected: unknown, path: string): string | undefined {
@@ -89,6 +92,7 @@ export function createExpectedGeneratedArtifacts(
     jokers: expectedJokers,
     searchAliases: generateJokerSearchAliases(expectedJokers),
     provenance: createPublicProvenance(sourceReview.metadata, expectedJokers, sourceReview.jokers),
+    classificationReviewReport: generateClassificationReviewReport(expectedJokers),
   }
 }
 
@@ -100,6 +104,11 @@ export function assertGeneratedArtifactsCurrent(
   assertArtifactCurrent('runtime Joker data', actual.jokers, expected.jokers)
   assertArtifactCurrent('search aliases', actual.searchAliases, expected.searchAliases)
   assertArtifactCurrent('public provenance', actual.provenance, expected.provenance)
+  assertArtifactCurrent(
+    'classification review report',
+    actual.classificationReviewReport,
+    expected.classificationReviewReport,
+  )
 }
 
 async function main(): Promise<void> {
@@ -118,6 +127,7 @@ async function main(): Promise<void> {
   const provenance = JSON.parse(
     await readFile(provenanceFile, 'utf8'),
   ) as GeneratedArtifacts['provenance']
+  const classificationReviewReport = await readFile(classificationReviewFile, 'utf8')
 
   assertGeneratedArtifactsCurrent(
     {
@@ -125,11 +135,12 @@ async function main(): Promise<void> {
       jokers,
       searchAliases: JOKER_SEARCH_ALIASES,
       provenance,
+      classificationReviewReport,
     },
     expected,
   )
   console.log(
-    `[data] generated artifacts match schema ${sourceReview.schemaVersion}, current inference rules, ${expected.jokers.length} local images, search aliases, and public provenance`,
+    `[data] generated artifacts match schema ${sourceReview.schemaVersion}, current inference rules, ${expected.jokers.length} local images, search aliases, public provenance, and the classification review report`,
   )
 }
 
